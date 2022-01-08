@@ -1,9 +1,12 @@
-import Faw from "./Lizardx";
+import Lizardx from "./Lizardx";
 
-const {el} = new Faw();
+const { el } = new Lizardx();
 
 el(".title").styles({
-    color: "red"
-}).on("click", () => {
-    console.log("click");
-});
+  color: "red",
+  fontSize: '25px',
+  backgroundColor: 'black',
+  padding: '15px'
+}).on("click", function () {
+  console.log('el(this)');
+}, { once: true });
