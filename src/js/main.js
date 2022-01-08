@@ -1,1 +1,1 @@
-import Lizardx from './Lizardx';
+import Lizardx from "./Lizardx";

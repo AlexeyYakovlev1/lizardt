@@ -26,8 +26,31 @@ var Lizardx = /** @class */ (function () {
         this.inf = {
             $el: null
         };
-        this.el = this.el.bind(this);
+        for (var method in this) {
+            if (typeof this[method] === 'function') {
+                this[method] = this[method]['bind'](this);
+            }
+        }
     }
+    Lizardx.prototype.setStyles = function ($el, obj) {
+        for (var primary in obj) {
+            $el.style[primary] = obj[primary];
+        }
+        return $el;
+    };
+    Lizardx.prototype.definesType = function (name) {
+        var obj = { name: name.replace("#", ""), attribute: "id" };
+        if (name.includes(".")) {
+            return __assign(__assign({}, obj), { name: name.replace(".", ""), attribute: "class" });
+        }
+        return obj;
+    };
+    Lizardx.prototype.setAttributes = function ($el, obj) {
+        for (var attr in obj) {
+            $el.setAttribute(attr, Array.isArray(obj[attr]) ? obj[attr].join(' ') : obj[attr]);
+        }
+        return $el;
+    };
     Lizardx.prototype.el = function (selector) {
         if (typeof selector === 'string') {
             this.inf.$el = document.querySelector(selector);
@@ -38,9 +61,7 @@ var Lizardx = /** @class */ (function () {
         return this;
     };
     Lizardx.prototype.styles = function (stylesObj) {
-        for (var primary in stylesObj) {
-            this.inf.$el.style[primary] = stylesObj[primary];
-        }
+        this.setStyles(this.inf.$el, stylesObj);
         return this;
     };
     Lizardx.prototype.on = function (event, func, options) {
@@ -63,9 +84,10 @@ var Lizardx = /** @class */ (function () {
         });
         return attribute ? findAttr : attributes;
     };
-    Lizardx.prototype.getChildren = function () {
+    Lizardx.prototype.getChildren = function (selector) {
         var $chldr = __spreadArray([], this.inf.$el.children, true);
         var $children = [];
+        var findChild = selector ? this.inf.$el.querySelector(selector) : null;
         $chldr.forEach(function (child) {
             $children.push({
                 $nextEl: child.nextElementSibling,
@@ -74,7 +96,7 @@ var Lizardx = /** @class */ (function () {
                 $el: child,
             });
         });
-        return $children;
+        return selector ? findChild : $children;
     };
     Lizardx.prototype.getCoordinates = function () {
         var dataCoordinatesOfEl = this.inf.$el.getBoundingClientRect();
@@ -98,13 +120,6 @@ var Lizardx = /** @class */ (function () {
         };
         var res = getParent(this.inf.$el, []);
         return (typeof num === 'number' && num >= 0) ? res[num] : res;
-    };
-    Lizardx.prototype.definesType = function (name) {
-        var obj = { name: name.replace("#", ""), attribute: "id" };
-        if (name.includes(".")) {
-            return __assign(__assign({}, obj), { name: name.replace(".", ""), attribute: "class" });
-        }
-        return obj;
     };
     Lizardx.prototype.add = function () {
         var _this = this;
@@ -151,6 +166,47 @@ var Lizardx = /** @class */ (function () {
     Lizardx.prototype.size = function () {
         var _a = this.inf.$el.getBoundingClientRect(), width = _a.width, height = _a.height;
         return { width: width, height: height };
+    };
+    Lizardx.prototype.createElement = function (_a) {
+        var tag = _a.tag, text = _a.text, styles = _a.styles, attributes = _a.attributes;
+        var $res = document.createElement(tag);
+        if ($res instanceof Element) {
+            $res.textContent = text ? text : '';
+            if (styles && Object.keys(styles).length) {
+                this.setStyles($res, styles);
+            }
+            if (attributes && Object.keys(attributes).length) {
+                this.setAttributes($res, attributes);
+            }
+        }
+        return $res;
+    };
+    Lizardx.prototype.addChild = function (child) {
+        var _this = this;
+        if (typeof child === 'object' && Object.keys(child).length) {
+            this.inf.$el.appendChild(this.createElement(child));
+        }
+        if (Array.isArray(child) && child.length) {
+            child.map(function (element) { return _this.inf.$el.appendChild(_this.createElement(element)); });
+        }
+        if (child instanceof Element) {
+            this.inf.$el.appendChild(child);
+        }
+        return this;
+    };
+    Lizardx.prototype.removeChild = function (child) {
+        var _this = this;
+        if (typeof child === 'string') {
+            var findChild = this.inf.$el.querySelector(child);
+            findChild && this.inf.$el.removeChild(findChild);
+        }
+        if (child instanceof Element) {
+            this.inf.$el.removeChild(child);
+        }
+        if (Array.isArray(child) && child.every(function (element) { return element instanceof Element; })) {
+            child.map(function (element) { return _this.inf.$el.removeChild(element); });
+        }
+        return this;
     };
     return Lizardx;
 }());

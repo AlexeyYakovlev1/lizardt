@@ -19,7 +19,9 @@ Lizardx {inf: {...}, el: f}
 - **Arguments**
 	- Selector **(required)**
 - **Example**
-```el(".title");```
+```Javascript
+el(".title");
+```
 
 ### ```add()```:
 - **Description**
@@ -29,7 +31,9 @@ Lizardx {inf: {...}, el: f}
 - **Arguments**
 	- Class names or id **(required)**
 - **Example**
-```el("div").add(".home", "#main");```
+```Javascript
+el("div").add(".home", "#main");
+```
 
 ### ```remove()```:
 - **Description**
@@ -39,7 +43,9 @@ Lizardx {inf: {...}, el: f}
 - **Arguments**
 	- Class names or id **(required)**
 - **Example**
-```el(".title").remove(".cursive", "#subtitle");```
+```Javascript
+el(".title").remove(".cursive", "#subtitle");
+```
 
 ### ```styles()```:
 - **Description**
@@ -49,7 +55,9 @@ Lizardx {inf: {...}, el: f}
 - **Arguments**
 	- Object of styles **(required)**
 - **Example**
-```el("div").styles({width: "125px"});```
+```Javascript
+el("div").styles({width: "125px"});
+```
 
 ### ```on()```:
 - **Description**
@@ -61,7 +69,7 @@ Lizardx {inf: {...}, el: f}
 	- Function **(required)**
 	- Options **(optional)**
 - **Example**
-```
+```Javascript
 el("button").on("click", () =>  {
 	console.log("Hello");
 })
@@ -75,7 +83,9 @@ Lizardx {inf: {...}, el: f}
 - **Arguments**
 	- Value **(required)**
 - **Example**
-```el(".btn").txt("Click me!");```
+```Javascript
+el(".btn").txt("Click me!");
+```
 
 ### ```size()```:
 - **Description**
@@ -83,7 +93,9 @@ Return current size html element
 - **Return**
 Object of size data
 - **Example**
-```el(".container").size();```
+```Javascript
+el(".container").size();
+```
 
 ### ```clearStyles()```:
 - **Description**
@@ -91,28 +103,43 @@ Remove all styles from style attribute
 - **Return**
 Lizardx {inf: {...}, el: f}
 - **Example**
-```el(".photo").clearStyles();```
+```Javascript
+el(".photo").clearStyles();
+```
 
 ### ```getAttributes()```:
 - **Description**
 Gets all the attributes of the element
 - **Return**
-List of attributes
-When used **attribute** returns an object with attribute data
+List of attributes. When used **attribute** returns an object with attribute data
 - **Arguments**
   - Attribute **(optional)**
 - **Example**
-```el(".button").getAttributes()```
+```Javascript
+el(".button").getAttributes();
+```
 or
-```el(".button").getAttributes('type')```
+```Javascript
+el(".button").getAttributes("type");
+```
 
 ### ```getChildren()```:
 - **Description**
 Gets all children in this element
+- **Arguments**
+  - Selector **(optional)**
 - **Return**
-List of children
+List of children. When we use **selector**, it returns the element itself
 - **Example**
-```el(".wrapper").getChildren()```
+```Javascript
+el(".wrapper").getChildren();
+```
+
+or
+
+```Javascript
+el(".wrapper").getChildren(".title");
+```
 
 ### ```getCoordinates()```:
 - **Description**
@@ -120,12 +147,117 @@ Gets the coordinates of an element on the page
 - **Return**
 Object of coordinates
 - **Example**
-```el(".wrapper").getCoordinates()```
+```Javascript
+el(".wrapper").getCoordinates()
+```
 
 ### ```getAllParents()```:
 - **Description**
-Gets all the parents of an element, including itself
+Gets all the parents of an element, including itself. When we use **num** the parent with this number is returned
+- **Arguments**
+  - Num **(optional)**
 - **Return**
 List of parents
 - **Example**
-```el(".wrapper").getAllParents()```
+```Javascript
+el(".wrapper").getAllParents()
+```
+or
+```Javascript
+el(".wrapper").getAllParents(1)
+```
+
+### ```createElement()```:
+- **Description**
+Creates HTML an element
+- **Arguments**
+  - Options **(required)**
+- **Return**
+HTML element
+- **Example**
+```Javascript
+const title = createElement({
+    tag: "h1",
+    text: "Hello, Lizard!",
+    styles: { color: "blue" },
+    attributes: { title: "Main title" },
+  });
+```
+
+### ```addChild()```:
+- **Description**
+Adds a child to an element
+- **Arguments**
+  - Child **(required)**
+- **Return**
+Lizardx {inf: {...}, el: f}
+- **Example**
+```Javascript
+el(".wrapper").addChild({
+    tag: "h1",
+    text: "Hello, Lizard!",
+    styles: { color: "blue" },
+    attributes: { title: "Main title" },
+  });
+```
+
+or
+
+```Javascript
+el(".wrapper").addChild([
+	{
+	  tag: "h1",
+	  text: "Hello, Lizard!",
+	  styles: { color: "blue" },
+	  attributes: { title: "Main title" },
+  	},
+  	{
+	  tag: "h2",
+	  text: "Hello, Lizard!",
+	  styles: { color: "red" },
+	  attributes: { title: "Subtitle" },
+  	}
+  ]);
+```
+
+or 
+
+```Javascript
+const title = createElement({
+    tag: "h1",
+    text: "Hello, Lizard!",
+    styles: { color: "blue" },
+    attributes: { title: "Main title" },
+  });
+
+el(".wrapper").addChild(title);
+```
+
+### ```removeChild()```:
+- **Description**
+Removes a child from an element
+- **Arguments**
+  - Child **(required)**
+- **Return**
+Lizardx {inf: {...}, el: f}
+- **Example**
+```Javascript
+el(".wrapper").removeChild(".title");
+```
+
+or
+
+```Javascript
+const subtitle = el(".wrapper").getChildren(".subtitle");
+const title = el(".wrapper").getChildren(".title");
+
+el(".wrapper").removeChild([title, subtitle]);
+```
+
+or 
+
+```Javascript
+const title = el(".wrapper").getChildren(".title");
+
+el(".wrapper").removeChild(title);
+```

@@ -4,10 +4,40 @@ class Lizardx {
       $el: null
     };
 
-    this.el = this.el.bind(this);
+    for (let method in this) {
+      if (typeof this[method] === 'function') {
+        this[method] = this[method]['bind'](this);
+      }
+    }
   }
 
-  el(selector) {
+  private setStyles($el, obj) {
+    for (const primary in obj) {
+      $el.style[primary] = obj[primary];
+    }
+
+    return $el;
+  }
+
+  private definesType(name) {
+    const obj = { name: name.replace("#", ""), attribute: "id" }
+
+    if (name.includes(".")) {
+      return { ...obj, name: name.replace(".", ""), attribute: "class" };
+    }
+
+    return obj;
+  }
+
+  private setAttributes($el, obj) {
+    for (let attr in obj) {
+      $el.setAttribute(attr, Array.isArray(obj[attr]) ? obj[attr].join(' ') : obj[attr]);
+    }
+
+    return $el;
+  }
+
+  public el(selector) {
     if (typeof selector === 'string') {
       this.inf.$el = document.querySelector(selector);
     } else if (selector instanceof Element) {
@@ -17,21 +47,19 @@ class Lizardx {
     return this;
   }
 
-  styles(stylesObj) {
-    for (const primary in stylesObj) {
-      this.inf.$el.style[primary] = stylesObj[primary];
-    }
+  public styles(stylesObj) {
+    this.setStyles(this.inf.$el, stylesObj);
 
-    return this
+    return this;
   }
 
-  on(event, func, options) {
+  public on(event, func, options) {
     this.inf.$el.addEventListener(event, func, options);
 
     return this;
   }
 
-  getAttributes(attribute = '') {
+  public getAttributes(attribute = '') {
     const attrs = { ...this.inf.$el.attributes };
     const attributes = [];
 
@@ -47,9 +75,10 @@ class Lizardx {
     return attribute ? findAttr : attributes;
   }
 
-  getChildren() {
+  public getChildren(selector) {
     const $chldr = [...this.inf.$el.children];
     const $children = [];
+    const findChild = selector ? this.inf.$el.querySelector(selector) : null;
 
     $chldr.forEach(child => {
       $children.push({
@@ -60,10 +89,10 @@ class Lizardx {
       });
     });
 
-    return $children;
+    return selector ? findChild : $children;
   }
 
-  getCoordinates() {
+  public getCoordinates() {
     const dataCoordinatesOfEl = this.inf.$el.getBoundingClientRect();
     const coordinates = {};
 
@@ -76,7 +105,7 @@ class Lizardx {
     return coordinates;
   }
 
-  getAllParents(num = false) {
+  public getAllParents(num = false) {
     const getParent = (parent, array) => {
       const parents = array;
 
@@ -94,17 +123,7 @@ class Lizardx {
     return (typeof num === 'number' && num >= 0) ? res[num] : res;
   }
 
-  definesType(name) {
-    const obj = { name: name.replace("#", ""), attribute: "id" }
-
-    if (name.includes(".")) {
-      return { ...obj, name: name.replace(".", ""), attribute: "class" };
-    }
-
-    return obj;
-  }
-
-  add(...args) {
+  public add(...args) {
     args.forEach(className => {
       const { attribute, name } = this.definesType(className);
       if (attribute === "class") {
@@ -117,7 +136,7 @@ class Lizardx {
     return this;
   }
 
-  remove(...args) {
+  public remove(...args) {
     args.forEach(className => {
       const { attribute, name } = this.definesType(className);
       if (attribute === "class") {
@@ -129,19 +148,71 @@ class Lizardx {
     return this;
   }
 
-  clearStyles() {
+  public clearStyles() {
     this.inf.$el.style = null;
     return this;
   }
 
-  txt(value) {
+  public txt(value) {
     this.inf.$el.textContent = value;
     return this;
   }
 
-  size() {
+  public size() {
     const { width, height } = this.inf.$el.getBoundingClientRect();
     return { width, height };
+  }
+
+  public createElement({ tag, text, styles, attributes }) {
+    const $res = document.createElement(tag);
+
+    if ($res instanceof Element) {
+      $res.textContent = text ? text : '';
+
+      if (styles && Object.keys(styles).length) {
+        this.setStyles($res, styles);
+      }
+
+      if (attributes && Object.keys(attributes).length) {
+        this.setAttributes($res, attributes);
+      }
+    }
+
+    return $res;
+  }
+
+  public addChild(child) {
+    if (typeof child === 'object' && Object.keys(child).length) {
+      this.inf.$el.appendChild(this.createElement(child));
+    }
+
+    if (Array.isArray(child) && child.length) {
+      child.map(element => this.inf.$el.appendChild(this.createElement(element)));
+    }
+
+    if (child instanceof Element) {
+      this.inf.$el.appendChild(child);
+    }
+
+    return this;
+  }
+
+  public removeChild(child) {
+    if (typeof child === 'string') {
+      const findChild = this.inf.$el.querySelector(child);
+
+      findChild && this.inf.$el.removeChild(findChild);
+    }
+
+    if (child instanceof Element) {
+      this.inf.$el.removeChild(child);
+    }
+
+    if (Array.isArray(child) && child.every(element => element instanceof Element)) {
+      child.map(element => this.inf.$el.removeChild(element));
+    }
+
+    return this;
   }
 }
 
