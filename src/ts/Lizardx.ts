@@ -1,7 +1,10 @@
 class Lizardx {
   constructor(private inf) {
+    
     this.inf = {
-      $el: null
+      $el: null,
+      $nodeList: [],
+      array: []
     };
 
     for (let method in this) {
@@ -9,6 +12,10 @@ class Lizardx {
         this[method] = this[method]['bind'](this);
       }
     }
+  }
+
+  private getError(err) {
+    throw new Error(err);
   }
 
   private setStyles($el, obj) {
@@ -54,6 +61,8 @@ class Lizardx {
   }
 
   public on(event, func, options) {
+    if (!event) // Note: will do check type for func argument
+      this.getError(`Event or function have invalid type`);
     this.inf.$el.addEventListener(event, func, options);
 
     return this;
@@ -124,6 +133,9 @@ class Lizardx {
   }
 
   public add(...args) {
+    if (!args.length)
+      this.getError(`You must pass something`);
+
     args.forEach(className => {
       const { attribute, name } = this.definesType(className);
       if (attribute === "class") {
@@ -137,6 +149,9 @@ class Lizardx {
   }
 
   public remove(...args) {
+    if (!args.length)
+      this.getError(`You must pass something`);
+
     args.forEach(className => {
       const { attribute, name } = this.definesType(className);
       if (attribute === "class") {
@@ -154,6 +169,9 @@ class Lizardx {
   }
 
   public txt(value) {
+    if (typeof value !== "string")
+      this.getError(`${value} is not string type`);
+
     this.inf.$el.textContent = value;
     return this;
   }
@@ -213,6 +231,26 @@ class Lizardx {
     }
 
     return this;
+  }
+
+  public list(selector) {
+    if (!selector)
+      this.getError(`selector "${selector}" is not defined`);
+   
+    this.inf.$nodeList = document.querySelectorAll(selector);
+    return this.inf.$nodeList;
+  }
+
+  public array(item, symb = "") {
+    if (!item)
+      throw new Error(`${item} is not defined`);
+    
+    this.inf.array = Array.from(item);
+
+    if (symb)
+      this.inf.array = item.split(symb);
+
+    return this.inf.array;
   }
 }
 

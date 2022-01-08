@@ -24,7 +24,9 @@ var Lizardx = /** @class */ (function () {
     function Lizardx(inf) {
         this.inf = inf;
         this.inf = {
-            $el: null
+            $el: null,
+            $nodeList: [],
+            array: []
         };
         for (var method in this) {
             if (typeof this[method] === 'function') {
@@ -32,6 +34,9 @@ var Lizardx = /** @class */ (function () {
             }
         }
     }
+    Lizardx.prototype.getError = function (err) {
+        throw new Error(err);
+    };
     Lizardx.prototype.setStyles = function ($el, obj) {
         for (var primary in obj) {
             $el.style[primary] = obj[primary];
@@ -65,6 +70,8 @@ var Lizardx = /** @class */ (function () {
         return this;
     };
     Lizardx.prototype.on = function (event, func, options) {
+        if (!event) // Note: will do check type for func argument
+            this.getError("Event or function have invalid type");
         this.inf.$el.addEventListener(event, func, options);
         return this;
     };
@@ -127,6 +134,8 @@ var Lizardx = /** @class */ (function () {
         for (var _i = 0; _i < arguments.length; _i++) {
             args[_i] = arguments[_i];
         }
+        if (!args.length)
+            this.getError("You must pass something");
         args.forEach(function (className) {
             var _a = _this.definesType(className), attribute = _a.attribute, name = _a.name;
             if (attribute === "class") {
@@ -144,6 +153,8 @@ var Lizardx = /** @class */ (function () {
         for (var _i = 0; _i < arguments.length; _i++) {
             args[_i] = arguments[_i];
         }
+        if (!args.length)
+            this.getError("You must pass something");
         args.forEach(function (className) {
             var _a = _this.definesType(className), attribute = _a.attribute, name = _a.name;
             if (attribute === "class") {
@@ -160,6 +171,8 @@ var Lizardx = /** @class */ (function () {
         return this;
     };
     Lizardx.prototype.txt = function (value) {
+        if (typeof value !== "string")
+            this.getError("".concat(value, " is not string type"));
         this.inf.$el.textContent = value;
         return this;
     };
@@ -207,6 +220,21 @@ var Lizardx = /** @class */ (function () {
             child.map(function (element) { return _this.inf.$el.removeChild(element); });
         }
         return this;
+    };
+    Lizardx.prototype.list = function (selector) {
+        if (!selector)
+            this.getError("selector \"".concat(selector, "\" is not defined"));
+        this.inf.$nodeList = document.querySelectorAll(selector);
+        return this.inf.$nodeList;
+    };
+    Lizardx.prototype.array = function (item, symb) {
+        if (symb === void 0) { symb = ""; }
+        if (!item)
+            throw new Error("".concat(item, " is not defined"));
+        this.inf.array = Array.from(item);
+        if (symb)
+            this.inf.array = item.split(symb);
+        return this.inf.array;
     };
     return Lizardx;
 }());

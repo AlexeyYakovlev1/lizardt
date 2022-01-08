@@ -2,10 +2,19 @@
 This library created for fast work with DOM Elements from Javascript file.
 
 ##  Installation
-Dillinger requires [Node.js](https://nodejs.org/) to run.
+Requires [Node.js](https://nodejs.org/) to run.
 
 ```sh
+cd ./project
+
 npm install lizardx --save-dev
+```
+
+## Usage
+```Javascript
+import Lizardx from "./Lizardx";
+
+const { el } = new Lizardx();
 ```
 
 ##  Methods
@@ -72,7 +81,7 @@ Lizardx {inf: {...}, el: f}
 ```Javascript
 el("button").on("click", () =>  {
 	console.log("Hello");
-})
+});
 ```
 
 ### ```txt()```:
@@ -94,7 +103,7 @@ Return current size html element
 Object of size data
 - **Example**
 ```Javascript
-el(".container").size();
+el(".title").size(); // { width: 500, height: 36 }
 ```
 
 ### ```clearStyles()```:
@@ -148,7 +157,7 @@ Gets the coordinates of an element on the page
 Object of coordinates
 - **Example**
 ```Javascript
-el(".wrapper").getCoordinates()
+el(".wrapper").getCoordinates();
 ```
 
 ### ```getAllParents()```:
@@ -160,11 +169,11 @@ Gets all the parents of an element, including itself. When we use **num** the pa
 List of parents
 - **Example**
 ```Javascript
-el(".wrapper").getAllParents()
+el(".wrapper").getAllParents();
 ```
 or
 ```Javascript
-el(".wrapper").getAllParents(1)
+el(".wrapper").getAllParents(1);
 ```
 
 ### ```createElement()```:
@@ -260,4 +269,33 @@ or
 const title = el(".wrapper").getChildren(".title");
 
 el(".wrapper").removeChild(title);
+```
+
+### ```array()```:
+- **Description**
+Creating an array from your first argument, the second argument **character** is optional, it separates your first argument with a unique character, which will help create the array
+- **Arguments**
+  - Item **(required)**
+  - Symb **(optional)**
+- **Return**
+Array
+- **Example**
+```Javascript
+array("abc"); // ['a','b','c'];
+```
+or
+```Javascript
+array("ab,c", ","); // ['ab', 'c'];
+```
+
+### ```list()```:
+- **Description**
+Searches html elements by selector
+- **Arguments**
+  - Selector **(required)**
+- **Return**
+NodeList
+- **Example**
+```Javascript
+list("li");
 ```
