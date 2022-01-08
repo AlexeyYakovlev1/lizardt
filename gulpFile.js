@@ -21,7 +21,7 @@ const paths = {
     to: './dist/'
   },
   build: {
-    from: './dist/js/*.js',
+    from: './src/js/Lizardx.js/*.js',
     to: `../${buildFolder}/js/`
   }
 }
