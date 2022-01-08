@@ -1,4 +1,4 @@
-export default class Lizardx {
+class Lizardx {
   constructor(private inf) {
     this.inf = {
       $el: null
@@ -144,3 +144,5 @@ export default class Lizardx {
     return { width, height };
   }
 }
+
+export default Lizardx;

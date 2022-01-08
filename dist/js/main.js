@@ -37,7 +37,7 @@ eval("\n\n//# sourceURL=webpack://dom_library/./src/js/interfaces/index.js?");
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _Lizardx__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Lizardx */ \"./src/js/Lizardx.js\");\n/* harmony import */ var _Lizardx__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Lizardx__WEBPACK_IMPORTED_MODULE_0__);\n\r\n\r\nconst { el } = new (_Lizardx__WEBPACK_IMPORTED_MODULE_0___default())();\r\n\r\nel(\".title\").styles({\r\n  color: \"red\",\r\n  fontSize: '25px',\r\n  backgroundColor: 'black',\r\n  padding: '15px'\r\n}).on(\"click\", function () {\r\n  console.log('el(this)');\r\n}, { once: true });\n\n//# sourceURL=webpack://dom_library/./src/js/main.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _Lizardx__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Lizardx */ \"./src/js/Lizardx.js\");\n/* harmony import */ var _Lizardx__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Lizardx__WEBPACK_IMPORTED_MODULE_0__);\n\n\n//# sourceURL=webpack://dom_library/./src/js/main.js?");
 
 /***/ })
 

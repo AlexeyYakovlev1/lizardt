@@ -2,11 +2,9 @@ const { src, dest, parallel, watch } = require('gulp');
 const ts = require('gulp-typescript');
 const webpack = require('webpack-stream');
 const plumber = require('gulp-plumber');
-const concat = require('gulp-concat');
 const browserSync = require('browser-sync').create();
 
 const tsProject = ts.createProject('./tsconfig.json');
-const buildFolder = 'build';
 const paths = {
   ts: {
     from: './src/ts/**/*',
@@ -21,9 +19,30 @@ const paths = {
     to: './dist/'
   },
   build: {
-    from: './src/js/Lizardx.js/*.js',
-    to: `../${buildFolder}/js/`
+    from: './src/js/Lizardx.js',
+    to: '../build/js/'
+  },
+  readme: {
+    from: './README.md',
+    to: '../build/'
   }
+}
+
+const buildLibrary = () => {
+  return src(paths.build.from)
+    .pipe(webpack({
+      output: {
+        filename: 'Lizardx.js',
+        library: 'Lizardx',
+        libraryTarget: 'umd'
+      }
+    }))
+    .pipe(dest(paths.build.to));
+}
+
+const readme = () => {
+  return src(paths.readme.from)
+    .pipe(dest(paths.readme.to));
 }
 
 const typescript = () => {
@@ -54,19 +73,6 @@ const html = () => {
     .pipe(browserSync.stream());
 }
 
-const buildLibrary = () => {
-  return src(paths.build.from)
-    .pipe(plumber())
-    .pipe(webpack({
-      mode: 'production',
-      output: {
-        library: 'main'
-      }
-    }))
-    .pipe(concat('main.js'))
-    .pipe(dest(paths.build.to));
-}
-
 const server = () => {
   browserSync.init({
     server: {
@@ -86,4 +92,4 @@ const defaultFunc = () => parallel(buildFunc, watching, server);
 
 exports.build = buildFunc();
 exports.default = defaultFunc();
-exports.buildLibrary = parallel(buildLibrary);
+exports.buildLibrary = parallel(buildLibrary, readme);
