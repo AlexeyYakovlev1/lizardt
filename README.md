@@ -476,3 +476,54 @@ const block = createElement({
 
 liz(".wrapper").addNextElement(block);
 ```
+
+### ```getRandom()```:
+- **Description**
+Gets a random number
+- **Arguments**
+  - Min **(required)**
+  - Max **(required)**
+- **Return**
+Random number
+- **Example**
+```Javascript
+const { getRandom } = new Lizardx();
+
+getRandom(0, 5); // 2.1321...
+```
+
+### ```setAttribute()```:
+- **Description**
+Sets attributes to an element
+- **Arguments**
+  - Attributes **(required)**
+- **Return**
+Lizardx class
+- **Example**
+```Javascript
+const { liz } = new Lizardx();
+
+liz(".list").setAttribute({ "data-colors": ["green", "red", "yellow"], "data-length": "3" });
+```
+
+### ```removeAttribute()```:
+- **Description**
+Removes attributes on an element
+- **Arguments**
+  - Attribute **(required)**
+- **Return**
+Lizardx class
+- **Example**
+```Javascript
+const { liz } = new Lizardx();
+
+liz(".list").removeAttribute("styles");
+```
+
+or
+
+```Javascript
+const { liz } = new Lizardx();
+
+liz(".list").removeAttribute(["styles", "title"]);
+```

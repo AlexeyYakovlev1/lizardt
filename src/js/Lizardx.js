@@ -368,6 +368,40 @@ var Lizardx = /** @class */ (function () {
             return JSON.stringify(item1) === JSON.stringify(item2);
         }
     };
+    Lizardx.prototype.getRandom = function (min, max) {
+        if ([min, max].every(function (num) { return typeof num === 'number'; })) {
+            return Math.random() * (max - min) + min;
+        }
+        else {
+            this.getError('One of the arguments or all arguments is not of type number');
+        }
+    };
+    Lizardx.prototype.setAttribute = function (attributes) {
+        if (this.target instanceof Element) {
+            if (typeof attributes === 'object' && attributes !== null && Object.keys(attributes).length) {
+                this.setAttributes(this.target, attributes);
+            }
+            return this;
+        }
+        else {
+            this.getError("Target is not HTML element");
+        }
+    };
+    Lizardx.prototype.removeAttribute = function (attribute) {
+        var _this = this;
+        if (this.target instanceof Element) {
+            if (typeof attribute === 'string') {
+                this.target.removeAttribute(attribute);
+            }
+            if (Array.isArray(attribute) && attribute.length && attribute.every(function (attr) { return typeof attr === "string"; })) {
+                attribute.map(function (attr) { return _this.target.removeAttribute(attr); });
+            }
+            return this;
+        }
+        else {
+            this.getError("Target is not HTML element");
+        }
+    };
     return Lizardx;
 }());
 exports.default = Lizardx;

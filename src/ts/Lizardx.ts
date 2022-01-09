@@ -385,6 +385,42 @@ class Lizardx {
       return JSON.stringify(item1) === JSON.stringify(item2);
     }
   }
+
+  public getRandom(min, max) {
+    if ([min, max].every(num => typeof num === 'number')) {
+      return Math.random() * (max - min) + min;
+    } else {
+      this.getError('One of the arguments or all arguments is not of type number');
+    }
+  }
+
+  public setAttribute(attributes) {
+    if (this.target instanceof Element) {
+      if (typeof attributes === 'object' && attributes !== null && Object.keys(attributes).length) {
+        this.setAttributes(this.target, attributes);
+      }
+
+      return this;
+    } else {
+      this.getError("Target is not HTML element");
+    }
+  }
+
+  public removeAttribute(attribute) {
+    if (this.target instanceof Element) {
+      if (typeof attribute === 'string') {
+        this.target.removeAttribute(attribute);
+      }
+
+      if (Array.isArray(attribute) && attribute.length && attribute.every(attr => typeof attr === "string")) {
+        attribute.map(attr => this.target.removeAttribute(attr));
+      }
+
+      return this;
+    } else {
+      this.getError("Target is not HTML element");
+    }
+  }
 }
 
 export default Lizardx;
