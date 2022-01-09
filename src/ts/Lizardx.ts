@@ -1,14 +1,27 @@
-const global = {
-  getError(err) {
+import {
+  IGlobal,
+  ILizardx,
+  IElement,
+  ITypeOfSelector,
+  ILiz,
+  IAttribute,
+  IChild,
+  ICoordinates,
+  IBoundingRect,
+  ISize
+} from './interfaces';
+
+const global: IGlobal = {
+  getError(err: string): never {
     throw new Error(err);
   },
 
-  checkList(target) {
+  checkList(target: any): Boolean {
     return Array.isArray(target) || target instanceof NodeList || target instanceof HTMLCollection;
   },
 
-  createElement({ tag, text, styles, attributes }) {
-    const $res = document.createElement(tag);
+  createElement({ tag, text, styles, attributes }: IElement): HTMLElement | null {
+    const $res: HTMLElement = document.createElement(tag);
 
     if ($res instanceof Element) {
       if (typeof text === "string") {
@@ -27,33 +40,33 @@ const global = {
     return $res;
   },
 
-  removeChildBySelector(el, selector) {
+  removeChildBySelector($el: HTMLElement | null, selector: string): void {
     if (typeof selector === "string" && selector.length) {
-      const findChild = el.querySelector(selector);
+      const findChild: HTMLElement | null = $el.querySelector(selector);
 
-      findChild && el.removeChild(findChild);
+      findChild && $el.removeChild(findChild);
     }
   },
 
-  addElementOnPos(parent, element, pos) {
-    if (parent instanceof Element) {
+  addElementOnPos($parent: HTMLElement, $element: HTMLElement | IElement, pos: InsertPosition): void {
+    if ($parent instanceof Element) {
       // Html element
-      if (element instanceof Element) {
-        parent.insertAdjacentElement(pos, element);
+      if ($element instanceof Element) {
+        $parent.insertAdjacentElement(pos, $element);
       }
 
       // Object
-      if (typeof element === "object" && !(element instanceof Element) && element !== null && Object.keys(element).length) {
-        const $el = global.createElement(element);
+      if (typeof $element === "object" && !($element instanceof Element) && $element !== null && Object.keys($element).length) {
+        const $el: HTMLElement = global.createElement($element);
 
-        parent.insertAdjacentElement(pos, $el);
+        $parent.insertAdjacentElement(pos, $el);
       }
     } else {
       global.getError("Target is not HTML element");
     }
   },
 
-  setStyles($el, obj) {
+  setStyles($el: HTMLElement | null, obj: object): HTMLElement | null {
     for (const primary in obj) {
       $el.style[primary] = obj[primary];
     }
@@ -61,8 +74,8 @@ const global = {
     return $el;
   },
 
-  definesType(name) {
-    const obj = { name: name.replace("#", ""), attribute: "id" }
+  definesType(name: string): ITypeOfSelector {
+    const obj: ITypeOfSelector = { name: name.replace("#", ""), attribute: "id" };
 
     if (name.includes(".")) {
       return { ...obj, name: name.replace(".", ""), attribute: "class" };
@@ -71,7 +84,7 @@ const global = {
     return obj;
   },
 
-  setAttributes($el, obj) {
+  setAttributes($el: HTMLElement | null, obj: object): HTMLElement | null {
     for (let attr in obj) {
       $el.setAttribute(attr, Array.isArray(obj[attr]) ? obj[attr].join(" ") : obj[attr]);
     }
@@ -79,10 +92,10 @@ const global = {
     return $el;
   },
 };
-const lizardx = {
+const lizardx: ILizardx = {
   createElement: global.createElement,
 
-  compare(item1, item2) {
+  compare(item1: any, item2: any): Boolean {
     if ([item1, item2].every(item => item instanceof Element)) {
       return item1.isEqualNode(item2);
     } else if ([item1, item2].some(item => item instanceof Element)) {
@@ -92,7 +105,7 @@ const lizardx = {
     }
   },
 
-  getRandom(min, max) {
+  getRandom(min: number, max: number): number {
     if ([min, max].every(num => typeof num === 'number')) {
       return Math.random() * (max - min) + min;
     } else {
@@ -100,8 +113,8 @@ const lizardx = {
     }
   },
 
-  copy(item) {
-    let res = item;
+  copy(item: any): any {
+    let res: any = item;
 
     if (item instanceof Array) {
       res = [...item];
@@ -112,11 +125,11 @@ const lizardx = {
     return res;
   },
 
-  array(item, symb = "") {
+  array(item: any, symb?: string): ILizardx {
     if (!item)
       global.getError(`${item} is not defined`);
 
-    let res = Array.from(item);
+    let res: Array<any> = Array.from(item);
 
     if (symb)
       res = item.split(symb);
@@ -129,7 +142,7 @@ const lizardx = {
     };
   },
 
-  list(selector) {
+  list(selector: string): ILizardx {
     if (!selector && typeof selector !== "string")
       global.getError(`selector "${selector}" is not defined`);
 
@@ -141,19 +154,19 @@ const lizardx = {
     };
   },
 
-  liz(target) {
+  liz(target: any): ILiz {
     if (typeof target === "string" && target.length) {
-      const element = document.querySelector(target);
+      const $element: HTMLElement | null = document.querySelector(target);
 
-      if (element) {
-        target = element;
+      if ($element) {
+        target = $element;
       }
     }
 
     return {
       target,
 
-      styles(stylesObj) {
+      styles(stylesObj: object): ILiz {
         if (this.target instanceof Element) {
           global.setStyles(this.target, stylesObj);
         }
@@ -161,7 +174,7 @@ const lizardx = {
         return this;
       },
 
-      on(event, func, options = {}) {
+      on(event: string, func: () => void, options?: object): void {
         if (!event) // Note: will do check type for func argument
           global.getError(`Event or function have invalid type`);
 
@@ -170,10 +183,10 @@ const lizardx = {
         }
       },
 
-      getAttributes(attribute = "") {
+      getAttributes(attribute?: string): IAttribute | Array<IAttribute> {
         if (this.target instanceof Element) {
-          const attrs = { ...this.target.attributes };
-          const attributes = [];
+          const attrs: object = { ...this.target.attributes };
+          const attributes: Array<IAttribute> = [];
 
           for (let attr in attrs) {
             attributes.push({
@@ -182,7 +195,7 @@ const lizardx = {
             });
           }
 
-          const findAttr = attributes.find(({ name }) => name === attribute);
+          const findAttr: IAttribute = attributes.find(({ name }) => name === attribute);
 
           return attribute ? findAttr : attributes;
         } else {
@@ -190,11 +203,11 @@ const lizardx = {
         }
       },
 
-      getChildren(selector) {
+      getChildren(selector?: string): HTMLElement | Array<IChild> {
         if (this.target instanceof Element) {
-          const $chldr = Array.from(this.target.children);
-          const $children = [];
-          const $findChild = selector ? this.target.querySelector(selector) : null;
+          const $chldr: Array<HTMLElement> = Array.from(this.target.children);
+          const $children: Array<IChild> = [];
+          const $findChild: HTMLElement = selector ? this.target.querySelector(selector) : null;
 
           $chldr.forEach($child => {
             $children.push({
@@ -211,10 +224,10 @@ const lizardx = {
         }
       },
 
-      getCoordinates() {
+      getCoordinates(): ICoordinates {
         if (this.target instanceof Element) {
-          const dataCoordinatesOfEl = this.target.getBoundingClientRect();
-          const coordinates = {};
+          const dataCoordinatesOfEl: IBoundingRect = this.target.getBoundingClientRect();
+          const coordinates: ICoordinates = {};
 
           for (let key in dataCoordinatesOfEl) {
             if (!["width", "height", "toJSON"].includes(key)) {
@@ -228,10 +241,10 @@ const lizardx = {
         }
       },
 
-      getAllParents(num = false) {
+      getAllParents(num?: number): Array<HTMLElement> | HTMLElement {
         if (this.target instanceof Element) {
-          const getParent = (parent, array) => {
-            const parents = array;
+          const getParent = (parent: HTMLElement | null, array: Array<HTMLElement>): Array<HTMLElement> => {
+            const parents: Array<HTMLElement> = array;
 
             if (parent) {
               parents.push(parent);
@@ -242,7 +255,7 @@ const lizardx = {
             return parents;
           }
 
-          const res = getParent(this.target, []);
+          const res: Array<HTMLElement> = getParent(this.target, []);
 
           return (typeof num === "number" && num >= 0) ? res[num] : res;
         } else {
@@ -250,47 +263,49 @@ const lizardx = {
         }
       },
 
-      add(...args) {
+      add(...args): ILiz {
         if (this.target instanceof Element) {
           if (!args.length)
             global.getError(`You must pass something`);
 
           args.forEach(className => {
-            const { attribute, name } = global.definesType(className);
+            const { attribute, name }: ITypeOfSelector = global.definesType(className);
+
             if (attribute === "class") {
               this.target.classList.add(name);
             } else {
               this.target.setAttribute(attribute, name);
             }
           });
+
+          return this;
         } else {
           global.getError("Target is not HTML element");
         }
-
-        return this;
       },
 
-      remove(...args) {
+      remove(...args): ILiz {
         if (!args.length)
           global.getError(`You must pass something`);
 
         if (this.target instanceof Element) {
           args.forEach(className => {
-            const { attribute, name } = global.definesType(className);
+            const { attribute, name }: ITypeOfSelector = global.definesType(className);
+
             if (attribute === "class") {
               this.target.classList.remove(name);
             } else {
               this.target.removeAttribute(attribute, name);
             }
           });
+
+          return this;
         } else {
           global.getError("Target is not HTML element");
         }
-
-        return this;
       },
 
-      clearStyles() {
+      clearStyles(): ILiz {
         if (this.target instanceof Element) {
           this.target["style"] = null;
         } else {
@@ -300,7 +315,7 @@ const lizardx = {
         return this;
       },
 
-      txt(value) {
+      txt(value: string): ILiz {
         if (typeof value !== "string")
           global.getError(`"${value}" is not string type`);
 
@@ -317,9 +332,9 @@ const lizardx = {
         return this;
       },
 
-      size() {
+      size(): ISize {
         if (this.target instanceof Element) {
-          const { width, height } = this.target.getBoundingClientRect();
+          const { width, height }: ISize = this.target.getBoundingClientRect();
 
           return { width, height };
         } else {
@@ -327,10 +342,10 @@ const lizardx = {
         }
       },
 
-      addChild(child) {
+      addChild(child: HTMLElement | IElement | Array<any>): ILiz {
         if (this.target instanceof Element) {
           // Object
-          if (typeof child === "object" && Object.keys(child).length && child !== null) {
+          if (!Array.isArray(child) && typeof child === "object" && Object.keys(child).length && child !== null) {
             this.target.appendChild(global.createElement(child));
           }
 
@@ -349,17 +364,19 @@ const lizardx = {
           if (child instanceof Element) {
             this.target.appendChild(child);
           }
+
+          return this;
         } else {
           global.getError("Target is not HTML element");
         }
-
-        return this;
       },
 
-      removeChild(child) {
+      removeChild(child: HTMLElement | string | Array<HTMLElement | string>): ILiz {
         if (this.target instanceof Element) {
           // Selector
-          global.removeChildBySelector(this.target, child);
+          if (typeof child === 'string' && child.length) {
+            global.removeChildBySelector(this.target, child);
+          }
 
           // Html element
           if (child instanceof Element) {
@@ -383,19 +400,19 @@ const lizardx = {
         return this;
       },
 
-      addPrevElement(element) {
+      addPrevElement(element: HTMLElement | IElement): ILiz {
         global.addElementOnPos(this.target, element, "beforebegin");
 
         return this;
       },
 
-      addNextElement(element) {
+      addNextElement(element: HTMLElement | IElement): ILiz {
         global.addElementOnPos(this.target, element, "afterend");
 
         return this;
       },
 
-      setAttribute(attributes) {
+      setAttribute(attributes: IAttribute): ILiz {
         if (this.target instanceof Element) {
           if (typeof attributes === 'object' && attributes !== null && Object.keys(attributes).length) {
             global.setAttributes(this.target, attributes);
@@ -407,7 +424,7 @@ const lizardx = {
         }
       },
 
-      removeAttribute(attribute) {
+      removeAttribute(attribute: string | Array<string>): ILiz {
         if (this.target instanceof Element) {
           if (typeof attribute === 'string') {
             this.target.removeAttribute(attribute);
@@ -423,25 +440,27 @@ const lizardx = {
         }
       },
 
-      last() {
+      last(): any {
         if (global.checkList(this.target)) {
-          const arr = this.target;
+          const arr: Array<any> = this.target;
+
           return arr[arr.length - 1];
         } else {
           global.getError(`Argument ${this.target} must be Array, NodeList or HTMLCollection`);
         }
       },
 
-      center() {
+      center(): any {
         if (global.checkList(this.target)) {
-          const arr = this.target;
+          const arr: Array<any> = this.target;
+
           return arr[Math.floor((arr.length - 1) / 2)];
         } else {
           global.getError(`Argument ${this.target} must be Array, NodeList or HTMLCollection`);
         }
       },
 
-      each(func) {
+      each(func: () => Array<any>): Array<any> {
         if (global.checkList(this.target)) {
           return Array.from(this.target).map(func);
         } else {

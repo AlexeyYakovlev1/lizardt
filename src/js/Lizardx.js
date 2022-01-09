@@ -43,22 +43,22 @@ var global = {
         }
         return $res;
     },
-    removeChildBySelector: function (el, selector) {
+    removeChildBySelector: function ($el, selector) {
         if (typeof selector === "string" && selector.length) {
-            var findChild = el.querySelector(selector);
-            findChild && el.removeChild(findChild);
+            var findChild = $el.querySelector(selector);
+            findChild && $el.removeChild(findChild);
         }
     },
-    addElementOnPos: function (parent, element, pos) {
-        if (parent instanceof Element) {
+    addElementOnPos: function ($parent, $element, pos) {
+        if ($parent instanceof Element) {
             // Html element
-            if (element instanceof Element) {
-                parent.insertAdjacentElement(pos, element);
+            if ($element instanceof Element) {
+                $parent.insertAdjacentElement(pos, $element);
             }
             // Object
-            if (typeof element === "object" && !(element instanceof Element) && element !== null && Object.keys(element).length) {
-                var $el = global.createElement(element);
-                parent.insertAdjacentElement(pos, $el);
+            if (typeof $element === "object" && !($element instanceof Element) && $element !== null && Object.keys($element).length) {
+                var $el = global.createElement($element);
+                $parent.insertAdjacentElement(pos, $el);
             }
         }
         else {
@@ -117,7 +117,6 @@ var lizardx = {
         return res;
     },
     array: function (item, symb) {
-        if (symb === void 0) { symb = ""; }
         if (!item)
             global.getError("".concat(item, " is not defined"));
         var res = Array.from(item);
@@ -134,9 +133,9 @@ var lizardx = {
     },
     liz: function (target) {
         if (typeof target === "string" && target.length) {
-            var element = document.querySelector(target);
-            if (element) {
-                target = element;
+            var $element = document.querySelector(target);
+            if ($element) {
+                target = $element;
             }
         }
         return {
@@ -148,7 +147,6 @@ var lizardx = {
                 return this;
             },
             on: function (event, func, options) {
-                if (options === void 0) { options = {}; }
                 if (!event) // Note: will do check type for func argument
                     global.getError("Event or function have invalid type");
                 if (this.target instanceof Element) {
@@ -156,7 +154,6 @@ var lizardx = {
                 }
             },
             getAttributes: function (attribute) {
-                if (attribute === void 0) { attribute = ""; }
                 if (this.target instanceof Element) {
                     var attrs = __assign({}, this.target.attributes);
                     var attributes = [];
@@ -211,7 +208,6 @@ var lizardx = {
                 }
             },
             getAllParents: function (num) {
-                if (num === void 0) { num = false; }
                 if (this.target instanceof Element) {
                     var getParent_1 = function (parent, array) {
                         var parents = array;
@@ -246,11 +242,11 @@ var lizardx = {
                             _this.target.setAttribute(attribute, name);
                         }
                     });
+                    return this;
                 }
                 else {
                     global.getError("Target is not HTML element");
                 }
-                return this;
             },
             remove: function () {
                 var _this = this;
@@ -270,11 +266,11 @@ var lizardx = {
                             _this.target.removeAttribute(attribute, name);
                         }
                     });
+                    return this;
                 }
                 else {
                     global.getError("Target is not HTML element");
                 }
-                return this;
             },
             clearStyles: function () {
                 if (this.target instanceof Element) {
@@ -314,7 +310,7 @@ var lizardx = {
                 var _this = this;
                 if (this.target instanceof Element) {
                     // Object
-                    if (typeof child === "object" && Object.keys(child).length && child !== null) {
+                    if (!Array.isArray(child) && typeof child === "object" && Object.keys(child).length && child !== null) {
                         this.target.appendChild(global.createElement(child));
                     }
                     // Array of objects and html elements
@@ -332,17 +328,19 @@ var lizardx = {
                     if (child instanceof Element) {
                         this.target.appendChild(child);
                     }
+                    return this;
                 }
                 else {
                     global.getError("Target is not HTML element");
                 }
-                return this;
             },
             removeChild: function (child) {
                 var _this = this;
                 if (this.target instanceof Element) {
                     // Selector
-                    global.removeChildBySelector(this.target, child);
+                    if (typeof child === 'string' && child.length) {
+                        global.removeChildBySelector(this.target, child);
+                    }
                     // Html element
                     if (child instanceof Element) {
                         this.target.removeChild(child);
