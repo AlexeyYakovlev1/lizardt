@@ -322,13 +322,15 @@ class Lizardx {
 
       // Object
       if (typeof element === 'object' && !(element instanceof Element) && element !== null && Object.keys(element).length) {
-        const el = this.createElement(element);
+        const $el = this.createElement(element);
 
-        this.target.insertAdjacentElement('beforebegin', el);
+        this.target.insertAdjacentElement('beforebegin', $el);
       }
     } else {
       this.getError("Target is not HTML element");
     }
+
+    return this;
   }
 
   public list(selector) {

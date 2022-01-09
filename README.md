@@ -409,7 +409,7 @@ Adds the previous item
 - **Arguments**
   - Element **(required)**
 - **Return**
-undefined
+Lizardx class
 - **Example**
 ```Javascript
 const { liz } = new Lizardx();

@@ -316,13 +316,14 @@ var Lizardx = /** @class */ (function () {
             }
             // Object
             if (typeof element === 'object' && !(element instanceof Element) && element !== null && Object.keys(element).length) {
-                var el = this.createElement(element);
-                this.target.insertAdjacentElement('beforebegin', el);
+                var $el = this.createElement(element);
+                this.target.insertAdjacentElement('beforebegin', $el);
             }
         }
         else {
             this.getError("Target is not HTML element");
         }
+        return this;
     };
     Lizardx.prototype.list = function (selector) {
         if (!selector && typeof selector !== "string")
