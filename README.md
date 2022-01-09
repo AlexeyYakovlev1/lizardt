@@ -292,7 +292,7 @@ Creating an array from your first argument, the second argument **symb** is opti
   - Item **(required)**
   - Symb **(optional)**
 - **Return**
-Array
+Lizardx class
 - **Example**
 ```Javascript
 array("abc"); // ['a','b','c'];
@@ -308,7 +308,7 @@ Searches html elements by selector
 - **Arguments**
   - Selector **(required)**
 - **Return**
-NodeList
+Lizardx class
 - **Example**
 ```Javascript
 list("li");
