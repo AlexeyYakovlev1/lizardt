@@ -421,6 +421,36 @@ class Lizardx {
       this.getError("Target is not HTML element");
     }
   }
+
+  private checkList(target) {
+    return Array.isArray(target) || target instanceof NodeList || target instanceof HTMLCollection;
+  }
+
+  public last() {
+    if (this.checkList(this.target)) {
+      const arr = this.target;
+      return arr[arr.length - 1];
+    } else {
+      this.getError(`Argument ${this.target} must be Array, NodeList or HTMLCollection`);
+    }
+  }
+
+  public center() {
+    if (this.checkList(this.target)) {
+      const arr = this.target;
+      return arr[Math.floor((arr.length - 1) / 2)];
+    } else {
+      this.getError(`Argument ${this.target} must be Array, NodeList or HTMLCollection`);
+    }
+  }
+
+  public each(func) {
+    if (this.checkList(this.target)) {
+      return Array.from(this.target).map(func);
+    } else {
+      this.getError(`Argument ${this.target} must be Array, NodeList or HTMLCollection`);
+    }
+  }
 }
 
 export default Lizardx;
