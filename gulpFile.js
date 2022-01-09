@@ -19,7 +19,7 @@ const paths = {
     to: './dist/'
   },
   build: {
-    from: './src/js/Lizardx.js',
+    from: './src/js/lizardx.js',
     to: '../build/js/'
   },
   readme: {
@@ -32,8 +32,8 @@ const buildLibrary = () => {
   return src(paths.build.from)
     .pipe(webpack({
       output: {
-        filename: 'Lizardx.js',
-        library: 'Lizardx',
+        filename: 'lizardx.js',
+        library: 'lizardx',
         libraryTarget: 'umd'
       }
     }))
