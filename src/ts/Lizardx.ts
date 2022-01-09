@@ -1,24 +1,45 @@
 class Lizardx {
-  constructor(private inf) {
-    
-    this.inf = {
-      $el: null,
-      $nodeList: [],
-      array: []
-    };
+  public target: any;
+
+  constructor() {
+    this.target = null;
 
     for (let method in this) {
-      if (typeof this[method] === 'function') {
-        this[method] = this[method]['bind'](this);
+      if (typeof this[method] === "function") {
+        this[method] = this[method]["bind"](this);
       }
     }
   }
 
-  private getError(err) {
+  public getError(err) {
     throw new Error(err);
   }
 
-  private setStyles($el, obj) {
+  public removeChildBySelector(el, selector) {
+    if (typeof selector === "string" && selector.length) {
+      const findChild = el.querySelector(selector);
+
+      findChild && el.removeChild(findChild);
+    }
+  }
+
+  public liz(target) {
+    if (typeof target === 'string' && target.length) {
+      const element = document.querySelector(target);
+
+      if (element) {
+        this.target = element;
+      }
+    } else if (target instanceof Element) {
+      this.target = target;
+    } else {
+      this.target = target;
+    }
+
+    return this;
+  }
+
+  public setStyles($el, obj) {
     for (const primary in obj) {
       $el.style[primary] = obj[primary];
     }
@@ -26,7 +47,7 @@ class Lizardx {
     return $el;
   }
 
-  private definesType(name) {
+  public definesType(name) {
     const obj = { name: name.replace("#", ""), attribute: "id" }
 
     if (name.includes(".")) {
@@ -36,114 +57,127 @@ class Lizardx {
     return obj;
   }
 
-  private setAttributes($el, obj) {
+  public setAttributes($el, obj) {
     for (let attr in obj) {
-      $el.setAttribute(attr, Array.isArray(obj[attr]) ? obj[attr].join(' ') : obj[attr]);
+      $el.setAttribute(attr, Array.isArray(obj[attr]) ? obj[attr].join(" ") : obj[attr]);
     }
 
     return $el;
   }
 
-  public el(selector) {
-    if (typeof selector === 'string') {
-      this.inf.$el = document.querySelector(selector);
-    } else if (selector instanceof Element) {
-      this.inf.$el = selector;
+  public styles(stylesObj) {
+    if (this.target instanceof Element) {
+      this.setStyles(this.target, stylesObj);
     }
 
     return this;
   }
 
-  public styles(stylesObj) {
-    this.setStyles(this.inf.$el, stylesObj);
-
-    return this;
-  }
-
-  public on(event, func, options) {
+  public on(event, func, options = {}) {
     if (!event) // Note: will do check type for func argument
       this.getError(`Event or function have invalid type`);
-    this.inf.$el.addEventListener(event, func, options);
 
-    return this;
+    if (this.target instanceof Element) {
+      this.target.addEventListener(event, func, options);
+    }
   }
 
-  public getAttributes(attribute = '') {
-    const attrs = { ...this.inf.$el.attributes };
-    const attributes = [];
+  public getAttributes(attribute = "") {
+    if (this.target instanceof Element) {
+      const attrs = { ...this.target.attributes };
+      const attributes = [];
 
-    for (let attr in attrs) {
-      attributes.push({
-        name: attrs[attr].name,
-        val: attrs[attr].nodeValue
-      });
+      for (let attr in attrs) {
+        attributes.push({
+          name: attrs[attr].name,
+          val: attrs[attr].nodeValue
+        });
+      }
+
+      const findAttr = attributes.find(({ name }) => name === attribute);
+
+      return attribute ? findAttr : attributes;
+    } else {
+      this.getError("Target is not HTML element");
     }
-
-    const findAttr = attributes.find(({ name }) => name === attribute);
-
-    return attribute ? findAttr : attributes;
   }
 
   public getChildren(selector) {
-    const $chldr = [...this.inf.$el.children];
-    const $children = [];
-    const findChild = selector ? this.inf.$el.querySelector(selector) : null;
+    if (this.target instanceof Element) {
+      const $chldr = Array.from(this.target.children);
+      const $children = [];
+      const $findChild = selector ? this.target.querySelector(selector) : null;
 
-    $chldr.forEach(child => {
-      $children.push({
-        $nextEl: child.nextElementSibling,
-        name: child.localName,
-        text: child.innerText,
-        $el: child,
+      $chldr.forEach($child => {
+        $children.push({
+          $nextEl: $child.nextElementSibling,
+          name: $child.localName,
+          text: $child["innerText"],
+          $el: $child,
+        });
       });
-    });
 
-    return selector ? findChild : $children;
+      return selector ? $findChild : $children;
+    } else {
+      this.getError("Target is not HTML element");
+    }
   }
 
   public getCoordinates() {
-    const dataCoordinatesOfEl = this.inf.$el.getBoundingClientRect();
-    const coordinates = {};
+    if (this.target instanceof Element) {
+      const dataCoordinatesOfEl = this.target.getBoundingClientRect();
+      const coordinates = {};
 
-    for (let key in dataCoordinatesOfEl) {
-      if (!['width', 'height', 'toJSON'].includes(key)) {
-        coordinates[key] = dataCoordinatesOfEl[key];
+      for (let key in dataCoordinatesOfEl) {
+        if (!["width", "height", "toJSON"].includes(key)) {
+          coordinates[key] = dataCoordinatesOfEl[key];
+        }
       }
-    }
 
-    return coordinates;
+      return coordinates;
+    } else {
+      this.getError("Target is not HTML element");
+    }
   }
 
   public getAllParents(num = false) {
-    const getParent = (parent, array) => {
-      const parents = array;
+    if (this.target instanceof Element) {
+      const getParent = (parent, array) => {
+        const parents = array;
 
-      if (parent) {
-        parents.push(parent);
+        if (parent) {
+          parents.push(parent);
 
-        return getParent(parent.parentElement, parents);
+          return getParent(parent.parentElement, parents);
+        }
+
+        return parents;
       }
 
-      return parents;
+      const res = getParent(this.target, []);
+
+      return (typeof num === "number" && num >= 0) ? res[num] : res;
+    } else {
+      this.getError("Target is not HTML element");
     }
-
-    const res = getParent(this.inf.$el, []);
-
-    return (typeof num === 'number' && num >= 0) ? res[num] : res;
   }
 
   public add(...args) {
-    if (!args.length)
-      this.getError(`You must pass something`);
+    if (this.target instanceof Element) {
+      if (!args.length)
+        this.getError(`You must pass something`);
 
-    args.forEach(className => {
-      const { attribute, name } = this.definesType(className);
-      if (attribute === "class") {
-        this.inf.$el.classList.add(name);
-      } else {
-        this.inf.$el.setAttribute(attribute, name);
-      }
-    })
+      args.forEach(className => {
+        const { attribute, name } = this.definesType(className);
+        if (attribute === "class") {
+          this.target.classList.add(name);
+        } else {
+          this.target.setAttribute(attribute, name);
+        }
+      });
+    } else {
+      this.getError("Target is not HTML element");
+    }
 
     return this;
   }
@@ -152,40 +186,66 @@ class Lizardx {
     if (!args.length)
       this.getError(`You must pass something`);
 
-    args.forEach(className => {
-      const { attribute, name } = this.definesType(className);
-      if (attribute === "class") {
-        this.inf.$el.classList.remove(name);
-      } else {
-        this.inf.$el.removeAttribute(attribute, name);
-      }
-    })
+    if (this.target instanceof Element) {
+      args.forEach(className => {
+        const { attribute, name } = this.definesType(className);
+        if (attribute === "class") {
+          this.target.classList.remove(name);
+        } else {
+          this.target.removeAttribute(attribute, name);
+        }
+      });
+    } else {
+      this.getError("Target is not HTML element");
+    }
+
     return this;
   }
 
   public clearStyles() {
-    this.inf.$el.style = null;
+    if (this.target instanceof Element) {
+      this.target['style'] = null;
+    } else {
+      this.getError("Target is not HTML element");
+    }
+
     return this;
   }
 
   public txt(value) {
     if (typeof value !== "string")
-      this.getError(`${value} is not string type`);
+      this.getError(`"${value}" is not string type`);
 
-    this.inf.$el.textContent = value;
+    if (this.target instanceof Element) {
+      if (typeof value === 'string') {
+        this.target.textContent = value;
+      } else {
+        this.getError("Value is not a string");
+      }
+    } else {
+      this.getError("Target is not HTML element");
+    }
+
     return this;
   }
 
   public size() {
-    const { width, height } = this.inf.$el.getBoundingClientRect();
-    return { width, height };
+    if (this.target instanceof Element) {
+      const { width, height } = this.target.getBoundingClientRect();
+
+      return { width, height };
+    } else {
+      this.getError("Target is not HTML element");
+    }
   }
 
   public createElement({ tag, text, styles, attributes }) {
     const $res = document.createElement(tag);
 
     if ($res instanceof Element) {
-      $res.textContent = text ? text : '';
+      if (typeof text === 'string') {
+        $res.textContent = text;
+      }
 
       if (styles && Object.keys(styles).length) {
         this.setStyles($res, styles);
@@ -200,57 +260,80 @@ class Lizardx {
   }
 
   public addChild(child) {
-    if (typeof child === 'object' && Object.keys(child).length) {
-      this.inf.$el.appendChild(this.createElement(child));
-    }
+    if (this.target instanceof Element) {
+      // Object
+      if (typeof child === "object" && Object.keys(child).length) {
+        this.target.appendChild(this.createElement(child));
+      }
 
-    if (Array.isArray(child) && child.length) {
-      child.map(element => this.inf.$el.appendChild(this.createElement(element)));
-    }
+      // Array of objects and html elements
+      if (Array.isArray(child) && child.length && child.every(obj => typeof obj === 'object' || obj instanceof Element)) {
+        child.map(element => {
+          if (!(element instanceof Element)) {
+            this.target.appendChild(this.createElement(element));
+          } else {
+            this.target.appendChild(element);
+          }
+        });
+      }
 
-    if (child instanceof Element) {
-      this.inf.$el.appendChild(child);
+      // Html element
+      if (child instanceof Element) {
+        this.target.appendChild(child);
+      }
+    } else {
+      this.getError("Target is not HTML element");
     }
 
     return this;
   }
 
   public removeChild(child) {
-    if (typeof child === 'string') {
-      const findChild = this.inf.$el.querySelector(child);
+    if (this.target instanceof Element) {
+      // Selector
+      this.removeChildBySelector(this.target, child);
 
-      findChild && this.inf.$el.removeChild(findChild);
-    }
+      // Html element
+      if (child instanceof Element) {
+        this.target.removeChild(child);
+      }
 
-    if (child instanceof Element) {
-      this.inf.$el.removeChild(child);
-    }
-
-    if (Array.isArray(child) && child.every(element => element instanceof Element)) {
-      child.map(element => this.inf.$el.removeChild(element));
+      // Array of html elements and selectors
+      if (Array.isArray(child) && child.length && child.every(element => element instanceof Element || (typeof element === 'string' && element.length))) {
+        child.map(element => {
+          if (element instanceof Element) {
+            this.target.removeChild(element)
+          } else {
+            this.removeChildBySelector(this.target, element);
+          }
+        });
+      }
+    } else {
+      this.getError("Target is not HTML element");
     }
 
     return this;
   }
 
   public list(selector) {
-    if (!selector)
+    if (!selector && typeof selector !== 'string')
       this.getError(`selector "${selector}" is not defined`);
-   
-    this.inf.$nodeList = document.querySelectorAll(selector);
-    return this.inf.$nodeList;
+
+    this.liz(document.querySelectorAll(selector));
+
+    return this;
   }
 
   public array(item, symb = "") {
     if (!item)
       throw new Error(`${item} is not defined`);
-    
-    this.inf.array = Array.from(item);
+
+    this.liz(Array.from(item));
 
     if (symb)
-      this.inf.array = item.split(symb);
+      this.liz(item.split(symb));
 
-    return this.inf.array;
+    return this;
   }
 }
 

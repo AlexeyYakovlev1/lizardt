@@ -1,5 +1,5 @@
 #  About
-This library created for fast work with DOM Elements from Javascript file.
+This library is designed to work quickly and easily with DOM and JavaScript in js file.
 
 ##  Installation
 Requires [Node.js](https://nodejs.org/) to run.
@@ -14,86 +14,104 @@ npm install lizardx --save-dev
 ```Javascript
 import Lizardx from "./Lizardx";
 
-const { el } = new Lizardx();
+const { liz, createElement, ... } = new Lizardx();
 ```
 
 ##  Methods
 Here described all methods which haves this library
 
-### ```el()```:
+### ```liz()```:
 - **Description**
-Appeal to html element
+Designed to create an element on which work will take place
 - **Return**
-Lizardx {inf: {...}, el: f}
+Lizardx class
 - **Arguments**
-	- Selector **(required)**
+	- Target **(required)**
 - **Example**
 ```Javascript
-el(".title");
+// the target will be a document.querySelector(".title");
+liz(".title"); // Lizardx class
+
+// the target will be a html element;
+liz(document.querySelector(".title")); // Lizardx class
+
+// the target will be a [1,2,3,4,5]
+liz([1,2,3,4,5]); // Lizardx class
+
+// to get target
+liz([1,2,3,4,5]).target; // [1,2,3,4,5]
 ```
 
 ### ```add()```:
 - **Description**
 Adding class or id for html element	
 - **Return**
-Lizardx {inf: {...}, el: f}
+Lizardx class
 - **Arguments**
 	- Class names or id **(required)**
 - **Example**
 ```Javascript
-el("div").add(".home", "#main");
+liz("div").add(".home", "#main");
 ```
 
 ### ```remove()```:
 - **Description**
 Removing class or id for html element	
 - **Return**
-Lizardx {inf: {...}, el: f}
+Lizardx class
 - **Arguments**
 	- Class names or id **(required)**
 - **Example**
 ```Javascript
-el(".title").remove(".cursive", "#subtitle");
+liz(".title").remove(".cursive", "#subtitle");
 ```
 
 ### ```styles()```:
 - **Description**
 Add styles for html element	
 - **Return**
-Lizardx {inf: {...}, el: f}
+Lizardx class
 - **Arguments**
 	- Object of styles **(required)**
 - **Example**
 ```Javascript
-el("div").styles({width: "125px"});
+liz("div").styles({width: "125px"});
 ```
 
 ### ```on()```:
 - **Description**
 Adding listener for html element
 - **Return**
-Lizardx {inf: {...}, el: f}
+undefined
 - **Arguments**
 	- Event **(required)**
 	- Function **(required)**
 	- Options **(optional)**
 - **Example**
 ```Javascript
-el("button").on("click", () =>  {
+liz("button").on("click", () =>  {
 	console.log("Hello");
 });
+```
+
+or
+
+```Javascript
+liz("button").on("click", () =>  {
+	console.log("Hello");
+}, { once: true });
 ```
 
 ### ```txt()```:
 - **Description**
 Adding text value  for html element
 - **Return**
-Lizardx {inf: {...}, el: f}
+Lizardx class
 - **Arguments**
 	- Value **(required)**
 - **Example**
 ```Javascript
-el(".btn").txt("Click me!");
+liz(".btn").txt("Click me!");
 ```
 
 ### ```size()```:
@@ -103,17 +121,17 @@ Return current size html element
 Object of size data
 - **Example**
 ```Javascript
-el(".title").size(); // { width: 500, height: 36 }
+liz(".title").size(); // { width: 500, height: 36 }
 ```
 
 ### ```clearStyles()```:
 - **Description**
 Remove all styles from style attribute
 - **Return**
-Lizardx {inf: {...}, el: f}
+Lizardx class
 - **Example**
 ```Javascript
-el(".photo").clearStyles();
+liz(".photo").clearStyles();
 ```
 
 ### ```getAttributes()```:
@@ -125,11 +143,11 @@ List of attributes. When used **attribute** returns an object with attribute dat
   - Attribute **(optional)**
 - **Example**
 ```Javascript
-el(".button").getAttributes();
+liz(".button").getAttributes(); // [{ name: "type", val... }]
 ```
 or
 ```Javascript
-el(".button").getAttributes("type");
+liz(".button").getAttributes("type"); // { name: "type", val... }
 ```
 
 ### ```getChildren()```:
@@ -141,13 +159,13 @@ Gets all children in this element
 List of children. When we use **selector**, it returns the element itself
 - **Example**
 ```Javascript
-el(".wrapper").getChildren();
+liz(".wrapper").getChildren(); // [HtmlElement, ...]
 ```
 
 or
 
 ```Javascript
-el(".wrapper").getChildren(".title");
+liz(".wrapper").getChildren(".title"); // HtmlElement
 ```
 
 ### ```getCoordinates()```:
@@ -157,7 +175,7 @@ Gets the coordinates of an element on the page
 Object of coordinates
 - **Example**
 ```Javascript
-el(".wrapper").getCoordinates();
+liz(".wrapper").getCoordinates(); // { top: 0, bottom: 0, left: 0, ... }
 ```
 
 ### ```getAllParents()```:
@@ -169,11 +187,11 @@ Gets all the parents of an element, including itself. When we use **num** the pa
 List of parents
 - **Example**
 ```Javascript
-el(".wrapper").getAllParents();
+liz(".wrapper").getAllParents(); // [HtmlElement, ...]
 ```
 or
 ```Javascript
-el(".wrapper").getAllParents(1);
+liz(".wrapper").getAllParents(1); HtmlElement under the number 1
 ```
 
 ### ```createElement()```:
@@ -190,7 +208,7 @@ const title = createElement({
     text: "Hello, Lizard!",
     styles: { color: "blue" },
     attributes: { title: "Main title" },
-  });
+  }); // HtmlElement
 ```
 
 ### ```addChild()```:
@@ -199,10 +217,10 @@ Adds a child to an element
 - **Arguments**
   - Child **(required)**
 - **Return**
-Lizardx {inf: {...}, el: f}
+Lizardx class
 - **Example**
 ```Javascript
-el(".wrapper").addChild({
+liz(".wrapper").addChild({
     tag: "h1",
     text: "Hello, Lizard!",
     styles: { color: "blue" },
@@ -213,19 +231,16 @@ el(".wrapper").addChild({
 or
 
 ```Javascript
-el(".wrapper").addChild([
+const subtitle = createElement({ tag: "h2", text: "Subtitle" });
+
+liz(".wrapper").addChild([
 	{
 	  tag: "h1",
 	  text: "Hello, Lizard!",
 	  styles: { color: "blue" },
 	  attributes: { title: "Main title" },
   	},
-  	{
-	  tag: "h2",
-	  text: "Hello, Lizard!",
-	  styles: { color: "red" },
-	  attributes: { title: "Subtitle" },
-  	}
+  	subtitle
   ]);
 ```
 
@@ -239,7 +254,7 @@ const title = createElement({
     attributes: { title: "Main title" },
   });
 
-el(".wrapper").addChild(title);
+liz(".wrapper").addChild(title);
 ```
 
 ### ```removeChild()```:
@@ -248,32 +263,31 @@ Removes a child from an element
 - **Arguments**
   - Child **(required)**
 - **Return**
-Lizardx {inf: {...}, el: f}
+Lizardx class
 - **Example**
 ```Javascript
-el(".wrapper").removeChild(".title");
+liz(".wrapper").removeChild(".title");
 ```
 
 or
 
 ```Javascript
-const subtitle = el(".wrapper").getChildren(".subtitle");
-const title = el(".wrapper").getChildren(".title");
+const title = liz(".wrapper").getChildren(".title");
 
-el(".wrapper").removeChild([title, subtitle]);
+liz(".wrapper").removeChild([title, ".subtitle"]);
 ```
 
 or 
 
 ```Javascript
-const title = el(".wrapper").getChildren(".title");
+const title = liz(".wrapper").getChildren(".title");
 
-el(".wrapper").removeChild(title);
+liz(".wrapper").removeChild(title);
 ```
 
 ### ```array()```:
 - **Description**
-Creating an array from your first argument, the second argument **character** is optional, it separates your first argument with a unique character, which will help create the array
+Creating an array from your first argument, the second argument **symb** is optional, it separates your first argument with a unique character, which will help create the array
 - **Arguments**
   - Item **(required)**
   - Symb **(optional)**

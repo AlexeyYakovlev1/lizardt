@@ -1,5 +1,15 @@
 import Lizardx from "./Lizardx";
 
-const {el} = new Lizardx();
+const { createElement, liz } = new Lizardx();
 
-console.log(el(".title").size());
+const subtitle = createElement({ tag: "h2", text: "Subtitle" });
+
+liz(".wrapper").addChild([
+  {
+    tag: "h1",
+    text: "Hello, Lizard!",
+    styles: { color: "blue" },
+    attributes: { title: "Main title" },
+  },
+  subtitle
+]);
