@@ -23,6 +23,24 @@ class Lizardx {
     }
   }
 
+  public addElementOnPos(parent, element, pos) {
+    if (parent instanceof Element) {
+      // Html element
+      if (element instanceof Element) {
+        parent.insertAdjacentElement(pos, element);
+      }
+
+      // Object
+      if (typeof element === "object" && !(element instanceof Element) && element !== null && Object.keys(element).length) {
+        const $el = this.createElement(element);
+
+        parent.insertAdjacentElement("afterend", $el);
+      }
+    } else {
+      this.getError("Target is not HTML element");
+    }
+  }
+
   public liz(target) {
     if (typeof target === "string" && target.length) {
       const element = document.querySelector(target);
@@ -313,22 +331,14 @@ class Lizardx {
     return this;
   }
 
-  public addBeforeElement(element) {
-    if (this.target instanceof Element) {
-      // Html element
-      if (element instanceof Element) {
-        this.target.insertAdjacentElement('beforebegin', element);
-      }
+  public addPrevElement(element) {
+    this.addElementOnPos(this.target, element, "beforebegin");
 
-      // Object
-      if (typeof element === 'object' && !(element instanceof Element) && element !== null && Object.keys(element).length) {
-        const $el = this.createElement(element);
+    return this;
+  }
 
-        this.target.insertAdjacentElement('beforebegin', $el);
-      }
-    } else {
-      this.getError("Target is not HTML element");
-    }
+  public addNextElement(element) {
+    this.addElementOnPos(this.target, element, "afterend");
 
     return this;
   }

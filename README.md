@@ -403,7 +403,7 @@ console.log(compare(createElement({ tag: "h1" }), createElement({ tag: "h2" })))
 console.log(compare(createElement({ tag: "h1" }), createElement({ tag: "h1" }))); // true
 ```
 
-### ```addBeforeElement()```:
+### ```addPrevElement()```:
 - **Description**
 Adds the previous item
 - **Arguments**
@@ -414,7 +414,7 @@ Lizardx class
 ```Javascript
 const { liz } = new Lizardx();
 
-liz(".wrapper").addBeforeElement({
+liz(".wrapper").addPrevElement({
   tag: "div",
   styles: {
     width: "200px",
@@ -437,5 +437,42 @@ const block = createElement({
   }
 });
 
-liz(".wrapper").addBeforeElement(block);
+liz(".wrapper").addPrevElement(block);
+```
+
+### ```addNextElement()```:
+- **Description**
+Adds the next item
+- **Arguments**
+  - Element **(required)**
+- **Return**
+Lizardx class
+- **Example**
+```Javascript
+const { liz } = new Lizardx();
+
+liz(".wrapper").addNextElement({
+  tag: "div",
+  styles: {
+    width: "200px",
+    height: "200px",
+    backgroundColor: "red"
+  }
+});
+```
+
+or
+
+```Javascript
+const { liz, createElement } = new Lizardx();
+const block = createElement({
+  tag: "div",
+  styles: {
+    width: "200px",
+    height: "200px",
+    backgroundColor: "red"
+  }
+});
+
+liz(".wrapper").addNextElement(block);
 ```

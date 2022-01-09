@@ -38,6 +38,22 @@ var Lizardx = /** @class */ (function () {
             findChild && el.removeChild(findChild);
         }
     };
+    Lizardx.prototype.addElementOnPos = function (parent, element, pos) {
+        if (parent instanceof Element) {
+            // Html element
+            if (element instanceof Element) {
+                parent.insertAdjacentElement(pos, element);
+            }
+            // Object
+            if (typeof element === "object" && !(element instanceof Element) && element !== null && Object.keys(element).length) {
+                var $el = this.createElement(element);
+                parent.insertAdjacentElement("afterend", $el);
+            }
+        }
+        else {
+            this.getError("Target is not HTML element");
+        }
+    };
     Lizardx.prototype.liz = function (target) {
         if (typeof target === "string" && target.length) {
             var element = document.querySelector(target);
@@ -308,21 +324,12 @@ var Lizardx = /** @class */ (function () {
         }
         return this;
     };
-    Lizardx.prototype.addBeforeElement = function (element) {
-        if (this.target instanceof Element) {
-            // Html element
-            if (element instanceof Element) {
-                this.target.insertAdjacentElement('beforebegin', element);
-            }
-            // Object
-            if (typeof element === 'object' && !(element instanceof Element) && element !== null && Object.keys(element).length) {
-                var $el = this.createElement(element);
-                this.target.insertAdjacentElement('beforebegin', $el);
-            }
-        }
-        else {
-            this.getError("Target is not HTML element");
-        }
+    Lizardx.prototype.addPrevElement = function (element) {
+        this.addElementOnPos(this.target, element, "beforebegin");
+        return this;
+    };
+    Lizardx.prototype.addNextElement = function (element) {
+        this.addElementOnPos(this.target, element, "afterend");
         return this;
     };
     Lizardx.prototype.list = function (selector) {
