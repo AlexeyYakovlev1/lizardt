@@ -334,7 +334,7 @@ Creating an array from your first argument, the second argument **symb** is opti
   - Item **(required)**
   - Symb **(optional)**
 - **Return**
-Array
+Lizardx class
 - **Example**
 ```Javascript
 const { array } = new Lizardx();
@@ -356,7 +356,7 @@ Searches html elements by selector
 - **Arguments**
   - Selector **(required)**
 - **Return**
-NodeList
+Lizardx class
 - **Example**
 ```Javascript
 const { list } = new Lizardx();
