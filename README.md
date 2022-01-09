@@ -29,6 +29,8 @@ Lizardx class
 	- Target **(required)**
 - **Example**
 ```Javascript
+const { liz } = new Lizardx();
+
 // the target will be a document.querySelector(".title");
 liz(".title"); // Lizardx class
 
@@ -51,6 +53,8 @@ Lizardx class
 	- Class names or id **(required)**
 - **Example**
 ```Javascript
+const { liz } = new Lizardx();
+
 liz("div").add(".home", "#main");
 ```
 
@@ -63,6 +67,8 @@ Lizardx class
 	- Class names or id **(required)**
 - **Example**
 ```Javascript
+const { liz } = new Lizardx();
+
 liz(".title").remove(".cursive", "#subtitle");
 ```
 
@@ -75,6 +81,8 @@ Lizardx class
 	- Object of styles **(required)**
 - **Example**
 ```Javascript
+const { liz } = new Lizardx();
+
 liz("div").styles({width: "125px"});
 ```
 
@@ -89,6 +97,8 @@ undefined
 	- Options **(optional)**
 - **Example**
 ```Javascript
+const { liz } = new Lizardx();
+
 liz("button").on("click", () =>  {
 	console.log("Hello");
 });
@@ -97,6 +107,8 @@ liz("button").on("click", () =>  {
 or
 
 ```Javascript
+const { liz } = new Lizardx();
+
 liz("button").on("click", () =>  {
 	console.log("Hello");
 }, { once: true });
@@ -111,6 +123,8 @@ Lizardx class
 	- Value **(required)**
 - **Example**
 ```Javascript
+const { liz } = new Lizardx();
+
 liz(".btn").txt("Click me!");
 ```
 
@@ -121,6 +135,8 @@ Return current size html element
 Object of size data
 - **Example**
 ```Javascript
+const { liz } = new Lizardx();
+
 liz(".title").size(); // { width: 500, height: 36 }
 ```
 
@@ -131,6 +147,8 @@ Remove all styles from style attribute
 Lizardx class
 - **Example**
 ```Javascript
+const { liz } = new Lizardx();
+
 liz(".photo").clearStyles();
 ```
 
@@ -143,10 +161,14 @@ List of attributes. When used **attribute** returns an object with attribute dat
   - Attribute **(optional)**
 - **Example**
 ```Javascript
+const { liz } = new Lizardx();
+
 liz(".button").getAttributes(); // [{ name: "type", val... }]
 ```
 or
 ```Javascript
+const { liz } = new Lizardx();
+
 liz(".button").getAttributes("type"); // { name: "type", val... }
 ```
 
@@ -159,12 +181,16 @@ Gets all children in this element
 List of children. When we use **selector**, it returns the element itself
 - **Example**
 ```Javascript
+const { liz } = new Lizardx();
+
 liz(".wrapper").getChildren(); // [HtmlElement, ...]
 ```
 
 or
 
 ```Javascript
+const { liz } = new Lizardx();
+
 liz(".wrapper").getChildren(".title"); // HtmlElement
 ```
 
@@ -175,6 +201,8 @@ Gets the coordinates of an element on the page
 Object of coordinates
 - **Example**
 ```Javascript
+const { liz } = new Lizardx();
+
 liz(".wrapper").getCoordinates(); // { top: 0, bottom: 0, left: 0, ... }
 ```
 
@@ -187,10 +215,14 @@ Gets all the parents of an element, including itself. When we use **num** the pa
 List of parents
 - **Example**
 ```Javascript
+const { liz } = new Lizardx();
+
 liz(".wrapper").getAllParents(); // [HtmlElement, ...]
 ```
 or
 ```Javascript
+const { liz } = new Lizardx();
+
 liz(".wrapper").getAllParents(1); HtmlElement under the number 1
 ```
 
@@ -203,6 +235,8 @@ Creates HTML an element
 HTML element
 - **Example**
 ```Javascript
+const { createElement } = new Lizardx();
+
 const title = createElement({
     tag: "h1",
     text: "Hello, Lizard!",
@@ -220,6 +254,8 @@ Adds a child to an element
 Lizardx class
 - **Example**
 ```Javascript
+const { liz } = new Lizardx();
+
 liz(".wrapper").addChild({
     tag: "h1",
     text: "Hello, Lizard!",
@@ -231,6 +267,7 @@ liz(".wrapper").addChild({
 or
 
 ```Javascript
+const { liz, createElement } = new Lizardx();
 const subtitle = createElement({ tag: "h2", text: "Subtitle" });
 
 liz(".wrapper").addChild([
@@ -247,6 +284,7 @@ liz(".wrapper").addChild([
 or 
 
 ```Javascript
+const { liz, createElement } = new Lizardx();
 const title = createElement({
     tag: "h1",
     text: "Hello, Lizard!",
@@ -266,12 +304,15 @@ Removes a child from an element
 Lizardx class
 - **Example**
 ```Javascript
+const { liz } = new Lizardx();
+
 liz(".wrapper").removeChild(".title");
 ```
 
 or
 
 ```Javascript
+const { liz } = new Lizardx();
 const title = liz(".wrapper").getChildren(".title");
 
 liz(".wrapper").removeChild([title, ".subtitle"]);
@@ -280,6 +321,7 @@ liz(".wrapper").removeChild([title, ".subtitle"]);
 or 
 
 ```Javascript
+const { liz } = new Lizardx();
 const title = liz(".wrapper").getChildren(".title");
 
 liz(".wrapper").removeChild(title);
@@ -295,11 +337,17 @@ Creating an array from your first argument, the second argument **symb** is opti
 Array
 - **Example**
 ```Javascript
-array("abc"); // ['a','b','c'];
+const { array } = new Lizardx();
+
+array("abc"); // ["a","b","c"];
 ```
+
 or
+
 ```Javascript
-array("ab,c", ","); // ['ab', 'c'];
+const { array } = new Lizardx();
+
+array("ab,c", ","); // ["ab", "c"];
 ```
 
 ### ```list()```:
@@ -311,5 +359,83 @@ Searches html elements by selector
 NodeList
 - **Example**
 ```Javascript
-list("li");
+const { list } = new Lizardx();
+
+list("li"); // [HtmlElement, HtmlElement, ...]
+```
+
+### ```copy()```:
+- **Description**
+Make a copy of the item
+- **Arguments**
+  - item **(required)**
+- **Return**
+Copy of item
+- **Example**
+```Javascript
+const { copy } = new Lizardx();
+const users = ["alex", "andrey", "alexey"];
+const copyUsers = copy(users);
+
+copyUsers.splice(0, 1);
+
+console.log(users, copyUsers); // ["alex", "andrey", "alexey"], ["andrey", "alexey"]
+```
+
+### ```compare()```:
+- **Description**
+Compares 2 items
+- **Arguments**
+  - item1 **(required)**
+  - item2 **(required)**
+- **Return**
+Comparison result
+- **Example**
+```Javascript
+const { compare, createElement } = new Lizardx();
+
+console.log(compare([1,2,3], [1,2,3])); // true
+console.log(compare([1,2,3], [1,2,3,4])); // false
+console.log(compare({}, {})); // true
+console.log(compare({}, "")); // false
+console.log(compare(0, 13)); // false
+console.log(compare(createElement({ tag: "h1" }), createElement({ tag: "h2" }))); // false
+console.log(compare(createElement({ tag: "h1" }), createElement({ tag: "h1" }))); // true
+```
+
+### ```addBeforeElement()```:
+- **Description**
+Adds the previous item
+- **Arguments**
+  - Element **(required)**
+- **Return**
+undefined
+- **Example**
+```Javascript
+const { liz } = new Lizardx();
+
+liz(".wrapper").addBeforeElement({
+  tag: "div",
+  styles: {
+    width: "200px",
+    height: "200px",
+    backgroundColor: "red"
+  }
+});
+```
+
+or
+
+```Javascript
+const { liz, createElement } = new Lizardx();
+const block = createElement({
+  tag: "div",
+  styles: {
+    width: "200px",
+    height: "200px",
+    backgroundColor: "red"
+  }
+});
+
+liz(".wrapper").addBeforeElement(block);
 ```

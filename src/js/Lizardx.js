@@ -10,6 +10,15 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var Lizardx = /** @class */ (function () {
     function Lizardx() {
@@ -30,14 +39,11 @@ var Lizardx = /** @class */ (function () {
         }
     };
     Lizardx.prototype.liz = function (target) {
-        if (typeof target === 'string' && target.length) {
+        if (typeof target === "string" && target.length) {
             var element = document.querySelector(target);
             if (element) {
                 this.target = element;
             }
-        }
-        else if (target instanceof Element) {
-            this.target = target;
         }
         else {
             this.target = target;
@@ -200,7 +206,7 @@ var Lizardx = /** @class */ (function () {
     };
     Lizardx.prototype.clearStyles = function () {
         if (this.target instanceof Element) {
-            this.target['style'] = null;
+            this.target["style"] = null;
         }
         else {
             this.getError("Target is not HTML element");
@@ -211,7 +217,7 @@ var Lizardx = /** @class */ (function () {
         if (typeof value !== "string")
             this.getError("\"".concat(value, "\" is not string type"));
         if (this.target instanceof Element) {
-            if (typeof value === 'string') {
+            if (typeof value === "string") {
                 this.target.textContent = value;
             }
             else {
@@ -236,7 +242,7 @@ var Lizardx = /** @class */ (function () {
         var tag = _a.tag, text = _a.text, styles = _a.styles, attributes = _a.attributes;
         var $res = document.createElement(tag);
         if ($res instanceof Element) {
-            if (typeof text === 'string') {
+            if (typeof text === "string") {
                 $res.textContent = text;
             }
             if (styles && Object.keys(styles).length) {
@@ -252,11 +258,11 @@ var Lizardx = /** @class */ (function () {
         var _this = this;
         if (this.target instanceof Element) {
             // Object
-            if (typeof child === "object" && Object.keys(child).length) {
+            if (typeof child === "object" && Object.keys(child).length && child !== null) {
                 this.target.appendChild(this.createElement(child));
             }
             // Array of objects and html elements
-            if (Array.isArray(child) && child.length && child.every(function (obj) { return typeof obj === 'object' || obj instanceof Element; })) {
+            if (Array.isArray(child) && child.length && child !== null && child.every(function (obj) { return typeof obj === "object" || obj instanceof Element; })) {
                 child.map(function (element) {
                     if (!(element instanceof Element)) {
                         _this.target.appendChild(_this.createElement(element));
@@ -286,7 +292,7 @@ var Lizardx = /** @class */ (function () {
                 this.target.removeChild(child);
             }
             // Array of html elements and selectors
-            if (Array.isArray(child) && child.length && child.every(function (element) { return element instanceof Element || (typeof element === 'string' && element.length); })) {
+            if (Array.isArray(child) && child.length && child.every(function (element) { return element instanceof Element || (typeof element === "string" && element.length); })) {
                 child.map(function (element) {
                     if (element instanceof Element) {
                         _this.target.removeChild(element);
@@ -302,8 +308,24 @@ var Lizardx = /** @class */ (function () {
         }
         return this;
     };
+    Lizardx.prototype.addBeforeElement = function (element) {
+        if (this.target instanceof Element) {
+            // Html element
+            if (element instanceof Element) {
+                this.target.insertAdjacentElement('beforebegin', element);
+            }
+            // Object
+            if (typeof element === 'object' && !(element instanceof Element) && element !== null && Object.keys(element).length) {
+                var el = this.createElement(element);
+                this.target.insertAdjacentElement('beforebegin', el);
+            }
+        }
+        else {
+            this.getError("Target is not HTML element");
+        }
+    };
     Lizardx.prototype.list = function (selector) {
-        if (!selector && typeof selector !== 'string')
+        if (!selector && typeof selector !== "string")
             this.getError("selector \"".concat(selector, "\" is not defined"));
         this.liz(document.querySelectorAll(selector));
         return this;
@@ -316,6 +338,27 @@ var Lizardx = /** @class */ (function () {
         if (symb)
             this.liz(item.split(symb));
         return this;
+    };
+    Lizardx.prototype.copy = function (item) {
+        var res = item;
+        if (item instanceof Array) {
+            res = __spreadArray([], item, true);
+        }
+        else if (item instanceof Object && item !== null) {
+            res = __assign({}, item);
+        }
+        return res;
+    };
+    Lizardx.prototype.compare = function (item1, item2) {
+        if ([item1, item2].every(function (item) { return item instanceof Element; })) {
+            return item1.isEqualNode(item2);
+        }
+        else if ([item1, item2].some(function (item) { return item instanceof Element; })) {
+            return false;
+        }
+        else {
+            return JSON.stringify(item1) === JSON.stringify(item2);
+        }
     };
     return Lizardx;
 }());

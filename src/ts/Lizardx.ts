@@ -24,14 +24,12 @@ class Lizardx {
   }
 
   public liz(target) {
-    if (typeof target === 'string' && target.length) {
+    if (typeof target === "string" && target.length) {
       const element = document.querySelector(target);
 
       if (element) {
         this.target = element;
       }
-    } else if (target instanceof Element) {
-      this.target = target;
     } else {
       this.target = target;
     }
@@ -204,7 +202,7 @@ class Lizardx {
 
   public clearStyles() {
     if (this.target instanceof Element) {
-      this.target['style'] = null;
+      this.target["style"] = null;
     } else {
       this.getError("Target is not HTML element");
     }
@@ -217,7 +215,7 @@ class Lizardx {
       this.getError(`"${value}" is not string type`);
 
     if (this.target instanceof Element) {
-      if (typeof value === 'string') {
+      if (typeof value === "string") {
         this.target.textContent = value;
       } else {
         this.getError("Value is not a string");
@@ -243,7 +241,7 @@ class Lizardx {
     const $res = document.createElement(tag);
 
     if ($res instanceof Element) {
-      if (typeof text === 'string') {
+      if (typeof text === "string") {
         $res.textContent = text;
       }
 
@@ -262,12 +260,12 @@ class Lizardx {
   public addChild(child) {
     if (this.target instanceof Element) {
       // Object
-      if (typeof child === "object" && Object.keys(child).length) {
+      if (typeof child === "object" && Object.keys(child).length && child !== null) {
         this.target.appendChild(this.createElement(child));
       }
 
       // Array of objects and html elements
-      if (Array.isArray(child) && child.length && child.every(obj => typeof obj === 'object' || obj instanceof Element)) {
+      if (Array.isArray(child) && child.length && child !== null && child.every(obj => typeof obj === "object" || obj instanceof Element)) {
         child.map(element => {
           if (!(element instanceof Element)) {
             this.target.appendChild(this.createElement(element));
@@ -299,7 +297,7 @@ class Lizardx {
       }
 
       // Array of html elements and selectors
-      if (Array.isArray(child) && child.length && child.every(element => element instanceof Element || (typeof element === 'string' && element.length))) {
+      if (Array.isArray(child) && child.length && child.every(element => element instanceof Element || (typeof element === "string" && element.length))) {
         child.map(element => {
           if (element instanceof Element) {
             this.target.removeChild(element)
@@ -315,8 +313,26 @@ class Lizardx {
     return this;
   }
 
+  public addBeforeElement(element) {
+    if (this.target instanceof Element) {
+      // Html element
+      if (element instanceof Element) {
+        this.target.insertAdjacentElement('beforebegin', element);
+      }
+
+      // Object
+      if (typeof element === 'object' && !(element instanceof Element) && element !== null && Object.keys(element).length) {
+        const el = this.createElement(element);
+
+        this.target.insertAdjacentElement('beforebegin', el);
+      }
+    } else {
+      this.getError("Target is not HTML element");
+    }
+  }
+
   public list(selector) {
-    if (!selector && typeof selector !== 'string')
+    if (!selector && typeof selector !== "string")
       this.getError(`selector "${selector}" is not defined`);
 
     this.liz(document.querySelectorAll(selector));
@@ -334,6 +350,28 @@ class Lizardx {
       this.liz(item.split(symb));
 
     return this;
+  }
+
+  public copy(item) {
+    let res = item;
+
+    if (item instanceof Array) {
+      res = [...item];
+    } else if (item instanceof Object && item !== null) {
+      res = { ...item };
+    }
+
+    return res;
+  }
+
+  public compare(item1, item2) {
+    if ([item1, item2].every(item => item instanceof Element)) {
+      return item1.isEqualNode(item2);
+    } else if ([item1, item2].some(item => item instanceof Element)) {
+      return false;
+    } else {
+      return JSON.stringify(item1) === JSON.stringify(item2);
+    }
   }
 }
 
