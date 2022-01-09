@@ -476,3 +476,45 @@ const block = createElement({
 
 liz(".wrapper").addNextElement(block);
 ```
+
+### ```last()```:
+- **Description**
+Returns the last element of the array
+- **Return**
+Last element of the array
+- **Example**
+```Javascript
+const { liz } = new Lizardx();
+
+liz([1,2,3]).last(); // 3
+liz(document.querySelectorAll("li")).last();
+list("li").last();
+```
+
+### ```center()```:
+- **Description**
+Returns the center element of the array
+- **Return**
+Center element
+- **Example**
+```Javascript
+const { liz, list } = new Lizardx();
+
+liz(document.querySelectorAll("li")).center();
+liz([1,2,3,4,5,6,7]).center(); // 4
+list("li").center();
+```
+
+### ```each()```:
+- **Description**
+Turns into an array and iterates over it
+- **Arguments**
+  - Function **(required)**
+- **Return**
+Array
+- **Example**
+```Javascript
+const { liz } = new Lizardx();
+
+liz([1,2,3,4]).each(item => item += 2);
+```

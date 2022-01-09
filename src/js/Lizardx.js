@@ -233,12 +233,7 @@ var Lizardx = /** @class */ (function () {
         if (typeof value !== "string")
             this.getError("\"".concat(value, "\" is not string type"));
         if (this.target instanceof Element) {
-            if (typeof value === "string") {
-                this.target.textContent = value;
-            }
-            else {
-                this.getError("Value is not a string");
-            }
+            this.target.textContent = value;
         }
         else {
             this.getError("Target is not HTML element");
@@ -366,6 +361,35 @@ var Lizardx = /** @class */ (function () {
         }
         else {
             return JSON.stringify(item1) === JSON.stringify(item2);
+        }
+    };
+    Lizardx.prototype.checkList = function (target) {
+        return Array.isArray(target) || target instanceof NodeList || target instanceof HTMLCollection;
+    };
+    Lizardx.prototype.last = function () {
+        if (this.checkList(this.target)) {
+            var arr = this.target;
+            return arr[arr.length - 1];
+        }
+        else {
+            this.getError("Argument ".concat(this.target, " must be Array, NodeList or HTMLCollection"));
+        }
+    };
+    Lizardx.prototype.center = function () {
+        if (this.checkList(this.target)) {
+            var arr = this.target;
+            return arr[Math.floor((arr.length - 1) / 2)];
+        }
+        else {
+            this.getError("Argument ".concat(this.target, " must be Array, NodeList or HTMLCollection"));
+        }
+    };
+    Lizardx.prototype.each = function (func) {
+        if (this.checkList(this.target)) {
+            return Array.from(this.target).map(func);
+        }
+        else {
+            this.getError("Argument ".concat(this.target, " must be Array, NodeList or HTMLCollection"));
         }
     };
     return Lizardx;
