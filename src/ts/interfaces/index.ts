@@ -36,27 +36,31 @@ export interface IAttribute {
   val: any
 }
 
+export interface IFilterMethods {
+  (category: object, unwanted: Array<string>, need?: Array<string>): any;
+}
+
 export interface IBoundingRect extends ISize, ICoordinates { };
 
-export interface ILiz {
+export interface IT {
   target: any,
-  styles(stylesObj: object): ILiz;
+  styles(stylesObj: object): IT;
   on(event: string, func: () => void, options?: object): void;
   getAttributes(attribute?: string): IAttribute | Array<IAttribute>;
   getChildren(selector?: string): HTMLElement | Array<IChild>;
   getCoordinates(): ICoordinates;
   getAllParents(num?: number): Array<HTMLElement> | HTMLElement;
-  add(): ILiz;
-  remove(): ILiz;
-  clearStyles(): ILiz;
-  txt(value: string): ILiz;
+  add(): IT;
+  remove(): IT;
+  clearStyles(): IT;
+  txt(value: string): IT;
   size(): ISize;
-  addChild(child: HTMLElement | IElement | Array<any>): ILiz;
-  removeChild(child: HTMLElement | string | Array<HTMLElement | string>): ILiz;
-  addPrevElement(element: HTMLElement | IElement): ILiz;
-  addNextElement(element: HTMLElement | IElement): ILiz;
-  setAttribute(attributes: IAttribute): ILiz;
-  removeAttribute(attribute: string | Array<string>): ILiz;
+  addChild(child: HTMLElement | IElement | Array<any>): IT;
+  removeChild(child: HTMLElement | string | Array<HTMLElement | string>): IT;
+  addPrevElement(element: HTMLElement | IElement): IT;
+  addNextElement(element: HTMLElement | IElement): IT;
+  setAttribute(attributes: IAttribute): IT;
+  removeAttribute(attribute: string | Array<string>): IT;
   last(): any;
   center(): any;
   each(func: () => Array<any>): Array<any>;
@@ -73,12 +77,12 @@ export interface IGlobal {
   setAttributes($el: HTMLElement | null, obj: object): HTMLElement | null;
 }
 
-export interface ILizardx {
+export interface ILizardt {
   createElement(options: IElement): HTMLElement | null;
   compare(item1: any, item2: any): Boolean;
   getRandom(min: number, max: number): number;
   copy(item: any): any;
-  array(item: any, symb?: string): ILizardx;
-  list(selector: string): ILizardx;
-  liz(target: any): ILiz;
+  array(item: any, symb?: string): ILizardt;
+  list(selector: string): ILizardt;
+  t(target: any, list?: boolean): IT;
 }

@@ -7,83 +7,92 @@ Requires [Node.js](https://nodejs.org/) to run.
 ```sh
 cd ./project
 
-npm install lizardx --save-dev
+npm install lizardt --save-dev
 ```
 
 ## Usage
 ```Javascript
-import lizardx from "lizardx";
+import lizardt from "lizardt";
 
-const { liz, createElement, ... } = lizardx;
+const { t, createElement, ... } = lizardt;
 ```
 
 ##  Methods
 Here described all methods which haves this library
 
-### ```liz()```:
+### ```t()```:
 - **Description**
-Designed to create an element on which work will take place
+Designed to create an element on which work will take place. When we use **list**, we refer to the list of elements
 - **Return**
-Lizardx object
+lizardt object
 - **Arguments**
 	- Target **(required)**
+  - List **(optional)**
 - **Example**
 ```Javascript
-const { liz } = lizardx;
+const { t } = lizardt;
 
 // the target will be a document.querySelector(".title");
-liz(".title"); // Lizardx object
+t(".title"); // lizardt object
 
 // the target will be a html element;
-liz(document.querySelector(".title")); // Lizardx object
+t(document.querySelector(".title")); // lizardt object
 
 // the target will be a [1,2,3,4,5]
-liz([1,2,3,4,5]); // Lizardx object
+t([1,2,3,4,5]); // lizardt object
 
 // to get target
-liz([1,2,3,4,5]).target; // [1,2,3,4,5]
+t([1,2,3,4,5]).target; // [1,2,3,4,5]
+```
+
+or
+
+```Javascript
+const { t } = lizardt;
+
+t("li", true).target; // Node list of li
 ```
 
 ### ```add()```:
 - **Description**
 Adding class or id for html element	
 - **Return**
-Lizardx object
+lizardt object
 - **Arguments**
 	- Class names or id **(required)**
 - **Example**
 ```Javascript
-const { liz } = lizardx;
+const { t } = lizardt;
 
-liz("div").add(".home", "#main");
+t("div").add(".home", "#main");
 ```
 
 ### ```remove()```:
 - **Description**
 Removing class or id for html element	
 - **Return**
-Lizardx object
+lizardt object
 - **Arguments**
 	- Class names or id **(required)**
 - **Example**
 ```Javascript
-const { liz } = lizardx;
+const { t } = lizardt;
 
-liz(".title").remove(".cursive", "#subtitle");
+t(".title").remove(".cursive", "#subtitle");
 ```
 
 ### ```styles()```:
 - **Description**
 Add styles for html element	
 - **Return**
-Lizardx object
+lizardt object
 - **Arguments**
 	- Object of styles **(required)**
 - **Example**
 ```Javascript
-const { liz } = lizardx;
+const { t } = lizardt;
 
-liz("div").styles({ width: "125px" });
+t("div").styles({ width: "125px" });
 ```
 
 ### ```on()```:
@@ -97,9 +106,9 @@ undefined
 	- Options **(optional)**
 - **Example**
 ```Javascript
-const { liz } = lizardx;
+const { t } = lizardt;
 
-liz("button").on("click", () =>  {
+t("button").on("click", () =>  {
 	console.log("Hello");
 });
 ```
@@ -107,9 +116,9 @@ liz("button").on("click", () =>  {
 or
 
 ```Javascript
-const { liz } = lizardx;
+const { t } = lizardt;
 
-liz("button").on("click", () =>  {
+t("button").on("click", () =>  {
 	console.log("Hello");
 }, { once: true });
 ```
@@ -118,14 +127,14 @@ liz("button").on("click", () =>  {
 - **Description**
 Adding text value  for html element
 - **Return**
-Lizardx object
+lizardt object
 - **Arguments**
 	- Value **(required)**
 - **Example**
 ```Javascript
-const { liz } = lizardx;
+const { t } = lizardt;
 
-liz(".btn").txt("Click me!");
+t(".btn").txt("Click me!");
 ```
 
 ### ```size()```:
@@ -135,21 +144,21 @@ Return current size html element
 Object of size data
 - **Example**
 ```Javascript
-const { liz } = lizardx;
+const { t } = lizardt;
 
-liz(".title").size(); // { width: 500, height: 36 }
+t(".title").size(); // { width: 500, height: 36 }
 ```
 
 ### ```clearStyles()```:
 - **Description**
 Remove all styles from style attribute
 - **Return**
-Lizardx object
+lizardt object
 - **Example**
 ```Javascript
-const { liz } = lizardx;
+const { t } = lizardt;
 
-liz(".photo").clearStyles();
+t(".photo").clearStyles();
 ```
 
 ### ```getAttributes()```:
@@ -161,15 +170,15 @@ List of attributes. When used **attribute** returns an object with attribute dat
   - Attribute **(optional)**
 - **Example**
 ```Javascript
-const { liz } = lizardx;
+const { t } = lizardt;
 
-liz(".button").getAttributes(); // [{ name: "type", val... }]
+t(".button").getAttributes(); // [{ name: "type", val... }]
 ```
 or
 ```Javascript
-const { liz } = lizardx;
+const { t } = lizardt;
 
-liz(".button").getAttributes("type"); // { name: "type", val... }
+t(".button").getAttributes("type"); // { name: "type", val... }
 ```
 
 ### ```getChildren()```:
@@ -181,17 +190,17 @@ Gets all children in this element
 List of children. When we use **selector**, it returns the element itself
 - **Example**
 ```Javascript
-const { liz } = lizardx;
+const { t } = lizardt;
 
-liz(".wrapper").getChildren(); // [HtmlElement, ...]
+t(".wrapper").getChildren(); // [HtmlElement, ...]
 ```
 
 or
 
 ```Javascript
-const { liz } = lizardx;
+const { t } = lizardt;
 
-liz(".wrapper").getChildren(".title"); // HtmlElement
+t(".wrapper").getChildren(".title"); // HtmlElement
 ```
 
 ### ```getCoordinates()```:
@@ -201,9 +210,9 @@ Gets the coordinates of an element on the page
 Object of coordinates
 - **Example**
 ```Javascript
-const { liz } = lizardx;
+const { t } = lizardt;
 
-liz(".wrapper").getCoordinates(); // { top: 0, bottom: 0, left: 0, ... }
+t(".wrapper").getCoordinates(); // { top: 0, bottom: 0, left: 0, ... }
 ```
 
 ### ```getAllParents()```:
@@ -215,15 +224,15 @@ Gets all the parents of an element, including itself. When we use **num** the pa
 List of parents
 - **Example**
 ```Javascript
-const { liz } = lizardx;
+const { t } = lizardt;
 
-liz(".wrapper").getAllParents(); // [HtmlElement, ...]
+t(".wrapper").getAllParents(); // [HtmlElement, ...]
 ```
 or
 ```Javascript
-const { liz } = lizardx;
+const { t } = lizardt;
 
-liz(".wrapper").getAllParents(1); HtmlElement under the number 1
+t(".wrapper").getAllParents(1); HtmlElement under the number 1
 ```
 
 ### ```createElement()```:
@@ -235,7 +244,7 @@ Creates HTML an element
 HTML element
 - **Example**
 ```Javascript
-const { createElement } = lizardx;
+const { createElement } = lizardt;
 
 const title = createElement({
     tag: "h1",
@@ -251,12 +260,12 @@ Adds a child to an element
 - **Arguments**
   - Child **(required)**
 - **Return**
-Lizardx object
+lizardt object
 - **Example**
 ```Javascript
-const { liz } = lizardx;
+const { t } = lizardt;
 
-liz(".wrapper").addChild({
+t(".wrapper").addChild({
     tag: "h1",
     text: "Hello, Lizard!",
     styles: { color: "blue" },
@@ -267,10 +276,10 @@ liz(".wrapper").addChild({
 or
 
 ```Javascript
-const { liz, createElement } = lizardx;
+const { t, createElement } = lizardt;
 const subtitle = createElement({ tag: "h2", text: "Subtitle" });
 
-liz(".wrapper").addChild([
+t(".wrapper").addChild([
 	{
 	  tag: "h1",
 	  text: "Hello, Lizard!",
@@ -284,7 +293,7 @@ liz(".wrapper").addChild([
 or 
 
 ```Javascript
-const { liz, createElement } = lizardx;
+const { t, createElement } = lizardt;
 const title = createElement({
     tag: "h1",
     text: "Hello, Lizard!",
@@ -292,7 +301,7 @@ const title = createElement({
     attributes: { title: "Main title" },
   });
 
-liz(".wrapper").addChild(title);
+t(".wrapper").addChild(title);
 ```
 
 ### ```removeChild()```:
@@ -301,30 +310,30 @@ Removes a child from an element
 - **Arguments**
   - Child **(required)**
 - **Return**
-Lizardx object
+lizardt object
 - **Example**
 ```Javascript
-const { liz } = lizardx;
+const { t } = lizardt;
 
-liz(".wrapper").removeChild(".title");
+t(".wrapper").removeChild(".title");
 ```
 
 or
 
 ```Javascript
-const { liz } = lizardx;
-const title = liz(".wrapper").getChildren(".title");
+const { t } = lizardt;
+const title = t(".wrapper").getChildren(".title");
 
-liz(".wrapper").removeChild([title, ".subtitle"]);
+t(".wrapper").removeChild([title, ".subtitle"]);
 ```
 
 or 
 
 ```Javascript
-const { liz } = lizardx;
-const title = liz(".wrapper").getChildren(".title");
+const { t } = lizardt;
+const title = t(".wrapper").getChildren(".title");
 
-liz(".wrapper").removeChild(title);
+t(".wrapper").removeChild(title);
 ```
 
 ### ```array()```:
@@ -334,10 +343,10 @@ Creating an array from your first argument, the second argument **symb** is opti
   - Item **(required)**
   - Symb **(optional)**
 - **Return**
-Lizardx object
+lizardt object
 - **Example**
 ```Javascript
-const { array } = lizardx;
+const { array } = lizardt;
 
 array("abc"); // ["a","b","c"];
 ```
@@ -345,23 +354,9 @@ array("abc"); // ["a","b","c"];
 or
 
 ```Javascript
-const { array } = lizardx;
+const { array } = lizardt;
 
 array("ab,c", ","); // ["ab", "c"];
-```
-
-### ```list()```:
-- **Description**
-Searches html elements by selector
-- **Arguments**
-  - Selector **(required)**
-- **Return**
-Lizardx object
-- **Example**
-```Javascript
-const { list } = lizardx;
-
-list("li"); // [HtmlElement, HtmlElement, ...]
 ```
 
 ### ```copy()```:
@@ -373,7 +368,7 @@ Make a copy of the item
 Copy of item
 - **Example**
 ```Javascript
-const { copy } = lizardx;
+const { copy } = lizardt;
 const users = ["alex", "andrey", "alexey"];
 const copyUsers = copy(users);
 
@@ -392,7 +387,7 @@ Compares 2 items
 Comparison result
 - **Example**
 ```Javascript
-const { compare, createElement } = lizardx;
+const { compare, createElement } = lizardt;
 
 console.log(compare([1,2,3], [1,2,3])); // true
 console.log(compare([1,2,3], [1,2,3,4])); // false
@@ -409,12 +404,12 @@ Adds the previous item
 - **Arguments**
   - Element **(required)**
 - **Return**
-Lizardx object
+lizardt object
 - **Example**
 ```Javascript
-const { liz } = lizardx;
+const { t } = lizardt;
 
-liz(".wrapper").addPrevElement({
+t(".wrapper").addPrevElement({
   tag: "div",
   styles: {
     width: "200px",
@@ -427,7 +422,7 @@ liz(".wrapper").addPrevElement({
 or
 
 ```Javascript
-const { liz, createElement } = lizardx;
+const { t, createElement } = lizardt;
 const block = createElement({
   tag: "div",
   styles: {
@@ -437,7 +432,7 @@ const block = createElement({
   }
 });
 
-liz(".wrapper").addPrevElement(block);
+t(".wrapper").addPrevElement(block);
 ```
 
 ### ```addNextElement()```:
@@ -446,12 +441,12 @@ Adds the next item
 - **Arguments**
   - Element **(required)**
 - **Return**
-Lizardx object
+lizardt object
 - **Example**
 ```Javascript
-const { liz } = lizardx;
+const { t } = lizardt;
 
-liz(".wrapper").addNextElement({
+t(".wrapper").addNextElement({
   tag: "div",
   styles: {
     width: "200px",
@@ -464,7 +459,7 @@ liz(".wrapper").addNextElement({
 or
 
 ```Javascript
-const { liz, createElement } = lizardx;
+const { t, createElement } = lizardt;
 const block = createElement({
   tag: "div",
   styles: {
@@ -474,7 +469,7 @@ const block = createElement({
   }
 });
 
-liz(".wrapper").addNextElement(block);
+t(".wrapper").addNextElement(block);
 ```
 
 ### ```getRandom()```:
@@ -487,9 +482,9 @@ Gets a random number
 Random number
 - **Example**
 ```Javascript
-const { getRandom } = lizardx;
+const { getRandom } = lizardt;
 
-getRandom(0, 5); // 2.1321...
+getRandom(0, 5); // 1.1481...
 ```
 
 ### ```setAttribute()```:
@@ -498,12 +493,12 @@ Sets attributes to an element
 - **Arguments**
   - Attributes **(required)**
 - **Return**
-Lizardx object
+lizardt object
 - **Example**
 ```Javascript
-const { liz } = lizardx;
+const { t } = lizardt;
 
-liz(".list").setAttribute({ "data-colors": ["green", "red", "yellow"], "data-length": "3" });
+t(".list").setAttribute({ "data-colors": ["green", "red", "yellow"], "data-length": "3" });
 ```
 
 ### ```removeAttribute()```:
@@ -512,20 +507,20 @@ Removes attributes on an element
 - **Arguments**
   - Attribute **(required)**
 - **Return**
-Lizardx object
+lizardt object
 - **Example**
 ```Javascript
-const { liz } = lizardx;
+const { t } = lizardt;
 
-liz(".input").removeAttribute("type");
+t(".input").removeAttribute("type");
 ```
 
 or
 
 ```Javascript
-const { liz } = lizardx;
+const { t } = lizardt;
 
-liz(".input").removeAttribute(["type", "placeholder"]);
+t(".input").removeAttribute(["type", "placeholder"]);
 ```
 
 ### ```last()```:
@@ -535,10 +530,10 @@ Returns the last element of the array
 Last element of the array
 - **Example**
 ```Javascript
-const { liz } = lizardx;
+const { t } = lizardt;
 
-liz([1,2,3]).last(); // 3
-liz(document.querySelectorAll("li")).last();
+t([1,2,3]).last(); // 3
+t(document.querySelectorAll("li")).last();
 list("li").last();
 ```
 
@@ -549,10 +544,10 @@ Returns the center element of the array
 Center element
 - **Example**
 ```Javascript
-const { liz, list } = lizardx;
+const { t, list } = lizardt;
 
-liz(document.querySelectorAll("li")).center();
-liz([1,2,3,4,5,6,7]).center(); // 4
+t(document.querySelectorAll("li")).center();
+t([1,2,3,4,5,6,7]).center(); // 4
 list("li").center();
 ```
 
@@ -565,7 +560,7 @@ Turns into an array and iterates over it
 Array
 - **Example**
 ```Javascript
-const { liz } = lizardx;
+const { t } = lizardt;
 
-liz([1,2,3,4]).each(item => item += 2);
+t([1,2,3,4]).each(item => item += 2);
 ```
