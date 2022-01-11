@@ -25,6 +25,23 @@ var arrayCategory = {
         }
         ;
         return false;
+    },
+    unfold: function () {
+        var res = [];
+        if (Array.isArray(this.target) && this.target.length) {
+            var unfoldArray_1 = function (array) {
+                array.map(function (item) {
+                    if (Array.isArray(item)) {
+                        return unfoldArray_1(item);
+                    }
+                    else {
+                        res.push(item);
+                    }
+                });
+            };
+            unfoldArray_1(this.target);
+        }
+        return res;
     }
 };
 for (var i in arrayCategory) {

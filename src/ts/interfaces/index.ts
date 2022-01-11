@@ -64,6 +64,7 @@ export interface IT {
   last(): any;
   center(): any;
   each(callback: () => Array<any>): Array<any>;
+  unfold(): Array<any>;
 }
 
 export interface IGlobal {

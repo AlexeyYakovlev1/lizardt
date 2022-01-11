@@ -18,7 +18,7 @@ const arrayCategory = {
     }
   },
 
-  isArray(item: any, callback?) {
+  isArray(item: any, callback?): boolean {
     const validArray = Array.isArray(item);
 
     if (validArray) {
@@ -30,6 +30,26 @@ const arrayCategory = {
     };
 
     return false;
+  },
+
+  unfold(): Array<any> {
+    const res: Array<any> = [];
+
+    if (Array.isArray(this.target) && this.target.length) {
+      const unfoldArray = (array: Array<any>): void => {
+        array.map(item => {
+          if (Array.isArray(item)) {
+            return unfoldArray(item);
+          } else {
+            res.push(item);
+          }
+        });
+      }
+
+      unfoldArray(this.target);
+    }
+
+    return res;
   }
 }
 

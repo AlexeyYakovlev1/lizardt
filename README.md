@@ -602,3 +602,15 @@ isObject({}, () => {
   console.log(1)
 }); // 1
 ```
+
+### ```unfold()```:
+- **Description**
+Unpacks a nested array
+- **Return**
+Array
+- **Example**
+```Javascript
+const { t } = lizardt
+
+console.log(t([[[1, 2, 3, 4], [5, 6, [7, 8, 9, [10, 11, [12, 13]]]]]]).unfold()); // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+```
