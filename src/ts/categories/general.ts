@@ -13,6 +13,7 @@ import global from "../global/index";
 
 // Additional methods
 import filterMethods from "../filterMethods/index";
+import objectCategory from "./object";
 
 const generalCategory = {
   compare(item1: any, item2: any): Boolean {
@@ -54,6 +55,8 @@ const generalCategory = {
     };
   },
 
+  ...filterMethods({ ...arrayCategory, ...objectCategory }, [], ["isArray", "isObject"]),
+
   t(target: any, list?: boolean): IT {
     if (typeof target === "string" && target.length) {
       const $element: NodeListOf<Element> | Element | null = list ? document.querySelectorAll(target) : document.querySelector(target);
@@ -65,8 +68,7 @@ const generalCategory = {
 
     return {
       target,
-      // Return everything except createElement, list methods
-      ...filterMethods({ ...domCategory, ...arrayCategory }, ["createElement", "list"])
+      ...filterMethods({ ...domCategory, ...arrayCategory }, ["createElement", "isArray"])
     }
   },
 }

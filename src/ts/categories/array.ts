@@ -21,6 +21,20 @@ const arrayCategory = {
       global.getError(`Argument ${this.target} must be Array, NodeList or HTMLCollection`);
     }
   },
+
+  isArray(item: any, callback?) {
+    const validArray = Array.isArray(item);
+
+    if (validArray) {
+      if (callback instanceof Function) {
+        return callback()
+      }
+
+      return true;
+    };
+    
+    return false;
+  }
 }
 
 for (let i in arrayCategory) {

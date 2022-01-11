@@ -20,11 +20,11 @@ var domCategory = {
         }
         return this;
     },
-    on: function (event, func, options) {
-        if (!event) // Note: will do check type for func argument
+    on: function (event, callback, options) {
+        if (!event) // Note: will do check type for callback argument
             index_1.default.getError("Event or function have invalid type");
         if (this.target instanceof Element) {
-            this.target.addEventListener(event, func, options);
+            this.target.addEventListener(event, callback, options);
         }
     },
     getAttributes: function (attribute) {
@@ -270,9 +270,9 @@ var domCategory = {
             index_1.default.getError("Target is not HTML element");
         }
     },
-    each: function (func) {
+    each: function (callback) {
         if (index_1.default.checkList(this.target)) {
-            return Array.from(this.target).map(func);
+            return Array.from(this.target).map(callback);
         }
         else {
             index_1.default.getError("Argument ".concat(this.target, " must be Array, NodeList or HTMLCollection"));

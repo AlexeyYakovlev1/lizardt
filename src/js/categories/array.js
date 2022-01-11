@@ -21,6 +21,17 @@ var arrayCategory = {
             index_1.default.getError("Argument ".concat(this.target, " must be Array, NodeList or HTMLCollection"));
         }
     },
+    isArray: function (item, callback) {
+        var validArray = Array.isArray(item);
+        if (validArray) {
+            if (callback instanceof Function) {
+                return callback();
+            }
+            return true;
+        }
+        ;
+        return false;
+    }
 };
 for (var i in arrayCategory) {
     // Exports every separately method

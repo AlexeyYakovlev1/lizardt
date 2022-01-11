@@ -7,8 +7,7 @@ import {
   IChild,
   ICoordinates,
   IBoundingRect,
-  ISize,
-  ILizardt
+  ISize
 } from "../interfaces/index";
 
 // Global methods
@@ -23,12 +22,12 @@ const domCategory = {
     return this;
   },
 
-  on(event: string, func: () => void, options?: object): void {
-    if (!event) // Note: will do check type for func argument
+  on(event: string, callback: () => void, options?: object): void {
+    if (!event) // Note: will do check type for callback argument
       global.getError(`Event or function have invalid type`);
 
     if (this.target instanceof Element) {
-      this.target.addEventListener(event, func, options);
+      this.target.addEventListener(event, callback, options);
     }
   },
 
@@ -289,9 +288,9 @@ const domCategory = {
     }
   },
 
-  each(func: () => Array<any>): Array<any> {
+  each(callback: () => Array<any>): Array<any> {
     if (global.checkList(this.target)) {
-      return Array.from(this.target).map(func);
+      return Array.from(this.target).map(callback);
     } else {
       global.getError(`Argument ${this.target} must be Array, NodeList or HTMLCollection`);
     }

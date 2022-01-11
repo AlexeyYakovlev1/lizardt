@@ -45,7 +45,7 @@ export interface IBoundingRect extends ISize, ICoordinates { };
 export interface IT {
   target: any,
   styles(stylesObj: object): IT;
-  on(event: string, func: () => void, options?: object): void;
+  on(event: string, callback: () => any, options?: object): void;
   getAttributes(attribute?: string): IAttribute | Array<IAttribute>;
   getChildren(selector?: string): HTMLElement | Array<IChild>;
   getCoordinates(): ICoordinates;
@@ -63,7 +63,7 @@ export interface IT {
   removeAttribute(attribute: string | Array<string>): IT;
   last(): any;
   center(): any;
-  each(func: () => Array<any>): Array<any>;
+  each(callback: () => Array<any>): Array<any>;
 }
 
 export interface IGlobal {
@@ -85,4 +85,6 @@ export interface ILizardt {
   array(item: any, symb?: string): ILizardt;
   list(selector: string): ILizardt;
   t(target: any, list?: boolean): IT;
+  isArray(item:any, callback?: () => any): boolean | any;
+  isObject(item:any, callback?: () => any): boolean | any;
 }
