@@ -8,17 +8,11 @@ var arrayCategory = {
             var arr = this.target;
             return arr[arr.length - 1];
         }
-        else {
-            index_1.default.getError("Argument ".concat(this.target, " must be Array, NodeList or HTMLCollection"));
-        }
     },
     center: function () {
         if (index_1.default.checkList(this.target)) {
             var arr = this.target;
             return arr[Math.floor((arr.length - 1) / 2)];
-        }
-        else {
-            index_1.default.getError("Argument ".concat(this.target, " must be Array, NodeList or HTMLCollection"));
         }
     },
     isArray: function (item, callback) {

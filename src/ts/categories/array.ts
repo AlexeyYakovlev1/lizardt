@@ -7,8 +7,6 @@ const arrayCategory = {
       const arr: Array<any> = this.target;
 
       return arr[arr.length - 1];
-    } else {
-      global.getError(`Argument ${this.target} must be Array, NodeList or HTMLCollection`);
     }
   },
 
@@ -17,8 +15,6 @@ const arrayCategory = {
       const arr: Array<any> = this.target;
 
       return arr[Math.floor((arr.length - 1) / 2)];
-    } else {
-      global.getError(`Argument ${this.target} must be Array, NodeList or HTMLCollection`);
     }
   },
 
@@ -32,7 +28,7 @@ const arrayCategory = {
 
       return true;
     };
-    
+
     return false;
   }
 }

@@ -44,30 +44,29 @@ export interface IBoundingRect extends ISize, ICoordinates { };
 
 export interface IT {
   target: any,
-  styles(stylesObj: object): IT;
+  styles(stylesObj: object): void;
   on(event: string, callback: () => any, options?: object): void;
   getAttributes(attribute?: string): IAttribute | Array<IAttribute>;
   getChildren(selector?: string): HTMLElement | Array<IChild>;
   getCoordinates(): ICoordinates;
   getAllParents(num?: number): Array<HTMLElement> | HTMLElement;
-  add(): IT;
-  remove(): IT;
-  clearStyles(): IT;
-  txt(value: string): IT;
+  add(): void;
+  remove(): void;
+  clearStyles(): void;
+  txt(value: string): void;
   size(): ISize;
-  addChild(child: HTMLElement | IElement | Array<any>): IT;
-  removeChild(child: HTMLElement | string | Array<HTMLElement | string>): IT;
-  addPrevElement(element: HTMLElement | IElement): IT;
-  addNextElement(element: HTMLElement | IElement): IT;
-  setAttribute(attributes: IAttribute): IT;
-  removeAttribute(attribute: string | Array<string>): IT;
+  addChild(child: HTMLElement | IElement | Array<any>): void;
+  removeChild(child: HTMLElement | string | Array<HTMLElement | string>): void;
+  addPrevElement(element: HTMLElement | IElement): void;
+  addNextElement(element: HTMLElement | IElement): void;
+  setAttribute(attributes: IAttribute): void;
+  removeAttribute(attribute: string | Array<string>): void;
   last(): any;
   center(): any;
   each(callback: () => Array<any>): Array<any>;
 }
 
 export interface IGlobal {
-  getError(err: string): never;
   checkList(target: any): Boolean;
   createElement(options: IElement): HTMLElement | null;
   removeChildBySelector($el: HTMLElement | null, selector: string): void;
@@ -80,11 +79,10 @@ export interface IGlobal {
 export interface ILizardt {
   createElement(options: IElement): HTMLElement | null;
   compare(item1: any, item2: any): Boolean;
-  getRandom(min: number, max: number): number;
   copy(item: any): any;
-  array(item: any, symb?: string): ILizardt;
-  list(selector: string): ILizardt;
+  array(item: any, symb?: string): Array<any>;
   t(target: any, list?: boolean): IT;
-  isArray(item:any, callback?: () => any): boolean | any;
-  isObject(item:any, callback?: () => any): boolean | any;
+  isArray(item: any, callback?: () => any): boolean | any;
+  isObject(item: any, callback?: () => any): boolean | any;
+  getRandom(min: number, max: number): number;
 }

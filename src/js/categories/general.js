@@ -23,12 +23,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // Categories
 var array_1 = require("../categories/array");
 var dom_1 = require("../categories/dom");
-// Global methods
-var index_1 = require("../global/index");
 // Additional methods
-var index_2 = require("../filterMethods/index");
+var index_1 = require("../filterMethods/index");
 var object_1 = require("./object");
-var generalCategory = __assign(__assign({ compare: function (item1, item2) {
+var generalCategory = __assign({ compare: function (item1, item2) {
         if ([item1, item2].every(function (item) { return item instanceof Element; })) {
             return item1.isEqualNode(item2);
         }
@@ -48,22 +46,23 @@ var generalCategory = __assign(__assign({ compare: function (item1, item2) {
         }
         return res;
     }, array: function (item, symb) {
-        if (!item)
-            index_1.default.getError("".concat(item, " is not defined"));
+        if (!item) {
+            return [];
+        }
         var res = Array.from(item);
-        if (symb)
+        if (typeof symb === "string" && symb.length) {
             res = item.split(symb);
-        this.t(item.split(symb));
-        return __assign(__assign({}, this), { target: res });
-    } }, (0, index_2.default)(__assign(__assign({}, array_1.default), object_1.default), [], ["isArray", "isObject"])), { t: function (target, list) {
+        }
+        return res;
+    }, t: function (target, list) {
         if (typeof target === "string" && target.length) {
             var $element = list ? document.querySelectorAll(target) : document.querySelector(target);
             if ($element) {
                 target = $element;
             }
         }
-        return __assign({ target: target }, (0, index_2.default)(__assign(__assign({}, dom_1.default), array_1.default), ["createElement", "isArray"]));
-    } });
+        return __assign({ target: target }, (0, index_1.default)(__assign(__assign({}, dom_1.default), array_1.default), ["createElement", "isArray"]));
+    } }, (0, index_1.default)(__assign(__assign({}, array_1.default), object_1.default), [], ["isArray", "isObject"]));
 for (var i in generalCategory) {
     // Exports every separately method
     exports[i] = generalCategory[i];

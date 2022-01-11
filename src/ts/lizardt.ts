@@ -4,18 +4,17 @@ import {
 } from "./interfaces/index";
 
 // Categories
-import domCategory from "./categories/dom";
 import generalCategory from "./categories/general";
 import numberCategory from "./categories/number";
+import domCategory from "./categories/dom";
 
 // Additional methods
 import filterMethods from "./filterMethods/index";
 
 const lizardt: ILizardt = {
-  ...numberCategory,
   ...generalCategory,
-  // Return only createElement methods
-  ...filterMethods({ ...domCategory }, [], ["createElement"]),
+  ...numberCategory,
+  ...filterMethods({ ...domCategory }, [], ["createElement"])
 };
 
 // Set context at lizardt

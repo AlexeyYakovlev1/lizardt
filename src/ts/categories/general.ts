@@ -8,9 +8,6 @@ import {
 import arrayCategory from "../categories/array";
 import domCategory from "../categories/dom";
 
-// Global methods
-import global from "../global/index";
-
 // Additional methods
 import filterMethods from "../filterMethods/index";
 import objectCategory from "./object";
@@ -38,24 +35,19 @@ const generalCategory = {
     return res;
   },
 
-  array(item: any, symb?: string): ILizardt {
-    if (!item)
-      global.getError(`${item} is not defined`);
+  array(item: any, symb?: string): Array<any> {
+    if (!item) {
+      return [];
+    }
 
     let res: Array<any> = Array.from(item);
 
-    if (symb)
+    if (typeof symb === "string" && symb.length) {
       res = item.split(symb);
+    }
 
-    this.t(item.split(symb));
-
-    return {
-      ...this,
-      target: res
-    };
+    return res;
   },
-
-  ...filterMethods({ ...arrayCategory, ...objectCategory }, [], ["isArray", "isObject"]),
 
   t(target: any, list?: boolean): IT {
     if (typeof target === "string" && target.length) {
@@ -71,6 +63,8 @@ const generalCategory = {
       ...filterMethods({ ...domCategory, ...arrayCategory }, ["createElement", "isArray"])
     }
   },
+
+  ...filterMethods({ ...arrayCategory, ...objectCategory }, [], ["isArray", "isObject"]),
 }
 
 for (let i in generalCategory) {

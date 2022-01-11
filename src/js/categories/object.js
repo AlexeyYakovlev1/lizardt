@@ -6,8 +6,7 @@ var objectCategory = {
             && !Array.isArray(item)
             && item !== null && typeof item === 'object'
             && !(item instanceof Element)
-            && Object.create(item))
-            || item === JSON.stringify({})) {
+            && Object.create(item))) {
             if (callback instanceof Function) {
                 return callback();
             }
@@ -16,4 +15,9 @@ var objectCategory = {
         return false;
     }
 };
+for (var i in objectCategory) {
+    // Exports every separately method
+    exports[i] = objectCategory[i];
+}
+// Exports all methods
 exports.default = objectCategory;

@@ -2,7 +2,6 @@
 import {
   IElement,
   ITypeOfSelector,
-  IT,
   IAttribute,
   IChild,
   ICoordinates,
@@ -14,20 +13,19 @@ import {
 import global from "../global/index";
 
 const domCategory = {
-  styles(stylesObj: object): IT {
+  styles(stylesObj: object) {
     if (this.target instanceof Element) {
       global.setStyles(this.target, stylesObj);
     }
-
-    return this;
   },
 
   on(event: string, callback: () => void, options?: object): void {
-    if (!event) // Note: will do check type for callback argument
-      global.getError(`Event or function have invalid type`);
+    if (this.target instanceof Element && callback instanceof Function) {
+      if (options && typeof options === "object" && Object.keys(options).length) {
+        return this.target.addEventListener(event, callback, options);
+      }
 
-    if (this.target instanceof Element) {
-      this.target.addEventListener(event, callback, options);
+      return this.target.addEventListener(event, callback);
     }
   },
 
@@ -46,8 +44,6 @@ const domCategory = {
       const findAttr: IAttribute = attributes.find(({ name }) => name === attribute);
 
       return attribute ? findAttr : attributes;
-    } else {
-      global.getError("Target is not HTML element");
     }
   },
 
@@ -67,8 +63,6 @@ const domCategory = {
       });
 
       return selector ? $findChild : $children;
-    } else {
-      global.getError("Target is not HTML element");
     }
   },
 
@@ -84,8 +78,6 @@ const domCategory = {
       }
 
       return coordinates;
-    } else {
-      global.getError("Target is not HTML element");
     }
   },
 
@@ -106,16 +98,11 @@ const domCategory = {
       const res: Array<HTMLElement> = getParent(this.target, []);
 
       return (typeof num === "number" && num >= 0) ? res[num] : res;
-    } else {
-      global.getError("Target is not HTML element");
     }
   },
 
-  add(...args): IT {
-    if (this.target instanceof Element) {
-      if (!args.length)
-        global.getError(`You must pass something`);
-
+  add(...args) {
+    if (this.target instanceof Element && args.length) {
       args.forEach(className => {
         const { attribute, name }: ITypeOfSelector = global.definesType(className);
 
@@ -125,18 +112,11 @@ const domCategory = {
           this.target.setAttribute(attribute, name);
         }
       });
-
-      return this;
-    } else {
-      global.getError("Target is not HTML element");
     }
   },
 
-  remove(...args): IT {
-    if (!args.length)
-      global.getError(`You must pass something`);
-
-    if (this.target instanceof Element) {
+  remove(...args) {
+    if (this.target instanceof Element && args.length) {
       args.forEach(className => {
         const { attribute, name }: ITypeOfSelector = global.definesType(className);
 
@@ -146,38 +126,19 @@ const domCategory = {
           this.target.removeAttribute(attribute, name);
         }
       });
-
-      return this;
-    } else {
-      global.getError("Target is not HTML element");
     }
   },
 
-  clearStyles(): IT {
+  clearStyles() {
     if (this.target instanceof Element) {
       this.target["style"] = null;
-    } else {
-      global.getError("Target is not HTML element");
     }
-
-    return this;
   },
 
-  txt(value: string): IT {
-    if (typeof value !== "string")
-      global.getError(`"${value}" is not string type`);
-
-    if (this.target instanceof Element) {
-      if (typeof value === "string") {
-        this.target.textContent = value;
-      } else {
-        global.getError("Value is not a string");
-      }
-    } else {
-      global.getError("Target is not HTML element");
+  txt(value: string) {
+    if (this.target instanceof Element && typeof value === "string") {
+      this.target.textContent = value;
     }
-
-    return this;
   },
 
   size(): ISize {
@@ -185,12 +146,10 @@ const domCategory = {
       const { width, height }: ISize = this.target.getBoundingClientRect();
 
       return { width, height };
-    } else {
-      global.getError("Target is not HTML element");
     }
   },
 
-  addChild(child: HTMLElement | IElement | Array<any>): IT {
+  addChild(child: HTMLElement | IElement | Array<any>) {
     if (this.target instanceof Element) {
       // Object
       if (!Array.isArray(child) && typeof child === "object" && Object.keys(child).length && child !== null) {
@@ -212,14 +171,10 @@ const domCategory = {
       if (child instanceof Element) {
         this.target.appendChild(child);
       }
-
-      return this;
-    } else {
-      global.getError("Target is not HTML element");
     }
   },
 
-  removeChild(child: HTMLElement | string | Array<HTMLElement | string>): IT {
+  removeChild(child: HTMLElement | string | Array<HTMLElement | string>) {
     if (this.target instanceof Element) {
       // Selector
       if (typeof child === "string" && child.length) {
@@ -241,38 +196,26 @@ const domCategory = {
           }
         });
       }
-    } else {
-      global.getError("Target is not HTML element");
     }
-
-    return this;
   },
 
-  addPrevElement(element: HTMLElement | IElement): IT {
+  addPrevElement(element: HTMLElement | IElement) {
     global.addElementOnPos(this.target, element, "beforebegin");
-
-    return this;
   },
 
-  addNextElement(element: HTMLElement | IElement): IT {
+  addNextElement(element: HTMLElement | IElement) {
     global.addElementOnPos(this.target, element, "afterend");
-
-    return this;
   },
 
-  setAttribute(attributes: IAttribute): IT {
+  setAttribute(attributes: IAttribute) {
     if (this.target instanceof Element) {
       if (typeof attributes === "object" && attributes !== null && Object.keys(attributes).length) {
         global.setAttributes(this.target, attributes);
       }
-
-      return this;
-    } else {
-      global.getError("Target is not HTML element");
     }
   },
 
-  removeAttribute(attribute: string | Array<string>): IT {
+  removeAttribute(attribute: string | Array<string>) {
     if (this.target instanceof Element) {
       if (typeof attribute === "string") {
         this.target.removeAttribute(attribute);
@@ -281,18 +224,12 @@ const domCategory = {
       if (Array.isArray(attribute) && attribute.length && attribute.every(attr => typeof attr === "string")) {
         attribute.map(attr => this.target.removeAttribute(attr));
       }
-
-      return this;
-    } else {
-      global.getError("Target is not HTML element");
     }
   },
 
   each(callback: () => Array<any>): Array<any> {
-    if (global.checkList(this.target)) {
+    if (global.checkList(this.target) && callback instanceof Function) {
       return Array.from(this.target).map(callback);
-    } else {
-      global.getError(`Argument ${this.target} must be Array, NodeList or HTMLCollection`);
     }
   },
 

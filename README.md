@@ -57,7 +57,7 @@ t("li", true).target; // Node list of li
 - **Description**
 Adding class or id for html element	
 - **Return**
-lizardt object
+undefined
 - **Arguments**
 	- Class names or id **(required)**
 - **Example**
@@ -71,7 +71,7 @@ t("div").add(".home", "#main");
 - **Description**
 Removing class or id for html element	
 - **Return**
-lizardt object
+undefined
 - **Arguments**
 	- Class names or id **(required)**
 - **Example**
@@ -85,7 +85,7 @@ t(".title").remove(".cursive", "#subtitle");
 - **Description**
 Add styles for html element	
 - **Return**
-lizardt object
+undefined
 - **Arguments**
 	- Object of styles **(required)**
 - **Example**
@@ -127,7 +127,7 @@ t("button").on("click", () =>  {
 - **Description**
 Adding text value  for html element
 - **Return**
-lizardt object
+undefined
 - **Arguments**
 	- Value **(required)**
 - **Example**
@@ -153,7 +153,7 @@ t(".title").size(); // { width: 500, height: 36 }
 - **Description**
 Remove all styles from style attribute
 - **Return**
-lizardt object
+undefined
 - **Example**
 ```Javascript
 const { t } = lizardt;
@@ -260,7 +260,7 @@ Adds a child to an element
 - **Arguments**
   - Child **(required)**
 - **Return**
-lizardt object
+undefined
 - **Example**
 ```Javascript
 const { t } = lizardt;
@@ -310,7 +310,7 @@ Removes a child from an element
 - **Arguments**
   - Child **(required)**
 - **Return**
-lizardt object
+undefined
 - **Example**
 ```Javascript
 const { t } = lizardt;
@@ -343,7 +343,7 @@ Creating an array from your first argument, the second argument **symb** is opti
   - Item **(required)**
   - Symb **(optional)**
 - **Return**
-lizardt object
+Array
 - **Example**
 ```Javascript
 const { array } = lizardt;
@@ -404,7 +404,7 @@ Adds the previous item
 - **Arguments**
   - Element **(required)**
 - **Return**
-lizardt object
+undefined
 - **Example**
 ```Javascript
 const { t } = lizardt;
@@ -441,7 +441,7 @@ Adds the next item
 - **Arguments**
   - Element **(required)**
 - **Return**
-lizardt object
+undefined
 - **Example**
 ```Javascript
 const { t } = lizardt;
@@ -493,7 +493,7 @@ Sets attributes to an element
 - **Arguments**
   - Attributes **(required)**
 - **Return**
-lizardt object
+undefined
 - **Example**
 ```Javascript
 const { t } = lizardt;
@@ -507,7 +507,7 @@ Removes attributes on an element
 - **Arguments**
   - Attribute **(required)**
 - **Return**
-lizardt object
+undefined
 - **Example**
 ```Javascript
 const { t } = lizardt;
@@ -575,7 +575,7 @@ t([1,2,3,4]).each(item => item += 2);
 True/False/Result your function
 - **Example**
 ```Javascript
-const {isArray} = lizardt;
+const { isArray } = lizardt;
 
 isArray([1,2,3]); // true
 isArray("") // false

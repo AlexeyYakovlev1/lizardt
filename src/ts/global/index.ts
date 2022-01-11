@@ -5,10 +5,6 @@ import {
 } from '../interfaces/index';
 
 const global: IGlobal = {
-  getError(err: string): never {
-    throw new Error(err);
-  },
-
   checkList(target: any): Boolean {
     return Array.isArray(target) || target instanceof NodeList || target instanceof HTMLCollection;
   },
@@ -54,8 +50,6 @@ const global: IGlobal = {
 
         $parent.insertAdjacentElement(pos, $el);
       }
-    } else {
-      global.getError("Target is not HTML element");
     }
   },
 

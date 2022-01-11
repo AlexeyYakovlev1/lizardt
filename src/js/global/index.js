@@ -12,9 +12,6 @@ var __assign = (this && this.__assign) || function () {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var global = {
-    getError: function (err) {
-        throw new Error(err);
-    },
     checkList: function (target) {
         return Array.isArray(target) || target instanceof NodeList || target instanceof HTMLCollection;
     },
@@ -51,9 +48,6 @@ var global = {
                 var $el = global.createElement($element);
                 $parent.insertAdjacentElement(pos, $el);
             }
-        }
-        else {
-            global.getError("Target is not HTML element");
         }
     },
     setStyles: function ($el, obj) {

@@ -1,8 +1,8 @@
 {
-  "name": "dom_library",
+  "name": "lizardt",
   "version": "1.0.0",
   "description": "library for conveniently work with dom",
-  "main": "library.js",
+  "main": "",
   "keywords": [
     "dom",
     "html"
