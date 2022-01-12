@@ -1,3 +1,50 @@
+// Categories 
+export interface IArrayCategory {
+  last(): any,
+  center(): any,
+  isArray(item: any, callback?): boolean;
+  unfold(): Array<any>;
+  each(callback: () => Array<any>): Array<any>
+  removeItem(index: number, val?: any): Array<any>;
+}
+
+export interface IDomCategory {
+  styles(stylesObj: object): void;
+  on(event: string, callback: () => any, options?: object): void;
+  getAttributes(attribute?: string): IAttribute | Array<IAttribute>;
+  getChildren(selector?: string): HTMLElement | Array<IChild>;
+  getCoordinates(): ICoordinates;
+  getAllParents(num?: number): Array<HTMLElement> | HTMLElement;
+  add(): void;
+  remove(): void;
+  clearStyles(): void;
+  txt(value: string): void;
+  size(): ISize;
+  addChild(child: HTMLElement | IElement | Array<any>): void;
+  removeChild(child: HTMLElement | string | Array<HTMLElement | string>): void;
+  addPrevElement(element: HTMLElement | IElement): void;
+  addNextElement(element: HTMLElement | IElement): void;
+  setAttribute(attributes: IAttribute): void;
+  removeAttribute(attribute: string | Array<string>): void;
+  createElement(options: IElement): HTMLElement;
+}
+
+export interface IGeneralCategory {
+  compare(item1: any, item2: any): Boolean;
+  copy(item: any): any;
+  array(item: any, symb?: string): Array<any>;
+  t(target: any, list?: boolean): IT;
+}
+
+export interface INumberCategory {
+  getRandom(min: number, max: number): number;
+}
+
+export interface IObjectCategory {
+  isObject(item, callback?): boolean;
+}
+
+// Arguments and options
 export interface IElement {
   tag?: string,
   text?: string,
@@ -36,12 +83,14 @@ export interface IAttribute {
   val: any
 }
 
+export interface IBoundingRect extends ISize, ICoordinates { };
+
+// Additional methods
 export interface IFilterMethods {
   (category: object, unwanted: Array<string>, need?: Array<string>): any;
 }
 
-export interface IBoundingRect extends ISize, ICoordinates { };
-
+// Main
 export interface IT {
   target: any,
   styles(stylesObj: object): void;
@@ -69,16 +118,17 @@ export interface IT {
 
 export interface IGlobal {
   checkList(target: any): Boolean;
-  createElement(options: IElement): HTMLElement | null;
-  removeChildBySelector($el: HTMLElement | null, selector: string): void;
-  addElementOnPos($parent: HTMLElement, $element: HTMLElement | IElement, pos: InsertPosition): void;
-  setStyles($el: HTMLElement | null, obj: object): HTMLElement | null;
+  createElement(options: IElement): HTMLElement;
+  removeChildBySelector(el: HTMLElement, selector: string): void;
+  addElementOnPos(parent: HTMLElement, element: HTMLElement | IElement, pos: InsertPosition): void;
+  setStyles(el: HTMLElement, obj: object): HTMLElement;
   definesType(name: string): ITypeOfSelector;
-  setAttributes($el: HTMLElement | null, obj: object): HTMLElement | null;
+  setAttributes(el: HTMLElement, obj: object): HTMLElement;
+  setError(message: string): never;
 }
 
 export interface ILizardt {
-  createElement(options: IElement): HTMLElement | null;
+  createElement(options: IElement): HTMLElement;
   compare(item1: any, item2: any): Boolean;
   copy(item: any): any;
   array(item: any, symb?: string): Array<any>;

@@ -610,7 +610,22 @@ Unpacks a nested array
 Array
 - **Example**
 ```Javascript
-const { t } = lizardt
+const { t } = lizardt;
 
 console.log(t([[[1, 2, 3, 4], [5, 6, [7, 8, 9, [10, 11, [12, 13]]]]]]).unfold()); // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+```
+
+### ```removeItem()```:
+- **Description**
+Removes an array element by index
+- **Arguments**
+  - Index **(required)**
+  - New value **(optional)**
+- **Return**
+Array
+- **Example**
+```Javascript
+const { t } = lizardt;
+
+t([1, 2, 3]).removeItem(0, 500); // [500, 2, 3]
 ```

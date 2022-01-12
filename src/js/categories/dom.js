@@ -18,13 +18,19 @@ var domCategory = {
         if (this.target instanceof Element) {
             index_1.default.setStyles(this.target, stylesObj);
         }
+        else {
+            index_1.default.setError("\"".concat(this.target, "\" is not a HTML element"));
+        }
     },
     on: function (event, callback, options) {
         if (this.target instanceof Element && callback instanceof Function) {
-            if (options && typeof options === "object" && Object.keys(options).length) {
+            if (options && typeof options === "object" && !Array.isArray(options) && !(options instanceof Element || options instanceof HTMLElement)) {
                 return this.target.addEventListener(event, callback, options);
             }
             return this.target.addEventListener(event, callback);
+        }
+        else {
+            index_1.default.setError("\"".concat(this.target, "\" is not a HTML element or your callback is not a function"));
         }
     },
     getAttributes: function (attribute) {
@@ -43,21 +49,27 @@ var domCategory = {
             });
             return attribute ? findAttr : attributes;
         }
+        else {
+            index_1.default.setError("\"".concat(this.target, "\" is not a HTML element"));
+        }
     },
     getChildren: function (selector) {
         if (this.target instanceof Element) {
-            var $chldr = Array.from(this.target.children);
-            var $children_1 = [];
-            var $findChild = selector ? this.target.querySelector(selector) : null;
-            $chldr.forEach(function ($child) {
-                $children_1.push({
-                    $nextEl: $child["nextElementSibling"],
-                    name: $child["localName"],
-                    text: $child["innerText"],
-                    $el: $child,
+            var chldr = Array.from(this.target.children);
+            var children_1 = [];
+            var findChild = selector ? this.target.querySelector(selector) : null;
+            chldr.forEach(function (child) {
+                children_1.push({
+                    $nextEl: child.nextElementSibling,
+                    name: child.localName,
+                    text: child.innerText,
+                    $el: child,
                 });
             });
-            return selector ? $findChild : $children_1;
+            return selector ? findChild : children_1;
+        }
+        else {
+            index_1.default.setError("\"".concat(this.target, "\" is not a HTML element"));
         }
     },
     getCoordinates: function () {
@@ -70,6 +82,9 @@ var domCategory = {
                 }
             }
             return coordinates;
+        }
+        else {
+            index_1.default.setError("\"".concat(this.target, "\" is not a HTML element"));
         }
     },
     getAllParents: function (num) {
@@ -84,6 +99,9 @@ var domCategory = {
             };
             var res = getParent_1(this.target, []);
             return (typeof num === "number" && num >= 0) ? res[num] : res;
+        }
+        else {
+            index_1.default.setError("\"".concat(this.target, "\" is not a HTML element"));
         }
     },
     add: function () {
@@ -103,6 +121,9 @@ var domCategory = {
                 }
             });
         }
+        else {
+            index_1.default.setError("\"".concat(this.target, "\" is not a HTML element or the argument list is empty"));
+        }
     },
     remove: function () {
         var _this = this;
@@ -121,15 +142,29 @@ var domCategory = {
                 }
             });
         }
+        else {
+            index_1.default.setError("\"".concat(this.target, "\" is not a HTML element or the argument list is empty"));
+        }
     },
     clearStyles: function () {
         if (this.target instanceof Element) {
             this.target["style"] = null;
         }
+        else {
+            index_1.default.setError("\"".concat(this.target, "\" is not a HTML element"));
+        }
     },
     txt: function (value) {
-        if (this.target instanceof Element && typeof value === "string") {
-            this.target.textContent = value;
+        if (this.target instanceof Element) {
+            if (typeof value === "string") {
+                this.target.textContent = value;
+            }
+            else {
+                index_1.default.setError("\"".concat(value, "\" is not a string"));
+            }
+        }
+        else {
+            index_1.default.setError("\"".concat(this.target, "\" is not a HTML element"));
         }
     },
     size: function () {
@@ -137,18 +172,21 @@ var domCategory = {
             var _a = this.target.getBoundingClientRect(), width = _a.width, height = _a.height;
             return { width: width, height: height };
         }
+        else {
+            index_1.default.setError("\"".concat(this.target, "\" is not a HTML element"));
+        }
     },
     addChild: function (child) {
         var _this = this;
         if (this.target instanceof Element) {
             // Object
-            if (!Array.isArray(child) && typeof child === "object" && Object.keys(child).length && child !== null) {
+            if (child && typeof child === "object" && !Array.isArray(child) && !(child instanceof Element || child instanceof HTMLElement)) {
                 this.target.appendChild(index_1.default.createElement(child));
             }
             // Array of objects and html elements
-            if (Array.isArray(child) && child.length && child !== null && child.every(function (obj) { return typeof obj === "object" || obj instanceof Element; })) {
+            if (Array.isArray(child) && child.length && child.every(function (obj) { return typeof obj === "object" || obj instanceof Element || obj instanceof HTMLElement; })) {
                 child.map(function (element) {
-                    if (!(element instanceof Element)) {
+                    if (!(element instanceof Element || element instanceof HTMLElement)) {
                         _this.target.appendChild(index_1.default.createElement(element));
                     }
                     else {
@@ -160,6 +198,9 @@ var domCategory = {
             if (child instanceof Element) {
                 this.target.appendChild(child);
             }
+        }
+        else {
+            index_1.default.setError("\"".concat(this.target, "\" is not a HTML element"));
         }
     },
     removeChild: function (child) {
@@ -185,6 +226,9 @@ var domCategory = {
                 });
             }
         }
+        else {
+            index_1.default.setError("\"".concat(this.target, "\" is not a HTML element"));
+        }
     },
     addPrevElement: function (element) {
         index_1.default.addElementOnPos(this.target, element, "beforebegin");
@@ -194,9 +238,15 @@ var domCategory = {
     },
     setAttribute: function (attributes) {
         if (this.target instanceof Element) {
-            if (typeof attributes === "object" && attributes !== null && Object.keys(attributes).length) {
+            if (attributes && typeof attributes === "object" && !Array.isArray(attributes) && !(attributes instanceof Element || attributes instanceof HTMLElement)) {
                 index_1.default.setAttributes(this.target, attributes);
             }
+            else {
+                index_1.default.setError("\"".concat(attributes, "\" is not a object"));
+            }
+        }
+        else {
+            index_1.default.setError("\"".concat(this.target, "\" is not a HTML element"));
         }
     },
     removeAttribute: function (attribute) {
@@ -209,10 +259,8 @@ var domCategory = {
                 attribute.map(function (attr) { return _this.target.removeAttribute(attr); });
             }
         }
-    },
-    each: function (callback) {
-        if (index_1.default.checkList(this.target) && callback instanceof Function) {
-            return Array.from(this.target).map(callback);
+        else {
+            index_1.default.setError("\"".concat(this.target, "\" is not a HTML element"));
         }
     },
     createElement: index_1.default.createElement,

@@ -1,13 +1,11 @@
-const objectCategory = {
-  isObject(item, callback?) {
-    if ((item
-      && !Array.isArray(item)
-      && item !== null && typeof item === 'object'
-      && !(item instanceof Element)
-      && Object.create(item))
-    ) {
+// Interfaces
+import { IObjectCategory } from "../interfaces/index";
+
+const objectCategory: IObjectCategory = {
+  isObject(item, callback?): boolean {
+    if (item && typeof item === "object" && !Array.isArray(item) && !(item instanceof Element || item instanceof HTMLElement)) {
       if (callback instanceof Function) {
-        return callback();
+        callback();
       }
 
       return true

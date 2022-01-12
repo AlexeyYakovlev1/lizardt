@@ -2,13 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var objectCategory = {
     isObject: function (item, callback) {
-        if ((item
-            && !Array.isArray(item)
-            && item !== null && typeof item === 'object'
-            && !(item instanceof Element)
-            && Object.create(item))) {
+        if (item && typeof item === "object" && !Array.isArray(item) && !(item instanceof Element || item instanceof HTMLElement)) {
             if (callback instanceof Function) {
-                return callback();
+                callback();
             }
             return true;
         }

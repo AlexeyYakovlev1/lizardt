@@ -1,7 +1,7 @@
 // Interfaces
 import {
-  ILizardt,
-  IT
+  IT,
+  IGeneralCategory
 } from "../interfaces/index";
 
 // Categories
@@ -12,7 +12,7 @@ import domCategory from "../categories/dom";
 import filterMethods from "../filterMethods/index";
 import objectCategory from "./object";
 
-const generalCategory = {
+const generalCategory: IGeneralCategory = {
   compare(item1: any, item2: any): Boolean {
     if ([item1, item2].every(item => item instanceof Element)) {
       return item1.isEqualNode(item2);
@@ -51,10 +51,10 @@ const generalCategory = {
 
   t(target: any, list?: boolean): IT {
     if (typeof target === "string" && target.length) {
-      const $element: NodeListOf<Element> | Element | null = list ? document.querySelectorAll(target) : document.querySelector(target);
+      const element: NodeListOf<Element> | Element | null = list ? document.querySelectorAll(target) : document.querySelector(target);
 
-      if ($element) {
-        target = $element;
+      if (element) {
+        target = element;
       }
     }
 

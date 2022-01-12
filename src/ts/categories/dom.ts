@@ -6,26 +6,31 @@ import {
   IChild,
   ICoordinates,
   IBoundingRect,
-  ISize
+  ISize,
+  IDomCategory
 } from "../interfaces/index";
 
 // Global methods
 import global from "../global/index";
 
-const domCategory = {
+const domCategory: IDomCategory = {
   styles(stylesObj: object) {
     if (this.target instanceof Element) {
       global.setStyles(this.target, stylesObj);
+    } else {
+      global.setError(`"${this.target}" is not a HTML element`);
     }
   },
 
   on(event: string, callback: () => void, options?: object): void {
     if (this.target instanceof Element && callback instanceof Function) {
-      if (options && typeof options === "object" && Object.keys(options).length) {
+      if (options && typeof options === "object" && !Array.isArray(options) && !(options instanceof Element || options instanceof HTMLElement)) {
         return this.target.addEventListener(event, callback, options);
       }
 
       return this.target.addEventListener(event, callback);
+    } else {
+      global.setError(`"${this.target}" is not a HTML element or your callback is not a function`);
     }
   },
 
@@ -44,25 +49,29 @@ const domCategory = {
       const findAttr: IAttribute = attributes.find(({ name }) => name === attribute);
 
       return attribute ? findAttr : attributes;
+    } else {
+      global.setError(`"${this.target}" is not a HTML element`);
     }
   },
 
   getChildren(selector?: string): HTMLElement | Array<IChild> {
     if (this.target instanceof Element) {
-      const $chldr: Array<HTMLElement> = Array.from(this.target.children);
-      const $children: Array<IChild> = [];
-      const $findChild: HTMLElement = selector ? this.target.querySelector(selector) : null;
+      const chldr: Array<HTMLElement> = Array.from(this.target.children);
+      const children: Array<IChild> = [];
+      const findChild: HTMLElement = selector ? this.target.querySelector(selector) : null;
 
-      $chldr.forEach($child => {
-        $children.push({
-          $nextEl: $child["nextElementSibling"],
-          name: $child["localName"],
-          text: $child["innerText"],
-          $el: $child,
+      chldr.forEach(child => {
+        children.push({
+          $nextEl: child.nextElementSibling,
+          name: child.localName,
+          text: child.innerText,
+          $el: child,
         });
       });
 
-      return selector ? $findChild : $children;
+      return selector ? findChild : children;
+    } else {
+      global.setError(`"${this.target}" is not a HTML element`);
     }
   },
 
@@ -78,6 +87,8 @@ const domCategory = {
       }
 
       return coordinates;
+    } else {
+      global.setError(`"${this.target}" is not a HTML element`);
     }
   },
 
@@ -98,6 +109,8 @@ const domCategory = {
       const res: Array<HTMLElement> = getParent(this.target, []);
 
       return (typeof num === "number" && num >= 0) ? res[num] : res;
+    } else {
+      global.setError(`"${this.target}" is not a HTML element`);
     }
   },
 
@@ -112,6 +125,8 @@ const domCategory = {
           this.target.setAttribute(attribute, name);
         }
       });
+    } else {
+      global.setError(`"${this.target}" is not a HTML element or the argument list is empty`);
     }
   },
 
@@ -126,18 +141,28 @@ const domCategory = {
           this.target.removeAttribute(attribute, name);
         }
       });
+    } else {
+      global.setError(`"${this.target}" is not a HTML element or the argument list is empty`);
     }
   },
 
-  clearStyles() {
+  clearStyles(): void {
     if (this.target instanceof Element) {
       this.target["style"] = null;
+    } else {
+      global.setError(`"${this.target}" is not a HTML element`);
     }
   },
 
-  txt(value: string) {
-    if (this.target instanceof Element && typeof value === "string") {
-      this.target.textContent = value;
+  txt(value: string): void {
+    if (this.target instanceof Element) {
+      if (typeof value === "string") {
+        this.target.textContent = value;
+      } else {
+        global.setError(`"${value}" is not a string`);
+      }
+    } else {
+      global.setError(`"${this.target}" is not a HTML element`);
     }
   },
 
@@ -146,20 +171,22 @@ const domCategory = {
       const { width, height }: ISize = this.target.getBoundingClientRect();
 
       return { width, height };
+    } else {
+      global.setError(`"${this.target}" is not a HTML element`);
     }
   },
 
   addChild(child: HTMLElement | IElement | Array<any>) {
     if (this.target instanceof Element) {
       // Object
-      if (!Array.isArray(child) && typeof child === "object" && Object.keys(child).length && child !== null) {
+      if (child && typeof child === "object" && !Array.isArray(child) && !(child instanceof Element || child instanceof HTMLElement)) {
         this.target.appendChild(global.createElement(child));
       }
 
       // Array of objects and html elements
-      if (Array.isArray(child) && child.length && child !== null && child.every(obj => typeof obj === "object" || obj instanceof Element)) {
+      if (Array.isArray(child) && child.length && child.every(obj => typeof obj === "object" || obj instanceof Element || obj instanceof HTMLElement)) {
         child.map(element => {
-          if (!(element instanceof Element)) {
+          if (!(element instanceof Element || element instanceof HTMLElement)) {
             this.target.appendChild(global.createElement(element));
           } else {
             this.target.appendChild(element);
@@ -171,6 +198,8 @@ const domCategory = {
       if (child instanceof Element) {
         this.target.appendChild(child);
       }
+    } else {
+      global.setError(`"${this.target}" is not a HTML element`);
     }
   },
 
@@ -196,6 +225,8 @@ const domCategory = {
           }
         });
       }
+    } else {
+      global.setError(`"${this.target}" is not a HTML element`);
     }
   },
 
@@ -209,9 +240,13 @@ const domCategory = {
 
   setAttribute(attributes: IAttribute) {
     if (this.target instanceof Element) {
-      if (typeof attributes === "object" && attributes !== null && Object.keys(attributes).length) {
+      if (attributes && typeof attributes === "object" && !Array.isArray(attributes) && !(attributes instanceof Element || attributes instanceof HTMLElement)) {
         global.setAttributes(this.target, attributes);
+      } else {
+        global.setError(`"${attributes}" is not a object`);
       }
+    } else {
+      global.setError(`"${this.target}" is not a HTML element`);
     }
   },
 
@@ -224,12 +259,8 @@ const domCategory = {
       if (Array.isArray(attribute) && attribute.length && attribute.every(attr => typeof attr === "string")) {
         attribute.map(attr => this.target.removeAttribute(attr));
       }
-    }
-  },
-
-  each(callback: () => Array<any>): Array<any> {
-    if (global.checkList(this.target) && callback instanceof Function) {
-      return Array.from(this.target).map(callback);
+    } else {
+      global.setError(`"${this.target}" is not a HTML element`);
     }
   },
 

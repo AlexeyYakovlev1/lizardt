@@ -56,9 +56,9 @@ var generalCategory = __assign({ compare: function (item1, item2) {
         return res;
     }, t: function (target, list) {
         if (typeof target === "string" && target.length) {
-            var $element = list ? document.querySelectorAll(target) : document.querySelector(target);
-            if ($element) {
-                target = $element;
+            var element = list ? document.querySelectorAll(target) : document.querySelector(target);
+            if (element) {
+                target = element;
             }
         }
         return __assign({ target: target }, (0, index_1.default)(__assign(__assign({}, dom_1.default), array_1.default), ["createElement", "isArray"]));

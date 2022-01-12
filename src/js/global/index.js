@@ -17,44 +17,44 @@ var global = {
     },
     createElement: function (_a) {
         var tag = _a.tag, text = _a.text, styles = _a.styles, attributes = _a.attributes;
-        var $res = document.createElement(tag);
-        if ($res instanceof Element) {
+        var res = document.createElement(tag);
+        if (res instanceof Element) {
             if (typeof text === "string") {
-                $res.textContent = text;
+                res.textContent = text;
             }
             if (styles && Object.keys(styles).length) {
-                global.setStyles($res, styles);
+                global.setStyles(res, styles);
             }
             if (attributes && Object.keys(attributes).length) {
-                global.setAttributes($res, attributes);
+                global.setAttributes(res, attributes);
             }
         }
-        return $res;
+        return res;
     },
-    removeChildBySelector: function ($el, selector) {
+    removeChildBySelector: function (el, selector) {
         if (typeof selector === "string" && selector.length) {
-            var findChild = $el.querySelector(selector);
-            findChild && $el.removeChild(findChild);
+            var findChild = el.querySelector(selector);
+            findChild && el.removeChild(findChild);
         }
     },
-    addElementOnPos: function ($parent, $element, pos) {
-        if ($parent instanceof Element) {
+    addElementOnPos: function (parent, element, pos) {
+        if (parent instanceof Element) {
             // Html element
-            if ($element instanceof Element) {
-                $parent.insertAdjacentElement(pos, $element);
+            if (element instanceof Element) {
+                parent.insertAdjacentElement(pos, element);
             }
             // Object
-            if (typeof $element === "object" && !($element instanceof Element) && $element !== null && Object.keys($element).length) {
-                var $el = global.createElement($element);
-                $parent.insertAdjacentElement(pos, $el);
+            if (element && typeof element === "object" && !Array.isArray(element) && !(element instanceof Element || element instanceof HTMLElement)) {
+                var el = global.createElement(element);
+                parent.insertAdjacentElement(pos, el);
             }
         }
     },
-    setStyles: function ($el, obj) {
+    setStyles: function (el, obj) {
         for (var primary in obj) {
-            $el.style[primary] = obj[primary];
+            el.style[primary] = obj[primary];
         }
-        return $el;
+        return el;
     },
     definesType: function (name) {
         var obj = { name: name.replace("#", ""), attribute: "id" };
@@ -63,11 +63,14 @@ var global = {
         }
         return obj;
     },
-    setAttributes: function ($el, obj) {
+    setAttributes: function (el, obj) {
         for (var attr in obj) {
-            $el.setAttribute(attr, Array.isArray(obj[attr]) ? obj[attr].join(" ") : obj[attr]);
+            el.setAttribute(attr, Array.isArray(obj[attr]) ? obj[attr].join(" ") : obj[attr]);
         }
-        return $el;
+        return el;
     },
+    setError: function (message) {
+        throw new Error(message);
+    }
 };
 exports.default = global;
