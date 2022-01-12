@@ -264,6 +264,52 @@ var domCategory = {
         }
     },
     createElement: index_1.default.createElement,
+    data: function (isArray) {
+        if (isArray === void 0) { isArray = false; }
+        var el = this.target;
+        if (el && el instanceof Element) {
+            if (el.nodeName === "FORM") {
+                var data_1 = {};
+                var validNodeNames_1 = ["INPUT", "TEXTAREA"];
+                var validItems_1 = Array.from(el.children).filter(function (item) {
+                    return validNodeNames_1.includes(item.nodeName);
+                });
+                validItems_1.forEach(function (_, index) {
+                    var $el = validItems_1[index];
+                    var itemAttributes = $el.attributes;
+                    if (!$el.attributes.name) {
+                        index_1.default.setError("This form element \"".concat($el.outerHTML, "\" must have the attribute \"name\""));
+                    }
+                    if (!isArray) {
+                        var val = $el.value;
+                        if ($el.type === "checkbox") {
+                            val = $el.checked;
+                        }
+                        data_1[itemAttributes.name.nodeValue] = val;
+                    }
+                    else {
+                        data_1 = [];
+                        for (var i = 0; i < validItems_1.length; i++) {
+                            var $currentEl = validItems_1[i];
+                            var currentItemAttributes = $currentEl.attributes;
+                            var val = $currentEl.value;
+                            if ($currentEl.type === "checkbox") {
+                                val = $currentEl.checked;
+                            }
+                            data_1[i] = "".concat(currentItemAttributes.name.nodeValue, ": \"").concat(val, "\"");
+                        }
+                    }
+                });
+                return data_1;
+            }
+            else {
+                index_1.default.setError("The element ".concat(el, " must have a \"FORM\" nodeName"));
+            }
+        }
+        else {
+            index_1.default.setError("Item ".concat(el, " must be HTMLElement"));
+        }
+    }
 };
 for (var i in domCategory) {
     // Exports every separately method

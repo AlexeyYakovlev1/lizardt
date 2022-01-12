@@ -27,6 +27,7 @@ export interface IDomCategory {
   setAttribute(attributes: IAttribute): void;
   removeAttribute(attribute: string | Array<string>): void;
   createElement(options: IElement): HTMLElement;
+  data(isArray:boolean): object | Array<object>;
 }
 
 export interface IGeneralCategory {
@@ -114,6 +115,7 @@ export interface IT {
   center(): any;
   each(callback: () => Array<any>): Array<any>;
   unfold(): Array<any>;
+  data(isArray:boolean): object | Array<object>;
 }
 
 export interface IGlobal {

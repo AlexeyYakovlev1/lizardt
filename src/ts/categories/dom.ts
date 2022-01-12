@@ -265,6 +265,59 @@ const domCategory: IDomCategory = {
   },
 
   createElement: global.createElement,
+
+  data(isArray = false): object | Array<object> {
+		const el = this.target;
+
+		if (el && el instanceof Element) {
+			if (el.nodeName === "FORM") {
+				let data:any = {};
+				const validNodeNames = ["INPUT", "TEXTAREA"];
+				const validItems = Array.from(el.children).filter(item => {
+					return validNodeNames.includes(item.nodeName);
+				})
+
+				validItems.forEach((_, index) => {
+					const $el:any = validItems[index];
+					const itemAttributes:any = $el.attributes;
+
+					if (!$el.attributes.name) {
+						global.setError(`This form element "${$el.outerHTML}" must have the attribute "name"`);
+					}
+
+					if (!isArray) {
+						let val = $el.value;
+						
+						if ($el.type === "checkbox") {
+							val = $el.checked;
+						}
+
+						data[itemAttributes.name.nodeValue] = val;
+					} else {
+						data = [];
+						
+						for (let i = 0; i < validItems.length; i++) {
+							const $currentEl:any = validItems[i];
+							const currentItemAttributes:any = $currentEl.attributes;
+							let val = $currentEl.value;
+
+							if ($currentEl.type === "checkbox") {
+								val = $currentEl.checked;
+							}
+						
+							data[i] = `${currentItemAttributes.name.nodeValue}: "${val}"`;
+						}
+					}
+				});
+
+				return data;
+			} else {
+				global.setError(`The element ${el} must have a "FORM" nodeName`);
+			}
+		} else {
+			global.setError(`Item ${el} must be HTMLElement`);
+		}
+	}
 }
 
 for (let i in domCategory) {

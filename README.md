@@ -629,3 +629,23 @@ const { t } = lizardt;
 
 t([1, 2, 3]).removeItem(0, 500); // [500, 2, 3]
 ```
+
+### ```data()```:
+- **Description**
+Returns data on form submission. second argument **(optional)**
+allows you to return data as an array
+- **Arguments**
+  - isArray **(optional)**
+- **Return**
+Form data. Object/Array
+- **Example**
+```Javascript
+const {t} = lizardt;
+
+t(".form").on("submit", event => {
+    event.preventDefault();
+
+    console.log(t(".form").data()); // {name: 'Alex', email: 'al@gmail.com'...}
+    console.log(t(".form").data(true)); // ['name: "Alex"', 'email: "al@gmail.com"'...]
+})
+```

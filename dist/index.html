@@ -18,6 +18,15 @@
         .title.cursive {
             font-style: italic;
         }
+
+        .form {
+            display: flex;
+            flex-direction: column;
+        }
+        input, textarea, button[type="submit"] {
+            width: 30%;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -35,6 +44,22 @@
     </ul>
 
     <button>Click me</button>
+
+    <form class="form">
+        <input type="text" class="input" placeholder="Name" name="name" value="Alex" />
+        <input type="email" placeholder="Email" name="email" value="al@gmail.com" />
+        <textarea name="description" id="textarea" cols="30" rows="10" placeholder="Description" value="description about me"></textarea>
+        <input type="checkbox" name="policy">
+        <input type="checkbox" name="rulescompany">
+        <input type="date" name="date">
+        <input type="file" name="file">
+        <input type="number" name="number" value="123">
+        <input type="color" name="color">
+        <input type="password" name="password" value="qwerty">
+        <input type="tel" name="tel" value="89132134234">
+        <input type="time" name="time">
+        <button type="submit">Submit</button>
+    </form>
 
     <script src="./js/main.js"></script>
 </body>
