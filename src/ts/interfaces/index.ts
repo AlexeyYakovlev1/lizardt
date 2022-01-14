@@ -1,6 +1,6 @@
 // Categories 
 export interface IFuncCategory {
-  isFunction(item:any, callback?:() => any):boolean | any
+  isFunction(item: any, callback?: () => any): boolean | any
 }
 
 export interface IArrayCategory {
@@ -31,7 +31,8 @@ export interface IDomCategory {
   setAttribute(attributes: IAttribute): void;
   removeAttribute(attribute: string | Array<string>): void;
   createElement(options: IElement): HTMLElement;
-  data(isArray:boolean): object | Array<object>;
+  data(isArray: boolean): object | Array<object>;
+  hasElement(element: Element | Array<Element | string> | string): boolean;
 }
 
 export interface IGeneralCategory {
@@ -47,6 +48,7 @@ export interface INumberCategory {
 
 export interface IObjectCategory {
   isObject(item, callback?): boolean;
+  hasProperty(property: string | Array<string>): boolean;
 }
 
 // Arguments and options
@@ -119,7 +121,7 @@ export interface IT {
   center(): any;
   each(callback: () => Array<any>): Array<any>;
   unfold(): Array<any>;
-  data(isArray:boolean): object | Array<object>;
+  data(isArray: boolean): object | Array<object>;
 }
 
 export interface IGlobal {
@@ -141,6 +143,6 @@ export interface ILizardt {
   t(target: any, list?: boolean): IT;
   isArray(item: any, callback?: () => any): boolean | any;
   isObject(item: any, callback?: () => any): boolean | any;
-  isFunction(item:any, callback?: () => any):boolean | any;
+  isFunction(item: any, callback?: () => any): boolean | any;
   getRandom(min: number, max: number): number;
 }

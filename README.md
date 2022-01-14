@@ -640,7 +640,7 @@ allows you to return data as an array
 Form data. Object/Array
 - **Example**
 ```Javascript
-const {t} = lizardt;
+const { t } = lizardt;
 
 t(".form").on("submit", event => {
     event.preventDefault();
@@ -660,11 +660,45 @@ t(".form").on("submit", event => {
 True/False/Result your function
 - **Example**
 ```Javascript
-const {isFunction} = lizardt;
+const { isFunction } = lizardt;
 
 isFunction("12") // false
 isFunction(console.log) // true
 isFunction(console.log, () => {
   console.log("yes");
 }) // yes
+```
+
+### ```hasProperty()```:
+- **Description**
+Checks for the presence of a property in an object. If you pass an array, then it will check for the presence of each property in the object
+- **Arguments**
+  - Property **(required)**
+- **Return**
+Boolean
+- **Example**
+```Javascript
+const { t } = lizardt;
+
+t({}).hasProperty("name"); // false
+t({ name: "Alexandr", age: 12 }).hasProperty(["name", "age"]); // true
+t({ name: "Alexandr", age: 12 }).hasProperty(["name", "age", "status"]); // false
+```
+
+### ```hasElement()```:
+- **Description**
+Checks if the parent element has a child element. If you pass an array then it will check for the presence of each child in the parent
+- **Arguments**
+  - Element **(required)**
+- **Return**
+Boolean
+- **Example**
+```Javascript
+const { t } = lizardt;
+const subtitle = t(".subtitle").target;
+
+t(".wrapper").hasElement([".title", subtitle]); // true
+t(".wrapper").hasElement(".title"); // true
+t(".wrapper").hasElement(subtitle); // true
+t(document.documentElement).hasElement(document.body); // true
 ```

@@ -10,6 +10,15 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 // Global methods
 var index_1 = require("../global/index");
@@ -267,40 +276,24 @@ var domCategory = {
     data: function (isArray) {
         if (isArray === void 0) { isArray = false; }
         var el = this.target;
-        if (el && el instanceof HTMLFormElement) {
+        if (el instanceof HTMLFormElement) {
             if (el.nodeName === "FORM") {
-                var data_1 = {};
-                var validNodeNames_1 = ["INPUT", "TEXTAREA"];
-                var validItems_1 = Array.from(el.children).filter(function (item) {
-                    return validNodeNames_1.includes(item.nodeName);
-                });
-                validItems_1.forEach(function (_, index) {
-                    var $el = validItems_1[index];
-                    var itemAttributes = $el.attributes;
-                    if (!$el.attributes.name) {
-                        index_1.default.setError("This form element \"".concat($el.outerHTML, "\" must have the attribute \"name\""));
+                var fd_1 = new FormData(el);
+                var resObj_1 = {};
+                var checkboxes = el.querySelectorAll("input[type='checkbox']");
+                // Set checkboxes
+                checkboxes.forEach(function (checkbox) { return fd_1.append(checkbox["name"], checkbox["checked"]); });
+                Array.from(fd_1.entries()).map(function (arr) { return resObj_1[arr[0]] = (typeof arr[1] === "string" && ["false", "true"].includes(arr[1])) ? JSON.parse(arr[1]) : arr[1]; });
+                if (isArray) {
+                    var resArray = [];
+                    for (var key in resObj_1) {
+                        var obj = {};
+                        obj[key] = resObj_1[key];
+                        resArray.push(obj);
                     }
-                    if (!isArray) {
-                        var val = $el.value;
-                        if ($el.type === "checkbox") {
-                            val = $el.checked;
-                        }
-                        data_1[itemAttributes.name.nodeValue] = val;
-                    }
-                    else {
-                        data_1 = [];
-                        for (var i = 0; i < validItems_1.length; i++) {
-                            var $currentEl = validItems_1[i];
-                            var currentItemAttributes = $currentEl.attributes;
-                            var val = $currentEl.value;
-                            if ($currentEl.type === "checkbox") {
-                                val = $currentEl.checked;
-                            }
-                            data_1[i] = "".concat(currentItemAttributes.name.nodeValue, ": \"").concat(val, "\"");
-                        }
-                    }
-                });
-                return data_1;
+                    return resArray;
+                }
+                return resObj_1;
             }
             else {
                 index_1.default.setError("The element ".concat(el, " must have a \"FORM\" nodeName"));
@@ -308,6 +301,31 @@ var domCategory = {
         }
         else {
             index_1.default.setError("Item ".concat(el, " must be HTMLFormElement"));
+        }
+    },
+    hasElement: function (element) {
+        var _this = this;
+        if (this.target instanceof Element) {
+            var children_2 = __spreadArray([], this.target.children, true);
+            if (element instanceof Element) {
+                return children_2.indexOf(element) !== -1;
+            }
+            if (typeof element === "string") {
+                return Boolean(this.target.querySelector(element));
+            }
+            if (Array.isArray(element)) {
+                return element.every(function (el) {
+                    if (el instanceof Element) {
+                        return children_2.indexOf(el) !== -1;
+                    }
+                    if (typeof el === "string") {
+                        return Boolean(_this.target.querySelector(el));
+                    }
+                });
+            }
+        }
+        else {
+            index_1.default.setError("\"".concat(this.target, "\" is not a HTML element"));
         }
     }
 };

@@ -61,7 +61,7 @@ const generalCategory: IGeneralCategory = {
 
     return {
       target,
-      ...filterMethods({ ...domCategory, ...arrayCategory, ...functionCategory}, ["createElement", "isArray", "isFunction"])
+      ...filterMethods({ ...domCategory, ...arrayCategory, ...functionCategory, ...objectCategory }, ["createElement", "isArray", "isFunction", "isObject"])
     }
   },
 
