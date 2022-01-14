@@ -7,6 +7,7 @@ import {
 // Categories
 import arrayCategory from "../categories/array";
 import domCategory from "../categories/dom";
+import functionCategory from "../categories/func";
 
 // Additional methods
 import filterMethods from "../filterMethods/index";
@@ -60,11 +61,11 @@ const generalCategory: IGeneralCategory = {
 
     return {
       target,
-      ...filterMethods({ ...domCategory, ...arrayCategory }, ["createElement", "isArray"])
+      ...filterMethods({ ...domCategory, ...arrayCategory, ...functionCategory}, ["createElement", "isArray", "isFunction"])
     }
   },
 
-  ...filterMethods({ ...arrayCategory, ...objectCategory }, [], ["isArray", "isObject"]),
+  ...filterMethods({ ...arrayCategory, ...objectCategory, ...functionCategory }, [], ["isArray", "isObject", "isFunction"]),
 }
 
 for (let i in generalCategory) {

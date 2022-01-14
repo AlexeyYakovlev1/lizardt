@@ -267,7 +267,7 @@ var domCategory = {
     data: function (isArray) {
         if (isArray === void 0) { isArray = false; }
         var el = this.target;
-        if (el && el instanceof Element) {
+        if (el && el instanceof HTMLFormElement) {
             if (el.nodeName === "FORM") {
                 var data_1 = {};
                 var validNodeNames_1 = ["INPUT", "TEXTAREA"];
@@ -307,7 +307,7 @@ var domCategory = {
             }
         }
         else {
-            index_1.default.setError("Item ".concat(el, " must be HTMLElement"));
+            index_1.default.setError("Item ".concat(el, " must be HTMLFormElement"));
         }
     }
 };

@@ -23,6 +23,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // Categories
 var array_1 = require("../categories/array");
 var dom_1 = require("../categories/dom");
+var func_1 = require("../categories/func");
 // Additional methods
 var index_1 = require("../filterMethods/index");
 var object_1 = require("./object");
@@ -61,8 +62,8 @@ var generalCategory = __assign({ compare: function (item1, item2) {
                 target = element;
             }
         }
-        return __assign({ target: target }, (0, index_1.default)(__assign(__assign({}, dom_1.default), array_1.default), ["createElement", "isArray"]));
-    } }, (0, index_1.default)(__assign(__assign({}, array_1.default), object_1.default), [], ["isArray", "isObject"]));
+        return __assign({ target: target }, (0, index_1.default)(__assign(__assign(__assign({}, dom_1.default), array_1.default), func_1.default), ["createElement", "isArray", "isFunction"]));
+    } }, (0, index_1.default)(__assign(__assign(__assign({}, array_1.default), object_1.default), func_1.default), [], ["isArray", "isObject", "isFunction"]));
 for (var i in generalCategory) {
     // Exports every separately method
     exports[i] = generalCategory[i];

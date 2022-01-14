@@ -1,4 +1,8 @@
 // Categories 
+export interface IFuncCategory {
+  isFunction(item:any, callback?:() => any):boolean | any
+}
+
 export interface IArrayCategory {
   last(): any,
   center(): any,
@@ -137,5 +141,6 @@ export interface ILizardt {
   t(target: any, list?: boolean): IT;
   isArray(item: any, callback?: () => any): boolean | any;
   isObject(item: any, callback?: () => any): boolean | any;
+  isFunction(item:any, callback?: () => any):boolean | any;
   getRandom(min: number, max: number): number;
 }
