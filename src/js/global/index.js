@@ -71,6 +71,20 @@ var global = {
     },
     setError: function (message) {
         throw new Error(message);
+    },
+    removeChild: function (parent, first) {
+        if (first === void 0) { first = false; }
+        if (parent instanceof Element) {
+            if (first) {
+                parent.removeChild(parent.firstElementChild);
+            }
+            else {
+                parent.removeChild(parent.lastElementChild);
+            }
+        }
+        else {
+            global.setError("\"".concat(parent, "\" must be inherited from Element"));
+        }
     }
 };
 exports.default = global;

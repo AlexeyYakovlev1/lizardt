@@ -2,6 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 // Global methods
 var index_1 = require("../global/index");
+// Categoryes
+var func_1 = require("./func");
 var arrayCategory = {
     last: function () {
         if (index_1.default.checkList(this.target)) {
@@ -33,8 +35,8 @@ var arrayCategory = {
     isArray: function (item, callback) {
         var validArray = Array.isArray(item);
         if (validArray) {
-            if (callback instanceof Function) {
-                callback();
+            if (func_1.default.isFunction(callback)) {
+                return callback();
             }
             return true;
         }

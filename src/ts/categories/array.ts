@@ -4,6 +4,9 @@ import global from "../global/index";
 // Interfaces
 import { IArrayCategory } from "../interfaces/index";
 
+// Categoryes
+import functionCategory from "./func";
+
 const arrayCategory: IArrayCategory = {
   last(): any {
     if (global.checkList(this.target)) {
@@ -39,8 +42,8 @@ const arrayCategory: IArrayCategory = {
     const validArray: boolean = Array.isArray(item);
 
     if (validArray) {
-      if (callback instanceof Function) {
-        callback();
+      if (functionCategory.isFunction(callback)) {
+        return callback();
       }
 
       return true;

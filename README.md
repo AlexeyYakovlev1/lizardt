@@ -646,7 +646,7 @@ t(".form").on("submit", event => {
     event.preventDefault();
 
     console.log(t(".form").data()); // {name: 'Alex', email: 'al@gmail.com', description: '', date: '', file: File, …}
-    console.log(t(".form").data(true)); // [{ name: 'Alex' }, { email: 'al@gmail.com' }, ...]
+    console.log(t(".form").data(true)); // ['name: "Alex"', 'email: "al@gmail.com"', ...]
 })
 ```
 
@@ -701,4 +701,28 @@ t(".wrapper").hasElement([".title", subtitle]); // true
 t(".wrapper").hasElement(".title"); // true
 t(".wrapper").hasElement(subtitle); // true
 t(document.documentElement).hasElement(document.body); // true
+```
+
+### ```removeLastChild()```:
+- **Description**
+Removes the last html child
+- **Return**
+undefined
+- **Example**
+```Javascript
+const { t } = lizardt;
+
+t(".wrapper").removeLastChild();
+```
+
+### ```removeFirstChild()```:
+- **Description**
+Removes the first html child
+- **Return**
+undefined
+- **Example**
+```Javascript
+const { t } = lizardt;
+
+t(".wrapper").removeFirstChild();
 ```

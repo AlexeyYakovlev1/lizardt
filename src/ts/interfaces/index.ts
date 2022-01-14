@@ -33,6 +33,8 @@ export interface IDomCategory {
   createElement(options: IElement): HTMLElement;
   data(isArray: boolean): object | Array<object>;
   hasElement(element: Element | Array<Element | string> | string): boolean;
+  removeLastChild():void;
+  removeFirstChild():void;
 }
 
 export interface IGeneralCategory {
@@ -122,6 +124,8 @@ export interface IT {
   each(callback: () => Array<any>): Array<any>;
   unfold(): Array<any>;
   data(isArray: boolean): object | Array<object>;
+  removeLastChild():void;
+  removeFirstChild():void;
 }
 
 export interface IGlobal {
@@ -133,6 +137,7 @@ export interface IGlobal {
   definesType(name: string): ITypeOfSelector;
   setAttributes(el: HTMLElement, obj: object): HTMLElement;
   setError(message: string): never;
+  removeChild(parent:any, first?:boolean):void;
 }
 
 export interface ILizardt {

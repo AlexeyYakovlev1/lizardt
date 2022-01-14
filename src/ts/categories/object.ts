@@ -1,5 +1,6 @@
 // Interfaces
 import { IObjectCategory } from "../interfaces/index";
+import functionCategory from "./func";
 
 // Global
 import global from "../global/index";
@@ -7,11 +8,11 @@ import global from "../global/index";
 const objectCategory: IObjectCategory = {
   isObject(item, callback?): boolean {
     if (item && typeof item === "object" && !Array.isArray(item) && !(item instanceof Element || item instanceof HTMLElement)) {
-      if (callback instanceof Function) {
-        callback();
+      if (functionCategory.isFunction(callback)) {
+        return callback();
       }
 
-      return true
+      return true;
     }
 
     return false;

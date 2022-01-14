@@ -224,7 +224,8 @@ var domCategory = {
                 this.target.removeChild(child);
             }
             // Array of html elements and selectors
-            if (Array.isArray(child) && child.length && child.every(function (element) { return element instanceof Element || (typeof element === "string" && element.length); })) {
+            if (Array.isArray(child) && child.length && child.every(function (element) { return element instanceof Element
+                || (typeof element === "string" && element.length); })) {
                 child.map(function (element) {
                     if (element instanceof Element) {
                         _this.target.removeChild(element);
@@ -283,13 +284,18 @@ var domCategory = {
                 var checkboxes = el.querySelectorAll("input[type='checkbox']");
                 // Set checkboxes
                 checkboxes.forEach(function (checkbox) { return fd_1.append(checkbox["name"], checkbox["checked"]); });
-                Array.from(fd_1.entries()).map(function (arr) { return resObj_1[arr[0]] = (typeof arr[1] === "string" && ["false", "true"].includes(arr[1])) ? JSON.parse(arr[1]) : arr[1]; });
+                Array.from(fd_1.entries()).map(function (arr) {
+                    if (typeof arr[1] === "string" && ["false", "true"].includes(arr[1])) {
+                        resObj_1[arr[0]] = JSON.parse(arr[1]);
+                    }
+                    else {
+                        resObj_1[arr[0]] = arr[1];
+                    }
+                });
                 if (isArray) {
                     var resArray = [];
                     for (var key in resObj_1) {
-                        var obj = {};
-                        obj[key] = resObj_1[key];
-                        resArray.push(obj);
+                        resArray.push("".concat(key, ": \"").concat(resObj_1[key], "\""));
                     }
                     return resArray;
                 }
@@ -327,6 +333,12 @@ var domCategory = {
         else {
             index_1.default.setError("\"".concat(this.target, "\" is not a HTML element"));
         }
+    },
+    removeLastChild: function () {
+        index_1.default.removeChild(this.target);
+    },
+    removeFirstChild: function () {
+        index_1.default.removeChild(this.target, true);
     }
 };
 for (var i in domCategory) {

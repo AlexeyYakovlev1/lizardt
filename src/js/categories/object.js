@@ -1,12 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var func_1 = require("./func");
 // Global
 var index_1 = require("../global/index");
 var objectCategory = {
     isObject: function (item, callback) {
         if (item && typeof item === "object" && !Array.isArray(item) && !(item instanceof Element || item instanceof HTMLElement)) {
-            if (callback instanceof Function) {
-                callback();
+            if (func_1.default.isFunction(callback)) {
+                return callback();
             }
             return true;
         }
