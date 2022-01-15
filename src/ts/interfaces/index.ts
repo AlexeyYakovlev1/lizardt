@@ -10,6 +10,7 @@ export interface IArrayCategory {
   unfold(): Array<any>;
   each(callback: () => Array<any>): Array<any>
   removeItem(index: number, val?: any): Array<any>;
+  hasItem(item: any): boolean;
 }
 
 export interface IDomCategory {
@@ -33,14 +34,16 @@ export interface IDomCategory {
   createElement(options: IElement): HTMLElement;
   data(isArray: boolean): object | Array<object>;
   hasElement(element: Element | Array<Element | string> | string): boolean;
-  removeLastChild():void;
-  removeFirstChild():void;
+  removeLastChild(): void;
+  removeFirstChild(): void;
 }
 
 export interface IGeneralCategory {
   compare(item1: any, item2: any): Boolean;
   copy(item: any): any;
   array(item: any, symb?: string): Array<any>;
+  jsonParse(item: any, reviver?): any;
+  jsonString(item: any, replacer?, space?): string;
   t(target: any, list?: boolean): IT;
 }
 
@@ -124,20 +127,25 @@ export interface IT {
   each(callback: () => Array<any>): Array<any>;
   unfold(): Array<any>;
   data(isArray: boolean): object | Array<object>;
-  removeLastChild():void;
-  removeFirstChild():void;
+  removeLastChild(): void;
+  removeFirstChild(): void;
+  hasItem(item: any): boolean;
+  hasProperty(property: string | Array<string>): boolean;
+  hasElement(element: Element | Array<Element | string> | string): boolean;
+  jsonParse(item: any, reviver?): any;
+  jsonString(item: any, replacer?, space?): string;
 }
 
 export interface IGlobal {
   checkList(target: any): Boolean;
   createElement(options: IElement): HTMLElement;
-  removeChildBySelector(el: HTMLElement, selector: string): void;
   addElementOnPos(parent: HTMLElement, element: HTMLElement | IElement, pos: InsertPosition): void;
   setStyles(el: HTMLElement, obj: object): HTMLElement;
   definesType(name: string): ITypeOfSelector;
   setAttributes(el: HTMLElement, obj: object): HTMLElement;
   setError(message: string): never;
-  removeChild(parent:any, first?:boolean):void;
+  removeChild(parent: any, element: string | Element, num?: string): void;
+  compare(item1: any, item2: any): Boolean;
 }
 
 export interface ILizardt {

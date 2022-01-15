@@ -13,27 +13,26 @@ import functionCategory from "../categories/func";
 import filterMethods from "../filterMethods/index";
 import objectCategory from "./object";
 
+// Global methods
+import global from "../global/index";
+
 const generalCategory: IGeneralCategory = {
-  compare(item1: any, item2: any): Boolean {
-    if ([item1, item2].every(item => item instanceof Element)) {
-      return item1.isEqualNode(item2);
-    } else if ([item1, item2].some(item => item instanceof Element)) {
-      return false;
-    } else {
-      return JSON.stringify(item1) === JSON.stringify(item2);
+  compare: global.compare,
+
+  copy(item: any): any {
+    if (Array.isArray(item)) {
+      return [...item];
+    } else if (item && typeof item === "object" && !Array.isArray(item) && !(item instanceof Element || item instanceof HTMLElement)) {
+      return { ...item };
     }
   },
 
-  copy(item: any): any {
-    let res: any = item;
+  jsonParse(item: any, reviver?): any {
+    return JSON.parse(item, reviver);
+  },
 
-    if (item instanceof Array) {
-      res = [...item];
-    } else if (item instanceof Object && item !== null) {
-      res = { ...item };
-    }
-
-    return res;
+  jsonString(item: any, replacer?, space?): string {
+    return JSON.stringify(item, replacer, space);
   },
 
   array(item: any, symb?: string): Array<any> {

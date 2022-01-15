@@ -703,6 +703,20 @@ t(".wrapper").hasElement(subtitle); // true
 t(document.documentElement).hasElement(document.body); // true
 ```
 
+### ```hasItem()```:
+- **Description**
+Checks if an element exists in an array
+- **Return**
+Boolean
+- **Example**
+```Javascript
+const { t } = lizardt;
+
+t([1, 2, 3, 4]).hasItem(1); // true
+t([1, 2, 3, 4]).hasItem("1"); // false
+t([{ name: "Alexandr" }, { name: "Andrey" }]).hasItem({ name: "Alexandr" }); // true
+```
+
 ### ```removeLastChild()```:
 - **Description**
 Removes the last html child
@@ -725,4 +739,45 @@ undefined
 const { t } = lizardt;
 
 t(".wrapper").removeFirstChild();
+```
+
+### ```jsonString()```:
+- **Description**
+Converts a value to a JSON string
+- **Arguments**
+  - Value **(required)**
+  - Replacer **(optional)**
+  - Space **(optional)**
+- **Return**
+String JSON
+- **Example**
+```Javascript
+const { jsonString } = lizardt;
+
+/*
+"[
+ 1,
+ 2,
+ 3,
+ 4
+]"
+*/
+jsonString([1, 2, 3, 4], null, " ");
+```
+
+### ```jsonParse()```:
+- **Description**
+Parses a JSON string
+- **Arguments**
+  - Value **(required)**
+  - Reviver **(optional)**
+- **Return**
+Data
+- **Example**
+```Javascript
+const { jsonParse, jsonString } = lizardt;
+const stringify = jsonString([1, 2, 3, 4]);
+
+// [1, 2, 3, 4]
+jsonParse(stringify);
 ```

@@ -68,6 +68,14 @@ var arrayCategory = {
             index_1.default.setError("\"".concat(this.target, "\" is not a list or your callback is not a function"));
         }
     },
+    hasItem: function (item) {
+        if (Array.isArray(this.target)) {
+            return Boolean(this.target.find(function (el) { return index_1.default.compare(el, item); }));
+        }
+        else {
+            index_1.default.setError("".concat(this.target, " is not an array"));
+        }
+    }
 };
 for (var i in arrayCategory) {
     // Exports every separately method

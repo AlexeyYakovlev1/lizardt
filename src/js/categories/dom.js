@@ -217,7 +217,7 @@ var domCategory = {
         if (this.target instanceof Element) {
             // Selector
             if (typeof child === "string" && child.length) {
-                index_1.default.removeChildBySelector(this.target, child);
+                index_1.default.removeChild(this.target, child);
             }
             // Html element
             if (child instanceof Element) {
@@ -231,7 +231,7 @@ var domCategory = {
                         _this.target.removeChild(element);
                     }
                     else {
-                        index_1.default.removeChildBySelector(_this.target, element);
+                        index_1.default.removeChild(_this.target, element);
                     }
                 });
             }
@@ -335,10 +335,10 @@ var domCategory = {
         }
     },
     removeLastChild: function () {
-        index_1.default.removeChild(this.target);
+        index_1.default.removeChild(this.target, "last");
     },
     removeFirstChild: function () {
-        index_1.default.removeChild(this.target, true);
+        index_1.default.removeChild(this.target, "first");
     }
 };
 for (var i in domCategory) {

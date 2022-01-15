@@ -31,12 +31,6 @@ var global = {
         }
         return res;
     },
-    removeChildBySelector: function (el, selector) {
-        if (typeof selector === "string" && selector.length) {
-            var findChild = el.querySelector(selector);
-            findChild && el.removeChild(findChild);
-        }
-    },
     addElementOnPos: function (parent, element, pos) {
         if (parent instanceof Element) {
             // Html element
@@ -72,19 +66,40 @@ var global = {
     setError: function (message) {
         throw new Error(message);
     },
-    removeChild: function (parent, first) {
-        if (first === void 0) { first = false; }
+    removeChild: function (parent, element, num) {
         if (parent instanceof Element) {
-            if (first) {
-                parent.removeChild(parent.firstElementChild);
+            if (num) {
+                switch (num) {
+                    case "first":
+                        parent.removeChild(parent.firstElementChild);
+                        break;
+                    case "last":
+                        parent.removeChild(parent.lastElementChild);
+                        break;
+                }
             }
-            else {
-                parent.removeChild(parent.lastElementChild);
+            if (typeof element === "string" && element.length) {
+                var findChild = parent.querySelector(element);
+                findChild && parent.removeChild(findChild);
+            }
+            if (element instanceof Element) {
+                parent.removeChild(element);
             }
         }
         else {
             global.setError("\"".concat(parent, "\" must be inherited from Element"));
         }
-    }
+    },
+    compare: function (item1, item2) {
+        if ([item1, item2].every(function (item) { return item instanceof Element; })) {
+            return item1.isEqualNode(item2);
+        }
+        else if ([item1, item2].some(function (item) { return item instanceof Element; })) {
+            return false;
+        }
+        else {
+            return JSON.stringify(item1) === JSON.stringify(item2);
+        }
+    },
 };
 exports.default = global;

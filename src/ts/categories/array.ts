@@ -79,6 +79,14 @@ const arrayCategory: IArrayCategory = {
       global.setError(`"${this.target}" is not a list or your callback is not a function`);
     }
   },
+
+  hasItem(item: any): boolean {
+    if (Array.isArray(this.target)) {
+      return Boolean(this.target.find(el => global.compare(el, item)));
+    } else {
+      global.setError(`${this.target} is not an array`);
+    }
+  }
 }
 
 for (let i in arrayCategory) {

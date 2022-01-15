@@ -27,25 +27,19 @@ var func_1 = require("../categories/func");
 // Additional methods
 var index_1 = require("../filterMethods/index");
 var object_1 = require("./object");
-var generalCategory = __assign({ compare: function (item1, item2) {
-        if ([item1, item2].every(function (item) { return item instanceof Element; })) {
-            return item1.isEqualNode(item2);
+// Global methods
+var index_2 = require("../global/index");
+var generalCategory = __assign({ compare: index_2.default.compare, copy: function (item) {
+        if (Array.isArray(item)) {
+            return __spreadArray([], item, true);
         }
-        else if ([item1, item2].some(function (item) { return item instanceof Element; })) {
-            return false;
+        else if (item && typeof item === "object" && !Array.isArray(item) && !(item instanceof Element || item instanceof HTMLElement)) {
+            return __assign({}, item);
         }
-        else {
-            return JSON.stringify(item1) === JSON.stringify(item2);
-        }
-    }, copy: function (item) {
-        var res = item;
-        if (item instanceof Array) {
-            res = __spreadArray([], item, true);
-        }
-        else if (item instanceof Object && item !== null) {
-            res = __assign({}, item);
-        }
-        return res;
+    }, jsonParse: function (item, reviver) {
+        return JSON.parse(item, reviver);
+    }, jsonString: function (item, replacer, space) {
+        return JSON.stringify(item, replacer, space);
     }, array: function (item, symb) {
         if (!item) {
             return [];
