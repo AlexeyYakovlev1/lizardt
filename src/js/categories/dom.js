@@ -346,7 +346,6 @@ var domCategory = {
             args[_i] = arguments[_i];
         }
         if (this.target instanceof Element) {
-            var result_1 = true;
             var $el_1 = this.target;
             var names_1 = [];
             if (!args.length) {
@@ -366,8 +365,7 @@ var domCategory = {
                     index_1.default.setError("type \"".concat(selector, "\" is not a string"));
                 }
             });
-            names_1.filter(function (name) { return !name ? result_1 = false : result_1 = true; });
-            return result_1;
+            return names_1.every(function (name) { return name; });
         }
         else {
             index_1.default.setError("\"".concat(this.target, "\" is not a HTML element"));

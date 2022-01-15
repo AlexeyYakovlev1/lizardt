@@ -344,8 +344,6 @@ const domCategory: IDomCategory = {
 
 	contains(...args) {
 		if (this.target instanceof Element) {
-			let result = true;
-			
 			const $el = this.target;
 			const names:Array<boolean> = [];
 
@@ -367,8 +365,7 @@ const domCategory: IDomCategory = {
 				}
 			})
 	
-			names.filter(name => !name ? result = false : result = true);
-			return result;
+			return names.every(name => name);
 		} else {
 			global.setError(`"${this.target}" is not a HTML element`);
 		}
