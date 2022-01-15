@@ -781,3 +781,18 @@ const stringify = jsonString([1, 2, 3, 4]);
 // [1, 2, 3, 4]
 jsonParse(stringify);
 ```
+
+### ```contains()```:
+- **Description**
+Checks for the presence of classes/ids on an html element
+- **Arguments**
+  - Selector name **(required)**
+- **Return**
+True/False
+- **Example**
+```Javascript
+const { t } = lizardt;
+
+t(".wrapper").contains("#block"); // true
+t(".wrapper").contains(".block", "#item"); // false
+```

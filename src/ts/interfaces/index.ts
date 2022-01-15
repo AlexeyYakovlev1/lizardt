@@ -36,6 +36,7 @@ export interface IDomCategory {
   hasElement(element: Element | Array<Element | string> | string): boolean;
   removeLastChild(): void;
   removeFirstChild(): void;
+  contains(selector:string):boolean;
 }
 
 export interface IGeneralCategory {
@@ -134,6 +135,7 @@ export interface IT {
   hasElement(element: Element | Array<Element | string> | string): boolean;
   jsonParse(item: any, reviver?): any;
   jsonString(item: any, replacer?, space?): string;
+  contains(selector:string):boolean;
 }
 
 export interface IGlobal {

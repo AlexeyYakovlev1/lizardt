@@ -339,6 +339,39 @@ var domCategory = {
     },
     removeFirstChild: function () {
         index_1.default.removeChild(this.target, "first");
+    },
+    contains: function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        if (this.target instanceof Element) {
+            var result_1 = true;
+            var $el_1 = this.target;
+            var names_1 = [];
+            if (!args.length) {
+                index_1.default.setError("Selectors array must be filled");
+            }
+            args.forEach(function (selector) {
+                if (typeof selector === "string") {
+                    var infEl = index_1.default.definesType(selector);
+                    if (infEl.attribute === "class") {
+                        names_1.push($el_1.classList.contains(infEl.name));
+                    }
+                    else if (infEl.attribute === "id") {
+                        names_1.push($el_1.getAttribute(infEl.attribute) === infEl.name);
+                    }
+                }
+                else {
+                    index_1.default.setError("type \"".concat(selector, "\" is not a string"));
+                }
+            });
+            names_1.filter(function (name) { return !name ? result_1 = false : result_1 = true; });
+            return result_1;
+        }
+        else {
+            index_1.default.setError("\"".concat(this.target, "\" is not a HTML element"));
+        }
     }
 };
 for (var i in domCategory) {
