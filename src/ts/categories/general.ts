@@ -1,7 +1,7 @@
 // Interfaces
 import {
-  IT,
-  IGeneralCategory
+	IT,
+	IGeneralCategory
 } from "../interfaces/index";
 
 // Categories
@@ -18,66 +18,66 @@ import filterMethods from "../filterMethods/index";
 import global from "../global/index";
 
 const generalCategory: IGeneralCategory = {
-  compare: global.compare,
+	compare: global.compare,
 
-  copy(item: any): any {
-    if (Array.isArray(item)) {
-      return [...item];
-    } else if (item && typeof item === "object" && !Array.isArray(item) && !(item instanceof Element || item instanceof HTMLElement)) {
-      return { ...item };
-    }
-  },
+	copy(item: any): any {
+		if (Array.isArray(item)) {
+			return [...item];
+		} else if (item && typeof item === "object" && !Array.isArray(item) && !(item instanceof Element || item instanceof HTMLElement)) {
+			return { ...item };
+		}
+	},
 
-  jsonParse(item: any, reviver?): any {
-    return JSON.parse(item, reviver);
-  },
+	jsonParse(item: any, reviver?): any {
+		return JSON.parse(item, reviver);
+	},
 
-  jsonString(item: any, replacer?, space?): string {
-    return JSON.stringify(item, replacer, space);
-  },
+	jsonString(item: any, replacer?, space?): string {
+		return JSON.stringify(item, replacer, space);
+	},
 
-  array(item: any, symb?: string): Array<any> {
-    if (!item) {
-      return [];
-    }
+	array(item: any, symb?: string): Array<any> {
+		if (!item) {
+			return [];
+		}
 
-    let res: Array<any> = Array.from(item);
+		let res: Array<any> = Array.from(item);
 
-    if (typeof symb === "string" && symb.length) {
-      res = item.split(symb);
-    }
+		if (typeof symb === "string" && symb.length) {
+			res = item.split(symb);
+		}
 
-    return res;
-  },
+		return res;
+	},
 
-  t(target: any, list?: boolean): IT {
-    let trt;
+	t(target: any, list?: boolean): IT {
+		let trt;
 
-    if (typeof target === "string" && /^\[.+\]$/.test(target)) {
-      try {
-        const selector = target.replace(/^\[/, "").replace(/\]$/, "");
-        const element: NodeListOf<Element> | Element | null = list ? document.querySelectorAll(selector) : document.querySelector(selector);
+		if (typeof target === "string" && /^\[.+\]$/.test(target)) {
+			try {
+				const selector = target.replace(/^\[/, "").replace(/\]$/, "");
+				const element: NodeListOf<Element> | Element | null = list ? document.querySelectorAll(selector) : document.querySelector(selector);
 
-        if (element) {
-          trt = element;
-        }
-      } catch (e) {
-        trt = target;
-      }
-    }
+				if (element) {
+					trt = element;
+				}
+			} catch (e) {
+				trt = target;
+			}
+		}
 
-    return {
-      target: trt ? trt : target,
-      ...filterMethods({ ...domCategory, ...arrayCategory, ...functionCategory, ...objectCategory, ...stringCategory }, ["createElement", "isArray", "isFunction", "isObject"])
-    }
-  },
+		return {
+			target: trt ? trt : target,
+			...filterMethods({ ...domCategory, ...arrayCategory, ...functionCategory, ...objectCategory, ...stringCategory }, ["createElement", "isArray", "isFunction", "isObject"])
+		}
+	},
 
-  ...filterMethods({ ...arrayCategory, ...objectCategory, ...functionCategory }, [], ["isArray", "isObject", "isFunction"]),
+	...filterMethods({ ...arrayCategory, ...objectCategory, ...functionCategory }, [], ["isArray", "isObject", "isFunction", "index"])
 }
 
 for (let i in generalCategory) {
-  // Exports every separately method
-  exports[i] = generalCategory[i];
+	// Exports every separately method
+	exports[i] = generalCategory[i];
 }
 
 // Exports all methods

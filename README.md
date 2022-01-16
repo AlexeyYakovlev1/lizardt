@@ -55,7 +55,7 @@ t([1,2,3,4,5]).target; // [1,2,3,4,5]
 - **Description**
 Adding class or id for html element	
 - **Return**
-undefined
+Main object
 - **Arguments**
 	- Class names or id **(required)**
 - **Example**
@@ -69,7 +69,7 @@ t("[div]").add(".home", "#main");
 - **Description**
 Removing class or id for html element	
 - **Return**
-undefined
+Main object
 - **Arguments**
 	- Class names or id **(required)**
 - **Example**
@@ -83,7 +83,7 @@ t("[.title]").remove(".cursive", "#subtitle");
 - **Description**
 Add styles for html element	
 - **Return**
-undefined
+Main object
 - **Arguments**
 	- Object of styles **(required)**
 - **Example**
@@ -125,7 +125,7 @@ t("[button]").on("click", () =>  {
 - **Description**
 Adding text value  for html element
 - **Return**
-undefined
+Main object
 - **Arguments**
 	- Value **(required)**
 - **Example**
@@ -151,7 +151,7 @@ t("[.title]").size(); // { width: 500, height: 36 }
 - **Description**
 Remove all styles from style attribute
 - **Return**
-undefined
+Main object
 - **Example**
 ```Javascript
 const { t } = lizardt;
@@ -258,7 +258,7 @@ Adds a child to an element
 - **Arguments**
   - Child **(required)**
 - **Return**
-undefined
+Main object
 - **Example**
 ```Javascript
 const { t } = lizardt;
@@ -308,7 +308,7 @@ Removes a child from an element
 - **Arguments**
   - Child **(required)**
 - **Return**
-undefined
+Main object
 - **Example**
 ```Javascript
 const { t } = lizardt;
@@ -387,7 +387,7 @@ Adds the previous item
 - **Arguments**
   - Element **(required)**
 - **Return**
-undefined
+Main object
 - **Example**
 ```Javascript
 const { t } = lizardt;
@@ -418,7 +418,7 @@ Adds the next item
 - **Arguments**
   - Element **(required)**
 - **Return**
-undefined
+Main object
 - **Example**
 ```Javascript
 const { t } = lizardt;
@@ -464,7 +464,7 @@ Sets attributes to an element
 - **Arguments**
   - Attributes **(required)**
 - **Return**
-undefined
+Main object
 - **Example**
 ```Javascript
 const { t } = lizardt;
@@ -478,7 +478,7 @@ Removes attributes on an element
 - **Arguments**
   - Attribute **(required)**
 - **Return**
-undefined
+Main object
 - **Example**
 ```Javascript
 const { t } = lizardt;
@@ -536,7 +536,7 @@ t([1,2,3,4]).each(item => item += 2);
   - Item **(required)**
   - Callback **(optional)**
 - **Return**
-True/False/Result your function
+Boolean/Result your function
 - **Example**
 ```Javascript
 const { isArray } = lizardt;
@@ -555,7 +555,7 @@ isArray([1,2,3], () => {
   - Item **(required)**
   - Callback **(optional)**
 - **Return**
-True/False/Result your function
+Boolean/Result your function
 - **Example**
 ```Javascript
 const {isObject} = lizardt;
@@ -621,7 +621,7 @@ t("[.form]").on("submit", event => {
   - Item **(required)**
   - Callback **(optional)**
 - **Return**
-True/False/Result your function
+Boolean/Result your function
 - **Example**
 ```Javascript
 const { isFunction } = lizardt;
@@ -685,7 +685,7 @@ t([{ name: "Alexandr" }, { name: "Andrey" }]).hasItem({ name: "Alexandr" }); // 
 - **Description**
 Removes the last html child
 - **Return**
-undefined
+Main object
 - **Example**
 ```Javascript
 const { t } = lizardt;
@@ -697,7 +697,7 @@ t("[.wrapper]").removeLastChild();
 - **Description**
 Removes the first html child
 - **Return**
-undefined
+Main object
 - **Example**
 ```Javascript
 const { t } = lizardt;
@@ -752,7 +752,7 @@ Checks for the presence of classes/ids on an html element
 - **Arguments**
   - Selector name **(required)**
 - **Return**
-True/False
+Boolean
 - **Example**
 ```Javascript
 const { t } = lizardt;
@@ -787,4 +787,20 @@ const { t } = lizardt;
 
 t("Hello, world!").indexOf("ello"); // 1
 t("Hello, world!").indexOf("D"); // -1
+```
+
+### ```index()```:
+- **Description**
+Replaces the value in the function ```t()``` with the found element at the index
+- **Arguments**
+  - Num **(required)**
+- **Return**
+Main object
+- **Example**
+```Javascript
+const { t } = lizardt;
+
+console.log(t([1,2,3,4,5,6,7]).index(2).target); // 3
+console.log(t([1,2,3,4,5,6,7]).index(-2).target); // 5
+t("[li]", true).index(2).styles({color: "red"}).txt("my index = 2");
 ```

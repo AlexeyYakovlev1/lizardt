@@ -17,7 +17,7 @@ var arrayCategory = {
     removeItem: function (num, val) {
         if (Array.isArray(this.target)) {
             val ? this.target.splice(num, 1, val) : this.target.splice(num, 1);
-            return this.target;
+            return this;
         }
         else {
             index_1.default.setError("\"".concat(this.target, "\" is not a array"));
@@ -76,6 +76,20 @@ var arrayCategory = {
             index_1.default.setError("".concat(this.target, " is not an array"));
         }
     },
+    index: function (num) {
+        num === undefined && index_1.default.setError("Invalid value num: ".concat(num));
+        if (Array.isArray(this.target)
+            || typeof this.target == "string"
+            || NodeList.prototype.isPrototypeOf(this.target)
+            || HTMLCollection.prototype.isPrototypeOf(this.target)) {
+            var el = this.target[num];
+            if (num < 0)
+                el = this.target[(this.target.length - 1) + num];
+            this.target = el;
+            return this;
+        }
+        index_1.default.setError("".concat(this.target, " must be array, string, HTMLCollection or NodeList"));
+    }
 };
 for (var i in arrayCategory) {
     // Exports every separately method
