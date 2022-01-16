@@ -785,6 +785,6 @@ Index of the beginning of the string
 ```Javascript
 const { t } = lizardt;
 
-t("Hello, world!").hasString("ello"); // 1
-t("Hello, world!").hasString("D"); // -1
+t("Hello, world!").indexOf("ello"); // 1
+t("Hello, world!").indexOf("D"); // -1
 ```
