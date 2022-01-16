@@ -8,10 +8,11 @@ import {
 import arrayCategory from "../categories/array";
 import domCategory from "../categories/dom";
 import functionCategory from "../categories/func";
+import objectCategory from "./object";
+import stringCategory from "./string";
 
 // Additional methods
 import filterMethods from "../filterMethods/index";
-import objectCategory from "./object";
 
 // Global methods
 import global from "../global/index";
@@ -50,17 +51,24 @@ const generalCategory: IGeneralCategory = {
   },
 
   t(target: any, list?: boolean): IT {
-    if (typeof target === "string" && target.length) {
-      const element: NodeListOf<Element> | Element | null = list ? document.querySelectorAll(target) : document.querySelector(target);
+    let trt;
 
-      if (element) {
-        target = element;
+    if (typeof target === "string" && /^\[.+\]$/.test(target)) {
+      try {
+        const selector = target.replace(/^\[/, "").replace(/\]$/, "");
+        const element: NodeListOf<Element> | Element | null = list ? document.querySelectorAll(selector) : document.querySelector(selector);
+
+        if (element) {
+          trt = element;
+        }
+      } catch (e) {
+        trt = target;
       }
     }
 
     return {
-      target,
-      ...filterMethods({ ...domCategory, ...arrayCategory, ...functionCategory, ...objectCategory }, ["createElement", "isArray", "isFunction", "isObject"])
+      target: trt ? trt : target,
+      ...filterMethods({ ...domCategory, ...arrayCategory, ...functionCategory, ...objectCategory, ...stringCategory }, ["createElement", "isArray", "isFunction", "isObject"])
     }
   },
 

@@ -24,9 +24,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var array_1 = require("../categories/array");
 var dom_1 = require("../categories/dom");
 var func_1 = require("../categories/func");
+var object_1 = require("./object");
+var string_1 = require("./string");
 // Additional methods
 var index_1 = require("../filterMethods/index");
-var object_1 = require("./object");
 // Global methods
 var index_2 = require("../global/index");
 var generalCategory = __assign({ compare: index_2.default.compare, copy: function (item) {
@@ -50,13 +51,20 @@ var generalCategory = __assign({ compare: index_2.default.compare, copy: functio
         }
         return res;
     }, t: function (target, list) {
-        if (typeof target === "string" && target.length) {
-            var element = list ? document.querySelectorAll(target) : document.querySelector(target);
-            if (element) {
-                target = element;
+        var trt;
+        if (typeof target === "string" && /^\[.+\]$/.test(target)) {
+            try {
+                var selector = target.replace(/^\[/, "").replace(/\]$/, "");
+                var element = list ? document.querySelectorAll(selector) : document.querySelector(selector);
+                if (element) {
+                    trt = element;
+                }
+            }
+            catch (e) {
+                trt = target;
             }
         }
-        return __assign({ target: target }, (0, index_1.default)(__assign(__assign(__assign(__assign({}, dom_1.default), array_1.default), func_1.default), object_1.default), ["createElement", "isArray", "isFunction", "isObject"]));
+        return __assign({ target: trt ? trt : target }, (0, index_1.default)(__assign(__assign(__assign(__assign(__assign({}, dom_1.default), array_1.default), func_1.default), object_1.default), string_1.default), ["createElement", "isArray", "isFunction", "isObject"]));
     } }, (0, index_1.default)(__assign(__assign(__assign({}, array_1.default), object_1.default), func_1.default), [], ["isArray", "isObject", "isFunction"]));
 for (var i in generalCategory) {
     // Exports every separately method

@@ -75,7 +75,7 @@ var arrayCategory = {
         else {
             index_1.default.setError("".concat(this.target, " is not an array"));
         }
-    }
+    },
 };
 for (var i in arrayCategory) {
     // Exports every separately method

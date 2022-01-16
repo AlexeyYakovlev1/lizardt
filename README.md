@@ -22,7 +22,7 @@ Here described all methods which haves this library
 
 ### ```t()```:
 - **Description**
-Designed to create an element on which work will take place. When we use **list**, we refer to the list of elements
+Designed to create an element on which work will take place. When we use **list**, we refer to the list of elements. To refer to an element write a string in "[]". If you want to work with a string, then write without "[]"
 - **Return**
 lizardt object
 - **Arguments**
@@ -33,24 +33,22 @@ lizardt object
 const { t } = lizardt;
 
 // the target will be a document.querySelector(".title");
-t(".title"); // lizardt object
+t("[.title]"); // lizardt object
+
+// the target will be a node list of .title
+t("[.title]", true); // lizardt object
 
 // the target will be a html element;
 t(document.querySelector(".title")); // lizardt object
+
+// the target will be a string
+t(".title"); // lizardt object
 
 // the target will be a [1,2,3,4,5]
 t([1,2,3,4,5]); // lizardt object
 
 // to get target
 t([1,2,3,4,5]).target; // [1,2,3,4,5]
-```
-
-or
-
-```Javascript
-const { t } = lizardt;
-
-t("li", true).target; // Node list of li
 ```
 
 ### ```add()```:
@@ -64,7 +62,7 @@ undefined
 ```Javascript
 const { t } = lizardt;
 
-t("div").add(".home", "#main");
+t("[div]").add(".home", "#main");
 ```
 
 ### ```remove()```:
@@ -78,7 +76,7 @@ undefined
 ```Javascript
 const { t } = lizardt;
 
-t(".title").remove(".cursive", "#subtitle");
+t("[.title]").remove(".cursive", "#subtitle");
 ```
 
 ### ```styles()```:
@@ -92,7 +90,7 @@ undefined
 ```Javascript
 const { t } = lizardt;
 
-t("div").styles({ width: "125px" });
+t("[div]").styles({ width: "125px" });
 ```
 
 ### ```on()```:
@@ -108,7 +106,7 @@ undefined
 ```Javascript
 const { t } = lizardt;
 
-t("button").on("click", () =>  {
+t("[button]").on("click", () =>  {
 	console.log("Hello");
 });
 ```
@@ -118,7 +116,7 @@ or
 ```Javascript
 const { t } = lizardt;
 
-t("button").on("click", () =>  {
+t("[button]").on("click", () =>  {
 	console.log("Hello");
 }, { once: true });
 ```
@@ -134,7 +132,7 @@ undefined
 ```Javascript
 const { t } = lizardt;
 
-t(".btn").txt("Click me!");
+t("[.btn]").txt("Click me!");
 ```
 
 ### ```size()```:
@@ -146,7 +144,7 @@ Object of size data
 ```Javascript
 const { t } = lizardt;
 
-t(".title").size(); // { width: 500, height: 36 }
+t("[.title]").size(); // { width: 500, height: 36 }
 ```
 
 ### ```clearStyles()```:
@@ -158,7 +156,7 @@ undefined
 ```Javascript
 const { t } = lizardt;
 
-t(".photo").clearStyles();
+t("[.photo]").clearStyles();
 ```
 
 ### ```getAttributes()```:
@@ -172,13 +170,13 @@ List of attributes. When used **attribute** returns an object with attribute dat
 ```Javascript
 const { t } = lizardt;
 
-t(".button").getAttributes(); // [{ name: "type", val... }]
+t("[.button]").getAttributes(); // [{ name: "type", val... }]
 ```
 or
 ```Javascript
 const { t } = lizardt;
 
-t(".button").getAttributes("type"); // { name: "type", val... }
+t("[.button]").getAttributes("type"); // { name: "type", val... }
 ```
 
 ### ```getChildren()```:
@@ -192,7 +190,7 @@ List of children. When we use **selector**, it returns the element itself
 ```Javascript
 const { t } = lizardt;
 
-t(".wrapper").getChildren(); // [HtmlElement, ...]
+t("[.wrapper]").getChildren(); // [HtmlElement, ...]
 ```
 
 or
@@ -200,7 +198,7 @@ or
 ```Javascript
 const { t } = lizardt;
 
-t(".wrapper").getChildren(".title"); // HtmlElement
+t("[.wrapper]").getChildren(".title"); // HtmlElement
 ```
 
 ### ```getCoordinates()```:
@@ -212,7 +210,7 @@ Object of coordinates
 ```Javascript
 const { t } = lizardt;
 
-t(".wrapper").getCoordinates(); // { top: 0, bottom: 0, left: 0, ... }
+t("[.wrapper]").getCoordinates(); // { top: 0, bottom: 0, left: 0, ... }
 ```
 
 ### ```getAllParents()```:
@@ -226,13 +224,13 @@ List of parents
 ```Javascript
 const { t } = lizardt;
 
-t(".wrapper").getAllParents(); // [HtmlElement, ...]
+t("[.wrapper]").getAllParents(); // [HtmlElement, ...]
 ```
 or
 ```Javascript
 const { t } = lizardt;
 
-t(".wrapper").getAllParents(1); HtmlElement under the number 1
+t("[.wrapper]").getAllParents(1); HtmlElement under the number 1
 ```
 
 ### ```createElement()```:
@@ -251,7 +249,7 @@ const title = createElement({
     text: "Hello, Lizard!",
     styles: { color: "blue" },
     attributes: { title: "Main title" },
-  }); // HtmlElement
+  }); // Html Element
 ```
 
 ### ```addChild()```:
@@ -265,7 +263,7 @@ undefined
 ```Javascript
 const { t } = lizardt;
 
-t(".wrapper").addChild({
+t("[.wrapper]").addChild({
     tag: "h1",
     text: "Hello, Lizard!",
     styles: { color: "blue" },
@@ -279,7 +277,7 @@ or
 const { t, createElement } = lizardt;
 const subtitle = createElement({ tag: "h2", text: "Subtitle" });
 
-t(".wrapper").addChild([
+t("[.wrapper]").addChild([
 	{
 	  tag: "h1",
 	  text: "Hello, Lizard!",
@@ -301,7 +299,7 @@ const title = createElement({
     attributes: { title: "Main title" },
   });
 
-t(".wrapper").addChild(title);
+t("[.wrapper]").addChild(title);
 ```
 
 ### ```removeChild()```:
@@ -315,25 +313,17 @@ undefined
 ```Javascript
 const { t } = lizardt;
 
-t(".wrapper").removeChild(".title");
+t("[.wrapper]").removeChild(".title");
 ```
 
 or
 
 ```Javascript
 const { t } = lizardt;
-const title = t(".wrapper").getChildren(".title");
+const title = t("[.wrapper]").getChildren(".title");
 
-t(".wrapper").removeChild([title, ".subtitle"]);
-```
-
-or 
-
-```Javascript
-const { t } = lizardt;
-const title = t(".wrapper").getChildren(".title");
-
-t(".wrapper").removeChild(title);
+t("[.wrapper]").removeChild([title, ".subtitle"]);
+t("[.wrapper]").removeChild(title);
 ```
 
 ### ```array()```:
@@ -349,13 +339,6 @@ Array
 const { array } = lizardt;
 
 array("abc"); // ["a","b","c"];
-```
-
-or
-
-```Javascript
-const { array } = lizardt;
-
 array("ab,c", ","); // ["ab", "c"];
 ```
 
@@ -408,21 +391,6 @@ undefined
 - **Example**
 ```Javascript
 const { t } = lizardt;
-
-t(".wrapper").addPrevElement({
-  tag: "div",
-  styles: {
-    width: "200px",
-    height: "200px",
-    backgroundColor: "red"
-  }
-});
-```
-
-or
-
-```Javascript
-const { t, createElement } = lizardt;
 const block = createElement({
   tag: "div",
   styles: {
@@ -432,7 +400,16 @@ const block = createElement({
   }
 });
 
-t(".wrapper").addPrevElement(block);
+t("[.wrapper]").addPrevElement({
+  tag: "div",
+  styles: {
+    width: "200px",
+    height: "200px",
+    backgroundColor: "red"
+  }
+});
+
+t("[.wrapper]").addPrevElement(block);
 ```
 
 ### ```addNextElement()```:
@@ -445,8 +422,7 @@ undefined
 - **Example**
 ```Javascript
 const { t } = lizardt;
-
-t(".wrapper").addNextElement({
+const block = createElement({
   tag: "div",
   styles: {
     width: "200px",
@@ -454,13 +430,8 @@ t(".wrapper").addNextElement({
     backgroundColor: "red"
   }
 });
-```
 
-or
-
-```Javascript
-const { t, createElement } = lizardt;
-const block = createElement({
+t("[.wrapper]").addNextElement({
   tag: "div",
   styles: {
     width: "200px",
@@ -498,7 +469,7 @@ undefined
 ```Javascript
 const { t } = lizardt;
 
-t(".list").setAttribute({ "data-colors": ["green", "red", "yellow"], "data-length": "3" });
+t("[.list]").setAttribute({ "data-colors": ["green", "red", "yellow"], "data-length": "3" });
 ```
 
 ### ```removeAttribute()```:
@@ -512,15 +483,8 @@ undefined
 ```Javascript
 const { t } = lizardt;
 
-t(".input").removeAttribute("type");
-```
-
-or
-
-```Javascript
-const { t } = lizardt;
-
-t(".input").removeAttribute(["type", "placeholder"]);
+t("[.input]").removeAttribute("type");
+t("[.input]").removeAttribute(["type", "placeholder"]);
 ```
 
 ### ```last()```:
@@ -534,7 +498,7 @@ const { t } = lizardt;
 
 t([1,2,3]).last(); // 3
 t(document.querySelectorAll("li")).last();
-list("li").last();
+list("[li]").last();
 ```
 
 ### ```center()```:
@@ -548,7 +512,7 @@ const { t, list } = lizardt;
 
 t(document.querySelectorAll("li")).center();
 t([1,2,3,4,5,6,7]).center(); // 4
-list("li").center();
+list("[li]").center();
 ```
 
 ### ```each()```:
@@ -642,11 +606,11 @@ Form data. Object/Array
 ```Javascript
 const { t } = lizardt;
 
-t(".form").on("submit", event => {
+t("[.form]").on("submit", event => {
     event.preventDefault();
 
-    console.log(t(".form").data()); // {name: 'Alex', email: 'al@gmail.com', description: '', date: '', file: File, …}
-    console.log(t(".form").data(true)); // ['name: "Alex"', 'email: "al@gmail.com"', ...]
+    console.log(t("[.form]").data()); // {name: 'Alex', email: 'al@gmail.com', description: '', date: '', file: File, …}
+    console.log(t("[.form]").data(true)); // ['name: "Alex"', 'email: "al@gmail.com"', ...]
 })
 ```
 
@@ -695,11 +659,11 @@ Boolean
 - **Example**
 ```Javascript
 const { t } = lizardt;
-const subtitle = t(".subtitle").target;
+const subtitle = t("[.subtitle]").target;
 
-t(".wrapper").hasElement([".title", subtitle]); // true
-t(".wrapper").hasElement(".title"); // true
-t(".wrapper").hasElement(subtitle); // true
+t("[.wrapper]").hasElement([".title", subtitle]); // true
+t("[.wrapper]").hasElement(".title"); // true
+t("[.wrapper]").hasElement(subtitle); // true
 t(document.documentElement).hasElement(document.body); // true
 ```
 
@@ -726,7 +690,7 @@ undefined
 ```Javascript
 const { t } = lizardt;
 
-t(".wrapper").removeLastChild();
+t("[.wrapper]").removeLastChild();
 ```
 
 ### ```removeFirstChild()```:
@@ -738,7 +702,7 @@ undefined
 ```Javascript
 const { t } = lizardt;
 
-t(".wrapper").removeFirstChild();
+t("[.wrapper]").removeFirstChild();
 ```
 
 ### ```jsonString()```:
@@ -793,6 +757,34 @@ True/False
 ```Javascript
 const { t } = lizardt;
 
-t(".wrapper").contains("#block"); // true
-t(".wrapper").contains(".block", "#item"); // false
+t("[.wrapper]").contains("#block"); // true
+t("[.wrapper]").contains(".block", "#item"); // false
+```
+
+### ```hasString()```:
+- **Description**
+Checks the contents of a string
+- **Arguments**
+  - String **(required)**
+- **Return**
+Boolean
+- **Example**
+```Javascript
+const { t } = lizardt;
+
+t("Hello, world!").hasString("ello"); // true
+t("Hello, world!").hasString("D"); // false
+```
+
+### ```indexOf()```:
+- **Description**
+Returns the index of the beginning of the string that matches the search
+- **Return**
+Index of the beginning of the string
+- **Example**
+```Javascript
+const { t } = lizardt;
+
+t("Hello, world!").hasString("ello"); // 1
+t("Hello, world!").hasString("D"); // -1
 ```

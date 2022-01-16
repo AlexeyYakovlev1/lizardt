@@ -86,7 +86,7 @@ const arrayCategory: IArrayCategory = {
     } else {
       global.setError(`${this.target} is not an array`);
     }
-  }
+  },
 }
 
 for (let i in arrayCategory) {
