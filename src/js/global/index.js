@@ -101,5 +101,22 @@ var global = {
             return JSON.stringify(item1) === JSON.stringify(item2);
         }
     },
+    getAllParents: function (num) {
+        if (this.target instanceof Element) {
+            var getParent_1 = function (parent, array) {
+                var parents = array;
+                if (parent) {
+                    parents.push(parent);
+                    return getParent_1(parent.parentElement, parents);
+                }
+                return parents;
+            };
+            var res = getParent_1(this.target, []);
+            return (typeof num === "number" && num >= 0) ? res[num] : res;
+        }
+        else {
+            global.setError("\"".concat(this.target, "\" is not a HTML element"));
+        }
+    }
 };
 exports.default = global;

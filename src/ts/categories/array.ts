@@ -88,15 +88,10 @@ const arrayCategory: IArrayCategory = {
     }
   },
 
-  index(num): any {
-    num === undefined && global.setError(`Invalid value num: "${num}"`);
+  index(num: number): any {
+    !num && typeof num !== "number" && global.setError(`Invalid value num: "${num}"`);
 
-    if (
-      Array.isArray(this.target)
-      || typeof this.target == "string"
-      || NodeList.prototype.isPrototypeOf(this.target)
-      || HTMLCollection.prototype.isPrototypeOf(this.target)
-    ) {
+    if (global.checkList(this.target) || typeof this.target == "string") {
       let el = this.target[num];
       if (num < 0) el = this.target[(this.target.length - 1) + num];
 

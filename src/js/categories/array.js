@@ -77,11 +77,8 @@ var arrayCategory = {
         }
     },
     index: function (num) {
-        num === undefined && index_1.default.setError("Invalid value num: \"".concat(num, "\""));
-        if (Array.isArray(this.target)
-            || typeof this.target == "string"
-            || NodeList.prototype.isPrototypeOf(this.target)
-            || HTMLCollection.prototype.isPrototypeOf(this.target)) {
+        !num && typeof num !== "number" && index_1.default.setError("Invalid value num: \"".concat(num, "\""));
+        if (index_1.default.checkList(this.target) || typeof this.target == "string") {
             var el = this.target[num];
             if (num < 0)
                 el = this.target[(this.target.length - 1) + num];

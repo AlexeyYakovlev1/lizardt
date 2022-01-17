@@ -13,9 +13,6 @@ import {
 // Global methods
 import global from "../global/index";
 
-// Categories
-import generalCategory from "./general";
-
 const domCategory: IDomCategory = {
   styles(stylesObj: object) {
     if (this.target instanceof Element) {
@@ -27,14 +24,14 @@ const domCategory: IDomCategory = {
   },
 
   on(event: string, callback: () => void, options?: object): void {
-    if (this.target instanceof Element && callback instanceof Function) {
+    if (callback instanceof Function) {
       if (options && typeof options === "object" && !Array.isArray(options) && !(options instanceof Element || options instanceof HTMLElement)) {
         return this.target.addEventListener(event, callback, options);
       }
 
       return this.target.addEventListener(event, callback);
     } else {
-      global.setError(`"${this.target}" is not a HTML element or your callback is not a function`);
+      global.setError(`"${callback}" is not a function`);
     }
   },
 
@@ -96,27 +93,7 @@ const domCategory: IDomCategory = {
     }
   },
 
-  getAllParents(num?: number): Array<HTMLElement> | HTMLElement {
-    if (this.target instanceof Element) {
-      const getParent = (parent: HTMLElement | null, array: Array<HTMLElement>): Array<HTMLElement> => {
-        const parents: Array<HTMLElement> = array;
-
-        if (parent) {
-          parents.push(parent);
-
-          return getParent(parent.parentElement, parents);
-        }
-
-        return parents;
-      }
-
-      const res: Array<HTMLElement> = getParent(this.target, []);
-
-      return (typeof num === "number" && num >= 0) ? res[num] : res;
-    } else {
-      global.setError(`"${this.target}" is not a HTML element`);
-    }
-  },
+  getAllParents: global.getAllParents,
 
   add(...args) {
     if (this.target instanceof Element && args.length) {
@@ -391,6 +368,22 @@ const domCategory: IDomCategory = {
       })
 
       return names.every(name => name);
+    } else {
+      global.setError(`"${this.target}" is not a HTML element`);
+    }
+  },
+
+  hasParent(selector: string | Element): boolean {
+    if (this.target instanceof Element) {
+      if (typeof selector === "string") {
+        const parent = document.querySelector(selector);
+
+        return Boolean(global.getAllParents.call(this).find(element => global.compare(parent, element)));
+      }
+
+      if (selector instanceof Element) {
+        return Boolean(global.getAllParents.call(this).find(element => global.compare(selector, element)))
+      }
     } else {
       global.setError(`"${this.target}" is not a HTML element`);
     }

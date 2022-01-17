@@ -16,7 +16,7 @@ export interface IArrayCategory {
   each(callback: () => Array<any>): Array<any>
   removeItem(index: number, val?: any): Array<any>;
   hasItem(item: any): boolean;
-  index(num:number):any;
+  index(num: number): any;
 }
 
 export interface IDomCategory {
@@ -43,6 +43,7 @@ export interface IDomCategory {
   removeLastChild(): void;
   removeFirstChild(): void;
   contains(selector: string): boolean;
+  hasParent(selector: string | Element): boolean;
 }
 
 export interface IGeneralCategory {
@@ -52,7 +53,7 @@ export interface IGeneralCategory {
   jsonParse(item: any, reviver?): any;
   jsonString(item: any, replacer?, space?): string;
   t(target: any, list?: boolean): IT;
-  index(num:number):any;
+  index(num: number): any;
 }
 
 export interface INumberCategory {
@@ -145,7 +146,8 @@ export interface IT {
   contains(selector: string): boolean;
   indexOf(str: string): number;
   hasString(str: string): boolean;
-  index(num:number):any;
+  index(num: number): any;
+  hasParent(selector: string | Element): boolean;
 }
 
 export interface IGlobal {
@@ -158,6 +160,7 @@ export interface IGlobal {
   setError(message: string): never;
   removeChild(parent: any, element: string | Element, num?: string): void;
   compare(item1: any, item2: any): Boolean;
+  getAllParents(num?: number): Array<HTMLElement> | HTMLElement;
 }
 
 export interface ILizardt {
@@ -170,5 +173,5 @@ export interface ILizardt {
   isObject(item: any, callback?: () => any): boolean | any;
   isFunction(item: any, callback?: () => any): boolean | any;
   getRandom(min: number, max: number): number;
-  index(num:number):any;
+  index(num: number): any;
 }

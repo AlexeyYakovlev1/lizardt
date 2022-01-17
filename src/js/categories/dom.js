@@ -33,14 +33,14 @@ var domCategory = {
         }
     },
     on: function (event, callback, options) {
-        if (this.target instanceof Element && callback instanceof Function) {
+        if (callback instanceof Function) {
             if (options && typeof options === "object" && !Array.isArray(options) && !(options instanceof Element || options instanceof HTMLElement)) {
                 return this.target.addEventListener(event, callback, options);
             }
             return this.target.addEventListener(event, callback);
         }
         else {
-            index_1.default.setError("\"".concat(this.target, "\" is not a HTML element or your callback is not a function"));
+            index_1.default.setError("\"".concat(callback, "\" is not a function"));
         }
     },
     getAttributes: function (attribute) {
@@ -97,23 +97,7 @@ var domCategory = {
             index_1.default.setError("\"".concat(this.target, "\" is not a HTML element"));
         }
     },
-    getAllParents: function (num) {
-        if (this.target instanceof Element) {
-            var getParent_1 = function (parent, array) {
-                var parents = array;
-                if (parent) {
-                    parents.push(parent);
-                    return getParent_1(parent.parentElement, parents);
-                }
-                return parents;
-            };
-            var res = getParent_1(this.target, []);
-            return (typeof num === "number" && num >= 0) ? res[num] : res;
-        }
-        else {
-            index_1.default.setError("\"".concat(this.target, "\" is not a HTML element"));
-        }
-    },
+    getAllParents: index_1.default.getAllParents,
     add: function () {
         var _this = this;
         var args = [];
@@ -381,6 +365,20 @@ var domCategory = {
                 }
             });
             return names_1.every(function (name) { return name; });
+        }
+        else {
+            index_1.default.setError("\"".concat(this.target, "\" is not a HTML element"));
+        }
+    },
+    hasParent: function (selector) {
+        if (this.target instanceof Element) {
+            if (typeof selector === "string") {
+                var parent_1 = document.querySelector(selector);
+                return Boolean(index_1.default.getAllParents.call(this).find(function (element) { return index_1.default.compare(parent_1, element); }));
+            }
+            if (selector instanceof Element) {
+                return Boolean(index_1.default.getAllParents.call(this).find(function (element) { return index_1.default.compare(selector, element); }));
+            }
         }
         else {
             index_1.default.setError("\"".concat(this.target, "\" is not a HTML element"));

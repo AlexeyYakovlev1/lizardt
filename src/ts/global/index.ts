@@ -111,6 +111,28 @@ const global: IGlobal = {
       return JSON.stringify(item1) === JSON.stringify(item2);
     }
   },
+
+  getAllParents(num?: number): Array<HTMLElement> | HTMLElement {
+    if (this.target instanceof Element) {
+      const getParent = (parent: HTMLElement | null, array: Array<HTMLElement>): Array<HTMLElement> => {
+        const parents: Array<HTMLElement> = array;
+
+        if (parent) {
+          parents.push(parent);
+
+          return getParent(parent.parentElement, parents);
+        }
+
+        return parents;
+      }
+
+      const res: Array<HTMLElement> = getParent(this.target, []);
+
+      return (typeof num === "number" && num >= 0) ? res[num] : res;
+    } else {
+      global.setError(`"${this.target}" is not a HTML element`);
+    }
+  }
 };
 
 export default global;

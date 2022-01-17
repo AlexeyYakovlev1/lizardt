@@ -5,7 +5,8 @@ import {
   isArray,
   unfold,
   each,
-  hasItem
+  hasItem,
+  index
 } from "../src/js/categories/array";
 
 // last
@@ -66,4 +67,11 @@ test("Проверка наличия элемента в массиве", () =>
   expect(hasItem.bind({ target: [1, 2, 3, 4] }, 2)()).toBeTruthy();
   expect(hasItem.bind({ target: [1, 2, 3, 4] }, 5)()).toBeFalsy();
   expect(hasItem.bind({ target: [1, 2, 3, "Hello"] }, "Hello")()).toBeTruthy();
+});
+
+// index
+test("Проверка на вывод элемента по индексу", () => {
+  expect(index.bind({ target: [1, 2, 3, 4] }, 2)()).toStrictEqual({ target: 3 });
+  expect(index.bind({ target: [1, 2, 3, 4] }, -1)()).toStrictEqual({ target: 3 });
+  expect(index.bind({ target: [1, 2, 3, 4] }, 0)()).toStrictEqual({ target: 1 });
 });

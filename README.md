@@ -804,3 +804,19 @@ console.log(t([1,2,3,4,5,6,7]).index(2).target); // 3
 console.log(t([1,2,3,4,5,6,7]).index(-2).target); // 5
 t("[li]", true).index(2).styles({color: "red"}).txt("my index = 2");
 ```
+
+### ```hasParent()```:
+- **Description**
+Checks if an element has a parent
+- **Arguments**
+  - Selector **(required)**
+- **Return**
+Boolean
+- **Example**
+```Javascript
+const { t } = lizardt;
+
+t("[.title]").hasParent(".wrapper"); // true
+t("[.title]").hasParent(document.documentElement); // true
+t("[.title]").hasParent(".subtitle"); // false
+```
