@@ -1,30 +1,30 @@
-const { src, dest, parallel, watch } = require('gulp');
-const ts = require('gulp-typescript');
-const webpack = require('webpack-stream');
-const plumber = require('gulp-plumber');
-const browserSync = require('browser-sync').create();
+const { src, dest, parallel, watch } = require("gulp");
+const ts = require("gulp-typescript");
+const webpack = require("webpack-stream");
+const plumber = require("gulp-plumber");
+const browserSync = require("browser-sync").create();
 
-const tsProject = ts.createProject('./tsconfig.json');
+const tsProject = ts.createProject("./tsconfig.json");
 const paths = {
   ts: {
-    from: './src/ts/**/*',
-    to: './src/js/'
+    from: "./src/ts/**/*",
+    to: "./src/js/"
   },
   js: {
-    from: './src/js/**/*',
-    to: './dist/js/',
+    from: "./src/js/**/*",
+    to: "./dist/js/",
   },
   html: {
-    from: './src/*.html',
-    to: './dist/'
+    from: "./src/*.html",
+    to: "./dist/"
   },
   build: {
-    from: './src/js/lizardt.js',
-    to: '../build/js/'
+    from: "./src/js/lizardt.js",
+    to: "../build/js/"
   },
   readme: {
-    from: './README.md',
-    to: '../build/'
+    from: "./README.md",
+    to: "../build/"
   }
 }
 
@@ -32,9 +32,9 @@ const buildLibrary = () => {
   return src(paths.build.from)
     .pipe(webpack({
       output: {
-        filename: 'lizardt.js',
-        library: 'lizardt',
-        libraryTarget: 'umd'
+        filename: "lizardt.js",
+        library: "lizardt",
+        libraryTarget: "umd"
       }
     }))
     .pipe(dest(paths.build.to));
@@ -60,7 +60,7 @@ const js = () => {
   return src(paths.js.from)
     .pipe(plumber())
     .pipe(webpack({
-      mode: 'development',
+      mode: "development",
     }))
     .pipe(dest(paths.js.to))
     .pipe(browserSync.stream());
@@ -76,7 +76,7 @@ const html = () => {
 const server = () => {
   browserSync.init({
     server: {
-      baseDir: './dist/'
+      baseDir: "./dist/"
     }
   });
 }

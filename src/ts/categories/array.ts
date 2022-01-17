@@ -20,7 +20,7 @@ const arrayCategory: IArrayCategory = {
 
   removeItem(num: number, val?: any): Array<any> {
     if (Array.isArray(this.target)) {
-      val ? this.target.splice(num, 1, val) : this.target.splice(num, 1);
+      val || typeof val === "number" && val >= 0 ? this.target.splice(num, 1, val) : this.target.splice(num, 1);
 
       return this.target;
     } else {
@@ -84,7 +84,7 @@ const arrayCategory: IArrayCategory = {
     if (Array.isArray(this.target)) {
       return Boolean(this.target.find(el => global.compare(el, item)));
     } else {
-      global.setError(`${this.target} is not an array`);
+      global.setError(`"${this.target}" is not an array`);
     }
   },
 }

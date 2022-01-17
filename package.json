@@ -7,15 +7,23 @@
     "dom",
     "html"
   ],
+  "scripts": {
+    "test": "jest"
+  },
+  "jest": {
+    "testEnvironment": "jsdom"
+  },
   "author": "Alexey Yakovlev <alexeyykovlev555@gmail.com>",
   "license": "ISC",
   "devDependencies": {
+    "@babel/plugin-transform-modules-commonjs": "^7.16.8",
     "browser-sync": "^2.27.7",
     "gulp": "^4.0.2",
     "gulp-concat": "^2.6.1",
-    "gulp-jest": "^4.0.4",
     "gulp-plumber": "^1.2.1",
     "gulp-typescript": "^6.0.0-alpha.1",
+    "jest": "^27.4.7",
+    "jsdom": "^19.0.0",
     "webpack": "^5.65.0",
     "webpack-stream": "^7.0.0"
   },
