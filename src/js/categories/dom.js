@@ -26,6 +26,7 @@ var domCategory = {
     styles: function (stylesObj) {
         if (this.target instanceof Element) {
             index_1.default.setStyles(this.target, stylesObj);
+            return this;
         }
         else {
             index_1.default.setError("\"".concat(this.target, "\" is not a HTML element"));
@@ -129,6 +130,7 @@ var domCategory = {
                     _this.target.setAttribute(attribute, name);
                 }
             });
+            return this;
         }
         else {
             index_1.default.setError("\"".concat(this.target, "\" is not a HTML element or the argument list is empty"));
@@ -150,6 +152,7 @@ var domCategory = {
                     _this.target.removeAttribute(attribute, name);
                 }
             });
+            return this;
         }
         else {
             index_1.default.setError("\"".concat(this.target, "\" is not a HTML element or the argument list is empty"));
@@ -158,6 +161,7 @@ var domCategory = {
     clearStyles: function () {
         if (this.target instanceof Element) {
             this.target["style"] = null;
+            return this;
         }
         else {
             index_1.default.setError("\"".concat(this.target, "\" is not a HTML element"));
@@ -167,6 +171,7 @@ var domCategory = {
         if (this.target instanceof Element) {
             if (typeof value === "string") {
                 this.target.textContent = value;
+                return this;
             }
             else {
                 index_1.default.setError("\"".concat(value, "\" is not a string"));
@@ -189,11 +194,13 @@ var domCategory = {
         var _this = this;
         if (this.target instanceof Element) {
             // Object
-            if (child && typeof child === "object" && !Array.isArray(child) && !(child instanceof Element || child instanceof HTMLElement)) {
+            if (child && typeof child === "object" && !Array.isArray(child)
+                && !(child instanceof Element || child instanceof HTMLElement)) {
                 this.target.appendChild(index_1.default.createElement(child));
             }
             // Array of objects and html elements
-            if (Array.isArray(child) && child.length && child.every(function (obj) { return typeof obj === "object" || obj instanceof Element || obj instanceof HTMLElement; })) {
+            if (Array.isArray(child) && child.length
+                && child.every(function (obj) { return typeof obj === "object" || obj instanceof Element || obj instanceof HTMLElement; })) {
                 child.map(function (element) {
                     if (!(element instanceof Element || element instanceof HTMLElement)) {
                         _this.target.appendChild(index_1.default.createElement(element));
@@ -207,6 +214,7 @@ var domCategory = {
             if (child instanceof Element) {
                 this.target.appendChild(child);
             }
+            return this;
         }
         else {
             index_1.default.setError("\"".concat(this.target, "\" is not a HTML element"));
@@ -235,6 +243,7 @@ var domCategory = {
                     }
                 });
             }
+            return this;
         }
         else {
             index_1.default.setError("\"".concat(this.target, "\" is not a HTML element"));
@@ -242,14 +251,17 @@ var domCategory = {
     },
     addPrevElement: function (element) {
         index_1.default.addElementOnPos(this.target, element, "beforebegin");
+        return this;
     },
     addNextElement: function (element) {
         index_1.default.addElementOnPos(this.target, element, "afterend");
+        return this;
     },
     setAttribute: function (attributes) {
         if (this.target instanceof Element) {
             if (attributes && typeof attributes === "object" && !Array.isArray(attributes) && !(attributes instanceof Element || attributes instanceof HTMLElement)) {
                 index_1.default.setAttributes(this.target, attributes);
+                return this;
             }
             else {
                 index_1.default.setError("\"".concat(attributes, "\" is not a object"));
@@ -268,6 +280,7 @@ var domCategory = {
             if (Array.isArray(attribute) && attribute.length && attribute.every(function (attr) { return typeof attr === "string"; })) {
                 attribute.map(function (attr) { return _this.target.removeAttribute(attr); });
             }
+            return this;
         }
         else {
             index_1.default.setError("\"".concat(this.target, "\" is not a HTML element"));
@@ -336,9 +349,11 @@ var domCategory = {
     },
     removeLastChild: function () {
         index_1.default.removeChild(this.target, "last");
+        return this;
     },
     removeFirstChild: function () {
         index_1.default.removeChild(this.target, "first");
+        return this;
     },
     contains: function () {
         var args = [];

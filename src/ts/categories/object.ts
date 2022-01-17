@@ -7,7 +7,9 @@ import global from "../global/index";
 
 const objectCategory: IObjectCategory = {
   isObject(item, callback?): boolean {
-    if (item && typeof item === "object" && !Array.isArray(item) && !(item instanceof Element || item instanceof HTMLElement)) {
+    if (item && typeof item === "object" && !Array.isArray(item)
+        && !(item instanceof Element || item instanceof HTMLElement)
+    ) {
       if (functionCategory.isFunction(callback)) {
         return callback();
       }

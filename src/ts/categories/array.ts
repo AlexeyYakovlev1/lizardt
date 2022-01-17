@@ -87,6 +87,26 @@ const arrayCategory: IArrayCategory = {
       global.setError(`"${this.target}" is not an array`);
     }
   },
+
+  index(num): any {
+    num === undefined && global.setError(`Invalid value num: "${num}"`);
+
+    if (
+      Array.isArray(this.target)
+      || typeof this.target == "string"
+      || NodeList.prototype.isPrototypeOf(this.target)
+      || HTMLCollection.prototype.isPrototypeOf(this.target)
+    ) {
+      let el = this.target[num];
+      if (num < 0) el = this.target[(this.target.length - 1) + num];
+
+      this.target = el;
+
+      return this;
+    }
+
+    global.setError(`"${this.target}" must be array, string, HTMLCollection or NodeList`);
+  }
 }
 
 for (let i in arrayCategory) {

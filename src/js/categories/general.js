@@ -65,7 +65,7 @@ var generalCategory = __assign({ compare: index_2.default.compare, copy: functio
             }
         }
         return __assign({ target: trt ? trt : target }, (0, index_1.default)(__assign(__assign(__assign(__assign(__assign({}, dom_1.default), array_1.default), func_1.default), object_1.default), string_1.default), ["createElement", "isArray", "isFunction", "isObject"]));
-    } }, (0, index_1.default)(__assign(__assign(__assign({}, array_1.default), object_1.default), func_1.default), [], ["isArray", "isObject", "isFunction"]));
+    } }, (0, index_1.default)(__assign(__assign(__assign({}, array_1.default), object_1.default), func_1.default), [], ["isArray", "isObject", "isFunction", "index"]));
 for (var i in generalCategory) {
     // Exports every separately method
     exports[i] = generalCategory[i];
