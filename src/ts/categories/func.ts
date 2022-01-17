@@ -6,7 +6,7 @@ const funcCategory: IFuncCategory = {
   isFunction(item: any, callback?): boolean {
     if (item && {}.toString.call(item) === "[object Function]") {
       if (callback instanceof Function) {
-        callback();
+        return callback();
       }
 
       return true;

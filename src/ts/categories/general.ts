@@ -26,6 +26,8 @@ const generalCategory: IGeneralCategory = {
 		} else if (item && typeof item === "object" && !Array.isArray(item) && !(item instanceof Element || item instanceof HTMLElement)) {
 			return { ...item };
 		}
+
+		return item;
 	},
 
 	jsonParse(item: any, reviver?): any {

@@ -37,6 +37,7 @@ var generalCategory = __assign({ compare: index_2.default.compare, copy: functio
         else if (item && typeof item === "object" && !Array.isArray(item) && !(item instanceof Element || item instanceof HTMLElement)) {
             return __assign({}, item);
         }
+        return item;
     }, jsonParse: function (item, reviver) {
         return JSON.parse(item, reviver);
     }, jsonString: function (item, replacer, space) {

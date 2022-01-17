@@ -4,7 +4,7 @@ var funcCategory = {
     isFunction: function (item, callback) {
         if (item && {}.toString.call(item) === "[object Function]") {
             if (callback instanceof Function) {
-                callback();
+                return callback();
             }
             return true;
         }
