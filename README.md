@@ -820,3 +820,29 @@ t("[.title]").hasParent(".wrapper"); // true
 t("[.title]").hasParent(document.documentElement); // true
 t("[.title]").hasParent(".subtitle"); // false
 ```
+
+### ```keys()```:
+- **Description**
+Returns the keys of an object in an array
+- **Return**
+Array of keys
+- **Example**
+```Javascript
+const { t } = lizardt;
+
+t({ name: "alex", age: 17 }).keys(); // ["name", "age"]
+t({}).keys(); // []
+```
+
+### ```values()```:
+- **Description**
+Returns the values of an object in an array
+- **Return**
+Array of values
+- **Example**
+```Javascript
+const { t } = lizardt;
+
+t({ name: "Alexandr", age: 17 }).values(); // ["Alexandr", 17]
+t({}).values(); // []
+```
