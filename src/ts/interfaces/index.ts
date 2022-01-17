@@ -63,6 +63,8 @@ export interface INumberCategory {
 export interface IObjectCategory {
   isObject(item, callback?): boolean;
   hasProperty(property: string | Array<string>): boolean;
+  keys(): Array<any>;
+  values(): Array<any>;
 }
 
 // Arguments and options
@@ -148,6 +150,8 @@ export interface IT {
   hasString(str: string): boolean;
   index(num: number): any;
   hasParent(selector: string | Element): boolean;
+  keys(): Array<any>;
+  values(): Array<any>;
 }
 
 export interface IGlobal {

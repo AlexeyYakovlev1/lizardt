@@ -27,7 +27,23 @@ var objectCategory = {
         else {
             index_1.default.setError("\"".concat(this.target, "\" is not an object"));
         }
-    }
+    },
+    keys: function () {
+        if (this.target && typeof this.target === "object" && !Array.isArray(this.target) && !(this.target instanceof Element || this.target instanceof HTMLElement)) {
+            return Object.keys(this.target);
+        }
+        else {
+            index_1.default.setError("\"".concat(this.target, "\" is not an object"));
+        }
+    },
+    values: function () {
+        if (this.target && typeof this.target === "object" && !Array.isArray(this.target) && !(this.target instanceof Element || this.target instanceof HTMLElement)) {
+            return Object.values(this.target);
+        }
+        else {
+            index_1.default.setError("\"".concat(this.target, "\" is not an object"));
+        }
+    },
 };
 for (var i in objectCategory) {
     // Exports every separately method

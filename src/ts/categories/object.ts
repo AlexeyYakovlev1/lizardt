@@ -8,7 +8,7 @@ import global from "../global/index";
 const objectCategory: IObjectCategory = {
   isObject(item, callback?): boolean {
     if (item && typeof item === "object" && !Array.isArray(item)
-        && !(item instanceof Element || item instanceof HTMLElement)
+      && !(item instanceof Element || item instanceof HTMLElement)
     ) {
       if (functionCategory.isFunction(callback)) {
         return callback();
@@ -32,7 +32,23 @@ const objectCategory: IObjectCategory = {
     } else {
       global.setError(`"${this.target}" is not an object`);
     }
-  }
+  },
+
+  keys(): Array<string> {
+    if (this.target && typeof this.target === "object" && !Array.isArray(this.target) && !(this.target instanceof Element || this.target instanceof HTMLElement)) {
+      return Object.keys(this.target);
+    } else {
+      global.setError(`"${this.target}" is not an object`);
+    }
+  },
+
+  values(): Array<string> {
+    if (this.target && typeof this.target === "object" && !Array.isArray(this.target) && !(this.target instanceof Element || this.target instanceof HTMLElement)) {
+      return Object.values(this.target);
+    } else {
+      global.setError(`"${this.target}" is not an object`);
+    }
+  },
 }
 
 for (let i in objectCategory) {
