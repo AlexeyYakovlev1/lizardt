@@ -77,7 +77,7 @@ const domCategory: IDomCategory = {
         children.push({
           $nextEl: child.nextElementSibling,
           name: child.localName,
-          text: child.innerText,
+          text: child.innerText || child.textContent,
           $el: child,
         });
       });

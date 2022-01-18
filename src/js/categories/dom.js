@@ -83,7 +83,7 @@ var domCategory = {
                 children_1.push({
                     $nextEl: child.nextElementSibling,
                     name: child.localName,
-                    text: child.innerText,
+                    text: child.innerText || child.textContent,
                     $el: child,
                 });
             });

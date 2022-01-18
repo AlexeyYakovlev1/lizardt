@@ -239,7 +239,15 @@ List of children. When we use **selector**, it returns the element itself
 ```Javascript
 const { t } = lizardt;
 
-t("[.wrapper]").getChildren(); // [HtmlElement, ...]
+/*
+[{
+  $nextEl: null,
+  name: "h1",
+  text: undefined,
+  $el: html element
+}]
+*/
+t("[.wrapper]").getChildren();
 ```
 
 or
@@ -247,7 +255,9 @@ or
 ```Javascript
 const { t } = lizardt;
 
-t("[.wrapper]").getChildren(".title"); // HtmlElement
+// Html element
+*/
+t("[.wrapper]").getChildren(".title");
 ```
 
 ### ```getCoordinates()```:
@@ -658,8 +668,8 @@ const { t } = lizardt;
 t("[.form]").on("submit", event => {
     event.preventDefault();
 
-    console.log(t("[.form]").data()); // {name: 'Alex', email: 'al@gmail.com', description: '', date: '', file: File, …}
-    console.log(t("[.form]").data(true)); // ['name: "Alex"', 'email: "al@gmail.com"', ...]
+    console.log(t("[.form]").data()); // {name: "Alex", email: "al@gmail.com", description: "", date: "", file: File, …}
+    console.log(t("[.form]").data(true)); // ["name: "Alex"", "email: "al@gmail.com"", ...]
 })
 ```
 

@@ -18,6 +18,8 @@
   "devDependencies": {
     "@babel/plugin-transform-modules-commonjs": "^7.16.8",
     "@babel/register": "^7.16.9",
+    "@testing-library/dom": "^8.11.2",
+    "@testing-library/jest-dom": "^5.16.1",
     "browser-sync": "^2.27.7",
     "gulp": "^4.0.2",
     "gulp-concat": "^2.6.1",
