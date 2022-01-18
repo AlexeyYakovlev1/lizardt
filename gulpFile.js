@@ -2,7 +2,6 @@ const { src, dest, parallel, watch } = require("gulp");
 const ts = require("gulp-typescript");
 const webpack = require("webpack-stream");
 const plumber = require("gulp-plumber");
-const browserSync = require("browser-sync").create();
 
 const tsProject = ts.createProject("./tsconfig.json");
 const paths = {
@@ -13,10 +12,6 @@ const paths = {
   js: {
     from: "./src/js/**/*",
     to: "./dist/js/",
-  },
-  html: {
-    from: "./src/*.html",
-    to: "./dist/"
   },
   build: {
     from: "./src/js/lizardt.js",
@@ -50,10 +45,8 @@ const typescript = () => {
     .pipe(plumber())
     .pipe(tsProject());
 
-  return tsResult
-    .js
-    .pipe(dest(paths.ts.to))
-    .pipe(browserSync.stream());
+  return tsResult.js
+    .pipe(dest(paths.ts.to));
 }
 
 const js = () => {
@@ -62,33 +55,16 @@ const js = () => {
     .pipe(webpack({
       mode: "development",
     }))
-    .pipe(dest(paths.js.to))
-    .pipe(browserSync.stream());
-}
-
-const html = () => {
-  return src(paths.html.from)
-    .pipe(plumber())
-    .pipe(dest(paths.html.to))
-    .pipe(browserSync.stream());
-}
-
-const server = () => {
-  browserSync.init({
-    server: {
-      baseDir: "./dist/"
-    }
-  });
+    .pipe(dest(paths.js.to));
 }
 
 const watching = () => {
   watch(paths.ts.from, parallel(typescript));
   watch(paths.js.from, parallel(js));
-  watch(paths.html.from, parallel(html));
 }
 
-const buildFunc = () => parallel(typescript, js, html);
-const defaultFunc = () => parallel(buildFunc, watching, server);
+const buildFunc = () => parallel(typescript, js);
+const defaultFunc = () => parallel(buildFunc(), watching);
 
 exports.build = buildFunc();
 exports.default = defaultFunc();
