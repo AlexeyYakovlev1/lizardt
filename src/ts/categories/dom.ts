@@ -35,6 +35,18 @@ const domCategory: IDomCategory = {
     }
   },
 
+  onRemove(event: string, callback: () => void, options?: object, useCapture?: boolean): void {
+    if (callback instanceof Function) {
+      if (options && typeof options === "object" && !Array.isArray(options) && !(options instanceof Element || options instanceof HTMLElement)) {
+        return this.target.removeEventListener(event, callback, options, useCapture);
+      }
+
+      return this.target.removeEventListener(event, callback, null, useCapture);
+    } else {
+      global.setError(`"${callback}" is not a function`);
+    }
+  },
+
   getAttributes(attribute?: string): IAttribute | Array<IAttribute> {
     if (this.target instanceof Element) {
       const attrs: object = { ...this.target.attributes };

@@ -43,6 +43,17 @@ var domCategory = {
             index_1.default.setError("\"".concat(callback, "\" is not a function"));
         }
     },
+    onRemove: function (event, callback, options, useCapture) {
+        if (callback instanceof Function) {
+            if (options && typeof options === "object" && !Array.isArray(options) && !(options instanceof Element || options instanceof HTMLElement)) {
+                return this.target.removeEventListener(event, callback, options, useCapture);
+            }
+            return this.target.removeEventListener(event, callback, null, useCapture);
+        }
+        else {
+            index_1.default.setError("\"".concat(callback, "\" is not a function"));
+        }
+    },
     getAttributes: function (attribute) {
         if (this.target instanceof Element) {
             var attrs = __assign({}, this.target.attributes);

@@ -121,6 +121,55 @@ t("[button]").on("click", () =>  {
 }, { once: true });
 ```
 
+### ```onRemove()```:
+- **Description**
+Removing listener for html element
+- **Return**
+undefined
+- **Arguments**
+	- Event **(required)**
+	- Function **(required)**
+	- Options **(optional)**
+	- Use capture **(optional)**
+- **Example**
+```Javascript
+const { t } = lizardt;
+
+let count = 0;
+
+function counter() {
+  count++;
+
+  if (count > 10) {
+    console.log("stop!");
+
+    t(this).onRemove("click", counter);
+  }
+}
+
+t("[.button]").on("click", counter);
+```
+
+or
+
+```Javascript
+const { t } = lizardt;
+
+let count = 0;
+
+function counter() {
+  count++;
+
+  if (count > 10) {
+    console.log("stop!");
+
+    t(this).onRemove("click", counter, { passive: true }, true);
+  }
+}
+
+t("[.button]").on("click", counter);
+```
+
 ### ```txt()```:
 - **Description**
 Adding text value  for html element

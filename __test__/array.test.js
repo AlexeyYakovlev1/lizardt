@@ -32,15 +32,15 @@ test("Вывод центрального элемента из массива",
   expect(center.call({ target: [1, 2, 3, 4] })).toStrictEqual(2);
   expect(center.call({ target: [1, 2, 3, 4, 5] })).toStrictEqual(3);
   expect(center.call({ target: ["Hello", "Hi"] })).toStrictEqual("Hello");
-  expect(center.call({ target: [] })).toStrictEqual(undefined);
+  expect(center.call({ target: [] })).toBeUndefined();
 });
 
 // isArray
 test("Определение массива", () => {
-  expect(isArray([1, 2, 3, 4])).toStrictEqual(true);
-  expect(isArray("Hello, world!")).toStrictEqual(false);
-  expect(isArray({})).toStrictEqual(false);
-  expect(isArray(123)).toStrictEqual(false);
+  expect(isArray([1, 2, 3, 4])).toBeTruthy();
+  expect(isArray("Hello, world!")).toBeFalsy();
+  expect(isArray({})).toBeFalsy();
+  expect(isArray(123)).toBeFalsy();
 });
 
 // unfold

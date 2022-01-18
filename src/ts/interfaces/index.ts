@@ -44,6 +44,7 @@ export interface IDomCategory {
   removeFirstChild(): void;
   contains(selector: string): boolean;
   hasParent(selector: string | Element): boolean;
+  onRemove(event: string, callback: () => any, options?: object, useCapture?: boolean): void;
 }
 
 export interface IGeneralCategory {
@@ -152,6 +153,7 @@ export interface IT {
   hasParent(selector: string | Element): boolean;
   keys(): Array<any>;
   values(): Array<any>;
+  onRemove(event: string, callback: () => any, options?: object, useCapture?: boolean): void;
 }
 
 export interface IGlobal {
