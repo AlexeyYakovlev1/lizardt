@@ -7,7 +7,20 @@ import {
   onRemove,
   getAttributes,
   getChildren,
+  add,
+  remove,
+  clearStyles,
+  txt,
+  size
 } from "../src/js/categories/dom";
+
+// size
+test("Получение размеров элемента", () => {
+  document.body.innerHTML = `<div class="block"></div>`;
+  const block = document.querySelector(".block");
+  const item = size.call({target: block});
+  expect(item).toStrictEqual({height: 0, width: 0});
+})
 
 // styles
 test("Установка стилей", () => {
@@ -56,6 +69,44 @@ test("Установка стилей", () => {
   });
 });
 
+// add
+test("Добавление класса/идентификатора", () => {
+  document.body.innerHTML = `<div class="wrapper"></div>`;
+  const block = document.querySelector(".wrapper");
+  const tests = [
+    ".block", ".main"
+  ];
+  
+  tests.map(className => {
+    const item = add.call({target: block}, className).target;
+    
+    return expect(item.classList.contains(className.replace(".", ""))).toStrictEqual(true);
+  })
+})
+
+// remove
+test("Удаление класса/идентификатора", () => {
+  document.body.innerHTML = `<div class="wrapper block"></div>`;
+  const block = document.querySelector(".wrapper");
+  const tests = [
+    ".block"
+  ];
+  
+  tests.map(className => {
+    const item = remove.call({target: block}, className).target;
+    
+    return expect(item.classList.contains(className.replace(".", ""))).toStrictEqual(false);
+  })
+})
+
+// clearStyles
+test("Удаление стилей из атрибута style", () => {
+  document.body.innerHTML = `<div class="wrapper" style="color: red;"></div>`;
+  const block = document.querySelector(".wrapper");
+  const item = clearStyles.call({target: block}).target;
+  expect(item.getAttribute("style")).toStrictEqual("");
+})
+
 // on
 test("Добавление события", () => {
   document.body.innerHTML = `<button class="button">Click</button>`;
@@ -75,6 +126,14 @@ test("Добавление события", () => {
     return expect(count).toStrictEqual(num);
   }));
 });
+
+// txt
+test("Добавление текста", () => {
+  document.body.innerHTML = `<h1 class="title">old text</h1>`;
+  const title = document.querySelector(".title");
+  const item = txt.call({target: title}, "new text").target;
+  expect(item.textContent).toStrictEqual("new text");
+})
 
 // onRemove
 test("Удаление события", () => {
