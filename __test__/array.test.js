@@ -6,72 +6,261 @@ import {
   unfold,
   each,
   hasItem,
-  index
+  index,
+  indexOf,
+  filter
 } from "../src/js/categories/array";
 
 // last
 test("Вывод последнего элемента из массива", () => {
-  expect(last.call({ target: [1, 2, 3, 4] })).toStrictEqual(4);
-  expect(last.call({ target: [1, 2, 3, 4, { name: "Alexandr" }] })).toStrictEqual({ name: "Alexandr" });
-  expect(last.call({ target: [1, 2, 3, 4, []] })).toStrictEqual([]);
-  expect(last.call({ target: [1, 2, 3, 4, "Hello"] })).toStrictEqual("Hello");
+  const tests = [
+    {
+      target: [1, 2, 3, 4],
+      toBe: 4
+    },
+    {
+      target: [1, 2, 3, 4, { name: "Alexandr" }],
+      toBe: { name: "Alexandr" }
+    },
+    {
+      target: [1, 2, 3, 4, []],
+      toBe: []
+    },
+    {
+      target: [1, 2, 3, 4, "Hello"],
+      toBe: "Hello"
+    }
+  ];
+
+  tests.map(({ target, toBe }) => expect(last.call({ target })).toStrictEqual(toBe));
 });
 
 // removeItem
 test("Удаление элемента из массива", () => {
-  expect(removeItem.call({ target: [1, 2, 3, 4] }, 2, 4)).toStrictEqual([1, 2, 4, 4]);
-  expect(removeItem.call({
-    target: [1, 2, 3, 4, { name: "Alexandr" }]
-  }, 1, 0)).toStrictEqual([1, 0, 3, 4, { name: "Alexandr" }]);
-  expect(removeItem.call({ target: [1, 2, 3, 4, []] }, 2)).toStrictEqual([1, 2, 4, []]);
-  expect(removeItem.call({ target: [1, 2, 3, 4, "Hello"] }, 4)).toStrictEqual([1, 2, 3, 4]);
+  const tests = [
+    {
+      target: [1, 2, 3, 4],
+      args: [2, 4],
+      toBe: [1, 2, 4, 4]
+    },
+    {
+      target: [1, 2, 3, 4, { name: "Alexandr" }],
+      args: [1, 0],
+      toBe: [1, 0, 3, 4, { name: "Alexandr" }]
+    },
+    {
+      target: [1, 2, 3, 4, []],
+      args: [2],
+      toBe: [1, 2, 4, []]
+    },
+    {
+      target: [1, 2, 3, 4, "Hello"],
+      args: [4],
+      toBe: [1, 2, 3, 4]
+    },
+  ];
+
+  tests.map(({ target, args, toBe }) => {
+    expect(removeItem.call({ target }, ...args)).toStrictEqual(toBe);
+  });
 });
 
 // center
 test("Вывод центрального элемента из массива", () => {
-  expect(center.call({ target: [1, 2, 3, 4] })).toStrictEqual(2);
-  expect(center.call({ target: [1, 2, 3, 4, 5] })).toStrictEqual(3);
-  expect(center.call({ target: ["Hello", "Hi"] })).toStrictEqual("Hello");
-  expect(center.call({ target: [] })).toBeUndefined();
+  const tests = [
+    {
+      target: [1, 2, 3, 4],
+      toBe: 2
+    },
+    {
+      target: [1, 2, 3, 4, 5],
+      toBe: 3
+    },
+    {
+      target: ["Hello", "Hi"],
+      toBe: "Hello"
+    },
+    {
+      target: [],
+      toBe: undefined
+    },
+  ];
+
+  tests.map(({ target, toBe }) => expect(center.call({ target })).toStrictEqual(toBe));
 });
 
 // isArray
 test("Определение массива", () => {
-  expect(isArray([1, 2, 3, 4])).toBeTruthy();
-  expect(isArray("Hello, world!")).toBeFalsy();
-  expect(isArray({})).toBeFalsy();
-  expect(isArray(123)).toBeFalsy();
+  const tests = [
+    {
+      target: [1, 2, 3, 4],
+      toBe: "toBeTruthy",
+    },
+    {
+      target: "Hello, world!",
+      toBe: "toBeFalsy",
+    },
+    {
+      target: {},
+      toBe: "toBeFalsy",
+    },
+    {
+      target: 123,
+      toBe: "toBeFalsy",
+    },
+  ];
+
+  tests.map(({ target, toBe }) => expect(isArray(target))[toBe]());
 });
 
 // unfold
 test("Распаковка вложенного массива", () => {
-  expect(unfold.call({ target: [[1, 2, [3, 4, [5, 6, [7, 8]]]]] })).toStrictEqual([1, 2, 3, 4, 5, 6, 7, 8]);
-  expect(unfold.call({ target: [[{ name: "Alex" }]] })).toStrictEqual([{ name: "Alex" }]);
-  expect(unfold.call({ target: "" })).toStrictEqual([]);
+  const tests = [
+    {
+      target: [[1, 2, [3, 4, [5, 6, [7, 8]]]]],
+      toBe: [1, 2, 3, 4, 5, 6, 7, 8]
+    },
+    {
+      target: [[{ name: "Alex" }]],
+      toBe: [{ name: "Alex" }]
+    },
+    {
+      target: "",
+      toBe: []
+    },
+  ];
+
+  tests.map(({ target, toBe }) => expect(unfold.call({ target })).toStrictEqual(toBe));
 });
 
 // each
 test("Перебор массива", () => {
-  expect(each.call({ target: [1, 2, 3, 4] }, (num) => {
-    num += 1;
-    return num;
-  })).toStrictEqual([2, 3, 4, 5]);
-  expect(each.call({ target: [1, 2, 3, 4] }, (num) => {
-    num = num > 3 ? num * 2 : num;
-    return num;
-  })).toStrictEqual([1, 2, 3, 8]);
+  const tests = [
+    {
+      target: [1, 2, 3, 4],
+      args: [function (num) {
+        num += 1;
+        return num;
+      }],
+      toBe: [2, 3, 4, 5]
+    },
+    {
+      target: [1, 2, 3, 4],
+      args: [function (num) {
+        num = num > 3 ? num * 2 : num;
+        return num;
+      }],
+      toBe: [1, 2, 3, 8]
+    },
+  ];
+
+  tests.map(({ target, args, toBe }) => expect(each.call({ target }, ...args)).toStrictEqual(toBe));
 });
 
 // hasItem
 test("Проверка наличия элемента в массиве", () => {
-  expect(hasItem.call({ target: [1, 2, 3, 4] }, 2)).toBeTruthy();
-  expect(hasItem.call({ target: [1, 2, 3, 4] }, 5)).toBeFalsy();
-  expect(hasItem.call({ target: [1, 2, 3, "Hello"] }, "Hello")).toBeTruthy();
+  const tests = [
+    {
+      target: [1, 2, 3, 4],
+      toBe: "toBeTruthy",
+      args: [2]
+    },
+    {
+      target: [1, 2, 3, "Hello"],
+      toBe: "toBeTruthy",
+      args: ["Hello"]
+    },
+    {
+      target: [1, 2, 3, 4],
+      toBe: "toBeFalsy",
+      args: [5]
+    },
+  ];
+
+  tests.map(({ target, args, toBe }) => expect(hasItem.call({ target }, ...args))[toBe]());
 });
 
 // index
 test("Проверка на вывод элемента по индексу", () => {
-  expect(index.call({ target: [1, 2, 3, 4] }, 2)).toStrictEqual({ target: 3 });
-  expect(index.call({ target: [1, 2, 3, 4] }, -1)).toStrictEqual({ target: 3 });
-  expect(index.call({ target: [1, 2, 3, 4] }, 0)).toStrictEqual({ target: 1 });
+  const tests = [
+    {
+      target: [1, 2, 3, 4],
+      toBe: { target: 3 },
+      args: [2]
+    },
+    {
+      target: [1, 2, 3, 4],
+      toBe: { target: 3 },
+      args: [-1]
+    },
+    {
+      target: [1, 2, 3, 4],
+      toBe: { target: 1 },
+      args: [0]
+    },
+  ];
+
+  tests.map(({ target, toBe, args }) => expect(index.call({ target }, ...args)).toStrictEqual(toBe));
+});
+
+// indexOf
+test("Проверка на вывод индекса, если элемент существует", () => {
+  const tests = [
+    {
+      target: [1, 2, 3, 4, 5],
+      args: [2],
+      toBe: 1
+    },
+    {
+      target: ["Hello"],
+      args: ["Hello"],
+      toBe: 0
+    },
+    {
+      target: ["Hello", { name: "Alexandr", age: 18 }],
+      args: [123],
+      toBe: -1
+    },
+    {
+      target: [],
+      args: [123],
+      toBe: -1
+    },
+    {
+      target: ["Hello", { name: "Alexandr", age: 18 }],
+      args: [{ name: "Alexandr", age: 18 }],
+      toBe: 1
+    },
+  ];
+
+  tests.map(({ target, args, toBe }) => expect(indexOf.call({ target }, ...args)).toStrictEqual(toBe));
+});
+
+// filter
+test("Проверка на фильтрацию массива", () => {
+  const tests = [
+    {
+      target: [1, 2, 3, 4, 5],
+      toBe: [3, 4, 5],
+      args: [function (num) {
+        return num > 2;
+      }]
+    },
+    {
+      target: ["Andrey", "Alexandr", "Alexey"],
+      toBe: ["Alexandr", "Alexey"],
+      args: [function (name) {
+        return /^alex/i.test(name);
+      }]
+    },
+    {
+      target: [1, 2, 3, 4, 5],
+      toBe: [2, 4],
+      args: [function (num) {
+        return num % 2 === 0;
+      }]
+    },
+  ];
+
+  tests.map(({ target, args, toBe }) => expect(filter.call({ target }, ...args)).toStrictEqual(toBe));
 });

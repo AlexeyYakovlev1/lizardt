@@ -85,8 +85,22 @@ var arrayCategory = {
             this.target = el;
             return this;
         }
-        index_1.default.setError("\"".concat(this.target, "\" must be array, string, HTMLCollection or NodeList"));
-    }
+        index_1.default.setError("\"".concat(this.target, "\" must be a array, string, HTMLCollection or NodeList"));
+    },
+    filter: function (callback, thisArg) {
+        if (Array.isArray(this.target)) {
+            if (callback instanceof Function) {
+                return thisArg ? this.target.filter(callback, thisArg) : this.target.filter(callback);
+            }
+            else {
+                index_1.default.setError("\"".concat(callback, "\" must be a function"));
+            }
+        }
+        else {
+            index_1.default.setError("\"".concat(this.target, "\" must be a array"));
+        }
+    },
+    indexOf: index_1.default.indexOf,
 };
 for (var i in arrayCategory) {
     // Exports every separately method

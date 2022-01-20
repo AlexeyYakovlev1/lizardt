@@ -4,10 +4,28 @@ import {
 
 // isFunction
 test("Проверка элемента на функцию", () => {
-  expect(isFunction({})).toBeFalsy();
-  expect(isFunction("")).toBeFalsy();
-  expect(isFunction([])).toBeFalsy();
-  expect(isFunction(() => { })).toBeTruthy();
-  expect(isFunction(console.log, () => 1)).toStrictEqual(1);
-  expect(isFunction("console.log", () => 1)).toBeFalsy();
-})
+  const tests = [
+    {
+      target: {},
+      toBe: "toBeFalsy",
+      args: []
+    },
+    {
+      target: [],
+      toBe: "toBeFalsy",
+      args: []
+    },
+    {
+      target: () => { },
+      toBe: "toBeTruthy",
+      args: []
+    },
+    {
+      target: "console.log",
+      args: [() => 1],
+      toBe: "toBeFalsy"
+    },
+  ];
+
+  tests.map(({ target, toBe, args }) => expect(isFunction(target, ...args))[toBe]());
+});

@@ -17,20 +17,7 @@ const stringCategory: IStringCategory = {
     }
   },
 
-  indexOf(str: string): number {
-    if (typeof this.target === "string") {
-      if (typeof str === "string") {
-        const regexp = new RegExp(str);
-        const res = this.target.match(regexp);
-
-        return res ? res.index : -1;
-      } else {
-        global.setError(`"${str}" not a string`);
-      }
-    } else {
-      global.setError(`"${this.target}" not a string`);
-    }
-  }
+  indexOf: global.indexOf,
 }
 
 for (let i in stringCategory) {
