@@ -117,6 +117,29 @@ var global = {
         else {
             global.setError("\"".concat(this.target, "\" is not a HTML element"));
         }
+    },
+    indexOf: function (findItem) {
+        if (typeof this.target === "string") {
+            if (typeof findItem === "string") {
+                var regexp = new RegExp(findItem);
+                var res = this.target.match(regexp);
+                return res ? res.index : -1;
+            }
+            else {
+                global.setError("\"".concat(findItem, "\" not a string"));
+            }
+        }
+        if (Array.isArray(this.target)) {
+            var res_1 = this.target.indexOf(findItem);
+            if (res_1 === -1) {
+                this.target.map(function (item, index) {
+                    if (global.compare(item, findItem)) {
+                        res_1 = index;
+                    }
+                });
+            }
+            return res_1;
+        }
     }
 };
 exports.default = global;

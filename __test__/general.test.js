@@ -9,42 +9,126 @@ import {
 
 // compare
 test("Сравнение двух элементов", () => {
-  expect(compare([1, 2, 3], [1, 2, 3])).toBeTruthy();
-  expect(compare([1, 2, 3], [])).toBeFalsy();
-  expect(compare({}, {})).toBeTruthy();
-  expect(compare(1, [])).toBeFalsy();
-  expect(compare([1], [1])).toBeTruthy();
-  expect(compare("[1,2,3]", "")).toBeFalsy();
-  expect(compare("ad", "ad")).toBeTruthy();
+  const tests = [
+    {
+      args: [[1, 2, 3], [1, 2, 3]],
+      toBe: "toBeTruthy"
+    },
+    {
+      args: [[1, 2, 3], []],
+      toBe: "toBeFalsy"
+    },
+    {
+      args: [{}, {}],
+      toBe: "toBeTruthy"
+    },
+    {
+      args: [1, []],
+      toBe: "toBeFalsy"
+    },
+    {
+      args: [[1], [1]],
+      toBe: "toBeTruthy"
+    },
+    {
+      args: ["[1,2,3]", ""],
+      toBe: "toBeFalsy"
+    },
+    {
+      args: ["ad", "ad"],
+      toBe: "toBeTruthy"
+    },
+  ];
+
+  tests.map(({ args, toBe }) => expect(compare(...args))[toBe]());
 })
 
 // copy
 test("Копирование элемента", () => {
-  expect(copy([1, 2, 3])).toStrictEqual([1, 2, 3]);
-  expect(copy("123")).toStrictEqual("123");
+  const tests = [
+    {
+      target: [1, 2, 3],
+      toBe: [1, 2, 3]
+    },
+    {
+      target: "123",
+      toBe: "123"
+    },
+  ];
+
+  tests.map(({ target, toBe }) => expect(copy(target)).toStrictEqual(toBe));
 })
 
 // jsonParse
 test("Парсит json строку", () => {
-  expect(jsonParse(jsonString([1, 2, 3, 4]))).toStrictEqual([1, 2, 3, 4]);
-  expect(jsonParse(jsonString({ name: "name" }))).toStrictEqual({ name: "name" });
-})
+  const tests = [
+    {
+      target: [1, 2, 3, 4],
+      toBe: [1, 2, 3, 4]
+    },
+    {
+      target: { name: "name" },
+      toBe: { name: "name" }
+    },
+  ];
+
+  tests.map(({ target, toBe }) => expect(jsonParse(jsonString(target))).toStrictEqual(toBe));
+});
 
 // jsonString
 test("Превращает в json значение", () => {
-  expect(jsonString({ name: "name" })).toStrictEqual(`{"name":"name"}`);
-})
+  const tests = [
+    {
+      target: { name: "name" },
+      toBe: `{"name":"name"}`
+    },
+    {
+      target: [],
+      toBe: `[]`
+    },
+  ];
+
+  tests.map(({ target, toBe }) => expect(jsonString(target)).toStrictEqual(toBe));
+});
 
 // array
-test("Создание массива из вашего первого аргумента, символ второго аргумента является необязательным, он разделяет ваш первый аргумент уникальным символом, который поможет создать массив", () => {
-  expect(array("abc")).toStrictEqual(["a", "b", "c"]);
-  expect(array("ab,c", ",")).toStrictEqual(["ab", "c"]);
+test("Создание массива", () => {
+  const tests = [
+    {
+      target: "abc",
+      args: [],
+      toBe: ["a", "b", "c"]
+    },
+    {
+      target: "ab,c",
+      args: [","],
+      toBe: ["ab", "c"]
+    },
+  ];
+
+  tests.map(({ target, toBe, args }) => expect(array(target, ...args)).toStrictEqual(toBe));
 })
 
 // t
 test("Предназначен для создания элемента, над которым будут проходить работы", () => {
-  expect(t("name").target).toStrictEqual("name");
-  expect(t([1, 2, 3]).target).toStrictEqual([1, 2, 3]);
-  expect(t({}).target).toStrictEqual({});
-  expect(t(123).target).toStrictEqual(123);
-})
+  const tests = [
+    {
+      target: "name",
+      toBe: "name"
+    },
+    {
+      target: [1, 2, 3],
+      toBe: [1, 2, 3]
+    },
+    {
+      target: {},
+      toBe: {}
+    },
+    {
+      target: 123,
+      toBe: 123
+    },
+  ];
+
+  tests.map(({ target, toBe }) => expect(t(target).target).toStrictEqual(toBe));
+});

@@ -132,6 +132,33 @@ const global: IGlobal = {
     } else {
       global.setError(`"${this.target}" is not a HTML element`);
     }
+  },
+
+  indexOf(findItem: any): number {
+    if (typeof this.target === "string") {
+      if (typeof findItem === "string") {
+        const regexp = new RegExp(findItem);
+        const res = this.target.match(regexp);
+
+        return res ? res.index : -1;
+      } else {
+        global.setError(`"${findItem}" not a string`);
+      }
+    }
+
+    if (Array.isArray(this.target)) {
+      let res = this.target.indexOf(findItem);
+
+      if (res === -1) {
+        this.target.map((item, index) => {
+          if (global.compare(item, findItem)) {
+            res = index;
+          }
+        });
+      }
+
+      return res;
+    }
   }
 };
 

@@ -5,12 +5,36 @@ import {
 
 // hasString
 test("Проверяет наличие значения в строке", () => {
-  expect(hasString.call({ target: "hello" }, "ell")).toBeTruthy();
-  expect(hasString.call({ target: "world" }, "ell")).toBeFalsy();
+  const tests = [
+    {
+      target: "hello",
+      args: ["ell"],
+      toBe: "toBeTruthy"
+    },
+    {
+      target: "world",
+      args: ["ell"],
+      toBe: "toBeFalsy"
+    },
+  ];
+
+  tests.map(({ target, args, toBe }) => expect(hasString.call({ target }, ...args))[toBe]());
 })
 
 // indexOf
 test("Возвращает индекс начала строки, которая соответствует поиску", () => {
-  expect(indexOf.call({ target: "hello" }, "ell")).toStrictEqual(1);
-  expect(indexOf.call({ target: "world" }, "ell")).toStrictEqual(-1);
+  const tests = [
+    {
+      target: "hello",
+      args: ["ell"],
+      toBe: 1
+    },
+    {
+      target: "world",
+      args: ["ell"],
+      toBe: -1
+    },
+  ];
+
+  tests.map(({ target, args, toBe }) => expect(indexOf.call({ target }, ...args)).toStrictEqual(toBe));
 })

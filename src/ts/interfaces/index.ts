@@ -1,7 +1,7 @@
 // Categories 
 export interface IStringCategory {
   hasString(str: string): boolean;
-  indexOf(str: string): number;
+  indexOf(findItem: any): number;
 }
 
 export interface IFuncCategory {
@@ -17,6 +17,8 @@ export interface IArrayCategory {
   removeItem(index: number, val?: any): Array<any>;
   hasItem(item: any): boolean;
   index(num: number): any;
+  filter(callback: () => any, thisArg?: any): any;
+  indexOf(findItem: any): number;
 }
 
 export interface IDomCategory {
@@ -147,13 +149,14 @@ export interface IT {
   jsonParse(item: any, reviver?): any;
   jsonString(item: any, replacer?, space?): string;
   contains(selector: string): boolean;
-  indexOf(str: string): number;
+  indexOf(findItem: any): number;
   hasString(str: string): boolean;
   index(num: number): any;
   hasParent(selector: string | Element): boolean;
   keys(): Array<any>;
   values(): Array<any>;
   onRemove(event: string, callback: () => any, options?: object, useCapture?: boolean): void;
+  filter(callback: () => any, thisArg?: any): any;
 }
 
 export interface IGlobal {
@@ -167,6 +170,7 @@ export interface IGlobal {
   removeChild(parent: any, element: string | Element, num?: string): void;
   compare(item1: any, item2: any): Boolean;
   getAllParents(num?: number): Array<HTMLElement> | HTMLElement;
+  indexOf(findItem: any): number;
 }
 
 export interface ILizardt {

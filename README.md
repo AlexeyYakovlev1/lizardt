@@ -837,7 +837,9 @@ t("Hello, world!").hasString("D"); // false
 
 ### ```indexOf()```:
 - **Description**
-Returns the index of the beginning of the string that matches the search
+Returns the index of the beginning of the string that matches the search. Also applicable to array
+- **Arguments**
+  - Item **(required)**
 - **Return**
 Index of the beginning of the string
 - **Example**
@@ -846,6 +848,8 @@ const { t } = lizardt;
 
 t("Hello, world!").indexOf("ello"); // 1
 t("Hello, world!").indexOf("D"); // -1
+t([1,2,3,4,5]).indexOf(2); // 1
+t([{ name: "Alex" }]).indexOf({ name: "Alex" }); // 0
 ```
 
 ### ```index()```:
@@ -904,4 +908,22 @@ const { t } = lizardt;
 
 t({ name: "Alexandr", age: 17 }).values(); // ["Alexandr", 17]
 t({}).values(); // []
+```
+
+### ```filter()```:
+- **Description**
+Creates a new array with all elements that pass the test specified in the passed function
+- **Return**
+  - Callback **(required)**
+  - Context **(optional)**
+- **Return**
+Array
+- **Example**
+```Javascript
+const { t } = lizardt;
+
+t([1,2,3,4,5]).filter(num => num % 2 === 0); // [2, 4]
+t([{ name: "A1", age: 15 }, { name: "A2", age: 12 }, { name: "A3", age: 18 }]).filter(({ age }) => {
+  return age >= 18;
+}); // [{ name: "A3", age: 18 }]
 ```

@@ -100,8 +100,22 @@ const arrayCategory: IArrayCategory = {
       return this;
     }
 
-    global.setError(`"${this.target}" must be array, string, HTMLCollection or NodeList`);
-  }
+    global.setError(`"${this.target}" must be a array, string, HTMLCollection or NodeList`);
+  },
+
+  filter(callback: () => any, thisArg?: any): any {
+    if (Array.isArray(this.target)) {
+      if (callback instanceof Function) {
+        return thisArg ? this.target.filter(callback, thisArg) : this.target.filter(callback);
+      } else {
+        global.setError(`"${callback}" must be a function`);
+      }
+    } else {
+      global.setError(`"${this.target}" must be a array`);
+    }
+  },
+
+  indexOf: global.indexOf,
 }
 
 for (let i in arrayCategory) {
