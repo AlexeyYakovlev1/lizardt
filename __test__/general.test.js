@@ -4,7 +4,8 @@ import {
   jsonParse,
   jsonString,
   array,
-  t
+  t,
+  typeOf
 } from "../src/js/categories/general";
 
 // compare
@@ -131,4 +132,19 @@ test("Предназначен для создания элемента, над 
   ];
 
   tests.map(({ target, toBe }) => expect(t(target).target).toStrictEqual(toBe));
+});
+
+// typeOf
+test("Проверка на тип данных", () => {
+  const tests = [
+    { target: 0, toBe: "number" },
+    { target: "", toBe: "string" },
+    { target: {}, toBe: "object" },
+    { target: [], toBe: "object" },
+    { target: NaN, toBe: "NaN" },
+    { target: null, toBe: "null" },
+    { target: undefined, toBe: "undefined" },
+  ];
+
+  tests.map(({ target, toBe }) => expect(typeOf(target)).toStrictEqual(toBe));
 });

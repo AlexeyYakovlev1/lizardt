@@ -927,3 +927,63 @@ t([{ name: "A1", age: 15 }, { name: "A2", age: 12 }, { name: "A3", age: 18 }]).f
   return age >= 18;
 }); // [{ name: "A3", age: 18 }]
 ```
+
+### ```filter()```:
+- **Description**
+Sorting an array by groups
+- **Return**
+  - Callback **(required)**
+- **Return**
+Object
+- **Example**
+```Javascript
+const { t } = lizardt;
+const users = [
+  {
+    name: "Alexandr",
+    age: 17
+  },
+  {
+    name: "Michail",
+    age: 19
+  },
+  {
+    name: "Andrey",
+    age: 12
+  },
+  {
+    name: "Victor",
+    age: 24
+  },
+];
+const workers = [
+  { id: 1, status: "senior" }, 
+  { id: 2, status: "junior" }, 
+  { id: 3, status: "junior" }
+];
+
+// { old: [{ name: "Michail", ... }, { name: "Victor", ... }], young: [{ name: "Alexandr", ... }, { name: "Andrey", ... }] }
+t(users).groupBy(user => user.age >= 18 ? "old" : "young");
+
+// { odd: [1, 3, 5, 7], even: [2, 4, 6] }
+t([1, 2, 3, 4, 5, 6, 7]).groupBy(num => num % 2 === 0 ? "even" : "odd");
+
+// { senior: [{ status: "senior", ... }], junior: [{ status: "junior", ... }, { status: "junior", ... }] }
+t(workers).groupBy(worker => worker.status);
+```
+
+### ```typeOf()```:
+- **Description**
+Returns the data type
+- **Return**
+String
+- **Example**
+```Javascript
+const { typeOf } = lizardt;
+
+typeOf(NaN); // "NaN" (not an object)
+typeOf(null); // "null" (not an object)
+typeOf(0); // "number"
+typeOf("string"); // "string"
+typeOf(undefined); // "undefined"
+```

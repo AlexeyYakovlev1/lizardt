@@ -14,6 +14,30 @@ var arrayCategory = {
             index_1.default.setError("\"".concat(this.target, "\" is not a list"));
         }
     },
+    groupBy: function (callback) {
+        if (Array.isArray(this.target)) {
+            if (callback instanceof Function) {
+                var data = this.target.reduce(function (acc, item, index, array) {
+                    var res = callback(item, index, array);
+                    if (res && res in acc) {
+                        acc[res].push(item);
+                    }
+                    else {
+                        acc[res] = [];
+                        acc[res].push(item);
+                    }
+                    return acc;
+                }, {});
+                return data;
+            }
+            else {
+                index_1.default.setError("\"".concat(callback, "\" is not a function"));
+            }
+        }
+        else {
+            index_1.default.setError("\"".concat(this.target, "\" is not a array"));
+        }
+    },
     removeItem: function (num, val) {
         if (Array.isArray(this.target)) {
             val || typeof val === "number" && val >= 0 ? this.target.splice(num, 1, val) : this.target.splice(num, 1);

@@ -1,7 +1,7 @@
 // Interfaces
 import {
-	IT,
-	IGeneralCategory
+  IT,
+  IGeneralCategory
 } from "../interfaces/index";
 
 // Categories
@@ -18,68 +18,72 @@ import filterMethods from "../filterMethods/index";
 import global from "../global/index";
 
 const generalCategory: IGeneralCategory = {
-	compare: global.compare,
+  compare: global.compare,
 
-	copy(item: any): any {
-		if (Array.isArray(item)) {
-			return [...item];
-		} else if (item && typeof item === "object" && !Array.isArray(item) && !(item instanceof Element || item instanceof HTMLElement)) {
-			return { ...item };
-		}
+  copy(item: any): any {
+    if (Array.isArray(item)) {
+      return [...item];
+    } else if (item && typeof item === "object" && !Array.isArray(item) && !(item instanceof Element || item instanceof HTMLElement)) {
+      return { ...item };
+    }
 
-		return item;
-	},
+    return item;
+  },
 
-	jsonParse(item: any, reviver?): any {
-		return JSON.parse(item, reviver);
-	},
+  jsonParse(item: any, reviver?): any {
+    return JSON.parse(item, reviver);
+  },
 
-	jsonString(item: any, replacer?, space?): string {
-		return JSON.stringify(item, replacer, space);
-	},
+  jsonString(item: any, replacer?, space?): string {
+    return JSON.stringify(item, replacer, space);
+  },
 
-	array(item: any, symb?: string): Array<any> {
-		if (!item) {
-			return [];
-		}
+  typeOf(item: any): string {
+    return (typeof item === "number" && isNaN(item)) ? "NaN" : item === null ? "null" : typeof item;
+  },
 
-		let res: Array<any> = Array.from(item);
+  array(item: any, symb?: string): Array<any> {
+    if (!item) {
+      return [];
+    }
 
-		if (typeof symb === "string" && symb.length) {
-			res = item.split(symb);
-		}
+    let res: Array<any> = Array.from(item);
 
-		return res;
-	},
+    if (typeof symb === "string" && symb.length) {
+      res = item.split(symb);
+    }
 
-	t(target: any, list?: boolean): IT {
-		let trt;
+    return res;
+  },
 
-		if (typeof target === "string" && /^\[.+\]$/.test(target)) {
-			try {
-				const selector = target.replace(/^\[/, "").replace(/\]$/, "");
-				const element: NodeListOf<Element> | Element | null = list ? document.querySelectorAll(selector) : document.querySelector(selector);
+  t(target: any, list?: boolean): IT {
+    let trt;
 
-				if (element) {
-					trt = element;
-				}
-			} catch (e) {
-				trt = target;
-			}
-		}
+    if (typeof target === "string" && /^\[.+\]$/.test(target)) {
+      try {
+        const selector = target.replace(/^\[/, "").replace(/\]$/, "");
+        const element: NodeListOf<Element> | Element | null = list ? document.querySelectorAll(selector) : document.querySelector(selector);
 
-		return {
-			target: trt ? trt : target,
-			...filterMethods({ ...domCategory, ...arrayCategory, ...functionCategory, ...objectCategory, ...stringCategory }, ["createElement", "isArray", "isFunction", "isObject"])
-		}
-	},
+        if (element) {
+          trt = element;
+        }
+      } catch (e) {
+        trt = target;
+      }
+    }
 
-	...filterMethods({ ...arrayCategory, ...objectCategory, ...functionCategory }, [], ["isArray", "isObject", "isFunction", "index"])
+    return {
+      target: trt ? trt : target,
+      ...filterMethods({ ...domCategory, ...arrayCategory, ...functionCategory, ...objectCategory, ...stringCategory }, ["createElement", "isArray", "isFunction", "isObject"])
+    }
+  },
+
+  ...filterMethods({ ...arrayCategory, ...objectCategory, ...functionCategory }, [], ["isArray", "isObject", "isFunction", "index"])
 }
 
 for (let i in generalCategory) {
-	// Exports every separately method
-	exports[i] = generalCategory[i];
+  // Exports every separately method
+  exports[i] = generalCategory[i];
 }
 
 // Exports all methods

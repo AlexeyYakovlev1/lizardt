@@ -8,7 +8,8 @@ import {
   hasItem,
   index,
   indexOf,
-  filter
+  filter,
+  groupBy
 } from "../src/js/categories/array";
 
 // last
@@ -263,4 +264,27 @@ test("Проверка на фильтрацию массива", () => {
   ];
 
   tests.map(({ target, args, toBe }) => expect(filter.call({ target }, ...args)).toStrictEqual(toBe));
+});
+
+// groupBy
+test("Сортирует массив по группам", () => {
+  const tests = [
+    {
+      target: [1, 2, 3, 4, 5, 6],
+      args: [num => num % 2 === 0 ? "even" : "odd"],
+      toBe: { even: [2, 4, 6], odd: [1, 3, 5] }
+    },
+    {
+      target: [{ id: 1, status: "Senior" }, { id: 2, status: "Junior" }, { id: 3, status: "Junior" }],
+      args: [worker => worker.status],
+      toBe: { Senior: [{ id: 1, status: "Senior" }], Junior: [{ id: 2, status: "Junior" }, { id: 3, status: "Junior" }] }
+    },
+    {
+      target: [],
+      args: [() => undefined],
+      toBe: {}
+    },
+  ];
+
+  tests.map(({ target, args, toBe }) => expect(groupBy.call({ target }, ...args)).toStrictEqual(toBe));
 });

@@ -18,6 +18,31 @@ const arrayCategory: IArrayCategory = {
     }
   },
 
+  groupBy(callback: (el?, index?, array?) => any) {
+    if (Array.isArray(this.target)) {
+      if (callback instanceof Function) {
+        const data: object = this.target.reduce((acc, item, index, array) => {
+          const res: any = callback(item, index, array);
+
+          if (res && res in acc) {
+            acc[res].push(item);
+          } else {
+            acc[res] = [];
+            acc[res].push(item);
+          }
+
+          return acc;
+        }, {});
+
+        return data;
+      } else {
+        global.setError(`"${callback}" is not a function`);
+      }
+    } else {
+      global.setError(`"${this.target}" is not a array`);
+    }
+  },
+
   removeItem(num: number, val?: any): Array<any> {
     if (Array.isArray(this.target)) {
       val || typeof val === "number" && val >= 0 ? this.target.splice(num, 1, val) : this.target.splice(num, 1);

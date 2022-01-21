@@ -19,6 +19,7 @@ export interface IArrayCategory {
   index(num: number): any;
   filter(callback: () => any, thisArg?: any): any;
   indexOf(findItem: any): number;
+  groupBy(callback: () => any): any;
 }
 
 export interface IDomCategory {
@@ -56,6 +57,7 @@ export interface IGeneralCategory {
   jsonParse(item: any, reviver?): any;
   jsonString(item: any, replacer?, space?): string;
   t(target: any, list?: boolean): IT;
+  typeOf(item: any): string;
   index(num: number): any;
 }
 
@@ -157,6 +159,7 @@ export interface IT {
   values(): Array<any>;
   onRemove(event: string, callback: () => any, options?: object, useCapture?: boolean): void;
   filter(callback: () => any, thisArg?: any): any;
+  groupBy(callback: () => any): any;
 }
 
 export interface IGlobal {

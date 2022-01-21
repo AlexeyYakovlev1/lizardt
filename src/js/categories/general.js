@@ -42,6 +42,8 @@ var generalCategory = __assign({ compare: index_2.default.compare, copy: functio
         return JSON.parse(item, reviver);
     }, jsonString: function (item, replacer, space) {
         return JSON.stringify(item, replacer, space);
+    }, typeOf: function (item) {
+        return (typeof item === "number" && isNaN(item)) ? "NaN" : item === null ? "null" : typeof item;
     }, array: function (item, symb) {
         if (!item) {
             return [];
