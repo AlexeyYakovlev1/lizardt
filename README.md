@@ -931,7 +931,7 @@ t([{ name: "A1", age: 15 }, { name: "A2", age: 12 }, { name: "A3", age: 18 }]).f
 ### ```groupBy()```:
 - **Description**
 Sorting an array by groups
-- **Return**
+- **Arguments**
   - Callback **(required)**
 - **Return**
 Object
@@ -975,6 +975,8 @@ t(workers).groupBy(worker => worker.status);
 ### ```typeOf()```:
 - **Description**
 Returns the data type
+- **Arguments**
+  - Item **(required)**
 - **Return**
 String
 - **Example**
