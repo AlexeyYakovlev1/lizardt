@@ -2,17 +2,142 @@ import "@testing-library/jest-dom"
 
 // DOM methods
 import {
-  styles,
-  on,
-  onRemove,
-  getAttributes,
-  getChildren,
-  add,
-  remove,
-  clearStyles,
-  txt,
-  size
+  styles, on, onRemove,
+  getAttributes, getChildren,
+  add, remove, clearStyles,
+  txt, size, addChild,
+  removeChild, addPrevElement,
+  addNextElement, setAttribute,
+  removeAttribute, data
 } from "../src/js/categories/dom";
+
+// data
+test("Получение значений элементов из формы", () => {
+  document.body.innerHTML = `<form class="form">
+    <input type="text" name="name" value="Alex" />
+    <input type="email" name="email" value="alex@gmail.com" />
+  </form>`;
+  const form = document.querySelector(".form");
+
+  form.addEventListener("submit", event => {
+    event.preventDefault();
+
+    expect(data.call({target: form})).toStrictEqual({
+      name: "Alex", email: "alex@gmail.com"
+    });
+    expect(data.call({target: form}, true)).toStrictEqual([
+      {name: "Alex"}, {email: "alex@gmail.com"}
+    ]);
+  });
+});
+
+// removeAttribute
+test("Удаляет аттрибут из элемента", () => {
+  document.body.innerHTML = `<div class="wrapper"></div>`;
+  
+  const block = document.querySelector(".wrapper");
+  const tests = [
+    {
+      attribute: "data-length",
+      value: "3",
+      return: null
+    },
+    {
+      attribute: "title",
+      value: "Main block",
+      return: null
+    }
+  ]
+
+  tests.map(test => {
+    block.setAttribute(test.attribute, test.value);
+    removeAttribute.call({target: block}, test.attribute);
+    expect(block.getAttribute(test.attribute)).toStrictEqual(test.return);
+  })
+})
+
+// setAttribute
+test("Добавляет аттрибуты к элементу", () => {
+  document.body.innerHTML = `<div class="wrapper"></div>`;
+  
+  const block = document.querySelector(".wrapper");
+  const tests = [
+    {
+      attribute: "data-length",
+      value: "3"
+    },
+    {
+      attribute: "title",
+      value: "Main block"
+    }
+  ]
+
+  tests.map(test => {
+    const value = test.value;
+    const obj = {};
+    obj[test.attribute] = value;
+    setAttribute.call({target: block}, obj);
+    expect(block.getAttribute(test.attribute)).toStrictEqual(test.value);
+  })
+})
+
+// addNextElement
+test("Добавляет html элемент как 'afterend'", () => {
+  document.body.innerHTML = `<ul class="list">
+    <li class="item"></li>
+  </ul>`;
+  const list = document.querySelector(".list");
+  const el = list.querySelector(".item");
+  addNextElement.call({target: el}, {
+    tag: "li",
+    text: "value"
+  }).target;
+  expect([...list.children][1].textContent).toStrictEqual("value");
+})
+
+// addPrevElement
+test("Добавляет html элемент как 'beforebegin'", () => {
+  document.body.innerHTML = `<ul class="list">
+    <li class="item"></li>
+  </ul>`;
+  const list = document.querySelector(".list");
+  const el = list.querySelector(".item");
+  addPrevElement.call({target: el}, {
+    tag: "li",
+    text: "value"
+  }).target;
+  expect([...list.children][0].textContent).toStrictEqual("value");
+})
+
+// removeChild
+test("Удаляет html ребенка из блок", () => {
+  document.body.innerHTML = `<div class="wrapper">
+    <h1 title="Main title">Hello, Lizard!</h1>
+  </div>`;
+
+  const block = document.querySelector(".wrapper");
+  
+  removeChild.call({target: block}, block.querySelector("[title='Main title']"));
+  const child = Boolean(block.querySelector("[title='Main title']"));
+
+  expect(child).toStrictEqual(false);
+})
+
+// addChild
+test("Добавляет html ребенка в блок", () => {
+  document.body.innerHTML = `<div class="wrapper"></div>`;
+  const block = document.querySelector(".wrapper");
+  addChild.call({target: block}, {
+    tag: "h1",
+    text: "Hello, Lizard!",
+    styles: { color: "blue" },
+    attributes: { title: "Main title" }
+  });
+
+  const findChildren = Boolean(block.querySelector("[title='Main title']"));
+
+  expect(findChildren).toStrictEqual(true);
+})
 
 // size
 test("Получение размеров элемента", () => {
