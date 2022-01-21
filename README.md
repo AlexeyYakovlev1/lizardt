@@ -928,7 +928,7 @@ t([{ name: "A1", age: 15 }, { name: "A2", age: 12 }, { name: "A3", age: 18 }]).f
 }); // [{ name: "A3", age: 18 }]
 ```
 
-### ```filter()```:
+### ```groupBy()```:
 - **Description**
 Sorting an array by groups
 - **Return**
