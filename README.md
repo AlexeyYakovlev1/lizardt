@@ -983,7 +983,7 @@ String
 ```Javascript
 const { typeOf } = lizardt;
 
-typeOf(NaN); // "NaN" (not an object)
+typeOf(NaN); // "NaN" (not an number)
 typeOf(null); // "null" (not an object)
 typeOf(0); // "number"
 typeOf("string"); // "string"
