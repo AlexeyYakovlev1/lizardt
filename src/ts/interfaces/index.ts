@@ -170,7 +170,7 @@ export interface IGlobal {
   definesType(name: string): ITypeOfSelector;
   setAttributes(el: HTMLElement, obj: object): HTMLElement;
   setError(message: string): never;
-  removeChild(parent: any, element: string | Element, num?: string): void;
+  removeChild(parent: any, element: string | Element, position?: string): void;
   compare(item1: any, item2: any): Boolean;
   getAllParents(num?: number): Array<HTMLElement> | HTMLElement;
   indexOf(findItem: any): number;

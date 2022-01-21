@@ -66,10 +66,10 @@ var global = {
     setError: function (message) {
         throw new Error(message);
     },
-    removeChild: function (parent, element, num) {
+    removeChild: function (parent, element, position) {
         if (parent instanceof Element) {
-            if (num) {
-                switch (num) {
+            if (position) {
+                switch (position) {
                     case "first":
                         parent.removeChild(parent.firstElementChild);
                         break;

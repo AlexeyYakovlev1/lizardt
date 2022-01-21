@@ -8,8 +8,98 @@ import {
   txt, size, addChild,
   removeChild, addPrevElement,
   addNextElement, setAttribute,
-  removeAttribute, data
+  removeAttribute, data, hasElement,
+  removeLastChild, removeFirstChild,
+  contains, hasParent
 } from "../src/js/categories/dom";
+
+// hasParent
+test("Проверка на существование родителя", () => {
+  document.body.innerHTML = `<div class="wrapper">
+    <h1 class="title"></h1>
+  </div>`;
+  const title = document.querySelector(".title");
+  const tests = [
+    {
+      parentClass: ".wrapper",
+      return: true
+    },
+    {
+      parentClass: ".list",
+      return: false
+    }
+  ]
+  tests.forEach(test => {
+    const chk = hasParent.call({target: title}, test.parentClass);
+    expect(chk).toStrictEqual(test.return);
+  })
+})
+
+// contains
+test("Проверяет наличие классов/идентификаторов", () => {
+  document.body.innerHTML = `<div class="wrapper" id="main"></div>`;
+  const block = document.querySelector(".wrapper");
+  const tests = [
+    {
+      names: [".wrapper", "#main"],
+      return: true
+    },
+    {
+      names: [".block", "#main", ".wrapper"],
+      return: false
+    }
+  ];
+
+  tests.forEach(test => {
+    const chk = contains.call({target: block}, ...test.names);
+    expect(chk).toStrictEqual(test.return);
+  })
+})
+
+// removeFirstChild
+test("Удаляет первого ребенка", () => {
+  document.body.innerHTML = `<div class="wrapper">
+    <p class="description"></p>
+    <ul class="list"></ul>
+  </div>`;
+
+  const block = document.querySelector(".wrapper");
+  removeFirstChild.call({target: block});
+  expect(block.querySelector(".description")).toStrictEqual(null);
+});
+
+// removeLastChild
+test("Удаляет последнего ребенка", () => {
+  document.body.innerHTML = `<div class="wrapper">
+    <p class="description"></p>
+    <ul class="list"></ul>
+  </div>`;
+
+  const block = document.querySelector(".wrapper");
+  removeLastChild.call({target: block});
+  expect(block.querySelector(".list")).toStrictEqual(null);
+});
+
+// hasElement
+test("Проверка на существование блока в родителе", () => {
+  document.body.innerHTML = `<div class="wrapper">
+    <p class="description"></p>
+  </div>`;
+  const block = document.querySelector(".wrapper");
+  const tests = [
+    {
+      className: ".description",
+      return: true
+    },
+    {
+      className: ".title",
+      return: false
+    }
+  ];
+  tests.forEach(test => {
+    expect(hasElement.call({target: block}, test.className)).toStrictEqual(test.return);
+  })
+})
 
 // data
 test("Получение значений элементов из формы", () => {

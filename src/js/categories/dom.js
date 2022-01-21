@@ -343,11 +343,11 @@ var domCategory = {
         }
     },
     removeLastChild: function () {
-        index_1.default.removeChild(this.target, "last");
+        index_1.default.removeChild(this.target, null, "last");
         return this;
     },
     removeFirstChild: function () {
-        index_1.default.removeChild(this.target, "first");
+        index_1.default.removeChild(this.target, null, "first");
         return this;
     },
     contains: function () {

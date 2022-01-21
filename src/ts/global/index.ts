@@ -75,10 +75,10 @@ const global: IGlobal = {
     throw new Error(message);
   },
 
-  removeChild(parent: any, element: string | Element, num?: string): void {
+  removeChild(parent: any, element: string | Element, position?: string): void {
     if (parent instanceof Element) {
-      if (num) {
-        switch (num) {
+      if (position) {
+        switch (position) {
           case "first":
             parent.removeChild(parent.firstElementChild);
             break;
