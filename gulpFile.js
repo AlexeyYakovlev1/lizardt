@@ -26,6 +26,7 @@ const paths = {
 const buildLibrary = () => {
   return src(paths.build.from)
     .pipe(webpack({
+      mode: "production",
       output: {
         filename: "lizardt.js",
         library: "lizardt",
