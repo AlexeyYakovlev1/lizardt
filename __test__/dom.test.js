@@ -144,6 +144,7 @@ test("Получение размеров элемента", () => {
   document.body.innerHTML = `<div class="block"></div>`;
   const block = document.querySelector(".block");
   const item = size.call({target: block});
+  
   expect(item).toStrictEqual({height: 0, width: 0});
 })
 
