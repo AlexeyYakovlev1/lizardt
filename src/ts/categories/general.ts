@@ -13,6 +13,7 @@ import stringCategory from "./string";
 
 // Additional methods
 import filterMethods from "../filterMethods/index";
+import additions from "../additions/index";
 
 // Global methods
 import global from "../global/index";
@@ -56,6 +57,18 @@ const generalCategory: IGeneralCategory = {
     return res;
   },
 
+  extend(options: object): object {
+    if (options && typeof options === "object" && !Array.isArray(options) && !(options instanceof Element || options instanceof HTMLElement)) {
+      for (let option in options) {
+        additions.setAddition = { [option]: options[option] };
+      }
+
+      return options;
+    } else {
+      global.setError(`"${options}" is not a object`);
+    }
+  },
+
   t(target: any, list?: boolean): IT {
     let trt;
 
@@ -74,7 +87,8 @@ const generalCategory: IGeneralCategory = {
 
     return {
       target: trt ? trt : target,
-      ...filterMethods({ ...domCategory, ...arrayCategory, ...functionCategory, ...objectCategory, ...stringCategory }, ["createElement", "isArray", "isFunction", "isObject"])
+      ...filterMethods({ ...domCategory, ...arrayCategory, ...functionCategory, ...objectCategory, ...stringCategory }, ["createElement", "isArray", "isFunction", "isObject"]),
+      ...additions.getAdditions,
     }
   },
 

@@ -62,6 +62,7 @@ export interface IGeneralCategory {
   getRandom(min: number, max: number): number;
   getPercent(current: number, endNum: number, round?: boolean): number;
   getNumFromPercent(percent: number, num: number, round?: boolean): number;
+  extend(options: object): object;
 }
 
 export interface INumberCategory {
@@ -193,4 +194,5 @@ export interface ILizardt {
   getRandom(min: number, max: number): number;
   getNumFromPercent(percent: number, num: number, round?: boolean): number;
   getPercent(current: number, endNum: number, round?: boolean): number;
+  extend(options: object): object;
 }

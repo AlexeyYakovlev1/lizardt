@@ -28,9 +28,10 @@ var object_1 = require("./object");
 var string_1 = require("./string");
 // Additional methods
 var index_1 = require("../filterMethods/index");
+var index_2 = require("../additions/index");
 // Global methods
-var index_2 = require("../global/index");
-var generalCategory = __assign({ compare: index_2.default.compare, copy: function (item) {
+var index_3 = require("../global/index");
+var generalCategory = __assign({ compare: index_3.default.compare, copy: function (item) {
         if (Array.isArray(item)) {
             return __spreadArray([], item, true);
         }
@@ -53,6 +54,17 @@ var generalCategory = __assign({ compare: index_2.default.compare, copy: functio
             res = item.split(symb);
         }
         return res;
+    }, extend: function (options) {
+        var _a;
+        if (options && typeof options === "object" && !Array.isArray(options) && !(options instanceof Element || options instanceof HTMLElement)) {
+            for (var option in options) {
+                index_2.default.setAddition = (_a = {}, _a[option] = options[option], _a);
+            }
+            return options;
+        }
+        else {
+            index_3.default.setError("\"".concat(options, "\" is not a object"));
+        }
     }, t: function (target, list) {
         var trt;
         if (typeof target === "string" && /^\[.+\]$/.test(target)) {
@@ -67,7 +79,7 @@ var generalCategory = __assign({ compare: index_2.default.compare, copy: functio
                 trt = target;
             }
         }
-        return __assign({ target: trt ? trt : target }, (0, index_1.default)(__assign(__assign(__assign(__assign(__assign({}, dom_1.default), array_1.default), func_1.default), object_1.default), string_1.default), ["createElement", "isArray", "isFunction", "isObject"]));
+        return __assign(__assign({ target: trt ? trt : target }, (0, index_1.default)(__assign(__assign(__assign(__assign(__assign({}, dom_1.default), array_1.default), func_1.default), object_1.default), string_1.default), ["createElement", "isArray", "isFunction", "isObject"])), index_2.default.getAdditions);
     } }, (0, index_1.default)(__assign(__assign(__assign({}, array_1.default), object_1.default), func_1.default), [], ["isArray", "isObject", "isFunction", "index"]));
 for (var i in generalCategory) {
     // Exports every separately method

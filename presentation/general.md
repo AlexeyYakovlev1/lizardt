@@ -144,3 +144,46 @@ typeOf(0); // "number"
 typeOf("string"); // "string"
 typeOf(undefined); // "undefined"
 ```
+
+### ```extend()```:
+- **Description**
+Adds new options, methods to the library
+- **Arguments**
+  - Options **(required)**
+- **Return**
+Options
+- **Example**
+```Javascript
+const { t, extend } = lizardt;
+
+extend({
+  getElement(data = []) {
+    if (data.length) {
+      const res = {};
+
+      data.map(attr => {
+        if (this.target[attr]) {
+          res[attr] = this.target[attr];
+        }
+      });
+
+      return res;
+    }
+
+    return this.target;
+  },
+  getTag() {
+    return this.target.localName;
+  },
+  // Error
+  remove() {
+    console.log(this.target);
+  }
+});
+
+const dataOfInput = t("[input]").getElement(["placeholder", "type"]);
+const tagOfInpit = t("[input]").getTag();
+
+// input and {placeholder: 'Enter', type: 'text'}
+console.log(tagOfInpit, dataOfInput);
+```
