@@ -5,7 +5,8 @@ import {
   jsonString,
   array,
   t,
-  typeOf
+  typeOf,
+  extend
 } from "../src/js/categories/general";
 
 // compare
@@ -148,3 +149,20 @@ test("Проверка на тип данных", () => {
 
   tests.map(({ target, toBe }) => expect(typeOf(target)).toStrictEqual(toBe));
 });
+
+test("Добавление новых опций", () => {
+  extend({
+    sayHello() {
+      if (typeof this.target === "string") {
+        return `Hello, ${this.target}`;
+      } else {
+        return false;
+      }
+    }
+  });
+  const item = t("Alexey").sayHello();
+  const item2 = t(["Alexey"]).sayHello();
+
+  expect(item).toStrictEqual("Hello, Alexey");
+  expect(item2).toStrictEqual(false);
+})
