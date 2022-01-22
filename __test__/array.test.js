@@ -284,6 +284,11 @@ test("Сортирует массив по группам", () => {
       args: [() => undefined],
       toBe: {}
     },
+    {
+      target: [1, 2, 3],
+      args: [num => num === 3 && "three"],
+      toBe: { three: [3] }
+    },
   ];
 
   tests.map(({ target, args, toBe }) => expect(groupBy.call({ target }, ...args)).toStrictEqual(toBe));

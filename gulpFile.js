@@ -2,6 +2,7 @@ const { src, dest, parallel, watch } = require("gulp");
 const ts = require("gulp-typescript");
 const webpack = require("webpack-stream");
 const plumber = require("gulp-plumber");
+const uglify = require("gulp-uglify");
 
 const tsProject = ts.createProject("./tsconfig.json");
 const paths = {
@@ -33,6 +34,7 @@ const buildLibrary = () => {
         libraryTarget: "umd"
       }
     }))
+    .pipe(uglify())
     .pipe(dest(paths.build.to));
 }
 
@@ -56,6 +58,7 @@ const js = () => {
     .pipe(webpack({
       mode: "development",
     }))
+    .pipe(uglify())
     .pipe(dest(paths.js.to));
 }
 

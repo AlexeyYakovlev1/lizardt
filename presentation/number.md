@@ -14,3 +14,43 @@ const { getRandom } = lizardt;
 
 getRandom(0, 5); // 1.1481...
 ```
+
+### ```getPercent()```:
+- **Description**
+Returns the percentage
+- **Arguments**
+  - Current number **(required)**
+  - End number **(required)**
+  - Round **(optional)**
+- **Return**
+Percent
+- **Example**
+```Javascript
+const { getPercent } = lizardt;
+
+getPercent(50, 100); // 50
+getPercent(22, 150); // 14.6666...
+
+// Percent rounding
+getPercent(22, 150, true); // 15
+```
+
+### ```getNumFromPercent()```:
+- **Description**
+Returns a number from a percentage
+- **Arguments**
+  - Percent **(required)**
+  - End number **(required)**
+  - Round **(optional)**
+- **Return**
+Number
+- **Example**
+```Javascript
+const { getNumFromPercent } = lizardt;
+
+getNumFromPercent(50, 100); // 50
+getNumFromPercent(22, 120); // 26.4
+
+// Number rounding
+getNumFromPercent(22, 120, true); // 26
+```

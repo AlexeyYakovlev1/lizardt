@@ -19,7 +19,7 @@ export interface IArrayCategory {
   index(num: number): any;
   filter(callback: () => any, thisArg?: any): any;
   indexOf(findItem: any): number;
-  groupBy(callback: () => any): any;
+  groupBy(callback: (el?, index?, array?) => any): object;
 }
 
 export interface IDomCategory {
@@ -59,10 +59,15 @@ export interface IGeneralCategory {
   t(target: any, list?: boolean): IT;
   typeOf(item: any): string;
   index(num: number): any;
+  getRandom(min: number, max: number): number;
+  getPercent(current: number, endNum: number, round?: boolean): number;
+  getNumFromPercent(percent: number, num: number, round?: boolean): number;
 }
 
 export interface INumberCategory {
   getRandom(min: number, max: number): number;
+  getPercent(current: number, endNum: number, round?: boolean): number;
+  getNumFromPercent(percent: number, num: number, round?: boolean): number;
 }
 
 export interface IObjectCategory {
@@ -159,7 +164,7 @@ export interface IT {
   values(): Array<any>;
   onRemove(event: string, callback: () => any, options?: object, useCapture?: boolean): void;
   filter(callback: () => any, thisArg?: any): any;
-  groupBy(callback: () => any): any;
+  groupBy(callback: (el?, index?, array?) => any): object;
 }
 
 export interface IGlobal {
@@ -177,14 +182,15 @@ export interface IGlobal {
 }
 
 export interface ILizardt {
-  createElement(options: IElement): HTMLElement;
   compare(item1: any, item2: any): Boolean;
   copy(item: any): any;
   array(item: any, symb?: string): Array<any>;
+  jsonParse(item: any, reviver?): any;
+  jsonString(item: any, replacer?, space?): string;
   t(target: any, list?: boolean): IT;
-  isArray(item: any, callback?: () => any): boolean | any;
-  isObject(item: any, callback?: () => any): boolean | any;
-  isFunction(item: any, callback?: () => any): boolean | any;
-  getRandom(min: number, max: number): number;
+  typeOf(item: any): string;
   index(num: number): any;
+  getRandom(min: number, max: number): number;
+  getNumFromPercent(percent: number, num: number, round?: boolean): number;
+  getPercent(current: number, endNum: number, round?: boolean): number;
 }

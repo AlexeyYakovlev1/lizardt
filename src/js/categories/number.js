@@ -11,6 +11,24 @@ var numberCategory = {
             index_1.default.setError("Not all elements in the given array are of type number");
         }
     },
+    getPercent: function (current, endNum, round) {
+        if ([typeof current, typeof endNum].every(function (num) { return num === "number"; })) {
+            var percent = (current / endNum) * 100;
+            return round ? Math.round(percent) : percent;
+        }
+        else {
+            index_1.default.setError("\"".concat(current, "\" or \"").concat(endNum, "\" not a number"));
+        }
+    },
+    getNumFromPercent: function (percent, num, round) {
+        if ([typeof percent, typeof num].every(function (num) { return num === "number"; })) {
+            var number = (percent * num) / 100;
+            return round ? Math.round(number) : number;
+        }
+        else {
+            index_1.default.setError("\"".concat(percent, "\" or \"").concat(num, "\" not a number"));
+        }
+    }
 };
 for (var i in numberCategory) {
     // Exports every separately method

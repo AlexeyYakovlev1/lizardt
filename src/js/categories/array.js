@@ -17,18 +17,19 @@ var arrayCategory = {
     groupBy: function (callback) {
         if (Array.isArray(this.target)) {
             if (callback instanceof Function) {
-                var data = this.target.reduce(function (acc, item, index, array) {
+                return this.target.reduce(function (acc, item, index, array) {
                     var res = callback(item, index, array);
-                    if (res && res in acc) {
-                        acc[res].push(item);
-                    }
-                    else {
-                        acc[res] = [];
-                        acc[res].push(item);
+                    if (res) {
+                        if (res in acc) {
+                            acc[res].push(item);
+                        }
+                        else {
+                            acc[res] = [];
+                            acc[res].push(item);
+                        }
                     }
                     return acc;
                 }, {});
-                return data;
             }
             else {
                 index_1.default.setError("\"".concat(callback, "\" is not a function"));

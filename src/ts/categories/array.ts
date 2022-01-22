@@ -18,23 +18,23 @@ const arrayCategory: IArrayCategory = {
     }
   },
 
-  groupBy(callback: (el?, index?, array?) => any) {
+  groupBy(callback: (el?, index?, array?) => any): object {
     if (Array.isArray(this.target)) {
       if (callback instanceof Function) {
-        const data: object = this.target.reduce((acc, item, index, array) => {
+        return this.target.reduce((acc, item, index, array) => {
           const res: any = callback(item, index, array);
 
-          if (res && res in acc) {
-            acc[res].push(item);
-          } else {
-            acc[res] = [];
-            acc[res].push(item);
+          if (res) {
+            if (res in acc) {
+              acc[res].push(item);
+            } else {
+              acc[res] = [];
+              acc[res].push(item);
+            }
           }
 
           return acc;
         }, {});
-
-        return data;
       } else {
         global.setError(`"${callback}" is not a function`);
       }
