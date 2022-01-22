@@ -347,12 +347,12 @@ const domCategory: IDomCategory = {
   },
 
   removeLastChild() {
-    global.removeChild(this.target, "last");
+    global.removeChild(this.target, null, "last");
     return this;
   },
 
   removeFirstChild() {
-    global.removeChild(this.target, "first");
+    global.removeChild(this.target, null, "first");
     return this;
   },
 
