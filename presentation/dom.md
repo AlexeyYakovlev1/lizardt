@@ -18,7 +18,7 @@ t("[div]").add(".home", "#main");
 - **Description**
 Removing class or id for html element	
 - **Return**
-Main object
+undefined
 - **Arguments**
 	- Class names or id **(required)**
 - **Example**
@@ -32,7 +32,7 @@ t("[.title]").remove(".cursive", "#subtitle");
 - **Description**
 Add styles for html element	
 - **Return**
-Main object
+undefined
 - **Arguments**
 	- Object of styles **(required)**
 - **Example**
