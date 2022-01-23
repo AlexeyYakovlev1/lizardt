@@ -114,7 +114,7 @@ const domCategory: IDomCategory = {
 
   getAllParents: global.getAllParents,
 
-  add(...args): void {
+  add(...args): IT {
     if (this.target instanceof Element && args.length) {
       args.forEach(className => {
         const { attribute, name }: ITypeOfSelector = global.definesType(className);
@@ -125,12 +125,13 @@ const domCategory: IDomCategory = {
           this.target.setAttribute(attribute, name);
         }
       });
+      return this;
     } else {
       global.setError(`"${this.target}" is not a HTML element or the argument list is empty`);
     }
   },
 
-  remove(...args): void {
+  remove(...args): IT {
     if (this.target instanceof Element && args.length) {
       args.forEach(className => {
         const { attribute, name }: ITypeOfSelector = global.definesType(className);
@@ -141,23 +142,26 @@ const domCategory: IDomCategory = {
           this.target.removeAttribute(attribute, name);
         }
       });
+      return this;
     } else {
       global.setError(`"${this.target}" is not a HTML element or the argument list is empty`);
     }
   },
 
-  clearStyles(): void {
+  clearStyles(): IT {
     if (this.target instanceof Element) {
       this.target["style"] = null;
+      return this;
     } else {
       global.setError(`"${this.target}" is not a HTML element`);
     }
   },
 
-  txt(value: string): void {
+  txt(value: string): IT {
     if (this.target instanceof Element) {
       if (typeof value === "string") {
         this.target.textContent = value;
+        return this;
       } else {
         global.setError(`"${value}" is not a string`);
       }
@@ -178,7 +182,7 @@ const domCategory: IDomCategory = {
     }
   },
 
-  addChild(child: HTMLElement | IElement | Array<any>): void {
+  addChild(child: HTMLElement | IElement | Array<any>): IT {
     if (this.target instanceof Element) {
       // Object
       if (child && typeof child === "object" && !Array.isArray(child)
@@ -204,12 +208,14 @@ const domCategory: IDomCategory = {
       if (child instanceof Element) {
         this.target.appendChild(child);
       }
+
+      return this;
     } else {
       global.setError(`"${this.target}" is not a HTML element`);
     }
   },
 
-  removeChild(child: HTMLElement | string | Array<HTMLElement | string>): void {
+  removeChild(child: HTMLElement | string | Array<HTMLElement | string>): IT {
     if (this.target instanceof Element) {
       // Selector
       if (typeof child === "string" && child.length) {
@@ -233,23 +239,28 @@ const domCategory: IDomCategory = {
           }
         });
       }
+
+      return this;
     } else {
       global.setError(`"${this.target}" is not a HTML element`);
     }
   },
 
-  addPrevElement(element: HTMLElement | IElement): void {
+  addPrevElement(element: HTMLElement | IElement): IT {
     global.addElementOnPos(this.target, element, "beforebegin");
+    return this;
   },
 
-  addNextElement(element: HTMLElement | IElement): void {
+  addNextElement(element: HTMLElement | IElement): IT {
     global.addElementOnPos(this.target, element, "afterend");
+    return this;
   },
 
-  setAttribute(attributes: IAttribute): void {
+  setAttribute(attributes: IAttribute): IT {
     if (this.target instanceof Element) {
       if (attributes && typeof attributes === "object" && !Array.isArray(attributes) && !(attributes instanceof Element || attributes instanceof HTMLElement)) {
         global.setAttributes(this.target, attributes);
+        return this;
       } else {
         global.setError(`"${attributes}" is not a object`);
       }
@@ -258,7 +269,7 @@ const domCategory: IDomCategory = {
     }
   },
 
-  removeAttribute(attribute: string | Array<string>): void {
+  removeAttribute(attribute: string | Array<string>): IT {
     if (this.target instanceof Element) {
       if (typeof attribute === "string") {
         this.target.removeAttribute(attribute);
@@ -267,6 +278,7 @@ const domCategory: IDomCategory = {
       if (Array.isArray(attribute) && attribute.length && attribute.every(attr => typeof attr === "string")) {
         attribute.map(attr => this.target.removeAttribute(attr));
       }
+      return this;
     } else {
       global.setError(`"${this.target}" is not a HTML element`);
     }
@@ -342,12 +354,14 @@ const domCategory: IDomCategory = {
     }
   },
 
-  removeLastChild(): void {
+  removeLastChild(): IT {
     global.removeChild(this.target, null, "last");
+    return this;
   },
 
-  removeFirstChild(): void {
+  removeFirstChild(): IT {
     global.removeChild(this.target, null, "first");
+    return this;
   },
 
   contains(...args): boolean {

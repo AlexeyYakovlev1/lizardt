@@ -23,28 +23,28 @@ export interface IArrayCategory {
 }
 
 export interface IDomCategory {
-  styles(stylesObj: object): void;
+  styles(stylesObj: object): IT;
   on(event: string, callback: () => any, options?: object): void;
   getAttributes(attribute?: string): IT;
   getChildren(selector?: string): IT;
   getCoordinates(): IT;
   getAllParents(num?: number): IT;
-  add(): void;
-  remove(): void;
-  clearStyles(): void;
-  txt(value: string): void;
+  add(): IT;
+  remove(): IT;
+  clearStyles(): IT;
+  txt(value: string): IT;
   size(): IT;
-  addChild(child: HTMLElement | IElement | Array<any>): void;
-  removeChild(child: HTMLElement | string | Array<HTMLElement | string>): void;
-  addPrevElement(element: HTMLElement | IElement): void;
-  addNextElement(element: HTMLElement | IElement): void;
-  setAttribute(attributes: IAttribute): void;
-  removeAttribute(attribute: string | Array<string>): void;
+  addChild(child: HTMLElement | IElement | Array<any>): IT;
+  removeChild(child: HTMLElement | string | Array<HTMLElement | string>): IT;
+  addPrevElement(element: HTMLElement | IElement): IT;
+  addNextElement(element: HTMLElement | IElement): IT;
+  setAttribute(attributes: IAttribute): IT;
+  removeAttribute(attribute: string | Array<string>): IT;
   createElement(options: IElement): HTMLElement;
   data(isArray: boolean): IT;
   hasElement(element: Element | Array<Element | string> | string): boolean;
-  removeLastChild(): void;
-  removeFirstChild(): void;
+  removeLastChild(): IT;
+  removeFirstChild(): IT;
   contains(selector: string): boolean;
   hasParent(selector: string | Element): boolean;
   onRemove(event: string, callback: () => any, options?: object, useCapture?: boolean): void;
@@ -127,30 +127,30 @@ export interface IFilterMethods {
 // Main
 export interface IT {
   target: any,
-  styles(stylesObj: object): void;
+  styles(stylesObj: object): IT;
   on(event: string, callback: () => any, options?: object): void;
   getAttributes(attribute?: string): IAttribute | Array<IAttribute>;
   getChildren(selector?: string): HTMLElement | Array<IChild>;
   getCoordinates(): ICoordinates;
   getAllParents(num?: number): Array<HTMLElement> | HTMLElement;
-  add(): void;
-  remove(): void;
-  clearStyles(): void;
-  txt(value: string): void;
+  add(): IT;
+  remove(): IT;
+  clearStyles(): IT;
+  txt(value: string): IT;
   size(): ISize;
-  addChild(child: HTMLElement | IElement | Array<any>): void;
-  removeChild(child: HTMLElement | string | Array<HTMLElement | string>): void;
-  addPrevElement(element: HTMLElement | IElement): void;
-  addNextElement(element: HTMLElement | IElement): void;
-  setAttribute(attributes: IAttribute): void;
-  removeAttribute(attribute: string | Array<string>): void;
+  addChild(child: HTMLElement | IElement | Array<any>): IT;
+  removeChild(child: HTMLElement | string | Array<HTMLElement | string>): IT;
+  addPrevElement(element: HTMLElement | IElement): IT;
+  addNextElement(element: HTMLElement | IElement): IT;
+  setAttribute(attributes: IAttribute): IT;
+  removeAttribute(attribute: string | Array<string>): IT;
   last(): any;
   center(): any;
   each(callback: () => Array<any>): Array<any>;
   unfold(): Array<any>;
   data(isArray: boolean): object | Array<object>;
-  removeLastChild(): void;
-  removeFirstChild(): void;
+  removeLastChild(): IT;
+  removeFirstChild(): IT;
   hasItem(item: any): boolean;
   hasProperty(property: string | Array<string>): boolean;
   hasElement(element: Element | Array<Element | string> | string): boolean;
@@ -176,7 +176,7 @@ export interface IGlobal {
   definesType(name: string): ITypeOfSelector;
   setAttributes(el: HTMLElement, obj: object): HTMLElement;
   setError(message: string): never;
-  removeChild(parent: any, element: string | Element, position?: string): void;
+  removeChild(parent: any, element: string | Element, position?: string): IT;
   compare(item1: any, item2: any): Boolean;
   getAllParents(num?: number): IT;
   indexOf(findItem: any): number;
