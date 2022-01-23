@@ -8,7 +8,9 @@ var arrayCategory = {
     last: function () {
         if (index_1.default.checkList(this.target)) {
             var arr = this.target;
-            return arr[arr.length - 1];
+            var lastItem = arr[arr.length - 1];
+            this.target = lastItem;
+            return this;
         }
         else {
             index_1.default.setError("\"".concat(this.target, "\" is not a list"));
@@ -17,7 +19,7 @@ var arrayCategory = {
     groupBy: function (callback) {
         if (Array.isArray(this.target)) {
             if (callback instanceof Function) {
-                return this.target.reduce(function (acc, item, index, array) {
+                var groups = this.target.reduce(function (acc, item, index, array) {
                     var res = callback(item, index, array);
                     if (res) {
                         if (res in acc) {
@@ -30,6 +32,8 @@ var arrayCategory = {
                     }
                     return acc;
                 }, {});
+                this.target = groups;
+                return this;
             }
             else {
                 index_1.default.setError("\"".concat(callback, "\" is not a function"));
@@ -51,7 +55,9 @@ var arrayCategory = {
     center: function () {
         if (index_1.default.checkList(this.target)) {
             var arr = this.target;
-            return arr[Math.floor((arr.length - 1) / 2)];
+            var centerItem = arr[Math.floor((arr.length - 1) / 2)];
+            this.target = centerItem;
+            return this;
         }
         else {
             index_1.default.setError("\"".concat(this.target, "\" is not a list"));
@@ -83,7 +89,8 @@ var arrayCategory = {
             };
             unfoldArray_1(this.target);
         }
-        return res;
+        this.target = res;
+        return this;
     },
     each: function (callback) {
         if (index_1.default.checkList(this.target) && callback instanceof Function) {
@@ -115,7 +122,8 @@ var arrayCategory = {
     filter: function (callback, thisArg) {
         if (Array.isArray(this.target)) {
             if (callback instanceof Function) {
-                return thisArg ? this.target.filter(callback, thisArg) : this.target.filter(callback);
+                this.target = thisArg ? this.target.filter(callback, thisArg) : this.target.filter(callback);
+                return this;
             }
             else {
                 index_1.default.setError("\"".concat(callback, "\" must be a function"));

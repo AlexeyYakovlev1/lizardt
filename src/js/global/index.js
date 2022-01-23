@@ -112,7 +112,8 @@ var global = {
                 return parents;
             };
             var res = getParent_1(this.target, []);
-            return (typeof num === "number" && num >= 0) ? res[num] : res;
+            this.target = (typeof num === "number" && num >= 0) ? res[num] : res;
+            return this;
         }
         else {
             global.setError("\"".concat(this.target, "\" is not a HTML element"));

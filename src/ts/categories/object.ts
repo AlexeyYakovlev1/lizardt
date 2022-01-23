@@ -1,5 +1,5 @@
 // Interfaces
-import { IObjectCategory } from "../interfaces/index";
+import { IObjectCategory, IT } from "../interfaces/index";
 import functionCategory from "./func";
 
 // Global
@@ -34,17 +34,25 @@ const objectCategory: IObjectCategory = {
     }
   },
 
-  keys(): Array<string> {
+  keys(): IT {
     if (this.target && typeof this.target === "object" && !Array.isArray(this.target) && !(this.target instanceof Element || this.target instanceof HTMLElement)) {
-      return Object.keys(this.target);
+      const keys: Array<string> = Object.keys(this.target);
+
+      this.target = keys;
+
+      return this;
     } else {
       global.setError(`"${this.target}" is not an object`);
     }
   },
 
-  values(): Array<string> {
+  values(): IT {
     if (this.target && typeof this.target === "object" && !Array.isArray(this.target) && !(this.target instanceof Element || this.target instanceof HTMLElement)) {
-      return Object.values(this.target);
+      const values: Array<any> = Object.values(this.target);
+
+      this.target = values;
+
+      return this;
     } else {
       global.setError(`"${this.target}" is not an object`);
     }

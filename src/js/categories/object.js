@@ -30,7 +30,9 @@ var objectCategory = {
     },
     keys: function () {
         if (this.target && typeof this.target === "object" && !Array.isArray(this.target) && !(this.target instanceof Element || this.target instanceof HTMLElement)) {
-            return Object.keys(this.target);
+            var keys = Object.keys(this.target);
+            this.target = keys;
+            return this;
         }
         else {
             index_1.default.setError("\"".concat(this.target, "\" is not an object"));
@@ -38,7 +40,9 @@ var objectCategory = {
     },
     values: function () {
         if (this.target && typeof this.target === "object" && !Array.isArray(this.target) && !(this.target instanceof Element || this.target instanceof HTMLElement)) {
-            return Object.values(this.target);
+            var values = Object.values(this.target);
+            this.target = values;
+            return this;
         }
         else {
             index_1.default.setError("\"".concat(this.target, "\" is not an object"));

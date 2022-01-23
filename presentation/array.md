@@ -4,28 +4,28 @@
 - **Description**
 Returns the last element of the array
 - **Return**
-Last element of the array
+Main object
 - **Example**
 ```Javascript
 const { t } = lizardt;
 
-t([1,2,3]).last(); // 3
-t(document.querySelectorAll("li")).last();
-list("[li]").last();
+t([1,2,3]).last().target; // 3
+t(document.querySelectorAll("li")).last().target;
+list("[li]").last().target;
 ```
 
 ### ```center()```:
 - **Description**
 Returns the center element of the array
 - **Return**
-Center element
+Main object
 - **Example**
 ```Javascript
 const { t, list } = lizardt;
 
-t(document.querySelectorAll("li")).center();
-t([1,2,3,4,5,6,7]).center(); // 4
-list("[li]").center();
+t(document.querySelectorAll("li")).center().target;
+t([1,2,3,4,5,6,7]).center().target; // 4
+list("[li]").center().target;
 ```
 
 ### ```each()```:
@@ -65,12 +65,13 @@ isArray([1,2,3], () => {
 - **Description**
 Unpacks a nested array
 - **Return**
-Array
+Main object
 - **Example**
 ```Javascript
 const { t } = lizardt;
 
-console.log(t([[[1, 2, 3, 4], [5, 6, [7, 8, 9, [10, 11, [12, 13]]]]]]).unfold()); // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+// [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+t([[[1, 2, 3, 4], [5, 6, [7, 8, 9, [10, 11, [12, 13]]]]]]).unfold().target;
 ```
 
 ### ```removeItem()```:
@@ -108,7 +109,7 @@ Returns the index of the beginning of the string that matches the search. Also a
 - **Arguments**
   - Item **(required)**
 - **Return**
-Index of the beginning of the string
+Index of the beginning of the string or index of element in array
 - **Example**
 ```Javascript
 const { t } = lizardt;
@@ -126,15 +127,18 @@ Creates a new array with all elements that pass the test specified in the passed
   - Callback **(required)**
   - Context **(optional)**
 - **Return**
-Array
+Main object
 - **Example**
 ```Javascript
 const { t } = lizardt;
 
-t([1,2,3,4,5]).filter(num => num % 2 === 0); // [2, 4]
+// [2, 4]
+t([1,2,3,4,5]).filter(num => num % 2 === 0).target;
+
+// [{ name: "A3", age: 18 }]
 t([{ name: "A1", age: 15 }, { name: "A2", age: 12 }, { name: "A3", age: 18 }]).filter(({ age }) => {
   return age >= 18;
-}); // [{ name: "A3", age: 18 }]
+}).target;
 ```
 
 ### ```groupBy()```:
@@ -143,27 +147,15 @@ Sorting an array by groups
 - **Arguments**
   - Callback **(required)**
 - **Return**
-Object
+Main object
 - **Example**
 ```Javascript
 const { t } = lizardt;
 const users = [
-  {
-    name: "Alexandr",
-    age: 17
-  },
-  {
-    name: "Michail",
-    age: 19
-  },
-  {
-    name: "Andrey",
-    age: 12
-  },
-  {
-    name: "Victor",
-    age: 24
-  },
+  { name: "Alexandr", age: 17 },
+  { name: "Michail", age: 19 },
+  { name: "Andrey", age: 12 },
+  { name: "Victor", age: 24 }
 ];
 const workers = [
   { id: 1, status: "senior" }, 
@@ -172,13 +164,13 @@ const workers = [
 ];
 
 // { old: [{ name: "Michail", ... }, { name: "Victor", ... }], young: [{ name: "Alexandr", ... }, { name: "Andrey", ... }] }
-t(users).groupBy(user => user.age >= 18 ? "old" : "young");
+t(users).groupBy(user => user.age >= 18 ? "old" : "young").target;
 
 // { odd: [1, 3, 5, 7], even: [2, 4, 6] }
-t([1, 2, 3, 4, 5, 6, 7]).groupBy(num => num % 2 === 0 ? "even" : "odd");
+t([1, 2, 3, 4, 5, 6, 7]).groupBy(num => num % 2 === 0 ? "even" : "odd").target;
 
 // { senior: [{ status: "senior", ... }], junior: [{ status: "junior", ... }, { status: "junior", ... }] }
-t(workers).groupBy(worker => worker.status);
+t(workers).groupBy(worker => worker.status).target;
 ```
 
 ### ```index()```:

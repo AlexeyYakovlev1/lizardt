@@ -17,6 +17,14 @@ import lizardt from "lizardt";
 const { t, createElement, ... } = lizardt;
 ```
 
+or 
+
+```Javascript
+import "lizardt";
+
+const { t, createElement, ... } = lizardt; // window.lizardt
+```
+
 ##  Methods
 Here described all methods which haves this library
 

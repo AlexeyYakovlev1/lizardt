@@ -33,32 +33,16 @@ test("Вывод последнего элемента из массива", () 
     }
   ];
 
-  tests.map(({ target, toBe }) => expect(last.call({ target })).toStrictEqual(toBe));
+  tests.map(({ target, toBe }) => expect(last.call({ target })).toStrictEqual({ target: toBe }));
 });
 
 // removeItem
 test("Удаление элемента из массива", () => {
   const tests = [
-    {
-      target: [1, 2, 3, 4],
-      args: [2, 4],
-      toBe: [1, 2, 4, 4]
-    },
-    {
-      target: [1, 2, 3, 4, { name: "Alexandr" }],
-      args: [1, 0],
-      toBe: [1, 0, 3, 4, { name: "Alexandr" }]
-    },
-    {
-      target: [1, 2, 3, 4, []],
-      args: [2],
-      toBe: [1, 2, 4, []]
-    },
-    {
-      target: [1, 2, 3, 4, "Hello"],
-      args: [4],
-      toBe: [1, 2, 3, 4]
-    },
+    { target: [1, 2, 3, 4], args: [2, 4], toBe: [1, 2, 4, 4] },
+    { target: [1, 2, 3, 4, { name: "Alexandr" }], args: [1, 0], toBe: [1, 0, 3, 4, { name: "Alexandr" }] },
+    { target: [1, 2, 3, 4, []], args: [2], toBe: [1, 2, 4, []] },
+    { target: [1, 2, 3, 4, "Hello"], args: [4], toBe: [1, 2, 3, 4] },
   ];
 
   tests.map(({ target, args, toBe }) => {
@@ -69,46 +53,22 @@ test("Удаление элемента из массива", () => {
 // center
 test("Вывод центрального элемента из массива", () => {
   const tests = [
-    {
-      target: [1, 2, 3, 4],
-      toBe: 2
-    },
-    {
-      target: [1, 2, 3, 4, 5],
-      toBe: 3
-    },
-    {
-      target: ["Hello", "Hi"],
-      toBe: "Hello"
-    },
-    {
-      target: [],
-      toBe: undefined
-    },
+    { target: [1, 2, 3, 4], toBe: 2 },
+    { target: [1, 2, 3, 4, 5], toBe: 3 },
+    { target: ["Hello", "Hi"], toBe: "Hello" },
+    { target: [], toBe: undefined },
   ];
 
-  tests.map(({ target, toBe }) => expect(center.call({ target })).toStrictEqual(toBe));
+  tests.map(({ target, toBe }) => expect(center.call({ target })).toStrictEqual({ target: toBe }));
 });
 
 // isArray
 test("Определение массива", () => {
   const tests = [
-    {
-      target: [1, 2, 3, 4],
-      toBe: "toBeTruthy",
-    },
-    {
-      target: "Hello, world!",
-      toBe: "toBeFalsy",
-    },
-    {
-      target: {},
-      toBe: "toBeFalsy",
-    },
-    {
-      target: 123,
-      toBe: "toBeFalsy",
-    },
+    { target: [1, 2, 3, 4], toBe: "toBeTruthy", },
+    { target: "Hello, world!", toBe: "toBeFalsy", },
+    { target: {}, toBe: "toBeFalsy" },
+    { target: 123, toBe: "toBeFalsy", },
   ];
 
   tests.map(({ target, toBe }) => expect(isArray(target))[toBe]());
@@ -117,21 +77,12 @@ test("Определение массива", () => {
 // unfold
 test("Распаковка вложенного массива", () => {
   const tests = [
-    {
-      target: [[1, 2, [3, 4, [5, 6, [7, 8]]]]],
-      toBe: [1, 2, 3, 4, 5, 6, 7, 8]
-    },
-    {
-      target: [[{ name: "Alex" }]],
-      toBe: [{ name: "Alex" }]
-    },
-    {
-      target: "",
-      toBe: []
-    },
+    { target: [[1, 2, [3, 4, [5, 6, [7, 8]]]]], toBe: [1, 2, 3, 4, 5, 6, 7, 8] },
+    { target: [[{ name: "Alex" }]], toBe: [{ name: "Alex" }] },
+    { target: "", toBe: [] },
   ];
 
-  tests.map(({ target, toBe }) => expect(unfold.call({ target })).toStrictEqual(toBe));
+  tests.map(({ target, toBe }) => expect(unfold.call({ target })).toStrictEqual({ target: toBe }));
 });
 
 // each
@@ -161,21 +112,9 @@ test("Перебор массива", () => {
 // hasItem
 test("Проверка наличия элемента в массиве", () => {
   const tests = [
-    {
-      target: [1, 2, 3, 4],
-      toBe: "toBeTruthy",
-      args: [2]
-    },
-    {
-      target: [1, 2, 3, "Hello"],
-      toBe: "toBeTruthy",
-      args: ["Hello"]
-    },
-    {
-      target: [1, 2, 3, 4],
-      toBe: "toBeFalsy",
-      args: [5]
-    },
+    { target: [1, 2, 3, 4], toBe: "toBeTruthy", args: [2] },
+    { target: [1, 2, 3, "Hello"], toBe: "toBeTruthy", args: ["Hello"] },
+    { target: [1, 2, 3, 4], toBe: "toBeFalsy", args: [5] },
   ];
 
   tests.map(({ target, args, toBe }) => expect(hasItem.call({ target }, ...args))[toBe]());
@@ -184,21 +123,9 @@ test("Проверка наличия элемента в массиве", () =>
 // index
 test("Проверка на вывод элемента по индексу", () => {
   const tests = [
-    {
-      target: [1, 2, 3, 4],
-      toBe: { target: 3 },
-      args: [2]
-    },
-    {
-      target: [1, 2, 3, 4],
-      toBe: { target: 3 },
-      args: [-1]
-    },
-    {
-      target: [1, 2, 3, 4],
-      toBe: { target: 1 },
-      args: [0]
-    },
+    { target: [1, 2, 3, 4], toBe: { target: 3 }, args: [2] },
+    { target: [1, 2, 3, 4], toBe: { target: 3 }, args: [-1] },
+    { target: [1, 2, 3, 4], toBe: { target: 1 }, args: [0] },
   ];
 
   tests.map(({ target, toBe, args }) => expect(index.call({ target }, ...args)).toStrictEqual(toBe));
@@ -263,7 +190,7 @@ test("Проверка на фильтрацию массива", () => {
     },
   ];
 
-  tests.map(({ target, args, toBe }) => expect(filter.call({ target }, ...args)).toStrictEqual(toBe));
+  tests.map(({ target, args, toBe }) => expect(filter.call({ target }, ...args)).toStrictEqual({ target: toBe }));
 });
 
 // groupBy
@@ -291,5 +218,5 @@ test("Сортирует массив по группам", () => {
     },
   ];
 
-  tests.map(({ target, args, toBe }) => expect(groupBy.call({ target }, ...args)).toStrictEqual(toBe));
+  tests.map(({ target, args, toBe }) => expect(groupBy.call({ target }, ...args)).toStrictEqual({ target: toBe }));
 });

@@ -4,7 +4,7 @@
 - **Description**
 Adding class or id for html element	
 - **Return**
-Main object
+undefined
 - **Arguments**
 	- Class names or id **(required)**
 - **Example**
@@ -123,7 +123,7 @@ t("[.button]").on("click", counter);
 - **Description**
 Adding text value  for html element
 - **Return**
-Main object
+undefined
 - **Arguments**
 	- Value **(required)**
 - **Example**
@@ -137,19 +137,19 @@ t("[.btn]").txt("Click me!");
 - **Description**
 Return current size html element
 - **Return**
-Object of size data
+Main object
 - **Example**
 ```Javascript
 const { t } = lizardt;
 
-t("[.title]").size(); // { width: 500, height: 36 }
+t("[.title]").size().target; // { width: 500, height: 36 }
 ```
 
 ### ```clearStyles()```:
 - **Description**
 Remove all styles from style attribute
 - **Return**
-Main object
+undefined
 - **Example**
 ```Javascript
 const { t } = lizardt;
@@ -168,13 +168,13 @@ List of attributes. When used **attribute** returns an object with attribute dat
 ```Javascript
 const { t } = lizardt;
 
-t("[.button]").getAttributes(); // [{ name: "type", val... }]
+t("[.button]").getAttributes().target; // [{ name: "type", val... }]
 ```
 or
 ```Javascript
 const { t } = lizardt;
 
-t("[.button]").getAttributes("type"); // { name: "type", val... }
+t("[.button]").getAttributes("type").target; // { name: "type", val... }
 ```
 
 ### ```getChildren()```:
@@ -196,7 +196,7 @@ const { t } = lizardt;
   $el: html element
 }]
 */
-t("[.wrapper]").getChildren();
+t("[.wrapper]").getChildren().target;
 ```
 
 or
@@ -205,20 +205,19 @@ or
 const { t } = lizardt;
 
 // Html element
-*/
-t("[.wrapper]").getChildren(".title");
+t("[.wrapper]").getChildren(".title").target;
 ```
 
 ### ```getCoordinates()```:
 - **Description**
 Gets the coordinates of an element on the page
 - **Return**
-Object of coordinates
+Main object
 - **Example**
 ```Javascript
 const { t } = lizardt;
 
-t("[.wrapper]").getCoordinates(); // { top: 0, bottom: 0, left: 0, ... }
+t("[.wrapper]").getCoordinates().target; // { top: 0, bottom: 0, left: 0, ... }
 ```
 
 ### ```getAllParents()```:
@@ -266,7 +265,7 @@ Adds a child to an element
 - **Arguments**
   - Child **(required)**
 - **Return**
-Main object
+undefined
 - **Example**
 ```Javascript
 const { t } = lizardt;
@@ -316,7 +315,7 @@ Removes a child from an element
 - **Arguments**
   - Child **(required)**
 - **Return**
-Main object
+undefined
 - **Example**
 ```Javascript
 const { t } = lizardt;
@@ -340,7 +339,7 @@ Adds the previous item
 - **Arguments**
   - Element **(required)**
 - **Return**
-Main object
+undefined
 - **Example**
 ```Javascript
 const { t } = lizardt;
@@ -371,7 +370,7 @@ Adds the next item
 - **Arguments**
   - Element **(required)**
 - **Return**
-Main object
+undefined
 - **Example**
 ```Javascript
 const { t } = lizardt;
@@ -402,7 +401,7 @@ Sets attributes to an element
 - **Arguments**
   - Attributes **(required)**
 - **Return**
-Main object
+undefined
 - **Example**
 ```Javascript
 const { t } = lizardt;
@@ -416,7 +415,7 @@ Removes attributes on an element
 - **Arguments**
   - Attribute **(required)**
 - **Return**
-Main object
+undefined
 - **Example**
 ```Javascript
 const { t } = lizardt;
@@ -432,7 +431,7 @@ allows you to return data as an array
 - **Arguments**
   - isArray **(optional)**
 - **Return**
-Form data. Object/Array
+Main object
 - **Example**
 ```Javascript
 const { t } = lizardt;
@@ -440,8 +439,8 @@ const { t } = lizardt;
 t("[.form]").on("submit", event => {
     event.preventDefault();
 
-    console.log(t("[.form]").data()); // {name: "Alex", email: "al@gmail.com", description: "", date: "", file: File, …}
-    console.log(t("[.form]").data(true)); // ["name: 'Alex'", "email: 'al@gmail.com'"", ...]
+    console.log(t("[.form]").data().target); // {name: "Alex", email: "al@gmail.com", description: "", date: "", file: File, …}
+    console.log(t("[.form]").data(true).target); // ["name: 'Alex'", "email: 'al@gmail.com'"", ...]
 })
 ```
 
@@ -467,7 +466,7 @@ t(document.documentElement).hasElement(document.body); // true
 - **Description**
 Removes the last html child
 - **Return**
-Main object
+undefined
 - **Example**
 ```Javascript
 const { t } = lizardt;
@@ -479,7 +478,7 @@ t("[.wrapper]").removeLastChild();
 - **Description**
 Removes the first html child
 - **Return**
-Main object
+undefined
 - **Example**
 ```Javascript
 const { t } = lizardt;

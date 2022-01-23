@@ -9,31 +9,31 @@ export interface IFuncCategory {
 }
 
 export interface IArrayCategory {
-  last(): any,
-  center(): any,
+  last(): IT,
+  center(): IT,
   isArray(item: any, callback?): boolean;
-  unfold(): Array<any>;
+  unfold(): IT;
   each(callback: () => Array<any>): Array<any>
   removeItem(index: number, val?: any): Array<any>;
   hasItem(item: any): boolean;
-  index(num: number): any;
+  index(num: number): IT;
   filter(callback: () => any, thisArg?: any): any;
   indexOf(findItem: any): number;
-  groupBy(callback: (el?, index?, array?) => any): object;
+  groupBy(callback: (el?, index?, array?) => any): IT;
 }
 
 export interface IDomCategory {
   styles(stylesObj: object): void;
   on(event: string, callback: () => any, options?: object): void;
-  getAttributes(attribute?: string): IAttribute | Array<IAttribute>;
-  getChildren(selector?: string): HTMLElement | Array<IChild>;
-  getCoordinates(): ICoordinates;
-  getAllParents(num?: number): Array<HTMLElement> | HTMLElement;
+  getAttributes(attribute?: string): IT;
+  getChildren(selector?: string): IT;
+  getCoordinates(): IT;
+  getAllParents(num?: number): IT;
   add(): void;
   remove(): void;
   clearStyles(): void;
   txt(value: string): void;
-  size(): ISize;
+  size(): IT;
   addChild(child: HTMLElement | IElement | Array<any>): void;
   removeChild(child: HTMLElement | string | Array<HTMLElement | string>): void;
   addPrevElement(element: HTMLElement | IElement): void;
@@ -41,7 +41,7 @@ export interface IDomCategory {
   setAttribute(attributes: IAttribute): void;
   removeAttribute(attribute: string | Array<string>): void;
   createElement(options: IElement): HTMLElement;
-  data(isArray: boolean): object | Array<object>;
+  data(isArray: boolean): IT;
   hasElement(element: Element | Array<Element | string> | string): boolean;
   removeLastChild(): void;
   removeFirstChild(): void;
@@ -74,8 +74,8 @@ export interface INumberCategory {
 export interface IObjectCategory {
   isObject(item, callback?): boolean;
   hasProperty(property: string | Array<string>): boolean;
-  keys(): Array<any>;
-  values(): Array<any>;
+  keys(): IT;
+  values(): IT;
 }
 
 // Arguments and options
@@ -178,7 +178,7 @@ export interface IGlobal {
   setError(message: string): never;
   removeChild(parent: any, element: string | Element, position?: string): void;
   compare(item1: any, item2: any): Boolean;
-  getAllParents(num?: number): Array<HTMLElement> | HTMLElement;
+  getAllParents(num?: number): IT;
   indexOf(findItem: any): number;
 }
 

@@ -68,7 +68,8 @@ var domCategory = {
                 var name = _a.name;
                 return name === attribute;
             });
-            return attribute ? findAttr : attributes;
+            this.target = attribute ? findAttr : attributes;
+            return this;
         }
         else {
             index_1.default.setError("\"".concat(this.target, "\" is not a HTML element"));
@@ -87,7 +88,8 @@ var domCategory = {
                     $el: child,
                 });
             });
-            return selector ? findChild : children_1;
+            this.target = selector ? findChild : children_1;
+            return this;
         }
         else {
             index_1.default.setError("\"".concat(this.target, "\" is not a HTML element"));
@@ -102,7 +104,8 @@ var domCategory = {
                     coordinates[key] = dataCoordinatesOfEl[key];
                 }
             }
-            return coordinates;
+            this.target = coordinates;
+            return this;
         }
         else {
             index_1.default.setError("\"".concat(this.target, "\" is not a HTML element"));
@@ -125,7 +128,6 @@ var domCategory = {
                     _this.target.setAttribute(attribute, name);
                 }
             });
-            return this;
         }
         else {
             index_1.default.setError("\"".concat(this.target, "\" is not a HTML element or the argument list is empty"));
@@ -147,7 +149,6 @@ var domCategory = {
                     _this.target.removeAttribute(attribute, name);
                 }
             });
-            return this;
         }
         else {
             index_1.default.setError("\"".concat(this.target, "\" is not a HTML element or the argument list is empty"));
@@ -156,7 +157,6 @@ var domCategory = {
     clearStyles: function () {
         if (this.target instanceof Element) {
             this.target["style"] = null;
-            return this;
         }
         else {
             index_1.default.setError("\"".concat(this.target, "\" is not a HTML element"));
@@ -166,7 +166,6 @@ var domCategory = {
         if (this.target instanceof Element) {
             if (typeof value === "string") {
                 this.target.textContent = value;
-                return this;
             }
             else {
                 index_1.default.setError("\"".concat(value, "\" is not a string"));
@@ -179,7 +178,8 @@ var domCategory = {
     size: function () {
         if (this.target instanceof Element) {
             var _a = this.target.getBoundingClientRect(), width = _a.width, height = _a.height;
-            return { width: width, height: height };
+            this.target = { width: width, height: height };
+            return this;
         }
         else {
             index_1.default.setError("\"".concat(this.target, "\" is not a HTML element"));
@@ -209,7 +209,6 @@ var domCategory = {
             if (child instanceof Element) {
                 this.target.appendChild(child);
             }
-            return this;
         }
         else {
             index_1.default.setError("\"".concat(this.target, "\" is not a HTML element"));
@@ -238,7 +237,6 @@ var domCategory = {
                     }
                 });
             }
-            return this;
         }
         else {
             index_1.default.setError("\"".concat(this.target, "\" is not a HTML element"));
@@ -246,17 +244,14 @@ var domCategory = {
     },
     addPrevElement: function (element) {
         index_1.default.addElementOnPos(this.target, element, "beforebegin");
-        return this;
     },
     addNextElement: function (element) {
         index_1.default.addElementOnPos(this.target, element, "afterend");
-        return this;
     },
     setAttribute: function (attributes) {
         if (this.target instanceof Element) {
             if (attributes && typeof attributes === "object" && !Array.isArray(attributes) && !(attributes instanceof Element || attributes instanceof HTMLElement)) {
                 index_1.default.setAttributes(this.target, attributes);
-                return this;
             }
             else {
                 index_1.default.setError("\"".concat(attributes, "\" is not a object"));
@@ -275,7 +270,6 @@ var domCategory = {
             if (Array.isArray(attribute) && attribute.length && attribute.every(function (attr) { return typeof attr === "string"; })) {
                 attribute.map(function (attr) { return _this.target.removeAttribute(attr); });
             }
-            return this;
         }
         else {
             index_1.default.setError("\"".concat(this.target, "\" is not a HTML element"));
@@ -305,9 +299,10 @@ var domCategory = {
                     for (var key in resObj_1) {
                         resArray.push("".concat(key, ": \"").concat(resObj_1[key], "\""));
                     }
-                    return resArray;
+                    this.target = resArray;
                 }
-                return resObj_1;
+                this.target = resObj_1;
+                return this;
             }
             else {
                 index_1.default.setError("The element ".concat(el, " must have a \"FORM\" nodeName"));
@@ -344,11 +339,9 @@ var domCategory = {
     },
     removeLastChild: function () {
         index_1.default.removeChild(this.target, null, "last");
-        return this;
     },
     removeFirstChild: function () {
         index_1.default.removeChild(this.target, null, "first");
-        return this;
     },
     contains: function () {
         var args = [];
@@ -385,10 +378,10 @@ var domCategory = {
         if (this.target instanceof Element) {
             if (typeof selector === "string") {
                 var parent_1 = document.querySelector(selector);
-                return Boolean(index_1.default.getAllParents.call(this).find(function (element) { return index_1.default.compare(parent_1, element); }));
+                return Boolean(index_1.default.getAllParents.call(this).target.find(function (element) { return index_1.default.compare(parent_1, element); }));
             }
             if (selector instanceof Element) {
-                return Boolean(index_1.default.getAllParents.call(this).find(function (element) { return index_1.default.compare(selector, element); }));
+                return Boolean(index_1.default.getAllParents.call(this).target.find(function (element) { return index_1.default.compare(selector, element); }));
             }
         }
         else {

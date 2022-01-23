@@ -24,4 +24,5 @@ for (var method in lizardt) {
         lizardt[method] = lizardt[method].bind(lizardt);
     }
 }
+window["lizardt"] = lizardt;
 exports.default = lizardt;

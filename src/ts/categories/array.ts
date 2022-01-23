@@ -2,26 +2,29 @@
 import global from "../global/index";
 
 // Interfaces
-import { IArrayCategory } from "../interfaces/index";
+import { IArrayCategory, IT } from "../interfaces/index";
 
 // Categoryes
 import functionCategory from "./func";
 
 const arrayCategory: IArrayCategory = {
-  last(): any {
+  last(): IT {
     if (global.checkList(this.target)) {
       const arr: Array<any> = this.target;
+      const lastItem: any = arr[arr.length - 1];
 
-      return arr[arr.length - 1];
+      this.target = lastItem;
+
+      return this;
     } else {
       global.setError(`"${this.target}" is not a list`);
     }
   },
 
-  groupBy(callback: (el?, index?, array?) => any): object {
+  groupBy(callback: (el?, index?, array?) => any): IT {
     if (Array.isArray(this.target)) {
       if (callback instanceof Function) {
-        return this.target.reduce((acc, item, index, array) => {
+        const groups: object = this.target.reduce((acc, item, index, array) => {
           const res: any = callback(item, index, array);
 
           if (res) {
@@ -35,6 +38,10 @@ const arrayCategory: IArrayCategory = {
 
           return acc;
         }, {});
+
+        this.target = groups;
+
+        return this;
       } else {
         global.setError(`"${callback}" is not a function`);
       }
@@ -53,11 +60,14 @@ const arrayCategory: IArrayCategory = {
     }
   },
 
-  center(): any {
+  center(): IT {
     if (global.checkList(this.target)) {
       const arr: Array<any> = this.target;
+      const centerItem: any = arr[Math.floor((arr.length - 1) / 2)];
 
-      return arr[Math.floor((arr.length - 1) / 2)];
+      this.target = centerItem;
+
+      return this;
     } else {
       global.setError(`"${this.target}" is not a list`);
     }
@@ -77,7 +87,7 @@ const arrayCategory: IArrayCategory = {
     return false;
   },
 
-  unfold(): Array<any> {
+  unfold(): IT {
     const res: Array<any> = [];
 
     if (Array.isArray(this.target) && this.target.length) {
@@ -94,7 +104,9 @@ const arrayCategory: IArrayCategory = {
       unfoldArray(this.target);
     }
 
-    return res;
+    this.target = res;
+
+    return this;
   },
 
   each(callback: () => Array<any>): Array<any> {
@@ -131,7 +143,9 @@ const arrayCategory: IArrayCategory = {
   filter(callback: () => any, thisArg?: any): any {
     if (Array.isArray(this.target)) {
       if (callback instanceof Function) {
-        return thisArg ? this.target.filter(callback, thisArg) : this.target.filter(callback);
+        this.target = thisArg ? this.target.filter(callback, thisArg) : this.target.filter(callback);
+
+        return this;
       } else {
         global.setError(`"${callback}" must be a function`);
       }

@@ -24,4 +24,6 @@ for (let method in lizardt) {
   }
 }
 
+window["lizardt"] = lizardt;
+
 export default lizardt;

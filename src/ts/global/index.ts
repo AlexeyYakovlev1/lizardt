@@ -1,7 +1,8 @@
 import {
   IGlobal,
   IElement,
-  ITypeOfSelector
+  ITypeOfSelector,
+  IT
 } from '../interfaces/index';
 
 const global: IGlobal = {
@@ -112,7 +113,7 @@ const global: IGlobal = {
     }
   },
 
-  getAllParents(num?: number): Array<HTMLElement> | HTMLElement {
+  getAllParents(num?: number): IT {
     if (this.target instanceof Element) {
       const getParent = (parent: HTMLElement | null, array: Array<HTMLElement>): Array<HTMLElement> => {
         const parents: Array<HTMLElement> = array;
@@ -128,7 +129,9 @@ const global: IGlobal = {
 
       const res: Array<HTMLElement> = getParent(this.target, []);
 
-      return (typeof num === "number" && num >= 0) ? res[num] : res;
+      this.target = (typeof num === "number" && num >= 0) ? res[num] : res;
+
+      return this;
     } else {
       global.setError(`"${this.target}" is not a HTML element`);
     }

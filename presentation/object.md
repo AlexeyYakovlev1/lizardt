@@ -39,24 +39,24 @@ t({ name: "Alexandr", age: 12 }).hasProperty(["name", "age", "status"]); // fals
 - **Description**
 Returns the keys of an object in an array
 - **Return**
-Array of keys
+Main object
 - **Example**
 ```Javascript
 const { t } = lizardt;
 
-t({ name: "alex", age: 17 }).keys(); // ["name", "age"]
-t({}).keys(); // []
+t({ name: "alex", age: 17 }).keys().target; // ["name", "age"]
+t({}).keys().target; // []
 ```
 
 ### ```values()```:
 - **Description**
 Returns the values of an object in an array
 - **Return**
-Array of values
+Main object
 - **Example**
 ```Javascript
 const { t } = lizardt;
 
-t({ name: "Alexandr", age: 17 }).values(); // ["Alexandr", 17]
-t({}).values(); // []
+t({ name: "Alexandr", age: 17 }).values().target; // ["Alexandr", 17]
+t({}).values().target; // []
 ```

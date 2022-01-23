@@ -10,7 +10,8 @@ import {
   addNextElement, setAttribute,
   removeAttribute, data, hasElement,
   removeLastChild, removeFirstChild,
-  contains, hasParent
+  contains, hasParent, getAllParents,
+  createElement,
 } from "../src/js/categories/dom";
 
 // hasParent
@@ -30,7 +31,7 @@ test("Проверка на существование родителя", () => 
     }
   ]
   tests.forEach(test => {
-    const chk = hasParent.call({target: title}, test.parentClass);
+    const chk = hasParent.call({ target: title }, test.parentClass);
     expect(chk).toStrictEqual(test.return);
   })
 })
@@ -51,7 +52,7 @@ test("Проверяет наличие классов/идентификато�
   ];
 
   tests.forEach(test => {
-    const chk = contains.call({target: block}, ...test.names);
+    const chk = contains.call({ target: block }, ...test.names);
     expect(chk).toStrictEqual(test.return);
   })
 })
@@ -64,7 +65,7 @@ test("Удаляет первого ребенка", () => {
   </div>`;
 
   const block = document.querySelector(".wrapper");
-  removeFirstChild.call({target: block});
+  removeFirstChild.call({ target: block });
   expect(block.querySelector(".description")).toStrictEqual(null);
 });
 
@@ -76,7 +77,7 @@ test("Удаляет последнего ребенка", () => {
   </div>`;
 
   const block = document.querySelector(".wrapper");
-  removeLastChild.call({target: block});
+  removeLastChild.call({ target: block });
   expect(block.querySelector(".list")).toStrictEqual(null);
 });
 
@@ -97,7 +98,7 @@ test("Проверка на существование блока в родит�
     }
   ];
   tests.forEach(test => {
-    expect(hasElement.call({target: block}, test.className)).toStrictEqual(test.return);
+    expect(hasElement.call({ target: block }, test.className)).toStrictEqual(test.return);
   })
 })
 
@@ -112,11 +113,11 @@ test("Получение значений элементов из формы", (
   form.addEventListener("submit", event => {
     event.preventDefault();
 
-    expect(data.call({target: form})).toStrictEqual({
+    expect(data.call({ target: form })).toStrictEqual({
       name: "Alex", email: "alex@gmail.com"
     });
-    expect(data.call({target: form}, true)).toStrictEqual([
-      {name: "Alex"}, {email: "alex@gmail.com"}
+    expect(data.call({ target: form }, true)).toStrictEqual([
+      { name: "Alex" }, { email: "alex@gmail.com" }
     ]);
   });
 });
@@ -124,7 +125,7 @@ test("Получение значений элементов из формы", (
 // removeAttribute
 test("Удаляет аттрибут из элемента", () => {
   document.body.innerHTML = `<div class="wrapper"></div>`;
-  
+
   const block = document.querySelector(".wrapper");
   const tests = [
     {
@@ -141,7 +142,7 @@ test("Удаляет аттрибут из элемента", () => {
 
   tests.map(test => {
     block.setAttribute(test.attribute, test.value);
-    removeAttribute.call({target: block}, test.attribute);
+    removeAttribute.call({ target: block }, test.attribute);
     expect(block.getAttribute(test.attribute)).toStrictEqual(test.return);
   })
 })
@@ -149,7 +150,7 @@ test("Удаляет аттрибут из элемента", () => {
 // setAttribute
 test("Добавляет аттрибуты к элементу", () => {
   document.body.innerHTML = `<div class="wrapper"></div>`;
-  
+
   const block = document.querySelector(".wrapper");
   const tests = [
     {
@@ -166,37 +167,44 @@ test("Добавляет аттрибуты к элементу", () => {
     const value = test.value;
     const obj = {};
     obj[test.attribute] = value;
-    setAttribute.call({target: block}, obj);
+    setAttribute.call({ target: block }, obj);
     expect(block.getAttribute(test.attribute)).toStrictEqual(test.value);
   })
 })
 
 // addNextElement
-test("Добавляет html элемент как 'afterend'", () => {
+test("Добавляет следующий элемент", () => {
   document.body.innerHTML = `<ul class="list">
     <li class="item"></li>
   </ul>`;
-  const list = document.querySelector(".list");
-  const el = list.querySelector(".item");
-  addNextElement.call({target: el}, {
+  const el = document.querySelector(".item");
+
+  addNextElement.call({ target: el }, {
     tag: "li",
     text: "value"
-  }).target;
-  expect([...list.children][1].textContent).toStrictEqual("value");
-})
+  });
+
+  const els = document.querySelectorAll("li");
+
+  expect([...els][1].textContent).toStrictEqual("value");
+});
 
 // addPrevElement
-test("Добавляет html элемент как 'beforebegin'", () => {
+test("Добавляет предыдущий элемент", () => {
   document.body.innerHTML = `<ul class="list">
     <li class="item"></li>
   </ul>`;
-  const list = document.querySelector(".list");
-  const el = list.querySelector(".item");
-  addPrevElement.call({target: el}, {
+
+  const el = document.querySelector(".item");
+
+  addPrevElement.call({ target: el }, {
     tag: "li",
     text: "value"
-  }).target;
-  expect([...list.children][0].textContent).toStrictEqual("value");
+  });
+
+  const els = document.querySelectorAll("li");
+
+  expect([...els][0].textContent).toStrictEqual("value");
 })
 
 // removeChild
@@ -206,8 +214,8 @@ test("Удаляет html ребенка из блок", () => {
   </div>`;
 
   const block = document.querySelector(".wrapper");
-  
-  removeChild.call({target: block}, block.querySelector("[title='Main title']"));
+
+  removeChild.call({ target: block }, block.querySelector("[title='Main title']"));
   const child = Boolean(block.querySelector("[title='Main title']"));
 
   expect(child).toStrictEqual(false);
@@ -217,7 +225,7 @@ test("Удаляет html ребенка из блок", () => {
 test("Добавляет html ребенка в блок", () => {
   document.body.innerHTML = `<div class="wrapper"></div>`;
   const block = document.querySelector(".wrapper");
-  addChild.call({target: block}, {
+  addChild.call({ target: block }, {
     tag: "h1",
     text: "Hello, Lizard!",
     styles: { color: "blue" },
@@ -233,9 +241,9 @@ test("Добавляет html ребенка в блок", () => {
 test("Получение размеров элемента", () => {
   document.body.innerHTML = `<div class="block"></div>`;
   const block = document.querySelector(".block");
-  const item = size.call({target: block});
-  
-  expect(item).toStrictEqual({height: 0, width: 0});
+  const item = size.call({ target: block }).target;
+
+  expect(item).toStrictEqual({ height: 0, width: 0 });
 })
 
 // styles
@@ -290,13 +298,15 @@ test("Добавление класса/идентификатора", () => {
   document.body.innerHTML = `<div class="wrapper"></div>`;
   const block = document.querySelector(".wrapper");
   const tests = [
-    ".block", ".main"
+    { args: [".block"], toBe: "toBeTruthy" },
+    { args: [".block", ".wrapper-block"], toBe: "toBeTruthy" },
+    { args: [".main-block"], toBe: "toBeTruthy" },
   ];
-  
-  tests.map(className => {
-    const item = add.call({target: block}, className).target;
-    
-    return expect(item.classList.contains(className.replace(".", ""))).toStrictEqual(true);
+
+  tests.map(({ args, toBe }) => {
+    add.call({ target: block }, ...args);
+
+    return expect(block.classList.contains(...args.map(className => className.replace(/^\./, ""))))[toBe]();
   })
 })
 
@@ -305,13 +315,15 @@ test("Удаление класса/идентификатора", () => {
   document.body.innerHTML = `<div class="wrapper block"></div>`;
   const block = document.querySelector(".wrapper");
   const tests = [
-    ".block"
+    { args: [".wrapper"], toBe: "toBeTruthy" },
+    { args: [".block", ".wrapper"], toBe: "toBeTruthy" },
+    { args: [".wrapper"], toBe: "toBeTruthy" },
   ];
-  
-  tests.map(className => {
-    const item = remove.call({target: block}, className).target;
-    
-    return expect(item.classList.contains(className.replace(".", ""))).toStrictEqual(false);
+
+  tests.map(({ args, toBe }) => {
+    remove.call({ target: block }, ...args);
+
+    return expect(!block.classList.contains(...args.map(className => className.replace(/^\./, ""))))[toBe]();
   })
 })
 
@@ -319,8 +331,10 @@ test("Удаление класса/идентификатора", () => {
 test("Удаление стилей из атрибута style", () => {
   document.body.innerHTML = `<div class="wrapper" style="color: red;"></div>`;
   const block = document.querySelector(".wrapper");
-  const item = clearStyles.call({target: block}).target;
-  expect(item.getAttribute("style")).toStrictEqual("");
+
+  clearStyles.call({ target: block });
+
+  expect(block.getAttribute("style")).toStrictEqual("");
 })
 
 // on
@@ -346,9 +360,12 @@ test("Добавление события", () => {
 // txt
 test("Добавление текста", () => {
   document.body.innerHTML = `<h1 class="title">old text</h1>`;
+
   const title = document.querySelector(".title");
-  const item = txt.call({target: title}, "new text").target;
-  expect(item.textContent).toStrictEqual("new text");
+
+  txt.call({ target: title }, "new text");
+
+  expect(title.textContent).toStrictEqual("new text");
 })
 
 // onRemove
@@ -419,7 +436,7 @@ test("Получение атрибутов элемента", () => {
 
     const attributes = getAttributes.call({ target: el }, findAttr);
 
-    expect(attributes).toStrictEqual(toBe);
+    expect(attributes).toStrictEqual({ target: toBe });
   });
 });
 
@@ -493,6 +510,69 @@ test("Получение дочерних элементов", () => {
     const el = document.querySelector(element);
     const children = getChildren.call({ target: el }, findEl);
 
-    return expect(children).toStrictEqual(toBe);
+    return expect(children).toStrictEqual({ target: toBe });
   });
+});
+
+// getAllParents
+test("Получение всех родителей", () => {
+  const tests = [
+    {
+      getTarget() {
+        return document.querySelector(".wrapper")
+      },
+      createHTML() {
+        document.body.innerHTML = `<div class="wrapper"></div>`;
+      },
+      toBe: [createElement({ tag: "div", attributes: { class: "wrapper" } }), document.body, document.documentElement]
+    },
+    {
+      getTarget() {
+        return document.querySelector(".title")
+      },
+      createHTML() {
+        document.body.innerHTML = `
+        <div class="wrapper">
+          <h1 class="title"></h1>
+        </div>
+        `;
+      },
+      num: 2,
+      toBe: document.body
+    },
+  ];
+
+  tests.map(({ getTarget, toBe, num, createHTML }) => {
+    createHTML();
+
+    expect(getAllParents.call({ target: getTarget() }, num)).toStrictEqual({ target: toBe });
+  });
+});
+
+// createElement
+test("Создание html элемента", () => {
+  const tests = [
+    {
+      toBe() {
+        const title = document.createElement("h1");
+
+        title.textContent = "Hello";
+
+        return title;
+      },
+      options: { tag: "h1", text: "Hello" }
+    },
+    {
+      toBe() {
+        const wrapper = document.createElement("div");
+
+        wrapper.classList.add("wrapper");
+
+        return wrapper;
+      },
+      options: { tag: "div", attributes: { class: "wrapper" } }
+    },
+  ];
+
+  tests.map(({ options, toBe }) => expect(createElement(options)).toStrictEqual(toBe()));
 });
