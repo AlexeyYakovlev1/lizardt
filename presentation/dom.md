@@ -516,3 +516,38 @@ t("[.title]").hasParent(".wrapper"); // true
 t("[.title]").hasParent(document.documentElement); // true
 t("[.title]").hasParent(".subtitle"); // false
 ```
+
+### ```text()```:
+- **Description**
+Gets the element's text
+- **Return**
+Main object
+- **Example**
+```Javascript
+const { t, createElement } = lizardt;
+const block = createElement({ tag: "div", text: "Hello, Lizard!" });
+
+// Hello, Lizard!
+t(block).text().target;
+```
+
+### ```getParent()```:
+- **Description**
+Gets the element's parent. If you use "selector", then it will find the parent by this selector
+- **Arguments**
+  - Selector **(optional)**
+- **Return**
+Main object
+- **Example**
+```Javascript
+const { t } = lizardt;
+
+// HTML Element with class .wrapper
+t("[body > .wrapper > .title]").getParent().target;
+
+// HTML Element body
+t("[.title]").getParent("body").target;
+
+// null
+t("[.title]").getParent("document").target;
+```

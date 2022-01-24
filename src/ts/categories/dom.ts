@@ -15,6 +15,26 @@ import {
 import global from "../global/index";
 
 const domCategory: IDomCategory = {
+  text(): IT {
+    if (this.target instanceof Element) {
+      this.target = this.target.innerText || this.target.textContent;
+
+      return this;
+    } else {
+      global.setError(`"${this.target}" is not a HTML element`);
+    }
+  },
+
+  getParent(selector?: string): IT {
+    if (this.target instanceof Element) {
+      this.target = (typeof selector === "string" && selector.length) ? this.target.closest(selector) : this.target.parentElement;
+
+      return this;
+    } else {
+      global.setError(`"${this.target}" is not a HTML element`);
+    }
+  },
+
   styles(stylesObj: object) {
     if (this.target instanceof Element) {
       global.setStyles(this.target, stylesObj);

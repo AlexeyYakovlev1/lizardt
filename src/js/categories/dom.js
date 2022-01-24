@@ -23,6 +23,24 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // Global methods
 var index_1 = require("../global/index");
 var domCategory = {
+    text: function () {
+        if (this.target instanceof Element) {
+            this.target = this.target.innerText || this.target.textContent;
+            return this;
+        }
+        else {
+            index_1.default.setError("\"".concat(this.target, "\" is not a HTML element"));
+        }
+    },
+    getParent: function (selector) {
+        if (this.target instanceof Element) {
+            this.target = (typeof selector === "string" && selector.length) ? this.target.closest(selector) : this.target.parentElement;
+            return this;
+        }
+        else {
+            index_1.default.setError("\"".concat(this.target, "\" is not a HTML element"));
+        }
+    },
     styles: function (stylesObj) {
         if (this.target instanceof Element) {
             index_1.default.setStyles(this.target, stylesObj);

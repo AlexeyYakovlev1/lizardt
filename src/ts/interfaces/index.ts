@@ -5,7 +5,7 @@ export interface IStringCategory {
 }
 
 export interface IFuncCategory {
-  isFunction(item: any, callback?: () => any): boolean | any
+  isFunction(item: any, callback?: () => any): boolean | any;
 }
 
 export interface IArrayCategory {
@@ -29,6 +29,7 @@ export interface IDomCategory {
   getChildren(selector?: string): IT;
   getCoordinates(): IT;
   getAllParents(num?: number): IT;
+  getParent(selector?: string): IT;
   add(): IT;
   remove(): IT;
   clearStyles(): IT;
@@ -48,6 +49,7 @@ export interface IDomCategory {
   contains(selector: string): boolean;
   hasParent(selector: string | Element): boolean;
   onRemove(event: string, callback: () => any, options?: object, useCapture?: boolean): void;
+  text(): IT;
 }
 
 export interface IGeneralCategory {
@@ -166,6 +168,9 @@ export interface IT {
   onRemove(event: string, callback: () => any, options?: object, useCapture?: boolean): void;
   filter(callback: () => any, thisArg?: any): any;
   groupBy(callback: (el?, index?, array?) => any): object;
+  text(): IT;
+  getParent(selector?: string): IT;
+  getAllParents(num?: number): IT;
 }
 
 export interface IGlobal {

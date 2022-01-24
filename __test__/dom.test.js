@@ -11,7 +11,7 @@ import {
   removeAttribute, data, hasElement,
   removeLastChild, removeFirstChild,
   contains, hasParent, getAllParents,
-  createElement,
+  createElement, text, getParent
 } from "../src/js/categories/dom";
 
 // hasParent
@@ -575,4 +575,68 @@ test("Создание html элемента", () => {
   ];
 
   tests.map(({ options, toBe }) => expect(createElement(options)).toStrictEqual(toBe()));
+});
+
+// text
+test("Получает текст элемента", () => {
+  const tests = [
+    {
+      target: createElement({ tag: "div", text: "Hello" }),
+      toBe: "Hello"
+    },
+    {
+      target: createElement({ tag: "h1", text: "Title" }),
+      toBe: "Title"
+    },
+    {
+      target: createElement({ tag: "div", text: "" }),
+      toBe: ""
+    },
+  ];
+
+  tests.map(({ target, toBe }) => expect(text.call({ target })).toStrictEqual({ target: toBe }));
+});
+
+// getParent
+test("Получает родителя элемента", () => {
+  const tests = [
+    {
+      createHTML() {
+        document.body.innerHTML = `
+          <div class="wrapper"></div>
+        `;
+      },
+      target() {
+        return document.querySelector(".wrapper");
+      },
+      args: ["body"],
+      toBe: document.body
+    },
+    {
+      createHTML() {
+        document.body.innerHTML = "";
+      },
+      target() {
+        return document.body;
+      },
+      args: ["html"],
+      toBe: document.documentElement
+    },
+    {
+      createHTML() {
+        document.body.innerHTML = "";
+      },
+      target() {
+        return document.documentElement;
+      },
+      args: ["document"],
+      toBe: null
+    },
+  ];
+
+  tests.map(({ target, args, toBe, createHTML }) => {
+    createHTML();
+
+    expect(getParent.call({ target: target() }, ...args)).toStrictEqual({ target: toBe });
+  });
 });
