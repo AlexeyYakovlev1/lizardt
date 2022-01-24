@@ -1,15 +1,8 @@
 import {
-  last,
-  removeItem,
-  center,
-  isArray,
-  unfold,
-  each,
-  hasItem,
-  index,
-  indexOf,
-  filter,
-  groupBy
+  last, removeItem, center,
+  isArray, unfold, each,
+  hasItem, index, indexOf,
+  filter, groupBy, addItem
 } from "../src/js/categories/array";
 
 // last
@@ -220,3 +213,9 @@ test("Сортирует массив по группам", () => {
 
   tests.map(({ target, args, toBe }) => expect(groupBy.call({ target }, ...args)).toStrictEqual({ target: toBe }));
 });
+
+// addItem
+test("Добавление элемента в массив", () => {
+  expect(addItem.call({target: [1,2,3]}, "4").target[3]).toStrictEqual("4");
+  expect(addItem.call({target: [1,2,3]}, "4", true).target[3]).toStrictEqual(3);
+})

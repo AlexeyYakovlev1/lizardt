@@ -134,6 +134,15 @@ var arrayCategory = {
         }
     },
     indexOf: index_1.default.indexOf,
+    addItem: function (item, position) {
+        if (Array.isArray(this.target)) {
+            this.target[!position ? "push" : "unshift"](item);
+            return this;
+        }
+        else {
+            index_1.default.setError("".concat(this.target, " must be array"));
+        }
+    }
 };
 for (var i in arrayCategory) {
     // Exports every separately method

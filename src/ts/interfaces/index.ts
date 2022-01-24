@@ -20,6 +20,7 @@ export interface IArrayCategory {
   filter(callback: () => any, thisArg?: any): any;
   indexOf(findItem: any): number;
   groupBy(callback: (el?, index?, array?) => any): IT;
+  addItem(item:any, position?:boolean): IT;
 }
 
 export interface IDomCategory {
@@ -78,6 +79,7 @@ export interface IObjectCategory {
   hasProperty(property: string | Array<string>): boolean;
   keys(): IT;
   values(): IT;
+  addProperty(item:Object): IT;
 }
 
 // Arguments and options
@@ -165,6 +167,7 @@ export interface IT {
   hasParent(selector: string | Element): boolean;
   keys(): Array<any>;
   values(): Array<any>;
+  addProperty(item:Object): IT;
   onRemove(event: string, callback: () => any, options?: object, useCapture?: boolean): void;
   filter(callback: () => any, thisArg?: any): any;
   groupBy(callback: (el?, index?, array?) => any): object;

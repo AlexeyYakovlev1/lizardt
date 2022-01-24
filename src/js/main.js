@@ -2,4 +2,4 @@ import "./lizardt";
 
 const { t } = lizardt;
 
-console.log(t(document.documentElement).getParent());
+console.log(t({}).addProperty({name: "Alexey", age: 17}).target); // 

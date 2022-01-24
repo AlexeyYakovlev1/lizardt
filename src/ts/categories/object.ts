@@ -57,6 +57,32 @@ const objectCategory: IObjectCategory = {
       global.setError(`"${this.target}" is not an object`);
     }
   },
+
+  addProperty(item:object): IT {
+    if (objectCategory.isObject(this.target)) {
+      if (objectCategory.isObject(item) || Array.isArray(item)) {
+        if (Array.isArray(item)) {
+          const done = item.every(el => objectCategory.isObject(el));
+          
+          if (!done) {
+            global.setError(`In array: ${item} all elements must be object`);
+          }
+
+          item.forEach(obj => {
+            Object.keys(obj).forEach(key => this.target[key] = obj[key]);
+          })
+        } else {
+          Object.keys(item).forEach(key => this.target[key] = item[key]);
+        }
+  
+        return this;
+      } else {
+        global.setError(`"${item}" must be object or array of object`);
+      }
+    } else {
+      global.setError(`"${this.target}" is not an object`);
+    }
+  }
 }
 
 for (let i in objectCategory) {

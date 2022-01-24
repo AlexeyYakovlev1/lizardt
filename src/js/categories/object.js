@@ -48,6 +48,32 @@ var objectCategory = {
             index_1.default.setError("\"".concat(this.target, "\" is not an object"));
         }
     },
+    addProperty: function (item) {
+        var _this = this;
+        if (objectCategory.isObject(this.target)) {
+            if (objectCategory.isObject(item) || Array.isArray(item)) {
+                if (Array.isArray(item)) {
+                    var done = item.every(function (el) { return objectCategory.isObject(el); });
+                    if (!done) {
+                        index_1.default.setError("In array: ".concat(item, " all elements must be object"));
+                    }
+                    item.forEach(function (obj) {
+                        Object.keys(obj).forEach(function (key) { return _this.target[key] = obj[key]; });
+                    });
+                }
+                else {
+                    Object.keys(item).forEach(function (key) { return _this.target[key] = item[key]; });
+                }
+                return this;
+            }
+            else {
+                index_1.default.setError("\"".concat(item, "\" must be object or array of object"));
+            }
+        }
+        else {
+            index_1.default.setError("\"".concat(this.target, "\" is not an object"));
+        }
+    }
 };
 for (var i in objectCategory) {
     // Exports every separately method
