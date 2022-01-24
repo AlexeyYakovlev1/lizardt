@@ -35,7 +35,7 @@ export interface IDomCategory {
   txt(value: string): IT;
   size(): IT;
   addChild(child: HTMLElement | IElement | Array<any>): IT;
-  removeChild(child: HTMLElement | string | Array<HTMLElement | string>): IT;
+  removeChild(child: HTMLElement | string | Array<HTMLElement | string>): void;
   addPrevElement(element: HTMLElement | IElement): IT;
   addNextElement(element: HTMLElement | IElement): IT;
   setAttribute(attributes: IAttribute): IT;
@@ -176,7 +176,7 @@ export interface IGlobal {
   definesType(name: string): ITypeOfSelector;
   setAttributes(el: HTMLElement, obj: object): HTMLElement;
   setError(message: string): never;
-  removeChild(parent: any, element: string | Element, position?: string): IT;
+  removeChild(parent: any, element: string | Element, position?: string): void;
   compare(item1: any, item2: any): Boolean;
   getAllParents(num?: number): IT;
   indexOf(findItem: any): number;
