@@ -195,7 +195,15 @@ Adds a new element to the array
 - **Arguments**
   - Item **(required)**
   - Position **(optional)**
-  
+- **Return**
+Main object
+- **Example**
+```Javascript
+const {t} = lizardt;
+t([1, 2, 3]).addItem(4).target; // [1, 2, 3, 4]
+t([1, 2, 3], true).addItem(4).target; // [4, 1, 2, 3]
+```
+
 ### ```merge()```:
 - **Description**
 Concatenates arrays or objects
@@ -205,10 +213,6 @@ Concatenates arrays or objects
 Main object
 - **Example**
 ```Javascript
-const {t} = lizardt;
-t([1, 2, 3]).addItem(4).target; // [1, 2, 3, 4]
-t([1, 2, 3], true).addItem(4).target; // [4, 1, 2, 3]
-```
 const { t } = lizardt;
 
 t([1,2,3]).merge([4,5,6]).target; // [1,2,3,4,5,6]
