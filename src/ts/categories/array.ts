@@ -4,10 +4,9 @@ import global from "../global/index";
 // Interfaces
 import { IArrayCategory, IT } from "../interfaces/index";
 
-// Categoryes
-import functionCategory from "./func";
-
 const arrayCategory: IArrayCategory = {
+  merge: global.merge,
+
   last(): IT {
     if (global.checkList(this.target)) {
       const arr: Array<any> = this.target;
@@ -22,7 +21,7 @@ const arrayCategory: IArrayCategory = {
   },
 
   groupBy(callback: (el?, index?, array?) => any): IT {
-    if (Array.isArray(this.target)) {
+    if (global.isArray(this.target)) {
       if (callback instanceof Function) {
         const groups: object = this.target.reduce((acc, item, index, array) => {
           const res: any = callback(item, index, array);
@@ -51,7 +50,7 @@ const arrayCategory: IArrayCategory = {
   },
 
   removeItem(num: number, val?: any): Array<any> {
-    if (Array.isArray(this.target)) {
+    if (global.isArray(this.target)) {
       val || typeof val === "number" && val >= 0 ? this.target.splice(num, 1, val) : this.target.splice(num, 1);
 
       return this.target;
@@ -73,27 +72,15 @@ const arrayCategory: IArrayCategory = {
     }
   },
 
-  isArray(item: any, callback?): boolean {
-    const validArray: boolean = Array.isArray(item);
-
-    if (validArray) {
-      if (functionCategory.isFunction(callback)) {
-        return callback();
-      }
-
-      return true;
-    };
-
-    return false;
-  },
+  isArray: global.isArray,
 
   unfold(): IT {
     const res: Array<any> = [];
 
-    if (Array.isArray(this.target) && this.target.length) {
+    if (global.isArray(this.target) && this.target.length) {
       const unfoldArray = (array: Array<any>): void => {
         array.map(item => {
-          if (Array.isArray(item)) {
+          if (global.isArray(item)) {
             return unfoldArray(item);
           } else {
             res.push(item);
@@ -118,7 +105,7 @@ const arrayCategory: IArrayCategory = {
   },
 
   hasItem(item: any): boolean {
-    if (Array.isArray(this.target)) {
+    if (global.isArray(this.target)) {
       return Boolean(this.target.find(el => global.compare(el, item)));
     } else {
       global.setError(`"${this.target}" is not an array`);
@@ -141,7 +128,7 @@ const arrayCategory: IArrayCategory = {
   },
 
   filter(callback: () => any, thisArg?: any): any {
-    if (Array.isArray(this.target)) {
+    if (global.isArray(this.target)) {
       if (callback instanceof Function) {
         this.target = thisArg ? this.target.filter(callback, thisArg) : this.target.filter(callback);
 

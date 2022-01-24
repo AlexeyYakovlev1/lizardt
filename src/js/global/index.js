@@ -10,10 +10,19 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var global = {
     checkList: function (target) {
-        return Array.isArray(target) || target instanceof NodeList || target instanceof HTMLCollection;
+        return global.isArray(target) || target instanceof NodeList || target instanceof HTMLCollection;
     },
     createElement: function (_a) {
         var tag = _a.tag, text = _a.text, styles = _a.styles, attributes = _a.attributes;
@@ -38,7 +47,7 @@ var global = {
                 parent.insertAdjacentElement(pos, element);
             }
             // Object
-            if (element && typeof element === "object" && !Array.isArray(element) && !(element instanceof Element || element instanceof HTMLElement)) {
+            if (element && typeof element === "object" && !global.isArray(element) && !(element instanceof Element || element instanceof HTMLElement)) {
                 var el = global.createElement(element);
                 parent.insertAdjacentElement(pos, el);
             }
@@ -59,7 +68,7 @@ var global = {
     },
     setAttributes: function (el, obj) {
         for (var attr in obj) {
-            el.setAttribute(attr, Array.isArray(obj[attr]) ? obj[attr].join(" ") : obj[attr]);
+            el.setAttribute(attr, global.isArray(obj[attr]) ? obj[attr].join(" ") : obj[attr]);
         }
         return el;
     },
@@ -130,7 +139,7 @@ var global = {
                 global.setError("\"".concat(findItem, "\" not a string"));
             }
         }
-        if (Array.isArray(this.target)) {
+        if (global.isArray(this.target)) {
             var res_1 = this.target.indexOf(findItem);
             if (res_1 === -1) {
                 this.target.map(function (item, index) {
@@ -140,6 +149,56 @@ var global = {
                 });
             }
             return res_1;
+        }
+    },
+    isFunction: function (item, callback) {
+        if (item && {}.toString.call(item) === "[object Function]") {
+            if (callback instanceof Function) {
+                return callback();
+            }
+            return true;
+        }
+        ;
+        return false;
+    },
+    isObject: function (item, callback) {
+        if (item && typeof item === "object" && !global.isArray(item)
+            && !(item instanceof Element || item instanceof HTMLElement)) {
+            if (global.isFunction(callback)) {
+                return callback();
+            }
+            return true;
+        }
+        return false;
+    },
+    isArray: function (item, callback) {
+        var validArray = Array.isArray(item);
+        if (validArray) {
+            if (global.isFunction(callback)) {
+                return callback();
+            }
+            return true;
+        }
+        ;
+        return false;
+    },
+    merge: function (item) {
+        if (global.isObject(this.target) || global.isArray(this.target)) {
+            if (global.isObject(item) || global.isArray(item)) {
+                if (global.isObject(this.target) && global.isObject(item)) {
+                    this.target = __assign(__assign({}, this.target), item);
+                }
+                if (global.isArray(this.target) && global.isArray(item)) {
+                    this.target = __spreadArray([], this.target, true).concat(item);
+                }
+                return this;
+            }
+            else {
+                global.setError("\"".concat(item, "\" must be an array or an object"));
+            }
+        }
+        else {
+            global.setError("\"".concat(this.target, "\" must be an array or an object"));
         }
     }
 };

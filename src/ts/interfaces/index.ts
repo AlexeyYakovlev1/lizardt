@@ -20,6 +20,7 @@ export interface IArrayCategory {
   filter(callback: () => any, thisArg?: any): any;
   indexOf(findItem: any): number;
   groupBy(callback: (el?, index?, array?) => any): IT;
+  merge(item: Array<any> | object): IT;
 }
 
 export interface IDomCategory {
@@ -53,17 +54,13 @@ export interface IDomCategory {
 }
 
 export interface IGeneralCategory {
-  compare(item1: any, item2: any): Boolean;
+  compare(item1: any, item2: any): boolean;
   copy(item: any): any;
   array(item: any, symb?: string): Array<any>;
   jsonParse(item: any, reviver?): any;
   jsonString(item: any, replacer?, space?): string;
   t(target: any, list?: boolean): IT;
   typeOf(item: any): string;
-  index(num: number): any;
-  getRandom(min: number, max: number): number;
-  getPercent(current: number, endNum: number, round?: boolean): number;
-  getNumFromPercent(percent: number, num: number, round?: boolean): number;
   extend(options: object): object;
 }
 
@@ -78,6 +75,7 @@ export interface IObjectCategory {
   hasProperty(property: string | Array<string>): boolean;
   keys(): IT;
   values(): IT;
+  merge(item: Array<any> | object): IT;
 }
 
 // Arguments and options
@@ -171,6 +169,7 @@ export interface IT {
   text(): IT;
   getParent(selector?: string): IT;
   getAllParents(num?: number): IT;
+  merge(item: Array<any> | object): IT;
 }
 
 export interface IGlobal {
@@ -182,13 +181,17 @@ export interface IGlobal {
   setAttributes(el: HTMLElement, obj: object): HTMLElement;
   setError(message: string): never;
   removeChild(parent: any, element: string | Element, position?: string): void;
-  compare(item1: any, item2: any): Boolean;
+  compare(item1: any, item2: any): boolean;
   getAllParents(num?: number): IT;
   indexOf(findItem: any): number;
+  merge(item: Array<any> | object): IT;
+  isObject(item, callback?): boolean;
+  isArray(item: any, callback?): boolean;
+  isFunction(item: any, callback?: () => any): boolean | any;
 }
 
 export interface ILizardt {
-  compare(item1: any, item2: any): Boolean;
+  compare(item1: any, item2: any): boolean;
   copy(item: any): any;
   array(item: any, symb?: string): Array<any>;
   jsonParse(item: any, reviver?): any;

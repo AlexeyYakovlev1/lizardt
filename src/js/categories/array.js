@@ -2,9 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 // Global methods
 var index_1 = require("../global/index");
-// Categoryes
-var func_1 = require("./func");
 var arrayCategory = {
+    merge: index_1.default.merge,
     last: function () {
         if (index_1.default.checkList(this.target)) {
             var arr = this.target;
@@ -17,7 +16,7 @@ var arrayCategory = {
         }
     },
     groupBy: function (callback) {
-        if (Array.isArray(this.target)) {
+        if (index_1.default.isArray(this.target)) {
             if (callback instanceof Function) {
                 var groups = this.target.reduce(function (acc, item, index, array) {
                     var res = callback(item, index, array);
@@ -44,7 +43,7 @@ var arrayCategory = {
         }
     },
     removeItem: function (num, val) {
-        if (Array.isArray(this.target)) {
+        if (index_1.default.isArray(this.target)) {
             val || typeof val === "number" && val >= 0 ? this.target.splice(num, 1, val) : this.target.splice(num, 1);
             return this.target;
         }
@@ -63,23 +62,13 @@ var arrayCategory = {
             index_1.default.setError("\"".concat(this.target, "\" is not a list"));
         }
     },
-    isArray: function (item, callback) {
-        var validArray = Array.isArray(item);
-        if (validArray) {
-            if (func_1.default.isFunction(callback)) {
-                return callback();
-            }
-            return true;
-        }
-        ;
-        return false;
-    },
+    isArray: index_1.default.isArray,
     unfold: function () {
         var res = [];
-        if (Array.isArray(this.target) && this.target.length) {
+        if (index_1.default.isArray(this.target) && this.target.length) {
             var unfoldArray_1 = function (array) {
                 array.map(function (item) {
-                    if (Array.isArray(item)) {
+                    if (index_1.default.isArray(item)) {
                         return unfoldArray_1(item);
                     }
                     else {
@@ -101,7 +90,7 @@ var arrayCategory = {
         }
     },
     hasItem: function (item) {
-        if (Array.isArray(this.target)) {
+        if (index_1.default.isArray(this.target)) {
             return Boolean(this.target.find(function (el) { return index_1.default.compare(el, item); }));
         }
         else {
@@ -120,7 +109,7 @@ var arrayCategory = {
         index_1.default.setError("\"".concat(this.target, "\" must be a array, string, HTMLCollection or NodeList"));
     },
     filter: function (callback, thisArg) {
-        if (Array.isArray(this.target)) {
+        if (index_1.default.isArray(this.target)) {
             if (callback instanceof Function) {
                 this.target = thisArg ? this.target.filter(callback, thisArg) : this.target.filter(callback);
                 return this;

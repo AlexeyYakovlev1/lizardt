@@ -7,6 +7,9 @@ import {
 import generalCategory from "./categories/general";
 import numberCategory from "./categories/number";
 import domCategory from "./categories/dom";
+import functionCategory from "./categories/func";
+import objectCategory from "./categories/object";
+import arrayCategory from "./categories/array";
 
 // Additional methods
 import filterMethods from "./filterMethods/index";
@@ -14,7 +17,7 @@ import filterMethods from "./filterMethods/index";
 const lizardt: ILizardt = {
   ...generalCategory,
   ...numberCategory,
-  ...filterMethods({ ...domCategory }, [], ["createElement"])
+  ...filterMethods({ ...domCategory, ...arrayCategory, ...objectCategory, ...functionCategory }, [], ["createElement", "isArray", "isObject", "isFunction", "index"])
 };
 
 // Set context at lizardt

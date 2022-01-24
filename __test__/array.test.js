@@ -9,7 +9,8 @@ import {
   index,
   indexOf,
   filter,
-  groupBy
+  groupBy,
+  merge
 } from "../src/js/categories/array";
 
 // last
@@ -219,4 +220,22 @@ test("Сортирует массив по группам", () => {
   ];
 
   tests.map(({ target, args, toBe }) => expect(groupBy.call({ target }, ...args)).toStrictEqual({ target: toBe }));
+});
+
+// merge
+test("Объединение массивов", () => {
+  const tests = [
+    {
+      target: [1, 2, 3],
+      args: [[4, 5, 6]],
+      toBe: [1, 2, 3, 4, 5, 6]
+    },
+    {
+      target: [],
+      args: [[4]],
+      toBe: [4]
+    }
+  ];
+
+  tests.map(({ target, args, toBe }) => expect(merge.call({ target }, ...args)).toStrictEqual({ target: toBe }));
 });

@@ -1,4 +1,4 @@
-import { isObject, hasProperty, keys, values } from "../src/js/categories/object";
+import { isObject, hasProperty, keys, values, merge } from "../src/js/categories/object";
 
 // isObject
 test("Проверка на объект", () => {
@@ -64,4 +64,22 @@ test("Вывод значений в массиве", () => {
   ];
 
   tests.map(({ target, toBe }) => expect(values.call({ target })).toStrictEqual({ target: toBe }));
+});
+
+// merge
+test("Объединение объектов", () => {
+  const tests = [
+    {
+      target: {},
+      args: [{}],
+      toBe: {}
+    },
+    {
+      target: { name: "Alexandr" },
+      args: [{ age: 18 }],
+      toBe: { name: "Alexandr", age: 18 }
+    },
+  ];
+
+  tests.map(({ target, args, toBe }) => expect(merge.call({ target }, ...args)).toStrictEqual({ target: toBe }));
 });
