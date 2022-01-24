@@ -1,16 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var index_1 = require("../global/index");
 var funcCategory = {
-    isFunction: function (item, callback) {
-        if (item && {}.toString.call(item) === "[object Function]") {
-            if (callback instanceof Function) {
-                return callback();
-            }
-            return true;
-        }
-        ;
-        return false;
-    }
+    isFunction: index_1.default.isFunction
 };
 for (var i in funcCategory) {
     // Exports every separately method

@@ -46,7 +46,7 @@ const domCategory: IDomCategory = {
 
   on(event: string, callback: () => void, options?: object): void {
     if (callback instanceof Function) {
-      if (options && typeof options === "object" && !Array.isArray(options) && !(options instanceof Element || options instanceof HTMLElement)) {
+      if (global.isObject(options)) {
         return this.target.addEventListener(event, callback, options);
       }
 
@@ -58,7 +58,7 @@ const domCategory: IDomCategory = {
 
   onRemove(event: string, callback: () => void, options?: object, useCapture?: boolean): void {
     if (callback instanceof Function) {
-      if (options && typeof options === "object" && !Array.isArray(options) && !(options instanceof Element || options instanceof HTMLElement)) {
+      if (global.isObject(options)) {
         return this.target.removeEventListener(event, callback, options, useCapture);
       }
 
@@ -131,8 +131,6 @@ const domCategory: IDomCategory = {
       global.setError(`"${this.target}" is not a HTML element`);
     }
   },
-
-  getAllParents: global.getAllParents,
 
   add(...args): IT {
     if (this.target instanceof Element && args.length) {
@@ -304,8 +302,6 @@ const domCategory: IDomCategory = {
     }
   },
 
-  createElement: global.createElement,
-
   data(isArray = false): IT {
     const el: any = this.target;
 
@@ -339,10 +335,10 @@ const domCategory: IDomCategory = {
 
         return this;
       } else {
-        global.setError(`The element ${el} must have a "FORM" nodeName`);
+        global.setError(`The element "${el}" must have a "FORM" nodeName`);
       }
     } else {
-      global.setError(`Item ${el} must be HTMLFormElement`);
+      global.setError(`Item "${el}" must be HTMLFormElement`);
     }
   },
 
@@ -427,7 +423,10 @@ const domCategory: IDomCategory = {
     } else {
       global.setError(`"${this.target}" is not a HTML element`);
     }
-  }
+  },
+
+  createElement: global.createElement,
+  getAllParents: global.getAllParents,
 }
 
 for (let i in domCategory) {

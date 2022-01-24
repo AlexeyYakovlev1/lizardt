@@ -4,9 +4,6 @@ import global from "../global/index";
 // Interfaces
 import { IArrayCategory, IT } from "../interfaces/index";
 
-// Categoryes
-import functionCategory from "./func";
-
 const arrayCategory: IArrayCategory = {
 	last(): IT {
 		if (global.checkList(this.target)) {
@@ -77,7 +74,7 @@ const arrayCategory: IArrayCategory = {
 		const validArray: boolean = Array.isArray(item);
 
 		if (validArray) {
-			if (functionCategory.isFunction(callback)) {
+			if (global.isFunction(callback)) {
 				return callback();
 			}
 
@@ -163,7 +160,9 @@ const arrayCategory: IArrayCategory = {
 		} else {
 			global.setError(`${this.target} must be array`);
 		}
-	}
+	},
+  	
+	merge: global.merge
 }
 
 for (let i in arrayCategory) {

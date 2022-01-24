@@ -52,7 +52,7 @@ var domCategory = {
     },
     on: function (event, callback, options) {
         if (callback instanceof Function) {
-            if (options && typeof options === "object" && !Array.isArray(options) && !(options instanceof Element || options instanceof HTMLElement)) {
+            if (index_1.default.isObject(options)) {
                 return this.target.addEventListener(event, callback, options);
             }
             return this.target.addEventListener(event, callback);
@@ -63,7 +63,7 @@ var domCategory = {
     },
     onRemove: function (event, callback, options, useCapture) {
         if (callback instanceof Function) {
-            if (options && typeof options === "object" && !Array.isArray(options) && !(options instanceof Element || options instanceof HTMLElement)) {
+            if (index_1.default.isObject(options)) {
                 return this.target.removeEventListener(event, callback, options, useCapture);
             }
             return this.target.removeEventListener(event, callback, null, useCapture);
@@ -129,7 +129,6 @@ var domCategory = {
             index_1.default.setError("\"".concat(this.target, "\" is not a HTML element"));
         }
     },
-    getAllParents: index_1.default.getAllParents,
     add: function () {
         var _this = this;
         var args = [];
@@ -303,7 +302,6 @@ var domCategory = {
             index_1.default.setError("\"".concat(this.target, "\" is not a HTML element"));
         }
     },
-    createElement: index_1.default.createElement,
     data: function (isArray) {
         if (isArray === void 0) { isArray = false; }
         var el = this.target;
@@ -333,11 +331,11 @@ var domCategory = {
                 return this;
             }
             else {
-                index_1.default.setError("The element ".concat(el, " must have a \"FORM\" nodeName"));
+                index_1.default.setError("The element \"".concat(el, "\" must have a \"FORM\" nodeName"));
             }
         }
         else {
-            index_1.default.setError("Item ".concat(el, " must be HTMLFormElement"));
+            index_1.default.setError("Item \"".concat(el, "\" must be HTMLFormElement"));
         }
     },
     hasElement: function (element) {
@@ -417,7 +415,9 @@ var domCategory = {
         else {
             index_1.default.setError("\"".concat(this.target, "\" is not a HTML element"));
         }
-    }
+    },
+    createElement: index_1.default.createElement,
+    getAllParents: index_1.default.getAllParents,
 };
 for (var i in domCategory) {
     // Exports every separately method

@@ -2,7 +2,8 @@ import {
   last, removeItem, center,
   isArray, unfold, each,
   hasItem, index, indexOf,
-  filter, groupBy, addItem
+  filter, groupBy, addItem,
+  merge
 } from "../src/js/categories/array";
 
 // last
@@ -219,3 +220,21 @@ test("Добавление элемента в массив", () => {
   expect(addItem.call({target: [1,2,3]}, "4").target[3]).toStrictEqual("4");
   expect(addItem.call({target: [1,2,3]}, "4", true).target[3]).toStrictEqual(3);
 })
+
+// merge
+test("Объединение массивов", () => {
+  const tests = [
+    {
+      target: [1, 2, 3],
+      args: [[4, 5, 6]],
+      toBe: [1, 2, 3, 4, 5, 6]
+    },
+    {
+      target: [],
+      args: [[4]],
+      toBe: [4]
+    }
+  ];
+
+  tests.map(({ target, args, toBe }) => expect(merge.call({ target }, ...args)).toStrictEqual({ target: toBe }));
+});

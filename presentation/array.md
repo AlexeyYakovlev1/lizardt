@@ -195,6 +195,12 @@ Adds a new element to the array
 - **Arguments**
   - Item **(required)**
   - Position **(optional)**
+  
+### ```merge()```:
+- **Description**
+Concatenates arrays or objects
+- **Arguments**
+  - Item **(required)**
 - **Return**
 Main object
 - **Example**
@@ -202,4 +208,9 @@ Main object
 const {t} = lizardt;
 t([1, 2, 3]).addItem(4).target; // [1, 2, 3, 4]
 t([1, 2, 3], true).addItem(4).target; // [4, 1, 2, 3]
+```
+const { t } = lizardt;
+
+t([1,2,3]).merge([4,5,6]).target; // [1,2,3,4,5,6]
+t({ name: "A" }).merge({ status: "junior" }).target; // { name: "A", status: "junior" }
 ```

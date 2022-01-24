@@ -1,32 +1,21 @@
 // Interfaces
 import { IObjectCategory, IT } from "../interfaces/index";
-import functionCategory from "./func";
 
 // Global
 import global from "../global/index";
 
 const objectCategory: IObjectCategory = {
-  isObject(item, callback?): boolean {
-    if (item && typeof item === "object" && !Array.isArray(item)
-      && !(item instanceof Element || item instanceof HTMLElement)
-    ) {
-      if (functionCategory.isFunction(callback)) {
-        return callback();
-      }
+  merge: global.merge,
 
-      return true;
-    }
-
-    return false;
-  },
+  isObject: global.isObject,
 
   hasProperty(property: string | Array<string>): boolean {
-    if (this.target && typeof this.target === "object" && !Array.isArray(this.target) && !(this.target instanceof Element || this.target instanceof HTMLElement)) {
+    if (global.isObject(this.target)) {
       if (typeof property === "string") {
         return property in this.target;
       }
 
-      if (Array.isArray(property)) {
+      if (global.isArray(property)) {
         return property.every(prop => prop in this.target);
       }
     } else {
@@ -35,7 +24,7 @@ const objectCategory: IObjectCategory = {
   },
 
   keys(): IT {
-    if (this.target && typeof this.target === "object" && !Array.isArray(this.target) && !(this.target instanceof Element || this.target instanceof HTMLElement)) {
+    if (global.isObject(this.target)) {
       const keys: Array<string> = Object.keys(this.target);
 
       this.target = keys;
@@ -47,7 +36,7 @@ const objectCategory: IObjectCategory = {
   },
 
   values(): IT {
-    if (this.target && typeof this.target === "object" && !Array.isArray(this.target) && !(this.target instanceof Element || this.target instanceof HTMLElement)) {
+    if (global.isObject(this.target)) {
       const values: Array<any> = Object.values(this.target);
 
       this.target = values;

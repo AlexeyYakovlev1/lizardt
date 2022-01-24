@@ -31,21 +31,27 @@ var index_1 = require("../filterMethods/index");
 var index_2 = require("../additions/index");
 // Global methods
 var index_3 = require("../global/index");
-var generalCategory = __assign({ compare: index_3.default.compare, copy: function (item) {
-        if (Array.isArray(item)) {
+var generalCategory = {
+    compare: index_3.default.compare,
+    copy: function (item) {
+        if (index_3.default.isArray(item)) {
             return __spreadArray([], item, true);
         }
-        else if (item && typeof item === "object" && !Array.isArray(item) && !(item instanceof Element || item instanceof HTMLElement)) {
+        else if (item && typeof item === "object" && !index_3.default.isArray(item) && !(item instanceof Element || item instanceof HTMLElement)) {
             return __assign({}, item);
         }
         return item;
-    }, jsonParse: function (item, reviver) {
+    },
+    jsonParse: function (item, reviver) {
         return JSON.parse(item, reviver);
-    }, jsonString: function (item, replacer, space) {
+    },
+    jsonString: function (item, replacer, space) {
         return JSON.stringify(item, replacer, space);
-    }, typeOf: function (item) {
+    },
+    typeOf: function (item) {
         return (typeof item === "number" && isNaN(item)) ? "NaN" : item === null ? "null" : typeof item;
-    }, array: function (item, symb) {
+    },
+    array: function (item, symb) {
         if (!item) {
             return [];
         }
@@ -54,9 +60,10 @@ var generalCategory = __assign({ compare: index_3.default.compare, copy: functio
             res = item.split(symb);
         }
         return res;
-    }, extend: function (options) {
+    },
+    extend: function (options) {
         var _a;
-        if (options && typeof options === "object" && !Array.isArray(options) && !(options instanceof Element || options instanceof HTMLElement)) {
+        if (options && typeof options === "object" && !index_3.default.isArray(options) && !(options instanceof Element || options instanceof HTMLElement)) {
             for (var option in options) {
                 index_2.default.setAddition = (_a = {}, _a[option] = options[option], _a);
             }
@@ -65,7 +72,8 @@ var generalCategory = __assign({ compare: index_3.default.compare, copy: functio
         else {
             index_3.default.setError("\"".concat(options, "\" is not a object"));
         }
-    }, t: function (target, list) {
+    },
+    t: function (target, list) {
         var trt;
         if (typeof target === "string" && /^\[.+\]$/.test(target)) {
             try {
@@ -80,7 +88,8 @@ var generalCategory = __assign({ compare: index_3.default.compare, copy: functio
             }
         }
         return __assign(__assign({ target: trt ? trt : target }, (0, index_1.default)(__assign(__assign(__assign(__assign(__assign({}, dom_1.default), array_1.default), func_1.default), object_1.default), string_1.default), ["createElement", "isArray", "isFunction", "isObject"])), index_2.default.getAdditions);
-    } }, (0, index_1.default)(__assign(__assign(__assign({}, array_1.default), object_1.default), func_1.default), [], ["isArray", "isObject", "isFunction", "index"]));
+    },
+};
 for (var i in generalCategory) {
     // Exports every separately method
     exports[i] = generalCategory[i];

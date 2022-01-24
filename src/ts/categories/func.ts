@@ -2,18 +2,10 @@ import {
   IFuncCategory
 } from "../interfaces/index";
 
+import global from "../global/index";
+
 const funcCategory: IFuncCategory = {
-  isFunction(item: any, callback?): boolean {
-    if (item && {}.toString.call(item) === "[object Function]") {
-      if (callback instanceof Function) {
-        return callback();
-      }
-
-      return true;
-    };
-
-    return false;
-  }
+  isFunction: global.isFunction
 }
 
 for (let i in funcCategory) {

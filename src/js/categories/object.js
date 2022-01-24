@@ -1,26 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var func_1 = require("./func");
 // Global
 var index_1 = require("../global/index");
 var objectCategory = {
-    isObject: function (item, callback) {
-        if (item && typeof item === "object" && !Array.isArray(item)
-            && !(item instanceof Element || item instanceof HTMLElement)) {
-            if (func_1.default.isFunction(callback)) {
-                return callback();
-            }
-            return true;
-        }
-        return false;
-    },
+    merge: index_1.default.merge,
+    isObject: index_1.default.isObject,
     hasProperty: function (property) {
         var _this = this;
-        if (this.target && typeof this.target === "object" && !Array.isArray(this.target) && !(this.target instanceof Element || this.target instanceof HTMLElement)) {
+        if (index_1.default.isObject(this.target)) {
             if (typeof property === "string") {
                 return property in this.target;
             }
-            if (Array.isArray(property)) {
+            if (index_1.default.isArray(property)) {
                 return property.every(function (prop) { return prop in _this.target; });
             }
         }
@@ -29,7 +20,7 @@ var objectCategory = {
         }
     },
     keys: function () {
-        if (this.target && typeof this.target === "object" && !Array.isArray(this.target) && !(this.target instanceof Element || this.target instanceof HTMLElement)) {
+        if (index_1.default.isObject(this.target)) {
             var keys = Object.keys(this.target);
             this.target = keys;
             return this;
@@ -39,7 +30,7 @@ var objectCategory = {
         }
     },
     values: function () {
-        if (this.target && typeof this.target === "object" && !Array.isArray(this.target) && !(this.target instanceof Element || this.target instanceof HTMLElement)) {
+        if (index_1.default.isObject(this.target)) {
             var values = Object.values(this.target);
             this.target = values;
             return this;
