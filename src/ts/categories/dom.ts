@@ -441,6 +441,17 @@ const domCategory: IDomCategory = {
 
   createElement: global.createElement,
   getAllParents: global.getAllParents,
+
+  toggle(...args): IT {
+    if (this.target instanceof Element && args.length) {
+      args.forEach(className => {
+        this.target.classList.toggle(className);
+      });
+      return this;
+    } else {
+      global.setError(`"${this.target}" is not a HTML element or arguments must be passed`);
+    }
+  }
 }
 
 for (let i in domCategory) {

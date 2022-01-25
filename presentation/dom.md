@@ -501,6 +501,22 @@ t("[.wrapper]").contains("#block"); // true
 t("[.wrapper]").contains(".block", "#item"); // false
 ```
 
+### ```toggle()```:
+- **Description**
+Switches css classes for an html element
+- **Arguments**
+  - className(s) **(required)**
+- **Return**
+Main object
+- **Example**
+```Javascript
+const {t} = lizardt;
+
+t("[button]").on("click", () => {
+    t("[.title]").toggle("hidden", "subtitle");
+})
+```
+
 ### ```hasParent()```:
 - **Description**
 Checks if an element has a parent

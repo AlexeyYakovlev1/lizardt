@@ -12,7 +12,7 @@ import {
   removeLastChild, removeFirstChild,
   contains, hasParent, getAllParents,
   createElement, text, getParent,
-  addHTML,
+  addHTML, toggle
 } from "../src/js/categories/dom";
 
 // hasParent
@@ -670,3 +670,14 @@ test("Установка HTML разметки в тег", () => {
     expect(getInnerHTML()).toStrictEqual(toBe);
   });
 });
+
+// toggle
+test("Переключает класс у элемента", () => {
+  document.body.innerHTML = `<button class="button">Click me</button>`;
+  const btn = document.querySelector("button");
+  btn.addEventListener("click", () => {
+    toggle.call({target: btn}, "default", "button");
+    expect(btn.classList.contains("default")).toStrictEqual(true);
+    expect(btn.classList.contains("button")).toStrictEqual(false);
+  })
+})

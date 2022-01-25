@@ -36,6 +36,7 @@ export interface IDomCategory {
   getCoordinates(): IT;
   getAllParents(num?: number): IT;
   getParent(selector?: string): IT;
+  toggle(): IT,
   add(): IT;
   remove(): IT;
   clearStyles(): IT;
