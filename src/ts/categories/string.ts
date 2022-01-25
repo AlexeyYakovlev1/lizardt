@@ -5,13 +5,17 @@ import global from "../global/index";
 import { IStringCategory } from "../interfaces/index";
 
 const stringCategory: IStringCategory = {
-  hasString(str: string): boolean {
+  hasString(str: string | Array<string>): boolean {
     if (typeof this.target === "string") {
       if (typeof str === "string") {
         return this.target.includes(str);
-      } else {
-        global.setError(`"${str}" not a string`);
       }
+
+      if (global.isArray(str) && str.every(item => typeof item === "string")) {
+        return str.every(string => this.target.includes(string));
+      }
+
+      global.setError(`"${str}" not a string or an array`);
     } else {
       global.setError(`"${this.target}" not a string`);
     }
@@ -40,6 +44,22 @@ const stringCategory: IStringCategory = {
       } else {
         global.setError(`"${str}" not a string`);
       }
+    } else {
+      global.setError(`"${this.target}" not a string`);
+    }
+  },
+
+  isEmail(): boolean {
+    if (typeof this.target === "string") {
+      return /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/.test(this.target);
+    } else {
+      global.setError(`"${this.target}" not a string`);
+    }
+  },
+
+  hasNumbers(): boolean {
+    if (typeof this.target === "string") {
+      return /\d+/.test(this.target);
     } else {
       global.setError(`"${this.target}" not a string`);
     }

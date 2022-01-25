@@ -30,6 +30,8 @@ const { t } = lizardt;
 
 t("Hello, world!").hasString("ello"); // true
 t("Hello, world!").hasString("D"); // false
+t("Hello, world!").hasString(["D", "ello"]); // false
+t("Hello, world!").hasString(["ld", "ello", "!"]); // true
 ```
 
 ### ```beginWith()```:
@@ -68,4 +70,30 @@ t("Hello, world!").endWith("Ddwa"); // false
 
 // Ignore register
 t("Hello, world!").endWith("WorLd!", true); // true
+```
+
+### ```isEmail()```:
+- **Description**
+Email Checker
+- **Return**
+Boolean
+- **Example**
+```Javascript
+const { t } = lizardt;
+
+t("Hello, world!").isEmail(); // false
+t("lizardt@mail.com").isEmail(); // true
+```
+
+### ```hasNumbers()```:
+- **Description**
+Checks if there are numbers in a string
+- **Return**
+Boolean
+- **Example**
+```Javascript
+const { t } = lizardt;
+
+t("no").hasNumbers(); // false
+t("yes_1").hasNumbers(); // true
 ```

@@ -1,9 +1,11 @@
 // Categories 
 export interface IStringCategory {
-  hasString(str: string): boolean;
+  hasString(str: string | Array<string>): boolean;
   indexOf(findItem: any): number;
   beginWith(str: string, ignoreRegister?: boolean): boolean;
   endWith(str: string, ignoreRegister?: boolean): boolean;
+  isEmail(): boolean;
+  hasNumbers(): boolean;
 }
 
 export interface IFuncCategory {
@@ -22,7 +24,7 @@ export interface IArrayCategory {
   filter(callback: () => any, thisArg?: any): any;
   indexOf(findItem: any): number;
   groupBy(callback: (el?, index?, array?) => any): IT;
-  addItem(item:any, position?:boolean): IT;
+  addItem(item: any, position?: boolean): IT;
   merge(item: Array<any> | object): IT;
 }
 
@@ -79,7 +81,7 @@ export interface IObjectCategory {
   hasProperty(property: string | Array<string>): boolean;
   keys(): IT;
   values(): IT;
-  addProperty(item:Object): IT;
+  addProperty(item: Object): IT;
   merge(item: Array<any> | object): IT;
 }
 
@@ -163,12 +165,12 @@ export interface IT {
   jsonString(item: any, replacer?, space?): string;
   contains(selector: string): boolean;
   indexOf(findItem: any): number;
-  hasString(str: string): boolean;
+  hasString(str: string | Array<string>): boolean;
   index(num: number): any;
   hasParent(selector: string | Element): boolean;
   keys(): Array<any>;
   values(): Array<any>;
-  addProperty(item:Object): IT;
+  addProperty(item: Object): IT;
   onRemove(event: string, callback: () => any, options?: object, useCapture?: boolean): void;
   filter(callback: () => any, thisArg?: any): any;
   groupBy(callback: (el?, index?, array?) => any): object;
@@ -179,6 +181,8 @@ export interface IT {
   addHTML(html: string): IT;
   beginWith(str: string, ignoreRegister?: boolean): boolean;
   endWith(str: string, ignoreRegister?: boolean): boolean;
+  isEmail(): boolean;
+  hasNumbers(): boolean;
 }
 
 export interface IGlobal {

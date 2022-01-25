@@ -2,7 +2,9 @@ import {
   hasString,
   indexOf,
   beginWith,
-  endWith
+  endWith,
+  isEmail,
+  hasNumbers
 } from "../src/js/categories/string";
 
 // hasString
@@ -16,6 +18,16 @@ test("Проверяет наличие значения в строке", () =>
     {
       target: "world",
       args: ["ell"],
+      toBe: "toBeFalsy"
+    },
+    {
+      target: "world",
+      args: [["wo", "ld"]],
+      toBe: "toBeTruthy"
+    },
+    {
+      target: "world",
+      args: [["4", "wo", "ld"]],
       toBe: "toBeFalsy"
     },
   ];
@@ -85,4 +97,28 @@ test("Проверяет конец строки", () => {
   ];
 
   tests.map(({ target, args, toBe }) => expect(endWith.call({ target }, ...args))[toBe]());
+});
+
+// isEmail
+test("Проверка электронной почты", () => {
+  const tests = [
+    { target: "alex@mail.ru", toBe: "toBeTruthy" },
+    { target: "alex321321@mail.ru", toBe: "toBeTruthy" },
+    { target: "alex@@@mail.ru", toBe: "toBeFalsy" },
+    { target: "alex@@@mail", toBe: "toBeFalsy" },
+  ];
+
+  tests.map(({ target, toBe }) => expect(isEmail.call({ target }))[toBe]());
+});
+
+// hasNumbers
+test("Проверка наличия цифр", () => {
+  const tests = [
+    { target: "no", toBe: "toBeFalsy" },
+    { target: "alex321321@mail.ru", toBe: "toBeTruthy" },
+    { target: "mail.ru", toBe: "toBeFalsy" },
+    { target: "131231", toBe: "toBeTruthy" },
+  ];
+
+  tests.map(({ target, toBe }) => expect(hasNumbers.call({ target }))[toBe]());
 });
