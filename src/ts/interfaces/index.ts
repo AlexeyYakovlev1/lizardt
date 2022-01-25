@@ -2,6 +2,8 @@
 export interface IStringCategory {
   hasString(str: string): boolean;
   indexOf(findItem: any): number;
+  beginWith(str: string, ignoreRegister?: boolean): boolean;
+  endWith(str: string, ignoreRegister?: boolean): boolean;
 }
 
 export interface IFuncCategory {
@@ -51,6 +53,7 @@ export interface IDomCategory {
   hasParent(selector: string | Element): boolean;
   onRemove(event: string, callback: () => any, options?: object, useCapture?: boolean): void;
   text(): IT;
+  addHTML(html: string): IT;
 }
 
 export interface IGeneralCategory {
@@ -170,6 +173,9 @@ export interface IT {
   getParent(selector?: string): IT;
   getAllParents(num?: number): IT;
   merge(item: Array<any> | object): IT;
+  addHTML(html: string): IT;
+  beginWith(str: string, ignoreRegister?: boolean): boolean;
+  endWith(str: string, ignoreRegister?: boolean): boolean;
 }
 
 export interface IGlobal {

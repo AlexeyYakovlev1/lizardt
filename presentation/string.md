@@ -31,3 +31,41 @@ const { t } = lizardt;
 t("Hello, world!").hasString("ello"); // true
 t("Hello, world!").hasString("D"); // false
 ```
+
+### ```beginWith()```:
+- **Description**
+Checks the beginning of a string
+- **Arguments**
+  - String **(required)**
+  - Ignore register **(optional)**
+- **Return**
+Boolean
+- **Example**
+```Javascript
+const { t } = lizardt;
+
+t("Hello, world!").beginWith("ello"); // false
+t("Hello, world!").beginWith("D"); // false
+
+// Ignore register
+t("Hello, world!").beginWith("hel", true); // true
+```
+
+### ```endWith()```:
+- **Description**
+Checks the end of a string
+- **Arguments**
+  - String **(required)**
+  - Ignore register **(optional)**
+- **Return**
+Boolean
+- **Example**
+```Javascript
+const { t } = lizardt;
+
+t("Hello, world!").endWith("!"); // true
+t("Hello, world!").endWith("Ddwa"); // false
+
+// Ignore register
+t("Hello, world!").endWith("WorLd!", true); // true
+```

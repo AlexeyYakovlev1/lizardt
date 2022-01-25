@@ -11,7 +11,8 @@ import {
   removeAttribute, data, hasElement,
   removeLastChild, removeFirstChild,
   contains, hasParent, getAllParents,
-  createElement, text, getParent
+  createElement, text, getParent,
+  addHTML,
 } from "../src/js/categories/dom";
 
 // hasParent
@@ -638,5 +639,34 @@ test("Получает родителя элемента", () => {
     createHTML();
 
     expect(getParent.call({ target: target() }, ...args)).toStrictEqual({ target: toBe });
+  });
+});
+
+// addHTML
+test("Установка HTML разметки в тег", () => {
+  const block = createElement({ tag: "div" });
+  const tests = [
+    {
+      target: block,
+      args: ["<div class='wrapper'>Hello, all!</div>"],
+      toBe: "<div class=\"wrapper\">Hello, all!</div>",
+      getInnerHTML() {
+        return block.innerHTML;
+      }
+    },
+    {
+      target: block,
+      args: [`<div class='wrapper'><h1 class='title'>Title</h1></div>`],
+      toBe: `<div class=\"wrapper\"><h1 class=\"title\">Title</h1></div>`,
+      getInnerHTML() {
+        return block.innerHTML;
+      }
+    },
+  ];
+
+  tests.map(({ toBe, target, args, getInnerHTML }) => {
+    addHTML.call({ target }, ...args);
+
+    expect(getInnerHTML()).toStrictEqual(toBe);
   });
 });

@@ -425,6 +425,20 @@ const domCategory: IDomCategory = {
     }
   },
 
+  addHTML(html: string): IT {
+    if (this.target instanceof Element) {
+      if (typeof html === "string") {
+        this.target.innerHTML = html;
+      } else {
+        global.setError(`"${html}" must be a string`);
+      }
+
+      return this;
+    } else {
+      global.setError(`"${this.target}" is not a HTML element`);
+    }
+  },
+
   createElement: global.createElement,
   getAllParents: global.getAllParents,
 }

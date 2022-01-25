@@ -416,6 +416,20 @@ var domCategory = {
             index_1.default.setError("\"".concat(this.target, "\" is not a HTML element"));
         }
     },
+    addHTML: function (html) {
+        if (this.target instanceof Element) {
+            if (typeof html === "string") {
+                this.target.innerHTML = html;
+            }
+            else {
+                index_1.default.setError("\"".concat(html, "\" must be a string"));
+            }
+            return this;
+        }
+        else {
+            index_1.default.setError("\"".concat(this.target, "\" is not a HTML element"));
+        }
+    },
     createElement: index_1.default.createElement,
     getAllParents: index_1.default.getAllParents,
 };

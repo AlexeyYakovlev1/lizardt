@@ -17,6 +17,34 @@ const stringCategory: IStringCategory = {
     }
   },
 
+  beginWith(str: string, ignoreRegister?: boolean): boolean {
+    if (typeof this.target === "string") {
+      if (typeof str === "string") {
+        const regexp = new RegExp(`^${str}`, ignoreRegister ? "i" : undefined);
+
+        return regexp.test(this.target);
+      } else {
+        global.setError(`"${str}" not a string`);
+      }
+    } else {
+      global.setError(`"${this.target}" not a string`);
+    }
+  },
+
+  endWith(str: string, ignoreRegister?: boolean): boolean {
+    if (typeof this.target === "string") {
+      if (typeof str === "string") {
+        const regexp = new RegExp(`${str}$`, ignoreRegister ? "i" : undefined);
+
+        return regexp.test(this.target);
+      } else {
+        global.setError(`"${str}" not a string`);
+      }
+    } else {
+      global.setError(`"${this.target}" not a string`);
+    }
+  },
+
   indexOf: global.indexOf,
 }
 

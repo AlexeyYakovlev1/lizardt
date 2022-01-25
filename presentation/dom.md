@@ -551,3 +551,22 @@ t("[.title]").getParent("body").target;
 // null
 t("[.title]").getParent("document").target;
 ```
+
+### ```addHTML()```:
+- **Description**
+Sets html markup
+- **Arguments**
+  - Html string **(required)**
+- **Return**
+Main object
+- **Example**
+```Javascript
+const { t } = lizardt;
+
+/*
+  <body>
+    <div>Hello, lizard!</div>
+  </body>
+*/
+t("[body]").addHTML("<div>Hello, lizard!</div>"); // Now body has a .wrapper block
+```

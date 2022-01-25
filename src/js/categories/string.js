@@ -16,6 +16,34 @@ var stringCategory = {
             index_1.default.setError("\"".concat(this.target, "\" not a string"));
         }
     },
+    beginWith: function (str, ignoreRegister) {
+        if (typeof this.target === "string") {
+            if (typeof str === "string") {
+                var regexp = new RegExp("^".concat(str), ignoreRegister ? "i" : undefined);
+                return regexp.test(this.target);
+            }
+            else {
+                index_1.default.setError("\"".concat(str, "\" not a string"));
+            }
+        }
+        else {
+            index_1.default.setError("\"".concat(this.target, "\" not a string"));
+        }
+    },
+    endWith: function (str, ignoreRegister) {
+        if (typeof this.target === "string") {
+            if (typeof str === "string") {
+                var regexp = new RegExp("".concat(str, "$"), ignoreRegister ? "i" : undefined);
+                return regexp.test(this.target);
+            }
+            else {
+                index_1.default.setError("\"".concat(str, "\" not a string"));
+            }
+        }
+        else {
+            index_1.default.setError("\"".concat(this.target, "\" not a string"));
+        }
+    },
     indexOf: index_1.default.indexOf,
 };
 for (var i in stringCategory) {
