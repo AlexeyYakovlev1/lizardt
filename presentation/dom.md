@@ -4,7 +4,7 @@
 - **Description**
 Adding class or id for html element	
 - **Return**
-undefined
+Main object
 - **Arguments**
 	- Class names or id **(required)**
 - **Example**
@@ -18,7 +18,7 @@ t("[div]").add(".home", "#main");
 - **Description**
 Removing class or id for html element	
 - **Return**
-undefined
+Main object
 - **Arguments**
 	- Class names or id **(required)**
 - **Example**
@@ -32,7 +32,7 @@ t("[.title]").remove(".cursive", "#subtitle");
 - **Description**
 Add styles for html element	
 - **Return**
-undefined
+Main object
 - **Arguments**
 	- Object of styles **(required)**
 - **Example**
@@ -123,7 +123,7 @@ t("[.button]").on("click", counter);
 - **Description**
 Adding text value  for html element
 - **Return**
-undefined
+Main object
 - **Arguments**
 	- Value **(required)**
 - **Example**
@@ -149,7 +149,7 @@ t("[.title]").size().target; // { width: 500, height: 36 }
 - **Description**
 Remove all styles from style attribute
 - **Return**
-undefined
+Main object
 - **Example**
 ```Javascript
 const { t } = lizardt;
@@ -265,7 +265,7 @@ Adds a child to an element
 - **Arguments**
   - Child **(required)**
 - **Return**
-undefined
+Main object
 - **Example**
 ```Javascript
 const { t } = lizardt;
@@ -315,7 +315,7 @@ Removes a child from an element
 - **Arguments**
   - Child **(required)**
 - **Return**
-undefined
+Main object
 - **Example**
 ```Javascript
 const { t } = lizardt;
@@ -339,7 +339,7 @@ Adds the previous item
 - **Arguments**
   - Element **(required)**
 - **Return**
-undefined
+Main object
 - **Example**
 ```Javascript
 const { t } = lizardt;
@@ -370,7 +370,7 @@ Adds the next item
 - **Arguments**
   - Element **(required)**
 - **Return**
-undefined
+Main object
 - **Example**
 ```Javascript
 const { t } = lizardt;
@@ -401,7 +401,7 @@ Sets attributes to an element
 - **Arguments**
   - Attributes **(required)**
 - **Return**
-undefined
+Main object
 - **Example**
 ```Javascript
 const { t } = lizardt;
@@ -415,7 +415,7 @@ Removes attributes on an element
 - **Arguments**
   - Attribute **(required)**
 - **Return**
-undefined
+Main object
 - **Example**
 ```Javascript
 const { t } = lizardt;
@@ -466,7 +466,7 @@ t(document.documentElement).hasElement(document.body); // true
 - **Description**
 Removes the last html child
 - **Return**
-undefined
+Main object
 - **Example**
 ```Javascript
 const { t } = lizardt;
@@ -478,7 +478,7 @@ t("[.wrapper]").removeLastChild();
 - **Description**
 Removes the first html child
 - **Return**
-undefined
+Main object
 - **Example**
 ```Javascript
 const { t } = lizardt;
