@@ -22,6 +22,7 @@ export interface IArrayCategory {
   filter(callback: () => any, thisArg?: any): any;
   indexOf(findItem: any): number;
   groupBy(callback: (el?, index?, array?) => any): IT;
+  addItem(item:any, position?:boolean): IT;
   merge(item: Array<any> | object): IT;
 }
 
@@ -78,6 +79,7 @@ export interface IObjectCategory {
   hasProperty(property: string | Array<string>): boolean;
   keys(): IT;
   values(): IT;
+  addProperty(item:Object): IT;
   merge(item: Array<any> | object): IT;
 }
 
@@ -166,6 +168,7 @@ export interface IT {
   hasParent(selector: string | Element): boolean;
   keys(): Array<any>;
   values(): Array<any>;
+  addProperty(item:Object): IT;
   onRemove(event: string, callback: () => any, options?: object, useCapture?: boolean): void;
   filter(callback: () => any, thisArg?: any): any;
   groupBy(callback: (el?, index?, array?) => any): object;

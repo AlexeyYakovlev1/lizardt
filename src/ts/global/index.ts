@@ -1,8 +1,8 @@
 import {
-  IGlobal,
-  IElement,
-  ITypeOfSelector,
-  IT
+	IGlobal,
+	IElement,
+	ITypeOfSelector,
+	IT
 } from '../interfaces/index';
 
 const global: IGlobal = {

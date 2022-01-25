@@ -189,6 +189,21 @@ console.log(t([1,2,3,4,5,6,7]).index(-2).target); // 5
 t("[li]", true).index(2).styles({color: "red"}).txt("my index = 2");
 ```
 
+### ```addItem()```:
+- **Description**
+Adds a new element to the array
+- **Arguments**
+  - Item **(required)**
+  - Position **(optional)**
+- **Return**
+Main object
+- **Example**
+```Javascript
+const {t} = lizardt;
+t([1, 2, 3]).addItem(4).target; // [1, 2, 3, 4]
+t([1, 2, 3], true).addItem(4).target; // [4, 1, 2, 3]
+```
+
 ### ```merge()```:
 - **Description**
 Concatenates arrays or objects

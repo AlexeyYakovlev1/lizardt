@@ -1,4 +1,4 @@
-import { isObject, hasProperty, keys, values, merge } from "../src/js/categories/object";
+import { isObject, hasProperty, keys, values, addProperty, merge } from "../src/js/categories/object";
 
 // isObject
 test("Проверка на объект", () => {
@@ -65,6 +65,13 @@ test("Вывод значений в массиве", () => {
 
   tests.map(({ target, toBe }) => expect(values.call({ target })).toStrictEqual({ target: toBe }));
 });
+
+// addPropery
+test("Добавление свойства в объект", () => {
+  expect(addProperty.call({target: {}}, {name: "Alexey", age: 17}).target).toStrictEqual({name: "Alexey", age: 17});
+  expect(addProperty.call({target: {name: "Alexey"}}, {age: 17}).target).toStrictEqual({name: 'Alexey', age: 17});
+  expect(addProperty.call({target: {}}, [{name: "Alexey"}, {age: 17}]).target).toStrictEqual({name: 'Alexey', age: 17});
+})
 
 // merge
 test("Объединение объектов", () => {

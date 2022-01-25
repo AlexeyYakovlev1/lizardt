@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // Global methods
 var index_1 = require("../global/index");
 var arrayCategory = {
-    merge: index_1.default.merge,
     last: function () {
         if (index_1.default.checkList(this.target)) {
             var arr = this.target;
@@ -16,7 +15,7 @@ var arrayCategory = {
         }
     },
     groupBy: function (callback) {
-        if (index_1.default.isArray(this.target)) {
+        if (Array.isArray(this.target)) {
             if (callback instanceof Function) {
                 var groups = this.target.reduce(function (acc, item, index, array) {
                     var res = callback(item, index, array);
@@ -43,7 +42,7 @@ var arrayCategory = {
         }
     },
     removeItem: function (num, val) {
-        if (index_1.default.isArray(this.target)) {
+        if (Array.isArray(this.target)) {
             val || typeof val === "number" && val >= 0 ? this.target.splice(num, 1, val) : this.target.splice(num, 1);
             return this.target;
         }
@@ -62,13 +61,23 @@ var arrayCategory = {
             index_1.default.setError("\"".concat(this.target, "\" is not a list"));
         }
     },
-    isArray: index_1.default.isArray,
+    isArray: function (item, callback) {
+        var validArray = Array.isArray(item);
+        if (validArray) {
+            if (index_1.default.isFunction(callback)) {
+                return callback();
+            }
+            return true;
+        }
+        ;
+        return false;
+    },
     unfold: function () {
         var res = [];
-        if (index_1.default.isArray(this.target) && this.target.length) {
+        if (Array.isArray(this.target) && this.target.length) {
             var unfoldArray_1 = function (array) {
                 array.map(function (item) {
-                    if (index_1.default.isArray(item)) {
+                    if (Array.isArray(item)) {
                         return unfoldArray_1(item);
                     }
                     else {
@@ -90,7 +99,7 @@ var arrayCategory = {
         }
     },
     hasItem: function (item) {
-        if (index_1.default.isArray(this.target)) {
+        if (Array.isArray(this.target)) {
             return Boolean(this.target.find(function (el) { return index_1.default.compare(el, item); }));
         }
         else {
@@ -109,7 +118,7 @@ var arrayCategory = {
         index_1.default.setError("\"".concat(this.target, "\" must be a array, string, HTMLCollection or NodeList"));
     },
     filter: function (callback, thisArg) {
-        if (index_1.default.isArray(this.target)) {
+        if (Array.isArray(this.target)) {
             if (callback instanceof Function) {
                 this.target = thisArg ? this.target.filter(callback, thisArg) : this.target.filter(callback);
                 return this;
@@ -123,6 +132,16 @@ var arrayCategory = {
         }
     },
     indexOf: index_1.default.indexOf,
+    addItem: function (item, position) {
+        if (Array.isArray(this.target)) {
+            this.target[!position ? "push" : "unshift"](item);
+            return this;
+        }
+        else {
+            index_1.default.setError("".concat(this.target, " must be array"));
+        }
+    },
+    merge: index_1.default.merge
 };
 for (var i in arrayCategory) {
     // Exports every separately method

@@ -60,3 +60,34 @@ const { t } = lizardt;
 t({ name: "Alexandr", age: 17 }).values().target; // ["Alexandr", 17]
 t({}).values().target; // []
 ```
+
+### ```addProperty()```:
+- **Description**
+Adds object properties to main object
+- **Arguments**
+  - Item **(required)**
+- **Return**
+Main object
+- **Example**
+```Javascript
+const { t } = lizardt;
+
+t({}).addProperty({name: "Alexey", age: 17}).target; // {name: "Alexey", age: 17}
+t({name: "Alexey"}).addProperty({age: 17}).target; // {name: 'Alexey', age: 17}
+t({}).addProperty([{name: "Alexey"}, {age: 17}]).target; // {name: 'Alexey', age: 17}
+```
+
+### ```merge()```:
+- **Description**
+Concatenates arrays or objects
+- **Arguments**
+  - Item **(required)**
+- **Return**
+Main object
+- **Example**
+```Javascript
+const { t } = lizardt;
+
+t([1,2,3]).merge([4,5,6]).target; // [1,2,3,4,5,6]
+t({ name: "A" }).merge({ status: "junior" }).target; // { name: "A", status: "junior" }
+```
