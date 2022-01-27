@@ -160,7 +160,8 @@ const users = [
 const workers = [
   { id: 1, status: "senior" }, 
   { id: 2, status: "junior" }, 
-  { id: 3, status: "junior" }
+  { id: 3, status: "junior" },
+  { id: 4 }
 ];
 
 // { old: [{ name: "Michail", ... }, { name: "Victor", ... }], young: [{ name: "Alexandr", ... }, { name: "Andrey", ... }] }
@@ -171,6 +172,8 @@ t([1, 2, 3, 4, 5, 6, 7]).groupBy(num => num % 2 === 0 ? "even" : "odd").target;
 
 // { senior: [{ status: "senior", ... }], junior: [{ status: "junior", ... }, { status: "junior", ... }] }
 t(workers).groupBy(worker => worker.status).target;
+// { senior: [{ status: "senior", ... }], junior: [{ status: "junior", ... }, { status: "junior", ... }], other: [{ id: 4 }] }
+t(workers).groupBy(worker => worker.status, "other").target;
 ```
 
 ### ```index()```:

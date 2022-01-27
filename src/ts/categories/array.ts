@@ -18,7 +18,7 @@ const arrayCategory: IArrayCategory = {
 		}
 	},
 
-	groupBy(callback: (el?, index?, array?) => any): IT {
+	groupBy(callback: (el?, index?, array?) => any, cat?: string): IT {
 		if (Array.isArray(this.target)) {
 			if (callback instanceof Function) {
 				const groups: object = this.target.reduce((acc, item, index, array) => {
@@ -30,6 +30,15 @@ const arrayCategory: IArrayCategory = {
 						} else {
 							acc[res] = [];
 							acc[res].push(item);
+						}
+					} else {
+						if (cat) {
+							if (typeof cat === "string" && cat.length) {
+								acc[cat] = [];
+								acc[cat].push(item);
+							} else {
+								global.setError(`"${cat}" must be string`);
+							}	
 						}
 					}
 
