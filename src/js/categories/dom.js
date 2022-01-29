@@ -438,8 +438,6 @@ var domCategory = {
             index_1.default.setError("\"".concat(this.target, "\" must be a checkbox or radio element"));
         }
     },
-    createElement: index_1.default.createElement,
-    getAllParents: index_1.default.getAllParents,
     toggle: function () {
         var _this = this;
         var args = [];
@@ -455,7 +453,29 @@ var domCategory = {
         else {
             index_1.default.setError("\"".concat(this.target, "\" is not a HTML element or arguments must be passed"));
         }
-    }
+    },
+    show: function () {
+        if (this.target instanceof HTMLElement) {
+            this.target.style.display = "";
+            var display = getComputedStyle(this.target).display;
+            this.target.style.display = display ? display : "block";
+            return this;
+        }
+        else {
+            index_1.default.setError("\"".concat(this.target, "\" is not a HTML element"));
+        }
+    },
+    hide: function () {
+        if (this.target instanceof HTMLElement) {
+            this.target.style.display = "none";
+            return this;
+        }
+        else {
+            index_1.default.setError("\"".concat(this.target, "\" is not a HTML element"));
+        }
+    },
+    createElement: index_1.default.createElement,
+    getAllParents: index_1.default.getAllParents,
 };
 for (var i in domCategory) {
     // Exports every separately method

@@ -59,6 +59,8 @@ export interface IDomCategory {
   text(): IT;
   addHTML(html: string): IT;
   isChecked(): boolean;
+  show(): IT;
+  hide(): IT;
 }
 
 export interface IGeneralCategory {
@@ -189,6 +191,8 @@ export interface IT {
   isDate(symbol: string): boolean;
   isChecked(): boolean;
   hasNumbers(): boolean;
+  show(): IT;
+  hide(): IT;
 }
 
 export interface IGlobal {

@@ -447,9 +447,6 @@ const domCategory: IDomCategory = {
     }
   },
 
-  createElement: global.createElement,
-  getAllParents: global.getAllParents,
-
   toggle(...args): IT {
     if (this.target instanceof Element && args.length) {
       args.forEach(className => {
@@ -459,7 +456,34 @@ const domCategory: IDomCategory = {
     } else {
       global.setError(`"${this.target}" is not a HTML element or arguments must be passed`);
     }
-  }
+  },
+
+  show(): IT {
+    if (this.target instanceof HTMLElement) {
+      this.target.style.display = "";
+
+      const display: string | undefined = getComputedStyle(this.target).display;
+
+      this.target.style.display = display ? display : "block";
+
+      return this;
+    } else {
+      global.setError(`"${this.target}" is not a HTML element`);
+    }
+  },
+
+  hide(): IT {
+    if (this.target instanceof HTMLElement) {
+      this.target.style.display = "none";
+
+      return this;
+    } else {
+      global.setError(`"${this.target}" is not a HTML element`);
+    }
+  },
+
+  createElement: global.createElement,
+  getAllParents: global.getAllParents,
 }
 
 for (let i in domCategory) {

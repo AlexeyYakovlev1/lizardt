@@ -12,7 +12,8 @@ import {
   removeLastChild, removeFirstChild,
   contains, hasParent, getAllParents,
   createElement, text, getParent,
-  addHTML, isChecked, toggle
+  addHTML, isChecked, toggle, show,
+  hide
 } from "../src/js/categories/dom";
 
 // hasParent
@@ -730,3 +731,30 @@ test("Переключает класс у элемента", () => {
     expect(btn.classList.contains("button")).toStrictEqual(false);
   })
 })
+
+// show
+test("Появление элемента на странице", () => {
+  const tests = [
+    {
+      target: createElement({ tag: "h1" }),
+      toBe: "block"
+    },
+  ];
+
+  tests.map(({ target, toBe }) => {
+    show.call({ target });
+
+    expect(target.style.display).toStrictEqual(toBe);
+  });
+});
+
+// hide
+test("Скрытие элемента на странице", () => {
+  const tests = [createElement({ tag: "span" }), createElement({ tag: "h1" })];
+
+  tests.map(target => {
+    hide.call({ target });
+
+    expect(target.style.display).toStrictEqual("none");
+  });
+});

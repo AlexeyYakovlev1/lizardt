@@ -599,3 +599,31 @@ const checkbox = t("[input[type=checkbox]]").target;
 
 t(checkbox).on("click", () => console.log(t(checkbox).isChecked()));
 ```
+
+### ```show()```:
+- **Description**
+Shows an element on the page. If you have some kind of display, then it will apply it, if not, then it will apply the block
+- **Return**
+Main object
+- **Example**
+```Javascript
+const { t } = lizardt;
+const btn = t("[.button]").target;
+const target = t("[.target]").target;
+
+t(btn).on("click", () => t(target).show());
+```
+
+### ```hide()```:
+- **Description**
+Hides an element on the page
+- **Return**
+Main object
+- **Example**
+```Javascript
+const { t } = lizardt;
+const btn = t("[.button]").target;
+const target = t("[.target]").target;
+
+t(btn).on("click", () => t(target).hide());
+```
