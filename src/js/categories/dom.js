@@ -440,6 +440,22 @@ var domCategory = {
     },
     createElement: index_1.default.createElement,
     getAllParents: index_1.default.getAllParents,
+    toggle: function () {
+        var _this = this;
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        if (this.target instanceof Element && args.length) {
+            args.forEach(function (className) {
+                _this.target.classList.toggle(className);
+            });
+            return this;
+        }
+        else {
+            index_1.default.setError("\"".concat(this.target, "\" is not a HTML element or arguments must be passed"));
+        }
+    }
 };
 for (var i in domCategory) {
     // Exports every separately method

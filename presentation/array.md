@@ -160,7 +160,8 @@ const users = [
 const workers = [
   { id: 1, status: "senior" }, 
   { id: 2, status: "junior" }, 
-  { id: 3, status: "junior" }
+  { id: 3, status: "junior" },
+  { id: 4 }
 ];
 
 // { old: [{ name: "Michail", ... }, { name: "Victor", ... }], young: [{ name: "Alexandr", ... }, { name: "Andrey", ... }] }
@@ -171,6 +172,8 @@ t([1, 2, 3, 4, 5, 6, 7]).groupBy(num => num % 2 === 0 ? "even" : "odd").target;
 
 // { senior: [{ status: "senior", ... }], junior: [{ status: "junior", ... }, { status: "junior", ... }] }
 t(workers).groupBy(worker => worker.status).target;
+// { senior: [{ status: "senior", ... }], junior: [{ status: "junior", ... }, { status: "junior", ... }], other: [{ id: 4 }] }
+t(workers).groupBy(worker => worker.status, "other").target;
 ```
 
 ### ```index()```:
@@ -194,14 +197,14 @@ t("[li]", true).index(2).styles({color: "red"}).txt("my index = 2");
 Adds a new element to the array
 - **Arguments**
   - Item **(required)**
-  - Position **(optional)**
+  - Start **(optional)**
 - **Return**
 Main object
 - **Example**
 ```Javascript
-const {t} = lizardt;
+const { t } = lizardt;
 t([1, 2, 3]).addItem(4).target; // [1, 2, 3, 4]
-t([1, 2, 3], true).addItem(4).target; // [4, 1, 2, 3]
+t([1, 2, 3]).addItem(4, true).target; // [4, 1, 2, 3]
 ```
 
 ### ```merge()```:

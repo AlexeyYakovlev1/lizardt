@@ -14,7 +14,7 @@ var arrayCategory = {
             index_1.default.setError("\"".concat(this.target, "\" is not a list"));
         }
     },
-    groupBy: function (callback) {
+    groupBy: function (callback, cat) {
         if (Array.isArray(this.target)) {
             if (callback instanceof Function) {
                 var groups = this.target.reduce(function (acc, item, index, array) {
@@ -26,6 +26,17 @@ var arrayCategory = {
                         else {
                             acc[res] = [];
                             acc[res].push(item);
+                        }
+                    }
+                    else {
+                        if (cat) {
+                            if (typeof cat === "string" && cat.length) {
+                                acc[cat] = [];
+                                acc[cat].push(item);
+                            }
+                            else {
+                                index_1.default.setError("\"".concat(cat, "\" must be string"));
+                            }
                         }
                     }
                     return acc;

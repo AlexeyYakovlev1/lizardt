@@ -196,9 +196,9 @@ test("Сортирует массив по группам", () => {
       toBe: { even: [2, 4, 6], odd: [1, 3, 5] }
     },
     {
-      target: [{ id: 1, status: "Senior" }, { id: 2, status: "Junior" }, { id: 3, status: "Junior" }],
-      args: [worker => worker.status],
-      toBe: { Senior: [{ id: 1, status: "Senior" }], Junior: [{ id: 2, status: "Junior" }, { id: 3, status: "Junior" }] }
+      target: [{ id: 1, status: "Senior" }, { id: 2, status: "Junior" }, { id: 3, status: "Junior" }, { id: 4 }],
+      args: [worker => worker.status, "other"],
+      toBe: { Senior: [{ id: 1, status: "Senior" }], Junior: [{ id: 2, status: "Junior" }, { id: 3, status: "Junior" }], "other": [{ id: 4 }] }
     },
     {
       target: [],
@@ -209,7 +209,7 @@ test("Сортирует массив по группам", () => {
       target: [1, 2, 3],
       args: [num => num === 3 && "three"],
       toBe: { three: [3] }
-    },
+    }
   ];
 
   tests.map(({ target, args, toBe }) => expect(groupBy.call({ target }, ...args)).toStrictEqual({ target: toBe }));
