@@ -600,14 +600,21 @@ const checkbox = t("[input[type=checkbox]]").target;
 t(checkbox).on("click", () => console.log(t(checkbox).isChecked()));
 ```
 
+<<<<<<< HEAD
 ### ```show()```:
 - **Description**
 Shows an element on the page. If you have some kind of display, then it will apply it, if not, then it will apply the block
+=======
+### ```clearOfChilds()```:
+- **Description**
+Removes child elements
+>>>>>>> 29ae9c3141a48d480161ab22b19da4d0dd5a8dc4
 - **Return**
 Main object
 - **Example**
 ```Javascript
 const { t } = lizardt;
+<<<<<<< HEAD
 const btn = t("[.button]").target;
 const target = t("[.target]").target;
 
@@ -617,13 +624,27 @@ t(btn).on("click", () => t(target).show());
 ### ```hide()```:
 - **Description**
 Hides an element on the page
+=======
+
+t("[.list]").clearOfChilds();
+```
+
+### ```clearSelectors()```:
+- **Description**
+Clears an element from selectors
+>>>>>>> 29ae9c3141a48d480161ab22b19da4d0dd5a8dc4
 - **Return**
 Main object
 - **Example**
 ```Javascript
 const { t } = lizardt;
+<<<<<<< HEAD
 const btn = t("[.button]").target;
 const target = t("[.target]").target;
 
 t(btn).on("click", () => t(target).hide());
+=======
+
+t("[.title]").clearSelectors();
+>>>>>>> 29ae9c3141a48d480161ab22b19da4d0dd5a8dc4
 ```

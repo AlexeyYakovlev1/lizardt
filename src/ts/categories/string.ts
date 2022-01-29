@@ -69,7 +69,6 @@ const stringCategory: IStringCategory = {
     if (typeof this.target === "string") {
       if (typeof symbol === "string" && symbol.length) {
         const regexp = new RegExp(`(\\d{2}\\${symbol}){2}\\d{4}`);
-        console.log(regexp, this.target);
         return regexp.test(this.target);
       } else {
         global.setError(`"${symbol}" not a string`);

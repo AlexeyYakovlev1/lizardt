@@ -66,7 +66,6 @@ var stringCategory = {
         if (typeof this.target === "string") {
             if (typeof symbol === "string" && symbol.length) {
                 var regexp = new RegExp("(\\d{2}\\".concat(symbol, "){2}\\d{4}"));
-                console.log(regexp, this.target);
                 return regexp.test(this.target);
             }
             else {

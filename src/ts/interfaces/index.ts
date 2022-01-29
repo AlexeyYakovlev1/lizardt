@@ -29,6 +29,8 @@ export interface IArrayCategory {
 }
 
 export interface IDomCategory {
+  clearSelectors(): IT;
+  clearOfChilds(): IT;
   styles(stylesObj: object): IT;
   on(event: string, callback: () => any, options?: object): void;
   getAttributes(attribute?: string): IT;
@@ -137,62 +139,12 @@ export interface IFilterMethods {
 }
 
 // Main
-export interface IT {
+export interface IT extends IDomCategory, IArrayCategory, IFuncCategory, IObjectCategory, IStringCategory {
   target: any,
-  styles(stylesObj: object): IT;
-  on(event: string, callback: () => any, options?: object): void;
-  getAttributes(attribute?: string): IAttribute | Array<IAttribute>;
-  getChildren(selector?: string): HTMLElement | Array<IChild>;
-  getCoordinates(): ICoordinates;
-  getAllParents(num?: number): Array<HTMLElement> | HTMLElement;
-  toggle(): IT;
-  add(): IT;
-  remove(): IT;
-  clearStyles(): IT;
-  txt(value: string): IT;
-  size(): ISize;
-  addChild(child: HTMLElement | IElement | Array<any>): IT;
-  removeChild(child: HTMLElement | string | Array<HTMLElement | string>): IT;
-  addPrevElement(element: HTMLElement | IElement): IT;
-  addNextElement(element: HTMLElement | IElement): IT;
-  setAttribute(attributes: IAttribute): IT;
-  removeAttribute(attribute: string | Array<string>): IT;
-  last(): any;
-  center(): any;
-  each(callback: () => Array<any>): Array<any>;
-  unfold(): Array<any>;
-  data(isArray: boolean): object | Array<object>;
-  removeLastChild(): IT;
-  removeFirstChild(): IT;
-  hasItem(item: any): boolean;
-  hasProperty(property: string | Array<string>): boolean;
-  hasElement(element: Element | Array<Element | string> | string): boolean;
-  jsonParse(item: any, reviver?): any;
-  jsonString(item: any, replacer?, space?): string;
-  contains(selector: string): boolean;
-  indexOf(findItem: any): number;
-  hasString(str: string | Array<string>): boolean;
-  index(num: number): any;
-  hasParent(selector: string | Element): boolean;
-  keys(): Array<any>;
-  values(): Array<any>;
-  addProperty(item: Object): IT;
-  onRemove(event: string, callback: () => any, options?: object, useCapture?: boolean): void;
-  filter(callback: () => any, thisArg?: any): any;
-  groupBy(callback: (el?, index?, array?) => any, cat?: string): object;
-  text(): IT;
-  getParent(selector?: string): IT;
-  getAllParents(num?: number): IT;
-  merge(item: Array<any> | object): IT;
-  addHTML(html: string): IT;
-  beginWith(str: string, ignoreRegister?: boolean): boolean;
-  endWith(str: string, ignoreRegister?: boolean): boolean;
-  isEmail(): boolean;
-  isDate(symbol: string): boolean;
-  isChecked(): boolean;
-  hasNumbers(): boolean;
-  show(): IT;
-  hide(): IT;
+  createElement: undefined;
+  isArray: undefined;
+  isFunction: undefined;
+  isObject: undefined;
 }
 
 export interface IGlobal {
@@ -213,17 +165,10 @@ export interface IGlobal {
   isFunction(item: any, callback?: () => any): boolean | any;
 }
 
-export interface ILizardt {
-  compare(item1: any, item2: any): boolean;
-  copy(item: any): any;
-  jsonParse(item: any, reviver?): any;
-  jsonString(item: any, replacer?, space?): string;
-  t(target: any, list?: boolean): IT;
-  typeOf(item: any): string;
-  index(num: number): any;
-  getRandom(min: number, max: number): number;
-  getNumFromPercent(percent: number, num: number, round?: boolean): number;
-  getPercent(current: number, endNum: number, round?: boolean): number;
-  extend(options: object): object;
-  array(item: any, symb?: string): Array<any>;
+export interface ILizardt extends IGeneralCategory, INumberCategory {
+  createElement(options: IElement): HTMLElement;
+  isArray(item: any, callback?): boolean;
+  isObject(item, callback?): boolean;
+  isFunction(item: any, callback?: () => any): boolean | any;
+  index(num: number): IT;
 }

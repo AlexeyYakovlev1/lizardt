@@ -13,7 +13,7 @@ import {
   contains, hasParent, getAllParents,
   createElement, text, getParent,
   addHTML, isChecked, toggle, show,
-  hide
+  hide, clearOfChilds, clearSelectors
 } from "../src/js/categories/dom";
 
 // hasParent
@@ -758,3 +758,21 @@ test("Скрытие элемента на странице", () => {
     expect(target.style.display).toStrictEqual("none");
   });
 });
+
+// clearOfChilds
+test("Удаляет все дочерние элементы из родительского", () => {
+  document.body.innerHTML = `<ul class="list">
+    <li></li>
+    <li></li>
+  </ul>`;
+  const list = document.querySelector(".list");
+  expect(clearOfChilds.call({ target: list }).target.children.length).toStrictEqual(0);
+})
+
+// clearSelectors
+test("Очищает элемент от селекторов", () => {
+  document.body.innerHTML = `<div class="wrapper block" id="main"></div>`;
+  const wrapper = document.querySelector(".wrapper");
+  expect(clearSelectors.call({ target: wrapper }).target.getAttribute("class")).toStrictEqual(null);
+  expect(clearSelectors.call({ target: wrapper }).target.getAttribute("id")).toStrictEqual(null);
+})

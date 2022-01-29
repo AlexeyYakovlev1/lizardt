@@ -484,6 +484,25 @@ const domCategory: IDomCategory = {
 
   createElement: global.createElement,
   getAllParents: global.getAllParents,
+
+  clearOfChilds(): IT {
+    if (this.target instanceof Element) {
+      this.target.innerHTML = "";
+      return this;
+    } else {
+      global.setError(`"${this.target}" is not a HTML element`);
+    }
+  },
+
+  clearSelectors(): IT {
+    if (this.target instanceof Element) {
+      this.target.removeAttribute("class");
+      this.target.removeAttribute("id");
+      return this;
+    } else {
+      global.setError(`"${this.target} is not a HTML element"`);
+    }
+  }
 }
 
 for (let i in domCategory) {

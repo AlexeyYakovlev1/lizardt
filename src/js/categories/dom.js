@@ -476,6 +476,25 @@ var domCategory = {
     },
     createElement: index_1.default.createElement,
     getAllParents: index_1.default.getAllParents,
+    clearOfChilds: function () {
+        if (this.target instanceof Element) {
+            this.target.innerHTML = "";
+            return this;
+        }
+        else {
+            index_1.default.setError("\"".concat(this.target, "\" is not a HTML element"));
+        }
+    },
+    clearSelectors: function () {
+        if (this.target instanceof Element) {
+            this.target.removeAttribute("class");
+            this.target.removeAttribute("id");
+            return this;
+        }
+        else {
+            index_1.default.setError("\"".concat(this.target, " is not a HTML element\""));
+        }
+    }
 };
 for (var i in domCategory) {
     // Exports every separately method
