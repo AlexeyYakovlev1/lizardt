@@ -6,7 +6,6 @@ import {
   isEmail,
   hasNumbers,
   isDate,
-  array,
 } from "../src/js/categories/string";
 
 // hasString
@@ -151,22 +150,4 @@ test("Проверка на дату", () => {
   ];
 
   tests.map(({ target, args, toBe }) => expect(isDate.call({ target }, ...args))[toBe]());
-});
-
-// array
-test("Создание массива из строки", () => {
-  const tests = [
-    {
-      target: "abc",
-      args: [],
-      toBe: ["a", "b", "c"]
-    },
-    {
-      target: "ab,c",
-      args: [","],
-      toBe: ["ab", "c"]
-    },
-  ];
-
-  tests.map(({ target, toBe, args }) => expect(array.call({ target }, ...args)).toStrictEqual({ target: toBe }));
 });

@@ -55,8 +55,18 @@ const generalCategory: IGeneralCategory = {
     }
   },
 
-  becomeArray(item: any): Array<any> {
-    return item ? Array.from(item) : [];
+  array(item: any, symb?: string): Array<any> {
+    if (!item) {
+      return [];
+    }
+
+    let res: Array<any> = Array.from(item);
+
+    if ([typeof symb, typeof item].every(type => type === "string") && symb.length) {
+      res = item.split(symb);
+    }
+
+    return res;
   },
 
   isArray(item: any, callback?): boolean {

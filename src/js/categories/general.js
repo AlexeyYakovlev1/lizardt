@@ -63,8 +63,15 @@ var generalCategory = {
             index_3.default.setError("\"".concat(options, "\" is not a object"));
         }
     },
-    becomeArray: function (item) {
-        return item ? Array.from(item) : [];
+    array: function (item, symb) {
+        if (!item) {
+            return [];
+        }
+        var res = Array.from(item);
+        if ([typeof symb, typeof item].every(function (type) { return type === "string"; }) && symb.length) {
+            res = item.split(symb);
+        }
+        return res;
     },
     isArray: function (item, callback) {
         var validArray = Array.isArray(item);

@@ -7,7 +7,6 @@ export interface IStringCategory {
   isEmail(): boolean;
   isDate(symbol: string): boolean;
   hasNumbers(): boolean;
-  array(symb?: string): Array<any>;
 }
 
 export interface IFuncCategory {
@@ -70,8 +69,8 @@ export interface IGeneralCategory {
   t(target: any, list?: boolean): IT;
   typeOf(item: any): string;
   extend(options: object): object;
-  becomeArray(item: any): Array<any>;
   isArray(item: any, callback?): boolean;
+  array(item: any, symb?: string): Array<any>;
 }
 
 export interface INumberCategory {
@@ -190,7 +189,6 @@ export interface IT {
   isDate(symbol: string): boolean;
   isChecked(): boolean;
   hasNumbers(): boolean;
-  array(symb?: string): Array<any>;
 }
 
 export interface IGlobal {
@@ -223,5 +221,5 @@ export interface ILizardt {
   getNumFromPercent(percent: number, num: number, round?: boolean): number;
   getPercent(current: number, endNum: number, round?: boolean): number;
   extend(options: object): object;
-  becomeArray(item: any): Array<any>;
+  array(item: any, symb?: string): Array<any>;
 }

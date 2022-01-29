@@ -113,18 +113,3 @@ const { t } = lizardt;
 t("no").hasNumbers(); // false
 t("yes_1").hasNumbers(); // true
 ```
-
-### ```array()```:
-- **Description**
-Creates an array. **symb** is optional, it separates your target with a unique character that will help create the array
-- **Arguments**
-  - Symb **(optional)**
-- **Return**
-Main object
-- **Example**
-```Javascript
-const { t } = lizardt;
-
-t("abc").array().target; // ["a","b","c"];
-t("ab,c").array(",").target; // ["ab", "c"];
-```

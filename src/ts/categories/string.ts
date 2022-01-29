@@ -79,22 +79,6 @@ const stringCategory: IStringCategory = {
     }
   },
 
-  array(symb?: string): Array<any> {
-    if (typeof this.target === "string" && this.target.length) {
-      let res: Array<any> = Array.from(this.target);
-
-      if (typeof symb === "string" && symb.length) {
-        res = this.target.split(symb);
-      }
-
-      this.target = res;
-
-      return this;
-    } else {
-      global.setError(`"${this.target}" not a string`);
-    }
-  },
-
   indexOf: global.indexOf,
 }
 

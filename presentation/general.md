@@ -191,18 +191,19 @@ isArray([1,2,3], () => {
 }); // 1
 ```
 
-### ```becomeArray()```:
+### ```array()```:
 - **Description**
-Creates a new Array instance from an array-like or iterable object
+Creates an array from your first argument, the second argument **symb** is optional, it separates your first argument with a unique character, which will help create the array
 - **Arguments**
   - Item **(required)**
+  - Symb **(optional)**
 - **Return**
-Array from **item**
+Array
 - **Example**
 ```Javascript
-const { becomeArray, t } = lizardt;
+const { array, t } = lizardt;
 
-becomeArray("Hello, world!"); // ['H', 'e', 'l', 'l', 'o', ',', ' ', 'w', 'o', 'r', 'l', 'd', '!']
-becomeArray(t("[li]", true).target); // [li, li, li, li]
-becomeArray(false); // []
+array("abc"); // ["a","b","c"];
+array("ab,c", ","); // ["ab", "c"];
+array(t("[li]", true).target); // [li, li, li];
 ```

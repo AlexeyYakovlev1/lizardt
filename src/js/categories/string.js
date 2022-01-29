@@ -77,19 +77,6 @@ var stringCategory = {
             index_1.default.setError("\"".concat(this.target, "\" not a string"));
         }
     },
-    array: function (symb) {
-        if (typeof this.target === "string" && this.target.length) {
-            var res = Array.from(this.target);
-            if (typeof symb === "string" && symb.length) {
-                res = this.target.split(symb);
-            }
-            this.target = res;
-            return this;
-        }
-        else {
-            index_1.default.setError("\"".concat(this.target, "\" not a string"));
-        }
-    },
     indexOf: index_1.default.indexOf,
 };
 for (var i in stringCategory) {
