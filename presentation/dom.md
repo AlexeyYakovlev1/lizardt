@@ -599,3 +599,27 @@ const checkbox = t("[input[type=checkbox]]").target;
 
 t(checkbox).on("click", () => console.log(t(checkbox).isChecked()));
 ```
+
+### ```clearOfChilds()```:
+- **Description**
+Removes child elements
+- **Return**
+Main object
+- **Example**
+```Javascript
+const { t } = lizardt;
+
+t("[.list]").clearOfChilds();
+```
+
+### ```clearSelectors()```:
+- **Description**
+Clears an element from selectors
+- **Return**
+Main object
+- **Example**
+```Javascript
+const { t } = lizardt;
+
+t("[.title]").clearSelectors();
+```

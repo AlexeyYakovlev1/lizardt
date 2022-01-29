@@ -29,6 +29,8 @@ export interface IArrayCategory {
 }
 
 export interface IDomCategory {
+  clearSelectors(): IT;
+  clearOfChilds(): IT;
   styles(stylesObj: object): IT;
   on(event: string, callback: () => any, options?: object): void;
   getAttributes(attribute?: string): IT;
@@ -137,6 +139,8 @@ export interface IFilterMethods {
 // Main
 export interface IT {
   target: any,
+  clearSelectors(): IT;
+  clearOfChilds(): IT;
   styles(stylesObj: object): IT;
   on(event: string, callback: () => any, options?: object): void;
   getAttributes(attribute?: string): IAttribute | Array<IAttribute>;

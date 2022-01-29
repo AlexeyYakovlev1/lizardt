@@ -12,7 +12,8 @@ import {
   removeLastChild, removeFirstChild,
   contains, hasParent, getAllParents,
   createElement, text, getParent,
-  addHTML, isChecked, toggle
+  addHTML, isChecked, toggle,
+  clearOfChilds, clearSelectors
 } from "../src/js/categories/dom";
 
 // hasParent
@@ -729,4 +730,22 @@ test("Переключает класс у элемента", () => {
     expect(btn.classList.contains("default")).toStrictEqual(true);
     expect(btn.classList.contains("button")).toStrictEqual(false);
   })
+})
+
+// clearOfChilds
+test("Удаляет все дочерние элементы из родительского", () => {
+  document.body.innerHTML = `<ul class="list">
+    <li></li>
+    <li></li>
+  </ul>`;
+  const list = document.querySelector(".list");
+  expect(clearOfChilds.call({target: list}).target.children.length).toStrictEqual(0);
+})
+
+// clearSelectors
+test("Очищает элемент от селекторов", () => {
+  document.body.innerHTML = `<div class="wrapper block" id="main"></div>`;
+  const wrapper = document.querySelector(".wrapper");
+  expect(clearSelectors.call({target: wrapper}).target.getAttribute("class")).toStrictEqual(null);
+  expect(clearSelectors.call({target: wrapper}).target.getAttribute("id")).toStrictEqual(null);
 })
