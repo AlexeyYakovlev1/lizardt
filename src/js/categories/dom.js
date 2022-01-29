@@ -494,6 +494,23 @@ var domCategory = {
         else {
             index_1.default.setError("\"".concat(this.target, " is not a HTML element\""));
         }
+    },
+    observer: function (callbackWhenShow, callbackWhenHide, options) {
+        if (this.target instanceof Element) {
+            new IntersectionObserver(function (entries, observer) {
+                entries.forEach(function (item) {
+                    if (callbackWhenShow && callbackWhenShow instanceof Function) {
+                        item.isIntersecting && callbackWhenShow(item.target, item);
+                    }
+                    if (callbackWhenHide && callbackWhenHide instanceof Function) {
+                        !item.isIntersecting && callbackWhenHide(item.target, item);
+                    }
+                });
+            }, options).observe(this.target);
+        }
+        else {
+            index_1.default.setError("\"".concat(this.target, " is not a HTML element\""));
+        }
     }
 };
 for (var i in domCategory) {

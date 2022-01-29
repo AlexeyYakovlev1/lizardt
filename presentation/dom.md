@@ -600,21 +600,14 @@ const checkbox = t("[input[type=checkbox]]").target;
 t(checkbox).on("click", () => console.log(t(checkbox).isChecked()));
 ```
 
-<<<<<<< HEAD
 ### ```show()```:
 - **Description**
 Shows an element on the page. If you have some kind of display, then it will apply it, if not, then it will apply the block
-=======
-### ```clearOfChilds()```:
-- **Description**
-Removes child elements
->>>>>>> 29ae9c3141a48d480161ab22b19da4d0dd5a8dc4
 - **Return**
 Main object
 - **Example**
 ```Javascript
 const { t } = lizardt;
-<<<<<<< HEAD
 const btn = t("[.button]").target;
 const target = t("[.target]").target;
 
@@ -624,27 +617,69 @@ t(btn).on("click", () => t(target).show());
 ### ```hide()```:
 - **Description**
 Hides an element on the page
-=======
+- **Return**
+Main object
+- **Example**
+```Javascript
+const { t } = lizardt;
+const btn = t("[.button]").target;
+const target = t("[.target]").target;
 
+t(btn).on("click", () => t(target).hide());
+```
+
+### ```clearOfChilds()```:
+- **Description**
+Removes child elements
+- **Return**
+Main object
+- **Example**
+```Javascript
+const { t } = lizardt;
 t("[.list]").clearOfChilds();
 ```
 
 ### ```clearSelectors()```:
 - **Description**
 Clears an element from selectors
->>>>>>> 29ae9c3141a48d480161ab22b19da4d0dd5a8dc4
 - **Return**
 Main object
 - **Example**
 ```Javascript
 const { t } = lizardt;
-<<<<<<< HEAD
-const btn = t("[.button]").target;
-const target = t("[.target]").target;
-
-t(btn).on("click", () => t(target).hide());
-=======
-
 t("[.title]").clearSelectors();
->>>>>>> 29ae9c3141a48d480161ab22b19da4d0dd5a8dc4
+```
+
+### ```observer()```:
+- **Description**
+Helps to asynchronously track the change of the intersection of an element with its parent or viewport document scope
+- **Arguments**
+  - callback when the element appeared **(optional)**
+  - callback when element disappears **(optional)**
+  - options **(optional)**
+- **Return**
+undefined
+- **Example**
+```Javascript
+const { t } = lizardt;
+const whenShow = (target, data) => {
+  // <div class="section"></div>  'show' IntersectionObserverEntry {...}
+  console.log(target, "show", data);
+};
+
+const whenHide = (target, data) => {
+  // <div class="section"></div>  'hide' IntersectionObserverEntry {...}
+  console.log(target, "hide", data);
+};
+
+const options = {
+  // The element that is used as the viewport to test the visibility of the target element. Default is browser scope
+  root: document.querySelector('body'),
+  // Indentation around the root
+  rootMargin: '0px',
+  // A number or array of numbers indicating at what percentage of the selected target element the callback should fire
+  threshold: 1
+}
+
+t("[.section]", true).each(section => t(section).observer(whenShow, whenHide, options));
 ```

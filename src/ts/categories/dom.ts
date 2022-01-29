@@ -502,6 +502,24 @@ const domCategory: IDomCategory = {
     } else {
       global.setError(`"${this.target} is not a HTML element"`);
     }
+  },
+
+  observer(callbackWhenShow?: (target: any, data: any) => any, callbackWhenHide?: (target: any, data: any) => any, options?: object): void {
+    if (this.target instanceof Element) {
+      new IntersectionObserver((entries, observer) => {
+        entries.forEach(item => {
+          if (callbackWhenShow && callbackWhenShow instanceof Function) {
+            item.isIntersecting && callbackWhenShow(item.target, item);
+          }
+
+          if (callbackWhenHide && callbackWhenHide instanceof Function) {
+            !item.isIntersecting && callbackWhenHide(item.target, item);
+          }
+        });
+      }, options).observe(this.target);
+    } else {
+      global.setError(`"${this.target} is not a HTML element"`);
+    }
   }
 }
 

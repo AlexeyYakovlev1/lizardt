@@ -63,6 +63,7 @@ export interface IDomCategory {
   isChecked(): boolean;
   show(): IT;
   hide(): IT;
+  observer(callbackWhenShow?: (target: any, data: any) => any, callbackWhenHide?: (target: any, data: any) => any, options?: object): void;
 }
 
 export interface IGeneralCategory {
