@@ -430,6 +430,14 @@ var domCategory = {
             index_1.default.setError("\"".concat(this.target, "\" is not a HTML element"));
         }
     },
+    isChecked: function () {
+        if (this.target instanceof HTMLElement && "type" in this.target && ["checkbox", "radio"].includes(this.target.type)) {
+            return this.target.checked;
+        }
+        else {
+            index_1.default.setError("\"".concat(this.target, "\" must be a checkbox or radio element"));
+        }
+    },
     createElement: index_1.default.createElement,
     getAllParents: index_1.default.getAllParents,
 };

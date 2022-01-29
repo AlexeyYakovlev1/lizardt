@@ -4,7 +4,8 @@ import {
   beginWith,
   endWith,
   isEmail,
-  hasNumbers
+  hasNumbers,
+  isDate
 } from "../src/js/categories/string";
 
 // hasString
@@ -121,4 +122,32 @@ test("Проверка наличия цифр", () => {
   ];
 
   tests.map(({ target, toBe }) => expect(hasNumbers.call({ target }))[toBe]());
+});
+
+// isDate
+test("Проверка на дату", () => {
+  const tests = [
+    {
+      target: "10/10/2022",
+      args: ["/"],
+      toBe: "toBeTruthy"
+    },
+    {
+      target: "10-10-2022",
+      args: ["-"],
+      toBe: "toBeTruthy"
+    },
+    {
+      target: "10-10-2022",
+      args: ["."],
+      toBe: "toBeFalsy"
+    },
+    {
+      target: "10\\10\\2022",
+      args: ["\\"],
+      toBe: "toBeTruthy"
+    },
+  ];
+
+  tests.map(({ target, args, toBe }) => expect(isDate.call({ target }, ...args))[toBe]());
 });

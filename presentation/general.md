@@ -187,3 +187,19 @@ const tagOfInpit = t("[input]").getTag();
 // input and {placeholder: 'Enter', type: 'text'}
 console.log(tagOfInpit, dataOfInput);
 ```
+
+### ```becomeArray()```:
+- **Description**
+Creates a new Array instance from an array-like or iterable object
+- **Arguments**
+  - Item **(required)**
+- **Return**
+Array from **item**
+- **Example**
+```Javascript
+const { becomeArray, t } = lizardt;
+
+becomeArray("Hello, world!"); // ['H', 'e', 'l', 'l', 'o', ',', ' ', 'w', 'o', 'r', 'l', 'd', '!']
+becomeArray(t("[li]", true).target); // [li, li, li, li]
+becomeArray(false); // []
+```

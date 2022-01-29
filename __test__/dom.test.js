@@ -12,7 +12,7 @@ import {
   removeLastChild, removeFirstChild,
   contains, hasParent, getAllParents,
   createElement, text, getParent,
-  addHTML,
+  addHTML, isChecked
 } from "../src/js/categories/dom";
 
 // hasParent
@@ -668,5 +668,54 @@ test("Установка HTML разметки в тег", () => {
     addHTML.call({ target }, ...args);
 
     expect(getInnerHTML()).toStrictEqual(toBe);
+  });
+});
+
+// isCheked
+test("Проверка состояния checkbox'a и radio", () => {
+  const tests = [
+    {
+      createHTML() {
+        document.body.innerHTML = `<input class="checkbox_1" type="checkbox" />`;
+      },
+      changeState() {
+        document.querySelector(".checkbox_1").checked = true;
+      },
+      target() {
+        return document.querySelector(".checkbox_1");
+      },
+      toBe: "toBeTruthy"
+    },
+    {
+      createHTML() {
+        document.body.innerHTML = `<input class="radio_1" type="radio" />`;
+      },
+      changeState() {
+        document.querySelector(".radio_1").checked = true;
+      },
+      target() {
+        return document.querySelector(".radio_1");
+      },
+      toBe: "toBeTruthy"
+    },
+    {
+      createHTML() {
+        document.body.innerHTML = `<input class="checkbox_1" type="checkbox" />`;
+      },
+      changeState() {
+        document.querySelector(".checkbox_1").checked = false;
+      },
+      target() {
+        return document.querySelector(".checkbox_1");
+      },
+      toBe: "toBeFalsy"
+    },
+  ];
+
+  tests.map(({ createHTML, changeState, target, toBe }) => {
+    createHTML();
+    changeState();
+
+    expect(isChecked.call({ target: target() }))[toBe]();
   });
 });

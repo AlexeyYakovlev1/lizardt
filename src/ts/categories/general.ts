@@ -69,6 +69,10 @@ const generalCategory: IGeneralCategory = {
     }
   },
 
+  becomeArray(item: any): Array<any> {
+    return item ? Array.from(item) : [];
+  },
+
   t(target: any, list?: boolean): IT {
     let trt: any;
 

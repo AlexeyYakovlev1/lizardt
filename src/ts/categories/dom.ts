@@ -439,6 +439,14 @@ const domCategory: IDomCategory = {
     }
   },
 
+  isChecked(): boolean {
+    if (this.target instanceof HTMLElement && "type" in this.target && ["checkbox", "radio"].includes(this.target.type)) {
+      return this.target.checked;
+    } else {
+      global.setError(`"${this.target}" must be a checkbox or radio element`);
+    }
+  },
+
   createElement: global.createElement,
   getAllParents: global.getAllParents,
 }

@@ -6,7 +6,8 @@ import {
   array,
   t,
   typeOf,
-  extend
+  extend,
+  becomeArray
 } from "../src/js/categories/general";
 
 // compare
@@ -165,4 +166,24 @@ test("Добавление новых опций", () => {
 
   expect(item).toStrictEqual("Hello, Alexey");
   expect(item2).toStrictEqual(false);
-})
+});
+
+// becomeArray
+test("Создание нового экземпляра Array", () => {
+  const tests = [
+    {
+      args: ["Hello, world!"],
+      toBe: ["H", "e", "l", "l", "o", ",", " ", "w", "o", "r", "l", "d", "!"],
+    },
+    {
+      args: [false],
+      toBe: [],
+    },
+    {
+      args: [{}],
+      toBe: [],
+    },
+  ];
+
+  tests.map(({ args, toBe }) => expect(becomeArray(...args)).toStrictEqual(toBe));
+});

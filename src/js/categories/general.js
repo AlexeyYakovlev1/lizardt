@@ -73,6 +73,9 @@ var generalCategory = {
             index_3.default.setError("\"".concat(options, "\" is not a object"));
         }
     },
+    becomeArray: function (item) {
+        return item ? Array.from(item) : [];
+    },
     t: function (target, list) {
         var trt;
         if (typeof target === "string" && /^\[.+\]$/.test(target)) {

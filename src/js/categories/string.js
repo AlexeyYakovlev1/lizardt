@@ -62,6 +62,21 @@ var stringCategory = {
             index_1.default.setError("\"".concat(this.target, "\" not a string"));
         }
     },
+    isDate: function (symbol) {
+        if (typeof this.target === "string") {
+            if (typeof symbol === "string" && symbol.length) {
+                var regexp = new RegExp("(\\d{2}\\".concat(symbol, "){2}\\d{4}"));
+                console.log(regexp, this.target);
+                return regexp.test(this.target);
+            }
+            else {
+                index_1.default.setError("\"".concat(symbol, "\" not a string"));
+            }
+        }
+        else {
+            index_1.default.setError("\"".concat(this.target, "\" not a string"));
+        }
+    },
     indexOf: index_1.default.indexOf,
 };
 for (var i in stringCategory) {

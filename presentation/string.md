@@ -85,6 +85,22 @@ t("Hello, world!").isEmail(); // false
 t("lizardt@mail.com").isEmail(); // true
 ```
 
+### ```isDate()```:
+- **Description**
+Checks for a date that is delimited by a **symbol**
+- **Return**
+- **Arguments**
+  - Symbol **(required)**
+Boolean
+- **Example**
+```Javascript
+const { t } = lizardt;
+
+t("10/10/2022").isDate("/"); // true
+t("10-10-2022").isDate("-"); // true
+t("10.10.2022").isDate("."); // true
+```
+
 ### ```hasNumbers()```:
 - **Description**
 Checks if there are numbers in a string

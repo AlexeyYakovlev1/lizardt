@@ -570,3 +570,16 @@ const { t } = lizardt;
 */
 t("[body]").addHTML("<div>Hello, lizard!</div>"); // Now body has a .wrapper block
 ```
+
+### ```isChecked()```:
+- **Description**
+Returns the state of the checkbox or radio
+- **Return**
+Boolean
+- **Example**
+```Javascript
+const { t } = lizardt;
+const checkbox = t("[input[type=checkbox]]").target;
+
+t(checkbox).on("click", () => console.log(t(checkbox).isChecked()));
+```

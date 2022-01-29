@@ -5,6 +5,7 @@ export interface IStringCategory {
   beginWith(str: string, ignoreRegister?: boolean): boolean;
   endWith(str: string, ignoreRegister?: boolean): boolean;
   isEmail(): boolean;
+  isDate(symbol: string): boolean;
   hasNumbers(): boolean;
 }
 
@@ -57,6 +58,7 @@ export interface IDomCategory {
   onRemove(event: string, callback: () => any, options?: object, useCapture?: boolean): void;
   text(): IT;
   addHTML(html: string): IT;
+  isChecked(): boolean;
 }
 
 export interface IGeneralCategory {
@@ -68,6 +70,7 @@ export interface IGeneralCategory {
   t(target: any, list?: boolean): IT;
   typeOf(item: any): string;
   extend(options: object): object;
+  becomeArray(item: any): Array<any>;
 }
 
 export interface INumberCategory {
@@ -182,6 +185,8 @@ export interface IT {
   beginWith(str: string, ignoreRegister?: boolean): boolean;
   endWith(str: string, ignoreRegister?: boolean): boolean;
   isEmail(): boolean;
+  isDate(symbol: string): boolean;
+  isChecked(): boolean;
   hasNumbers(): boolean;
 }
 
@@ -216,4 +221,5 @@ export interface ILizardt {
   getNumFromPercent(percent: number, num: number, round?: boolean): number;
   getPercent(current: number, endNum: number, round?: boolean): number;
   extend(options: object): object;
+  becomeArray(item: any): Array<any>;
 }
