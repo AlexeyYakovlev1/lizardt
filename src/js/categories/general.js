@@ -51,16 +51,6 @@ var generalCategory = {
     typeOf: function (item) {
         return (typeof item === "number" && isNaN(item)) ? "NaN" : item === null ? "null" : typeof item;
     },
-    array: function (item, symb) {
-        if (!item) {
-            return [];
-        }
-        var res = Array.from(item);
-        if (typeof symb === "string" && symb.length) {
-            res = item.split(symb);
-        }
-        return res;
-    },
     extend: function (options) {
         var _a;
         if (options && typeof options === "object" && !index_3.default.isArray(options) && !(options instanceof Element || options instanceof HTMLElement)) {

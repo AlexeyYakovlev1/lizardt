@@ -31,22 +31,6 @@ t([1,2,3,4,5]); // lizardt object
 t([1,2,3,4,5]).target; // [1,2,3,4,5]
 ```
 
-### ```array()```:
-- **Description**
-Creating an array from your first argument, the second argument **symb** is optional, it separates your first argument with a unique character, which will help create the array
-- **Arguments**
-  - Item **(required)**
-  - Symb **(optional)**
-- **Return**
-Array
-- **Example**
-```Javascript
-const { array } = lizardt;
-
-array("abc"); // ["a","b","c"];
-array("ab,c", ","); // ["ab", "c"];
-```
-
 ### ```copy()```:
 - **Description**
 Make a copy of the item

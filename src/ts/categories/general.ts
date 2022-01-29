@@ -43,20 +43,6 @@ const generalCategory: IGeneralCategory = {
     return (typeof item === "number" && isNaN(item)) ? "NaN" : item === null ? "null" : typeof item;
   },
 
-  array(item: any, symb?: string): Array<any> {
-    if (!item) {
-      return [];
-    }
-
-    let res: Array<any> = Array.from(item);
-
-    if (typeof symb === "string" && symb.length) {
-      res = item.split(symb);
-    }
-
-    return res;
-  },
-
   extend(options: object): object {
     if (options && typeof options === "object" && !global.isArray(options) && !(options instanceof Element || options instanceof HTMLElement)) {
       for (let option in options) {

@@ -3,7 +3,6 @@ import {
   copy,
   jsonParse,
   jsonString,
-  array,
   t,
   typeOf,
   extend,
@@ -106,24 +105,6 @@ test("Превращает в json значение", () => {
 
   tests.map(({ target, toBe }) => expect(jsonString(target)).toStrictEqual(toBe));
 });
-
-// array
-test("Создание массива", () => {
-  const tests = [
-    {
-      target: "abc",
-      args: [],
-      toBe: ["a", "b", "c"]
-    },
-    {
-      target: "ab,c",
-      args: [","],
-      toBe: ["ab", "c"]
-    },
-  ];
-
-  tests.map(({ target, toBe, args }) => expect(array(target, ...args)).toStrictEqual(toBe));
-})
 
 // t
 test("Предназначен для создания элемента, над которым будут проходить работы", () => {

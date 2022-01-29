@@ -7,6 +7,7 @@ export interface IStringCategory {
   isEmail(): boolean;
   isDate(symbol: string): boolean;
   hasNumbers(): boolean;
+  array(symb?: string): Array<any>;
 }
 
 export interface IFuncCategory {
@@ -64,7 +65,6 @@ export interface IDomCategory {
 export interface IGeneralCategory {
   compare(item1: any, item2: any): boolean;
   copy(item: any): any;
-  array(item: any, symb?: string): Array<any>;
   jsonParse(item: any, reviver?): any;
   jsonString(item: any, replacer?, space?): string;
   t(target: any, list?: boolean): IT;
@@ -190,6 +190,7 @@ export interface IT {
   isDate(symbol: string): boolean;
   isChecked(): boolean;
   hasNumbers(): boolean;
+  array(symb?: string): Array<any>;
 }
 
 export interface IGlobal {
@@ -213,7 +214,6 @@ export interface IGlobal {
 export interface ILizardt {
   compare(item1: any, item2: any): boolean;
   copy(item: any): any;
-  array(item: any, symb?: string): Array<any>;
   jsonParse(item: any, reviver?): any;
   jsonString(item: any, replacer?, space?): string;
   t(target: any, list?: boolean): IT;
