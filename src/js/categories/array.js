@@ -72,17 +72,6 @@ var arrayCategory = {
             index_1.default.setError("\"".concat(this.target, "\" is not a list"));
         }
     },
-    isArray: function (item, callback) {
-        var validArray = Array.isArray(item);
-        if (validArray) {
-            if (index_1.default.isFunction(callback)) {
-                return callback();
-            }
-            return true;
-        }
-        ;
-        return false;
-    },
     unfold: function () {
         var res = [];
         if (Array.isArray(this.target) && this.target.length) {

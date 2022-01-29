@@ -42,25 +42,6 @@ const { t } = lizardt;
 t([1,2,3,4]).each(item => item += 2);
 ```
 
-### ```isArray()```:
-- **Description**
-Сhecks if the passed element is an array. The second argument (optional) is a function that is called if the first argument is an array.
-- **Arguments**
-  - Item **(required)**
-  - Callback **(optional)**
-- **Return**
-Boolean/Result your function
-- **Example**
-```Javascript
-const { isArray } = lizardt;
-
-isArray([1,2,3]); // true
-isArray("") // false
-isArray([1,2,3], () => {
-  console.log(1)
-}); // 1
-```
-
 ### ```unfold()```:
 - **Description**
 Unpacks a nested array

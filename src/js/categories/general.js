@@ -76,6 +76,17 @@ var generalCategory = {
     becomeArray: function (item) {
         return item ? Array.from(item) : [];
     },
+    isArray: function (item, callback) {
+        var validArray = Array.isArray(item);
+        if (validArray) {
+            if (index_3.default.isFunction(callback)) {
+                return callback();
+            }
+            return true;
+        }
+        ;
+        return false;
+    },
     t: function (target, list) {
         var trt;
         if (typeof target === "string" && /^\[.+\]$/.test(target)) {

@@ -16,7 +16,6 @@ export interface IFuncCategory {
 export interface IArrayCategory {
   last(): IT,
   center(): IT,
-  isArray(item: any, callback?): boolean;
   unfold(): IT;
   each(callback: () => Array<any>): Array<any>
   removeItem(index: number, val?: any): Array<any>;
@@ -24,7 +23,7 @@ export interface IArrayCategory {
   index(num: number): IT;
   filter(callback: () => any, thisArg?: any): any;
   indexOf(findItem: any): number;
-  groupBy(callback: (el?, index?, array?) => any, cat?:string): IT;
+  groupBy(callback: (el?, index?, array?) => any, cat?: string): IT;
   addItem(item: any, position?: boolean): IT;
   merge(item: Array<any> | object): IT;
 }
@@ -72,6 +71,7 @@ export interface IGeneralCategory {
   typeOf(item: any): string;
   extend(options: object): object;
   becomeArray(item: any): Array<any>;
+  isArray(item: any, callback?): boolean;
 }
 
 export interface INumberCategory {
@@ -178,7 +178,7 @@ export interface IT {
   addProperty(item: Object): IT;
   onRemove(event: string, callback: () => any, options?: object, useCapture?: boolean): void;
   filter(callback: () => any, thisArg?: any): any;
-  groupBy(callback: (el?, index?, array?) => any, cat?:string): object;
+  groupBy(callback: (el?, index?, array?) => any, cat?: string): object;
   text(): IT;
   getParent(selector?: string): IT;
   getAllParents(num?: number): IT;

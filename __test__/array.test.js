@@ -1,6 +1,6 @@
 import {
   last, removeItem, center,
-  isArray, unfold, each,
+  unfold, each,
   hasItem, index, indexOf,
   filter, groupBy, addItem,
   merge
@@ -54,18 +54,6 @@ test("Вывод центрального элемента из массива",
   ];
 
   tests.map(({ target, toBe }) => expect(center.call({ target })).toStrictEqual({ target: toBe }));
-});
-
-// isArray
-test("Определение массива", () => {
-  const tests = [
-    { target: [1, 2, 3, 4], toBe: "toBeTruthy", },
-    { target: "Hello, world!", toBe: "toBeFalsy", },
-    { target: {}, toBe: "toBeFalsy" },
-    { target: 123, toBe: "toBeFalsy", },
-  ];
-
-  tests.map(({ target, toBe }) => expect(isArray(target))[toBe]());
 });
 
 // unfold
@@ -217,8 +205,8 @@ test("Сортирует массив по группам", () => {
 
 // addItem
 test("Добавление элемента в массив", () => {
-  expect(addItem.call({target: [1,2,3]}, "4").target[3]).toStrictEqual("4");
-  expect(addItem.call({target: [1,2,3]}, "4", true).target[3]).toStrictEqual(3);
+  expect(addItem.call({ target: [1, 2, 3] }, "4").target[3]).toStrictEqual("4");
+  expect(addItem.call({ target: [1, 2, 3] }, "4", true).target[3]).toStrictEqual(3);
 })
 
 // merge

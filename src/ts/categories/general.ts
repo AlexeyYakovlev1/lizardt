@@ -73,6 +73,20 @@ const generalCategory: IGeneralCategory = {
     return item ? Array.from(item) : [];
   },
 
+  isArray(item: any, callback?): boolean {
+    const validArray: boolean = Array.isArray(item);
+
+    if (validArray) {
+      if (global.isFunction(callback)) {
+        return callback();
+      }
+
+      return true;
+    };
+
+    return false;
+  },
+
   t(target: any, list?: boolean): IT {
     let trt: any;
 
