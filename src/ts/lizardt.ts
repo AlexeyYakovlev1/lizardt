@@ -17,7 +17,11 @@ import filterMethods from "./filterMethods/index";
 const lizardt: ILizardt = {
   ...generalCategory,
   ...numberCategory,
-  ...filterMethods({ ...domCategory, ...arrayCategory, ...objectCategory, ...functionCategory }, [], ["createElement", "isArray", "isObject", "isFunction", "index"])
+  ...filterMethods(
+    { ...domCategory, ...arrayCategory, ...objectCategory, ...functionCategory },
+    [],
+    ["createElement", "isArray", "isObject", "isFunction", "index", "scrollToElement"]
+  )
 };
 
 // Set context at lizardt

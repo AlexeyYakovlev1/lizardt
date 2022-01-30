@@ -492,7 +492,7 @@ var domCategory = {
             return this;
         }
         else {
-            index_1.default.setError("\"".concat(this.target, " is not a HTML element\""));
+            index_1.default.setError("\"".concat(this.target, "\" is not a HTML element"));
         }
     },
     observer: function (callbackWhenShow, callbackWhenHide, options) {
@@ -509,9 +509,22 @@ var domCategory = {
             }, options).observe(this.target);
         }
         else {
-            index_1.default.setError("\"".concat(this.target, " is not a HTML element\""));
+            index_1.default.setError("\"".concat(this.target, "\" is not a HTML element"));
         }
-    }
+    },
+    scrollToElement: function (element, options) {
+        if (element instanceof HTMLElement) {
+            var _a = options.behavior, behavior = _a === void 0 ? "auto" : _a, _b = options.verticalAlignment, verticalAlignment = _b === void 0 ? "start" : _b, _c = options.horizontalAlignment, horizontalAlignment = _c === void 0 ? "nearest" : _c;
+            element.scrollIntoView({
+                behavior: behavior,
+                block: verticalAlignment,
+                inline: horizontalAlignment
+            });
+        }
+        else {
+            index_1.default.setError("\"".concat(element, "\" is not a HTML element"));
+        }
+    },
 };
 for (var i in domCategory) {
     // Exports every separately method

@@ -64,6 +64,7 @@ export interface IDomCategory {
   show(): IT;
   hide(): IT;
   observer(callbackWhenShow?: (target: any, data: any) => any, callbackWhenHide?: (target: any, data: any) => any, options?: object): void;
+  scrollToElement(element: Element | HTMLElement, options?: IScrollOptions): void;
 }
 
 export interface IGeneralCategory {
@@ -94,6 +95,12 @@ export interface IObjectCategory {
 }
 
 // Arguments and options
+export interface IScrollOptions {
+  behavior?: ScrollBehavior;
+  verticalAlignment?: ScrollLogicalPosition;
+  horizontalAlignment?: ScrollLogicalPosition;
+}
+
 export interface IElement {
   tag?: string,
   text?: string,

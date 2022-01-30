@@ -8,7 +8,8 @@ import {
   IBoundingRect,
   ISize,
   IDomCategory,
-  IT
+  IT,
+  IScrollOptions
 } from "../interfaces/index";
 
 // Global methods
@@ -500,7 +501,7 @@ const domCategory: IDomCategory = {
       this.target.removeAttribute("id");
       return this;
     } else {
-      global.setError(`"${this.target} is not a HTML element"`);
+      global.setError(`"${this.target}" is not a HTML element`);
     }
   },
 
@@ -518,9 +519,23 @@ const domCategory: IDomCategory = {
         });
       }, options).observe(this.target);
     } else {
-      global.setError(`"${this.target} is not a HTML element"`);
+      global.setError(`"${this.target}" is not a HTML element`);
     }
-  }
+  },
+
+  scrollToElement(element: Element | HTMLElement, options?: IScrollOptions): void {
+    if (element instanceof HTMLElement) {
+      const { behavior = "auto", verticalAlignment = "start", horizontalAlignment = "nearest" } = options;
+
+      element.scrollIntoView({
+        behavior,
+        block: verticalAlignment,
+        inline: horizontalAlignment
+      });
+    } else {
+      global.setError(`"${element}" is not a HTML element`);
+    }
+  },
 }
 
 for (let i in domCategory) {

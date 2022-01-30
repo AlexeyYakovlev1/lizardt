@@ -20,7 +20,7 @@ var object_1 = require("./categories/object");
 var array_1 = require("./categories/array");
 // Additional methods
 var index_1 = require("./filterMethods/index");
-var lizardt = __assign(__assign(__assign({}, general_1.default), number_1.default), (0, index_1.default)(__assign(__assign(__assign(__assign({}, dom_1.default), array_1.default), object_1.default), func_1.default), [], ["createElement", "isArray", "isObject", "isFunction", "index"]));
+var lizardt = __assign(__assign(__assign({}, general_1.default), number_1.default), (0, index_1.default)(__assign(__assign(__assign(__assign({}, dom_1.default), array_1.default), object_1.default), func_1.default), [], ["createElement", "isArray", "isObject", "isFunction", "index", "scrollToElement"]));
 // Set context at lizardt
 for (var method in lizardt) {
     if (lizardt[method] instanceof Function) {

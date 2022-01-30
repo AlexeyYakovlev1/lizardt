@@ -647,6 +647,7 @@ Main object
 - **Example**
 ```Javascript
 const { t } = lizardt;
+
 t("[.title]").clearSelectors();
 ```
 
@@ -682,4 +683,25 @@ const options = {
 }
 
 t("[.section]", true).each(section => t(section).observer(whenShow, whenHide, options));
+```
+
+### ```scrollToElement()```:
+- **Description**
+Scrolls the page to a specific element
+- **Arguments**
+  - Element **(required)**
+  - Options **(optional)**
+- **Return**
+undefined
+- **Example**
+```Javascript
+const { t, scrollToElement } = lizardt;
+
+t("[button]").on("click", () => {
+  scrollToElement(t("[header]").target, {
+    behavior: "smooth", // Scroll animation ("smooth" or "auto")
+    verticalAlignment: "center", // Vertical alignment ("start", "center", "end", "nearest")
+    horizontalAlignment: "nearest" // Horizontal alignment ("start", "center", "end", "nearest")
+  });
+});
 ```
