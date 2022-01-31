@@ -16,16 +16,6 @@ import {
 import global from "../global/index";
 
 const domCategory: IDomCategory = {
-  text(): IT {
-    if (this.target instanceof Element) {
-      this.target = this.target.innerText || this.target.textContent;
-
-      return this;
-    } else {
-      global.setError(`"${this.target}" is not a HTML element`);
-    }
-  },
-
   getParent(selector?: string): IT {
     if (this.target instanceof Element) {
       this.target = (typeof selector === "string" && selector.length) ? this.target.closest(selector) : this.target.parentElement;
@@ -176,14 +166,13 @@ const domCategory: IDomCategory = {
     }
   },
 
-  txt(value: string): IT {
+  txt(value?: string | number): IT {
     if (this.target instanceof Element) {
-      if (typeof value === "string") {
+      if (["string", "number"].includes(typeof value)) {
         this.target.textContent = value;
-        return this;
-      } else {
-        global.setError(`"${value}" is not a string`);
       }
+
+      return this.target.textContent;
     } else {
       global.setError(`"${this.target}" is not a HTML element`);
     }
@@ -536,6 +525,18 @@ const domCategory: IDomCategory = {
       global.setError(`"${element}" is not a HTML element`);
     }
   },
+
+  value(val?: string | number): string {
+    if (this.target instanceof HTMLElement) {
+      if (["string", "number"].includes(typeof val)) {
+        this.target.value = val;
+      }
+
+      return this.target.value;
+    } else {
+      global.setError(`"${this.target}" is not a HTML element`);
+    }
+  }
 }
 
 for (let i in domCategory) {

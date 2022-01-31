@@ -121,16 +121,36 @@ t("[.button]").on("click", counter);
 
 ### ```txt()```:
 - **Description**
-Adding text value  for html element
-- **Return**
-Main object
+Sets the text of an element or returns it
 - **Arguments**
-	- Value **(required)**
+	- Text **(optional)**
+- **Return**
+Text of element
 - **Example**
 ```Javascript
 const { t } = lizardt;
 
 t("[.btn]").txt("Click me!");
+
+// "Click me!"
+t("[.btn]").txt();
+```
+
+### ```value()```:
+- **Description**
+Sets a value to an element or returns it
+- **Arguments**
+	- Value **(optional)**
+- **Return**
+Value of element
+- **Example**
+```Javascript
+const { t } = lizardt;
+
+t("[input]").value("Enter password");
+
+// "Enter password"
+t("[input]").value();
 ```
 
 ### ```size()```:
@@ -531,20 +551,6 @@ const { t } = lizardt;
 t("[.title]").hasParent(".wrapper"); // true
 t("[.title]").hasParent(document.documentElement); // true
 t("[.title]").hasParent(".subtitle"); // false
-```
-
-### ```text()```:
-- **Description**
-Gets the element's text
-- **Return**
-Main object
-- **Example**
-```Javascript
-const { t, createElement } = lizardt;
-const block = createElement({ tag: "div", text: "Hello, Lizard!" });
-
-// Hello, Lizard!
-t(block).text().target;
 ```
 
 ### ```getParent()```:

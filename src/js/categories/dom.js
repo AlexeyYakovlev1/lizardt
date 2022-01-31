@@ -23,15 +23,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // Global methods
 var index_1 = require("../global/index");
 var domCategory = {
-    text: function () {
-        if (this.target instanceof Element) {
-            this.target = this.target.innerText || this.target.textContent;
-            return this;
-        }
-        else {
-            index_1.default.setError("\"".concat(this.target, "\" is not a HTML element"));
-        }
-    },
     getParent: function (selector) {
         if (this.target instanceof Element) {
             this.target = (typeof selector === "string" && selector.length) ? this.target.closest(selector) : this.target.parentElement;
@@ -184,13 +175,10 @@ var domCategory = {
     },
     txt: function (value) {
         if (this.target instanceof Element) {
-            if (typeof value === "string") {
+            if (["string", "number"].includes(typeof value)) {
                 this.target.textContent = value;
-                return this;
             }
-            else {
-                index_1.default.setError("\"".concat(value, "\" is not a string"));
-            }
+            return this.target.textContent;
         }
         else {
             index_1.default.setError("\"".concat(this.target, "\" is not a HTML element"));
@@ -525,6 +513,17 @@ var domCategory = {
             index_1.default.setError("\"".concat(element, "\" is not a HTML element"));
         }
     },
+    value: function (val) {
+        if (this.target instanceof HTMLElement) {
+            if (["string", "number"].includes(typeof val)) {
+                this.target.value = val;
+            }
+            return this.target.value;
+        }
+        else {
+            index_1.default.setError("\"".concat(this.target, "\" is not a HTML element"));
+        }
+    }
 };
 for (var i in domCategory) {
     // Exports every separately method

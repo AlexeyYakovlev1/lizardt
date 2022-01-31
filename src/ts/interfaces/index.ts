@@ -42,7 +42,7 @@ export interface IDomCategory {
   add(): IT;
   remove(): IT;
   clearStyles(): IT;
-  txt(value: string): IT;
+  txt(value?: string | number): IT;
   size(): IT;
   addChild(child: HTMLElement | IElement | Array<any>): IT;
   removeChild(child: HTMLElement | string | Array<HTMLElement | string>): void;
@@ -58,11 +58,11 @@ export interface IDomCategory {
   contains(selector: string): boolean;
   hasParent(selector: string | Element): boolean;
   onRemove(event: string, callback: () => any, options?: object, useCapture?: boolean): void;
-  text(): IT;
   addHTML(html: string): IT;
   isChecked(): boolean;
   show(): IT;
   hide(): IT;
+  value(val?: string | number): string;
   observer(callbackWhenShow?: (target: any, data: any) => any, callbackWhenHide?: (target: any, data: any) => any, options?: object): void;
   scrollToElement(element: Element | HTMLElement, options?: IScrollOptions): void;
 }

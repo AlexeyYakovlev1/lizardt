@@ -11,9 +11,10 @@ import {
   removeAttribute, data, hasElement,
   removeLastChild, removeFirstChild,
   contains, hasParent, getAllParents,
-  createElement, text, getParent,
+  createElement, getParent,
   addHTML, isChecked, toggle, show,
-  hide, clearOfChilds, clearSelectors
+  hide, clearOfChilds, clearSelectors,
+  value
 } from "../src/js/categories/dom";
 
 // hasParent
@@ -360,14 +361,26 @@ test("Добавление события", () => {
 });
 
 // txt
-test("Добавление текста", () => {
-  document.body.innerHTML = `<h1 class="title">old text</h1>`;
+test("Добавление и получение текста", () => {
+  const tests = [
+    {
+      target: createElement({ tag: "h1" }),
+      args: [],
+      toBe: ""
+    },
+    {
+      target: createElement({ tag: "h1", text: "Title" }),
+      args: [],
+      toBe: "Title"
+    },
+    {
+      target: createElement({ tag: "h1", text: "Title" }),
+      args: ["Title 1"],
+      toBe: "Title 1"
+    },
+  ];
 
-  const title = document.querySelector(".title");
-
-  txt.call({ target: title }, "new text");
-
-  expect(title.textContent).toStrictEqual("new text");
+  tests.map(({ target, toBe, args }) => expect(txt.call({ target }, ...args)).toStrictEqual(toBe));
 })
 
 // onRemove
@@ -579,26 +592,6 @@ test("Создание html элемента", () => {
   tests.map(({ options, toBe }) => expect(createElement(options)).toStrictEqual(toBe()));
 });
 
-// text
-test("Получает текст элемента", () => {
-  const tests = [
-    {
-      target: createElement({ tag: "div", text: "Hello" }),
-      toBe: "Hello"
-    },
-    {
-      target: createElement({ tag: "h1", text: "Title" }),
-      toBe: "Title"
-    },
-    {
-      target: createElement({ tag: "div", text: "" }),
-      toBe: ""
-    },
-  ];
-
-  tests.map(({ target, toBe }) => expect(text.call({ target })).toStrictEqual({ target: toBe }));
-});
-
 // getParent
 test("Получает родителя элемента", () => {
   const tests = [
@@ -776,3 +769,26 @@ test("Очищает элемент от селекторов", () => {
   expect(clearSelectors.call({ target: wrapper }).target.getAttribute("class")).toStrictEqual(null);
   expect(clearSelectors.call({ target: wrapper }).target.getAttribute("id")).toStrictEqual(null);
 })
+
+// value
+test("Установка значения элементу", () => {
+  const tests = [
+    {
+      target: createElement({ tag: "input" }),
+      args: [],
+      toBe: ""
+    },
+    {
+      target: createElement({ tag: "input", attributes: { value: "Enter please your phone" } }),
+      args: [],
+      toBe: "Enter please your phone"
+    },
+    {
+      target: createElement({ tag: "input" }),
+      args: ["Enter please your phone"],
+      toBe: "Enter please your phone"
+    },
+  ];
+
+  tests.map(({ target, args, toBe }) => expect(value.call({ target }, ...args)).toStrictEqual(toBe));
+});
