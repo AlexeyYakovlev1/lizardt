@@ -34,4 +34,5 @@ Here described all methods which haves this library
 - For [String](https://github.com/AlexeyYakovlev1/lizardt/tree/master/presentation/string.md)
 - For [Object](https://github.com/AlexeyYakovlev1/lizardt/tree/master/presentation/object.md)
 - For [Number](https://github.com/AlexeyYakovlev1/lizardt/tree/master/presentation/number.md)
+- For [Ajax](https://github.com/AlexeyYakovlev1/lizardt/tree/master/presentation/ajax.md)
 - [General](https://github.com/AlexeyYakovlev1/lizardt/tree/master/presentation/general.md)

@@ -1,6 +1,7 @@
 // Interfaces
 import {
-  ILizardt
+  ILizardt,
+  IAjaxCategory
 } from "./interfaces/index";
 
 // Categories
@@ -10,6 +11,7 @@ import domCategory from "./categories/dom";
 import functionCategory from "./categories/func";
 import objectCategory from "./categories/object";
 import arrayCategory from "./categories/array";
+import ajaxCategory from "./categories/ajax";
 
 // Additional methods
 import filterMethods from "./filterMethods/index";
@@ -17,12 +19,18 @@ import filterMethods from "./filterMethods/index";
 const lizardt: ILizardt = {
   ...generalCategory,
   ...numberCategory,
+  ...filterMethods({ ...ajaxCategory }, ["success"]),
   ...filterMethods(
     { ...domCategory, ...arrayCategory, ...objectCategory, ...functionCategory },
     [],
     ["createElement", "isArray", "isObject", "isFunction", "index", "scrollToElement"]
-  )
+  ),
 };
+const ajaxMethods: Omit<IAjaxCategory, "ajax"> = filterMethods({ ...ajaxCategory }, ["ajax"]);
+
+for (let i in ajaxMethods) {
+  Promise.prototype[i] = ajaxMethods[i];
+}
 
 // Set context at lizardt
 for (let method in lizardt) {

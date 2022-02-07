@@ -28,6 +28,12 @@ export interface IArrayCategory {
   merge(item: Array<any> | object): IT;
 }
 
+export interface IAjaxCategory {
+  ajax(url: string, options: IAjaxOptions): Promise<any>;
+  success(callback: (data: any) => any): Promise<any>;
+  failure(callback: (data: any) => any): Promise<any>;
+}
+
 export interface IDomCategory {
   clearSelectors(): IT;
   clearOfChilds(): IT;
@@ -65,6 +71,18 @@ export interface IDomCategory {
   value(val?: string | number): string;
   observer(callbackWhenShow?: (target: any, data: any) => any, callbackWhenHide?: (target: any, data: any) => any, options?: object): void;
   scrollToElement(element: Element | HTMLElement, options?: IScrollOptions): void;
+}
+
+export interface IAjaxOptions {
+  method?: string;
+  headers?: HeadersInit;
+  mode?: RequestMode;
+  cache?: RequestCache;
+  credentials?: RequestCredentials;
+  redirect?: RequestRedirect;
+  referrerPolicy?: ReferrerPolicy;
+  body?: string;
+  beforeSend?: () => any;
 }
 
 export interface IGeneralCategory {

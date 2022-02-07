@@ -1,7 +1,7 @@
 // Interfaces
 import {
   IT,
-  IGeneralCategory
+  IGeneralCategory,
 } from "../interfaces/index";
 
 // Categories
