@@ -157,6 +157,46 @@ const arrayCategory: IArrayCategory = {
     }
   },
 
+  sort(fromMore: boolean): IT {
+    if (Array.isArray(this.target)) {
+      if (this.target.every(num => typeof num === "number")) {
+        const quickSort = (arr: Array<any>): Array<any> => {
+          if (arr.length < 2) {
+            return arr;
+          }
+
+          const lastNum: number = arr[arr.length - 1];
+          const less: Array<any> = [];
+          const more: Array<any> = [];
+
+          for (let i = 0; i < arr.length - 1; i++) {
+            arr[i] > lastNum ? more.push(arr[i]) : less.push(arr[i]);
+          }
+
+          return quickSort(fromMore ? more : less).concat(lastNum, quickSort(fromMore ? less : more));
+        }
+
+        this.target = quickSort(this.target);
+
+        return this;
+      } else {
+        global.setError("The content of the array must be of type number");
+      }
+    } else {
+      global.setError(`${this.target} must be array`);
+    }
+  },
+
+  uniques(): IT {
+    if (Array.isArray(this.target)) {
+      this.target = Array.from(new Set(this.target));
+
+      return this;
+    } else {
+      global.setError(`${this.target} must be array`);
+    }
+  },
+
   merge: global.merge
 }
 

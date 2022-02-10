@@ -26,6 +26,8 @@ export interface IArrayCategory {
   groupBy(callback: (el?, index?, array?) => any, cat?: string): IT;
   addItem(item: any, position?: boolean): IT;
   merge(item: Array<any> | object): IT;
+  sort(fromMore: boolean): IT;
+  uniques(): IT;
 }
 
 export interface IAjaxCategory {

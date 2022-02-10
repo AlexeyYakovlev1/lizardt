@@ -3,7 +3,7 @@ import {
   unfold, each,
   hasItem, index, indexOf,
   filter, groupBy, addItem,
-  merge
+  merge, sort, uniques
 } from "../src/js/categories/array";
 
 // last
@@ -225,4 +225,26 @@ test("Объединение массивов", () => {
   ];
 
   tests.map(({ target, args, toBe }) => expect(merge.call({ target }, ...args)).toStrictEqual({ target: toBe }));
+});
+
+// sort
+test("Сортировка массива", () => {
+  const tests = [
+    { target: [3, 2, 1], args: [true], toBe: [3, 2, 1] },
+    { target: [3, 2, 2, 4], args: [], toBe: [2, 2, 3, 4] },
+    { target: [3], args: [true], toBe: [3] },
+  ];
+
+  tests.map(({ target, args, toBe }) => expect(sort.call({ target }, ...args)).toStrictEqual({ target: toBe }));
+});
+
+// uniques
+test("Вывод уникальных элементов", () => {
+  const tests = [
+    { target: [1, 3, 2, 2], toBe: [1, 3, 2] },
+    { target: [1], toBe: [1] },
+    { target: [2, 2, 2, 2], toBe: [2] },
+  ];
+
+  tests.map(({ target, toBe }) => expect(uniques.call({ target })).toStrictEqual({ target: toBe }));
 });

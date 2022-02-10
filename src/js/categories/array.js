@@ -141,6 +141,41 @@ var arrayCategory = {
             index_1.default.setError("".concat(this.target, " must be array"));
         }
     },
+    sort: function (fromMore) {
+        if (Array.isArray(this.target)) {
+            if (this.target.every(function (num) { return typeof num === "number"; })) {
+                var quickSort_1 = function (arr) {
+                    if (arr.length < 2) {
+                        return arr;
+                    }
+                    var lastNum = arr[arr.length - 1];
+                    var less = [];
+                    var more = [];
+                    for (var i = 0; i < arr.length - 1; i++) {
+                        arr[i] > lastNum ? more.push(arr[i]) : less.push(arr[i]);
+                    }
+                    return quickSort_1(fromMore ? more : less).concat(lastNum, quickSort_1(fromMore ? less : more));
+                };
+                this.target = quickSort_1(this.target);
+                return this;
+            }
+            else {
+                index_1.default.setError("The content of the array must be of type number");
+            }
+        }
+        else {
+            index_1.default.setError("".concat(this.target, " must be array"));
+        }
+    },
+    uniques: function () {
+        if (Array.isArray(this.target)) {
+            this.target = Array.from(new Set(this.target));
+            return this;
+        }
+        else {
+            index_1.default.setError("".concat(this.target, " must be array"));
+        }
+    },
     merge: index_1.default.merge
 };
 for (var i in arrayCategory) {

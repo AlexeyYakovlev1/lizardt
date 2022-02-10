@@ -202,3 +202,31 @@ const { t } = lizardt;
 t([1,2,3]).merge([4,5,6]).target; // [1,2,3,4,5,6]
 t({ name: "A" }).merge({ status: "junior" }).target; // { name: "A", status: "junior" }
 ```
+
+### ```sort()```:
+- **Description**
+Sorted array. If you use **fromMore**, then sorting will occur from the largest number to the smallest. Accepts only numbers
+- **Arguments**
+  - fromMore **(optional)**
+- **Return**
+Main object
+- **Example**
+```Javascript
+const { t } = lizardt;
+
+t([1,4,2,3]).sort().target; // [1, 2, 3, 4]
+t([1,4,2,3]).sort(true).target; // [4, 3, 2, 1]
+```
+
+### ```uniques()```:
+- **Description**
+
+- **Return**
+Main object
+- **Example**
+```Javascript
+const { t } = lizardt;
+
+t([1,1,1,111]).uniques().target; // [1, 111]
+t([1,4,2,3,3]).uniques().target; // [1, 4, 2, 3]
+```
