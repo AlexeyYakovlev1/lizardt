@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // Global methods
 var index_1 = require("../global/index");
 var arrayCategory = {
+    isEmpty: index_1.default.isEmpty,
     last: function () {
         if (index_1.default.checkList(this.target)) {
             var arr = this.target;

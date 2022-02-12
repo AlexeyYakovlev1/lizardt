@@ -5,6 +5,7 @@ var index_1 = require("../global/index");
 var objectCategory = {
     merge: index_1.default.merge,
     isObject: index_1.default.isObject,
+    isEmpty: index_1.default.isEmpty,
     hasProperty: function (property) {
         var _this = this;
         if (index_1.default.isObject(this.target)) {

@@ -5,6 +5,8 @@ import global from "../global/index";
 import { IArrayCategory, IT } from "../interfaces/index";
 
 const arrayCategory: IArrayCategory = {
+  isEmpty: global.isEmpty,
+
   last(): IT {
     if (global.checkList(this.target)) {
       const arr: Array<any> = this.target;

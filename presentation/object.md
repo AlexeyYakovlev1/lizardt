@@ -91,3 +91,16 @@ const { t } = lizardt;
 t({ name: "Alex" }).merge({ age: 17 }, { status: "JS-developer" }).target; // { name: "Alex", age: 17, status: "JS-developer" }
 t({ name: "A" }).merge({ status: "junior" }).target; // { name: "A", status: "junior" }
 ```
+
+### ```isEmpty()```:
+- **Description**
+Check for empty
+- **Return**
+Boolean
+- **Example**
+```Javascript
+const { t } = lizardt;
+
+t({}).isEmpty(); // true
+t({ name: "alex" }).isEmpty(); // false
+```

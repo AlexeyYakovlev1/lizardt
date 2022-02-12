@@ -2,7 +2,7 @@
 import global from "../global/index";
 
 // Interfaces
-import { IStringCategory } from "../interfaces/index";
+import { IStringCategory, IT } from "../interfaces/index";
 
 const stringCategory: IStringCategory = {
   hasString(str: string | Array<string>): boolean {
@@ -78,7 +78,36 @@ const stringCategory: IStringCategory = {
     }
   },
 
+  replaceFound(findItems: Array<string>, replaceValues: Array<string>): IT {
+    if (typeof this.target === "string") {
+      if (([findItems, replaceValues].every(items => Array.isArray(items)))) {
+        if (findItems.length === replaceValues.length) {
+          if ([...findItems, ...replaceValues].every(item => typeof item === "string")) {
+            this.target = this.target.split("").map(letter => {
+              findItems.map((findLetter, index) => {
+                letter = findLetter === letter ? replaceValues[index] : letter;
+              });
+
+              return letter;
+            }).join("");
+
+            return this;
+          } else {
+            global.setError("The contents of arrays must be of type string");
+          }
+        } else {
+          global.setError("The number of search elements does not match with those to be replaced");
+        }
+      } else {
+        global.setError(`"${findItems}" and "${replaceValues}" must be a array`);
+      }
+    } else {
+      global.setError(`"${this.target}" not a string`);
+    }
+  },
+
   indexOf: global.indexOf,
+  isEmpty: global.isEmpty,
 }
 
 for (let i in stringCategory) {

@@ -278,3 +278,16 @@ const { t } = lizardt;
 t([1, 2, 3, 4, 5]).splice(0, 1).target; // [2, 3, 4, 5]
 t([1, 2, 3, 4, 5]).splice(0, 1, "0").target; // ["0", 2, 3, 4, 5]
 ```
+
+### ```isEmpty()```:
+- **Description**
+Check for empty
+- **Return**
+Boolean
+- **Example**
+```Javascript
+const { t } = lizardt;
+
+t([]).isEmpty(); // true
+t([1]).isEmpty(); // false
+```

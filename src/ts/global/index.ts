@@ -218,6 +218,22 @@ const global: IGlobal = {
     } else {
       global.setError(`"${this.target}" must be an array or an object`);
     }
+  },
+
+  isEmpty(): boolean {
+    if (typeof this.target === "string" || Array.isArray(this.target) || global.isObject(this.target) || this.target instanceof HTMLElement) {
+      if (typeof this.target === "string") {
+        return !Boolean(this.target);
+      } else if (Array.isArray(this.target)) {
+        return !Boolean(this.target.length);
+      } else if (global.isObject(this.target)) {
+        return !Boolean(Object.keys(this.target).length);
+      } else {
+        return !Boolean(Array.from(this.target["children"]).length);
+      }
+    } else {
+      global.setError(`"${this.target}" must be one of the following types: array, string, object or HTML element`);
+    }
   }
 };
 

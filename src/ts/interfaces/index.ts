@@ -7,6 +7,8 @@ export interface IStringCategory {
   isEmail(): boolean;
   isDate(symbol: string): boolean;
   hasNumbers(): boolean;
+  replaceFound(findItems: Array<string>, replaceValues: Array<string>): IT;
+  isEmpty(): boolean;
 }
 
 export interface IFuncCategory {
@@ -31,6 +33,7 @@ export interface IArrayCategory {
   slice(): IT;
   splice(): IT;
   find(): IT;
+  isEmpty(): boolean;
 }
 
 export interface IAjaxCategory {
@@ -77,18 +80,7 @@ export interface IDomCategory {
   value(val?: string | number): string;
   observer(callbackWhenShow?: (target: any, data: any) => any, callbackWhenHide?: (target: any, data: any) => any, options?: object): void;
   scrollToElement(element: Element | HTMLElement, options?: IScrollOptions): void;
-}
-
-export interface IAjaxOptions {
-  method?: string;
-  headers?: HeadersInit;
-  mode?: RequestMode;
-  cache?: RequestCache;
-  credentials?: RequestCredentials;
-  redirect?: RequestRedirect;
-  referrerPolicy?: ReferrerPolicy;
-  body?: string;
-  beforeSend?: () => any;
+  isEmpty(): boolean;
 }
 
 export interface IGeneralCategory {
@@ -116,6 +108,7 @@ export interface IObjectCategory {
   values(): IT;
   addProperty(item: Object): IT;
   merge(item: Array<any> | object): IT;
+  isEmpty(): boolean;
 }
 
 // Arguments and options
@@ -123,6 +116,18 @@ export interface IScrollOptions {
   behavior?: ScrollBehavior;
   verticalAlignment?: ScrollLogicalPosition;
   horizontalAlignment?: ScrollLogicalPosition;
+}
+
+export interface IAjaxOptions {
+  method?: string;
+  headers?: HeadersInit;
+  mode?: RequestMode;
+  cache?: RequestCache;
+  credentials?: RequestCredentials;
+  redirect?: RequestRedirect;
+  referrerPolicy?: ReferrerPolicy;
+  body?: string;
+  beforeSend?: () => any;
 }
 
 export interface IElement {
@@ -194,6 +199,7 @@ export interface IGlobal {
   merge(): IT;
   isObject(item, callback?): boolean;
   isFunction(item: any, callback?: () => any): boolean | any;
+  isEmpty(): boolean;
 }
 
 export interface ILizardt extends IGeneralCategory, INumberCategory {
@@ -202,4 +208,4 @@ export interface ILizardt extends IGeneralCategory, INumberCategory {
   isObject(item, callback?): boolean;
   isFunction(item: any, callback?: () => any): boolean | any;
   index(num: number): IT;
-}
+}3

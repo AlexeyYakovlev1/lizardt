@@ -1,4 +1,14 @@
-import { isObject, hasProperty, keys, values, addProperty, merge } from "../src/js/categories/object";
+import { isObject, hasProperty, keys, values, addProperty, merge, isEmpty } from "../src/js/categories/object";
+
+// isEmpty
+test("Проверка на пустоту", () => {
+  const tests = [
+    { target: {}, toBe: "toBeTruthy" },
+    { target: { name: "Alex" }, toBe: "toBeFalsy" },
+  ];
+
+  tests.map(({ target, toBe }) => expect(isEmpty.call({ target }))[toBe]());
+});
 
 // isObject
 test("Проверка на объект", () => {
@@ -68,9 +78,9 @@ test("Вывод значений в массиве", () => {
 
 // addPropery
 test("Добавление свойства в объект", () => {
-  expect(addProperty.call({target: {}}, {name: "Alexey", age: 17}).target).toStrictEqual({name: "Alexey", age: 17});
-  expect(addProperty.call({target: {name: "Alexey"}}, {age: 17}).target).toStrictEqual({name: 'Alexey', age: 17});
-  expect(addProperty.call({target: {}}, [{name: "Alexey"}, {age: 17}]).target).toStrictEqual({name: 'Alexey', age: 17});
+  expect(addProperty.call({ target: {} }, { name: "Alexey", age: 17 }).target).toStrictEqual({ name: "Alexey", age: 17 });
+  expect(addProperty.call({ target: { name: "Alexey" } }, { age: 17 }).target).toStrictEqual({ name: 'Alexey', age: 17 });
+  expect(addProperty.call({ target: {} }, [{ name: "Alexey" }, { age: 17 }]).target).toStrictEqual({ name: 'Alexey', age: 17 });
 })
 
 // merge

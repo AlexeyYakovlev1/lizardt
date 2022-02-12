@@ -99,6 +99,7 @@ const { t } = lizardt;
 t("10/10/2022").isDate("/"); // true
 t("10-10-2022").isDate("-"); // true
 t("10.10.2022").isDate("."); // true
+t("10/10/2022").isDate("."); // false
 ```
 
 ### ```hasNumbers()```:
@@ -112,4 +113,33 @@ const { t } = lizardt;
 
 t("no").hasNumbers(); // false
 t("yes_1").hasNumbers(); // true
+```
+
+### ```replaceFound()```:
+- **Description**
+Finds characters globally throughout a string that can be replaced with the provided ones
+- **Return**
+Main object
+- **Arguments**
+  - findItems **(required)**
+  - replaceValues **(required)**
+- **Example**
+```Javascript
+const { t } = lizardt;
+
+t("Hello, all!").replaceFound(["H", "l"], ["h", "L"]).target; // heLLo, aLL!
+t("aaabbbccc").replaceFound(["a", "c"], ["A", "C"]).target; // AAAbbbCCC
+```
+
+### ```isEmpty()```:
+- **Description**
+Check for empty
+- **Return**
+Boolean
+- **Example**
+```Javascript
+const { t } = lizardt;
+
+t("hello").isEmpty(); // false
+t("").isEmpty(); // true
 ```

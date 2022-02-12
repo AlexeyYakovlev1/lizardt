@@ -14,8 +14,24 @@ import {
   createElement, getParent,
   addHTML, isChecked, toggle, show,
   hide, clearOfChilds, clearSelectors,
-  value
+  value, isEmpty
 } from "../src/js/categories/dom";
+
+// isEmpty
+test("Проверка на пустоту", () => {
+  const el1 = createElement({ tag: "div" });
+  const el2 = createElement({ tag: "h1" });
+
+  el1.appendChild(el2);
+
+  const tests = [
+    { target: el2, toBe: "toBeTruthy" },
+    { target: el1, toBe: "toBeFalsy" },
+    { target: document.documentElement, toBe: "toBeFalsy" },
+  ];
+
+  tests.map(({ target, toBe }) => expect(isEmpty.call({ target }))[toBe]());
+});
 
 // hasParent
 test("Проверка на существование родителя", () => {

@@ -6,7 +6,19 @@ import {
   isEmail,
   hasNumbers,
   isDate,
+  replaceFound,
+  isEmpty
 } from "../src/js/categories/string";
+
+// isEmpty
+test("Проверка на пустоту", () => {
+  const tests = [
+    { target: "", toBe: "toBeTruthy" },
+    { target: "a", toBe: "toBeFalsy" },
+  ];
+
+  tests.map(({ target, toBe }) => expect(isEmpty.call({ target }))[toBe]());
+});
 
 // hasString
 test("Проверяет наличие значения в строке", () => {
@@ -150,4 +162,15 @@ test("Проверка на дату", () => {
   ];
 
   tests.map(({ target, args, toBe }) => expect(isDate.call({ target }, ...args))[toBe]());
+});
+
+// replaceFound
+test("Находит символы глобально по всей строке, которые можно заменить предоставленными", () => {
+  const tests = [
+    { target: "Hello, world!", args: [["H", "l"], ["h", "L"]], toBe: "heLLo, worLd!" },
+    { target: "Hello, world!", args: [["!"], ["?"]], toBe: "Hello, world?" },
+    { target: "Hello, world!", args: [[",", "w"], [".", "W"]], toBe: "Hello. World!" },
+  ];
+
+  tests.map(({ target, args, toBe }) => expect(replaceFound.call({ target }, ...args)).toStrictEqual({ target: toBe }));
 });

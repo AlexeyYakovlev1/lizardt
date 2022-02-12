@@ -6,8 +6,8 @@ import global from "../global/index";
 
 const objectCategory: IObjectCategory = {
   merge: global.merge,
-
   isObject: global.isObject,
+  isEmpty: global.isEmpty,
 
   hasProperty(property: string | Array<string>): boolean {
     if (global.isObject(this.target)) {

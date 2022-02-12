@@ -711,3 +711,17 @@ t("[button]").on("click", () => {
   });
 });
 ```
+
+### ```isEmpty()```:
+- **Description**
+Check for empty
+- **Return**
+Boolean
+- **Example**
+```Javascript
+const { t, createElement } = lizardt;
+
+// No children
+t(createElement({ tag: "h1", text: "Hello, all!" })).isEmpty(); // true
+t(document.documentElement).isEmpty(); // false
+```

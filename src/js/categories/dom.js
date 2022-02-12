@@ -23,6 +23,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // Global methods
 var index_1 = require("../global/index");
 var domCategory = {
+    isEmpty: index_1.default.isEmpty,
     getParent: function (selector) {
         if (this.target instanceof Element) {
             this.target = (typeof selector === "string" && selector.length) ? this.target.closest(selector) : this.target.parentElement;

@@ -16,6 +16,8 @@ import {
 import global from "../global/index";
 
 const domCategory: IDomCategory = {
+  isEmpty: global.isEmpty,
+
   getParent(selector?: string): IT {
     if (this.target instanceof Element) {
       this.target = (typeof selector === "string" && selector.length) ? this.target.closest(selector) : this.target.parentElement;
