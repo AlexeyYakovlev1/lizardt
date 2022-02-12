@@ -29,6 +29,18 @@ var ajaxCategory = {
             index_1.default.setError("\"".concat(url, "\" is not a string"));
         }
     },
+    allComplete: function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        if (args.length && args.every(function (item) { return item instanceof Promise; })) {
+            return Promise.all(args);
+        }
+        else {
+            index_1.default.setError("The argument list must not be empty and the content must be of type Promise");
+        }
+    }
 };
 for (var i in ajaxCategory) {
     // Exports every separately method

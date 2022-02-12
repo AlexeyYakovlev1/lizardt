@@ -34,9 +34,10 @@ export interface IArrayCategory {
 }
 
 export interface IAjaxCategory {
-  ajax(url: string, options: IAjaxOptions): Promise<any>;
+  ajax(url: string, options?: IAjaxOptions): Promise<any>;
   success(callback: (data: any) => any): Promise<any>;
   failure(callback: (data: any) => any): Promise<any>;
+  allComplete(...args): Promise<any>;
 }
 
 export interface IDomCategory {

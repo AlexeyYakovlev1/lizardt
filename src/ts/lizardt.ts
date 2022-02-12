@@ -21,12 +21,12 @@ const lizardt: ILizardt = {
   ...numberCategory,
   ...filterMethods({ ...ajaxCategory }, ["success"]),
   ...filterMethods(
-    { ...domCategory, ...arrayCategory, ...objectCategory, ...functionCategory },
+    { ...domCategory, ...arrayCategory, ...objectCategory, ...functionCategory, ...ajaxCategory },
     [],
-    ["createElement", "isArray", "isObject", "isFunction", "index", "scrollToElement"]
+    ["createElement", "isArray", "isObject", "isFunction", "index", "scrollToElement", "allComplete"]
   ),
 };
-const ajaxMethods: Omit<IAjaxCategory, "ajax"> = filterMethods({ ...ajaxCategory }, ["ajax"]);
+const ajaxMethods: Omit<IAjaxCategory, "ajax" | "allComplete"> = filterMethods({ ...ajaxCategory }, ["ajax"]);
 
 for (let i in ajaxMethods) {
   Promise.prototype[i] = ajaxMethods[i];

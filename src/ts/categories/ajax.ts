@@ -21,7 +21,7 @@ const ajaxCategory: IAjaxCategory = {
     }
   },
 
-  ajax(url: string, options: IAjaxOptions): Promise<any> {
+  ajax(url: string, options?: IAjaxOptions): Promise<any> {
     if (typeof url === "string") {
       const data: IAjaxOptions = (options && Object.keys(options).length) ? options : { method: "GET" };
 
@@ -32,6 +32,14 @@ const ajaxCategory: IAjaxCategory = {
       global.setError(`"${url}" is not a string`);
     }
   },
+
+  allComplete(...args): Promise<any> {
+    if (args.length && args.every(item => item instanceof Promise)) {
+      return Promise.all(args);
+    } else {
+      global.setError("The argument list must not be empty and the content must be of type Promise");
+    }
+  }
 }
 
 for (let i in ajaxCategory) {

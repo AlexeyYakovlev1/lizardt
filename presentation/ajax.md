@@ -59,3 +59,29 @@ res.failure(err => {
   throw err;
 });
 ```
+
+### ```allComplete()```:
+- **Description**
+Executed when all promises have completed successfully
+- **Return**
+Values
+- **Arguments**
+  - Promises **(required)**
+- **Example**
+```Javascript
+const { ajax, allComplete } = lizardt;
+const p1 = ajax(url, options);
+const p2 = new Promise((res, rej) => {
+  setTimeout(() => {
+    return res(3);
+  }, 2000);
+});
+
+allComplete(p1, p2)
+  .success(values => {
+    // [Response, 3]
+    console.log(values);
+  }).failure(err => {
+    throw err;
+  });
+```
