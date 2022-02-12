@@ -721,7 +721,8 @@ Boolean
 ```Javascript
 const { t, createElement } = lizardt;
 
-// No children
+// Haven't children
 t(createElement({ tag: "h1", text: "Hello, all!" })).isEmpty(); // true
+// Have children
 t(document.documentElement).isEmpty(); // false
 ```
