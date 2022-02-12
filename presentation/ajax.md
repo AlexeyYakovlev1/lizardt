@@ -69,8 +69,12 @@ Values
   - Promises **(required)**
 - **Example**
 ```Javascript
-const { ajax, allComplete } = lizardt;
-const p1 = ajax(url, options);
+const { allComplete } = lizardt;
+const p1 = new Promise((res, rej) => {
+  setTimeout(() => {
+    return res(2);
+  }, 5000);
+});
 const p2 = new Promise((res, rej) => {
   setTimeout(() => {
     return res(3);
@@ -79,7 +83,7 @@ const p2 = new Promise((res, rej) => {
 
 allComplete(p1, p2)
   .success(values => {
-    // [Response, 3]
+    // [2, 3]
     console.log(values);
   }).failure(err => {
     throw err;
