@@ -34,10 +34,10 @@ var index_3 = require("../global/index");
 var generalCategory = {
     compare: index_3.default.compare,
     copy: function (item) {
-        if (index_3.default.isArray(item)) {
+        if (Array.isArray(item)) {
             return __spreadArray([], item, true);
         }
-        else if (item && typeof item === "object" && !index_3.default.isArray(item) && !(item instanceof Element || item instanceof HTMLElement)) {
+        else if (item && typeof item === "object" && !Array.isArray(item) && !(item instanceof Element || item instanceof HTMLElement)) {
             return __assign({}, item);
         }
         return item;
@@ -53,7 +53,7 @@ var generalCategory = {
     },
     extend: function (options) {
         var _a;
-        if (options && typeof options === "object" && !index_3.default.isArray(options) && !(options instanceof Element || options instanceof HTMLElement)) {
+        if (options && typeof options === "object" && !Array.isArray(options) && !(options instanceof Element || options instanceof HTMLElement)) {
             for (var option in options) {
                 index_2.default.setAddition = (_a = {}, _a[option] = options[option], _a);
             }

@@ -11,7 +11,7 @@ const stringCategory: IStringCategory = {
         return this.target.includes(str);
       }
 
-      if (global.isArray(str) && str.every(item => typeof item === "string")) {
+      if (Array.isArray(str) && str.every(item => typeof item === "string")) {
         return str.every(string => this.target.includes(string));
       }
 

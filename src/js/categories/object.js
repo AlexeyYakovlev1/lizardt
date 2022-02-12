@@ -11,7 +11,7 @@ var objectCategory = {
             if (typeof property === "string") {
                 return property in this.target;
             }
-            if (index_1.default.isArray(property)) {
+            if (Array.isArray(property)) {
                 return property.every(function (prop) { return prop in _this.target; });
             }
         }

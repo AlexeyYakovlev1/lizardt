@@ -15,7 +15,7 @@ const objectCategory: IObjectCategory = {
         return property in this.target;
       }
 
-      if (global.isArray(property)) {
+      if (Array.isArray(property)) {
         return property.every(prop => prop in this.target);
       }
     } else {
@@ -47,12 +47,12 @@ const objectCategory: IObjectCategory = {
     }
   },
 
-  addProperty(item:object): IT {
+  addProperty(item: object): IT {
     if (objectCategory.isObject(this.target)) {
       if (objectCategory.isObject(item) || Array.isArray(item)) {
         if (Array.isArray(item)) {
           const done = item.every(el => objectCategory.isObject(el));
-          
+
           if (!done) {
             global.setError(`In array: ${item} all elements must be object`);
           }
@@ -63,7 +63,7 @@ const objectCategory: IObjectCategory = {
         } else {
           Object.keys(item).forEach(key => this.target[key] = item[key]);
         }
-  
+
         return this;
       } else {
         global.setError(`"${item}" must be object or array of object`);

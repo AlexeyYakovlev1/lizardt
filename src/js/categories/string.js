@@ -9,7 +9,7 @@ var stringCategory = {
             if (typeof str === "string") {
                 return this.target.includes(str);
             }
-            if (index_1.default.isArray(str) && str.every(function (item) { return typeof item === "string"; })) {
+            if (Array.isArray(str) && str.every(function (item) { return typeof item === "string"; })) {
                 return str.every(function (string) { return _this.target.includes(string); });
             }
             index_1.default.setError("\"".concat(str, "\" not a string or an array"));

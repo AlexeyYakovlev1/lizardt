@@ -3,8 +3,42 @@ import {
   unfold, each,
   hasItem, index, indexOf,
   filter, groupBy, addItem,
-  merge, sort, uniques
+  merge, sort, uniques,
+  find, slice, splice
 } from "../src/js/categories/array";
+
+// find
+test("Поиск подходящего элемента", () => {
+  const tests = [
+    { target: [1, 2, 3], args: [num => num > 1], toBe: 2 },
+    { target: [{ name: "Alex" }, { name: "Alex 2" }], args: [({ name }) => name === "Alex"], toBe: { name: "Alex" } },
+    { target: [1, 2, 3], args: [num => num < 0], toBe: undefined },
+  ];
+
+  tests.map(({ target, args, toBe }) => expect(find.call({ target }, ...args)).toStrictEqual({ target: toBe }));
+});
+
+// slice
+test("Возвращает новый массив, содержащий копию части исходного массива", () => {
+  const tests = [
+    { target: [1, 2, 3], args: [1], toBe: [2, 3] },
+    { target: [{ name: "Alex" }, { name: "Alex 2" }], args: [0, 2], toBe: [{ name: "Alex" }, { name: "Alex 2" }] },
+    { target: [1, 2, 3], args: [2], toBe: [3] },
+  ];
+
+  tests.map(({ target, args, toBe }) => expect(slice.call({ target }, ...args)).toStrictEqual({ target: toBe }));
+});
+
+// splice
+test("Изменяет содержимое массива, удаляя существующие элементы и/или добавляя новые", () => {
+  const tests = [
+    { target: [1, 2, 3], args: [0, 1], toBe: [1] },
+    { target: [{ name: "Alex" }, { name: "Alex 2" }], args: [0, 2], toBe: [{ name: "Alex" }, { name: "Alex 2" }] },
+    { target: [1, 2, 3], args: [2], toBe: [3] },
+  ];
+
+  tests.map(({ target, args, toBe }) => expect(splice.call({ target }, ...args)).toStrictEqual({ target: toBe }));
+});
 
 // last
 test("Вывод последнего элемента из массива", () => {

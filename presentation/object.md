@@ -73,21 +73,21 @@ Main object
 const { t } = lizardt;
 
 t({}).addProperty({name: "Alexey", age: 17}).target; // {name: "Alexey", age: 17}
-t({name: "Alexey"}).addProperty({age: 17}).target; // {name: 'Alexey', age: 17}
-t({}).addProperty([{name: "Alexey"}, {age: 17}]).target; // {name: 'Alexey', age: 17}
+t({name: "Alexey"}).addProperty({age: 17}).target; // {name: "Alexey", age: 17}
+t({}).addProperty([{name: "Alexey"}, {age: 17}]).target; // {name: "Alexey", age: 17}
 ```
 
 ### ```merge()```:
 - **Description**
 Concatenates arrays or objects
 - **Arguments**
-  - Item **(required)**
+  - Items **(required)**
 - **Return**
 Main object
 - **Example**
 ```Javascript
 const { t } = lizardt;
 
-t([1,2,3]).merge([4,5,6]).target; // [1,2,3,4,5,6]
+t({ name: "Alex" }).merge({ age: 17 }, { status: "JS-developer" }).target; // { name: "Alex", age: 17, status: "JS-developer" }
 t({ name: "A" }).merge({ status: "junior" }).target; // { name: "A", status: "junior" }
 ```

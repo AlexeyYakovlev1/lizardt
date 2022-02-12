@@ -192,7 +192,7 @@ t([1, 2, 3]).addItem(4, true).target; // [4, 1, 2, 3]
 - **Description**
 Concatenates arrays or objects
 - **Arguments**
-  - Item **(required)**
+  - Items **(required)**
 - **Return**
 Main object
 - **Example**
@@ -200,7 +200,7 @@ Main object
 const { t } = lizardt;
 
 t([1,2,3]).merge([4,5,6]).target; // [1,2,3,4,5,6]
-t({ name: "A" }).merge({ status: "junior" }).target; // { name: "A", status: "junior" }
+t([-3, -2]).merge([-1, 0], [1, 2, 3], [4, 5, 6]).target; // [-3, -2, -1, 0, 1, 2, 3, 4, 5, 6]
 ```
 
 ### ```sort()```:
@@ -229,4 +229,52 @@ const { t } = lizardt;
 
 t([1,1,1,111]).uniques().target; // [1, 111]
 t([1,4,2,3,3]).uniques().target; // [1, 4, 2, 3]
+```
+
+### ```find()```:
+- **Description**
+Returns the first matching element
+- **Arguments**
+  - callback **(required)**
+- **Return**
+Main object
+- **Example**
+```Javascript
+const { t } = lizardt;
+
+t([1, 4, 2, 3]).find(num => num > 2).target; // 4
+t([1, 4, 2, 3]).find(num => num % 2 === 0).target; // 4
+```
+
+### ```slice()```:
+- **Description**
+Returns a new array, returns the restored part of the original array
+- **Arguments**
+  - begin **(optional)**
+  - end **(optional)**
+- **Return**
+Main object
+- **Example**
+```Javascript
+const { t } = lizardt;
+
+t([1, 2, 3, 4]).slice(1, 2).target; // [2]
+t([1, 2, 3, 4]).slice(0, 2).target; // [1, 2]
+```
+
+### ```splice()```:
+- **Description**
+Modifies the contents of an array by removing existing elements and/or adding new ones.
+- **Arguments**
+  - begin **(required)**
+  - end **(optional)**
+  - replace **(optional)**
+- **Return**
+Main object
+- **Example**
+```Javascript
+const { t } = lizardt;
+
+t([1, 2, 3, 4, 5]).splice(0, 1).target; // [2, 3, 4, 5]
+t([1, 2, 3, 4, 5]).splice(0, 1, "0").target; // ["0", 2, 3, 4, 5]
 ```

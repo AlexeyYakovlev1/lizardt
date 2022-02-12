@@ -11,7 +11,49 @@ var arrayCategory = {
             return this;
         }
         else {
-            index_1.default.setError("\"".concat(this.target, "\" is not a list"));
+            index_1.default.setError("\"".concat(this.target, "\" is not a array"));
+        }
+    },
+    find: function () {
+        var _a;
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        if (Array.isArray(this.target)) {
+            this.target = (_a = this.target).find.apply(_a, args);
+            return this;
+        }
+        else {
+            index_1.default.setError("\"".concat(this.target, "\" is not a array"));
+        }
+    },
+    slice: function () {
+        var _a;
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        if (Array.isArray(this.target)) {
+            this.target = (_a = this.target).slice.apply(_a, args);
+            return this;
+        }
+        else {
+            index_1.default.setError("\"".concat(this.target, "\" is not a array"));
+        }
+    },
+    splice: function () {
+        var _a;
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        if (Array.isArray(this.target)) {
+            this.target = (_a = this.target).splice.apply(_a, args);
+            return this;
+        }
+        else {
+            index_1.default.setError("\"".concat(this.target, "\" is not a array"));
         }
     },
     groupBy: function (callback, cat) {

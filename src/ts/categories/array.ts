@@ -14,7 +14,37 @@ const arrayCategory: IArrayCategory = {
 
       return this;
     } else {
-      global.setError(`"${this.target}" is not a list`);
+      global.setError(`"${this.target}" is not a array`);
+    }
+  },
+
+  find(...args): IT {
+    if (Array.isArray(this.target)) {
+      this.target = this.target.find(...args);
+
+      return this;
+    } else {
+      global.setError(`"${this.target}" is not a array`);
+    }
+  },
+
+  slice(...args): IT {
+    if (Array.isArray(this.target)) {
+      this.target = this.target.slice(...args);
+
+      return this;
+    } else {
+      global.setError(`"${this.target}" is not a array`);
+    }
+  },
+
+  splice(...args): IT {
+    if (Array.isArray(this.target)) {
+      this.target = this.target.splice(...args);
+
+      return this;
+    } else {
+      global.setError(`"${this.target}" is not a array`);
     }
   },
 

@@ -22,7 +22,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var global = {
     checkList: function (target) {
-        return global.isArray(target) || target instanceof NodeList || target instanceof HTMLCollection;
+        return Array.isArray(target) || target instanceof NodeList || target instanceof HTMLCollection;
     },
     createElement: function (_a) {
         var tag = _a.tag, text = _a.text, styles = _a.styles, attributes = _a.attributes;
@@ -47,7 +47,7 @@ var global = {
                 parent.insertAdjacentElement(pos, element);
             }
             // Object
-            if (element && typeof element === "object" && !global.isArray(element) && !(element instanceof Element || element instanceof HTMLElement)) {
+            if (element && typeof element === "object" && !Array.isArray(element) && !(element instanceof Element || element instanceof HTMLElement)) {
                 var el = global.createElement(element);
                 parent.insertAdjacentElement(pos, el);
             }
@@ -68,7 +68,7 @@ var global = {
     },
     setAttributes: function (el, obj) {
         for (var attr in obj) {
-            el.setAttribute(attr, global.isArray(obj[attr]) ? obj[attr].join(" ") : obj[attr]);
+            el.setAttribute(attr, Array.isArray(obj[attr]) ? obj[attr].join(" ") : obj[attr]);
         }
         return el;
     },
@@ -139,7 +139,7 @@ var global = {
                 global.setError("\"".concat(findItem, "\" not a string"));
             }
         }
-        if (global.isArray(this.target)) {
+        if (Array.isArray(this.target)) {
             var res_1 = this.target.indexOf(findItem);
             if (res_1 === -1) {
                 this.target.map(function (item, index) {
@@ -162,7 +162,7 @@ var global = {
         return false;
     },
     isObject: function (item, callback) {
-        if (item && typeof item === "object" && !global.isArray(item)
+        if (item && typeof item === "object" && !Array.isArray(item)
             && !(item instanceof Element || item instanceof HTMLElement)) {
             if (global.isFunction(callback)) {
                 return callback();
@@ -171,30 +171,29 @@ var global = {
         }
         return false;
     },
-    isArray: function (item, callback) {
-        var validArray = Array.isArray(item);
-        if (validArray) {
-            if (global.isFunction(callback)) {
-                return callback();
-            }
-            return true;
+    merge: function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
         }
-        ;
-        return false;
-    },
-    merge: function (item) {
-        if (global.isObject(this.target) || global.isArray(this.target)) {
-            if (global.isObject(item) || global.isArray(item)) {
-                if (global.isObject(this.target) && global.isObject(item)) {
-                    this.target = __assign(__assign({}, this.target), item);
+        if (global.isObject(this.target) || Array.isArray(this.target)) {
+            if (args.every(function (item) { return global.isObject(item); }) || args.every(function (item) { return Array.isArray(item); })) {
+                if (Array.isArray(this.target) && args.every(function (item) { return Array.isArray(item); })) {
+                    this.target = __spreadArray([], this.target, true).concat(args.reduce(function (acc, item) {
+                        acc = __spreadArray([], acc, true).concat(item);
+                        return acc;
+                    }, []));
                 }
-                if (global.isArray(this.target) && global.isArray(item)) {
-                    this.target = __spreadArray([], this.target, true).concat(item);
+                if (global.isObject(this.target) && args.every(function (item) { return global.isObject(item); })) {
+                    this.target = __assign(__assign({}, this.target), args.reduce(function (acc, item) {
+                        Object.assign(acc, item);
+                        return acc;
+                    }, {}));
                 }
                 return this;
             }
             else {
-                global.setError("\"".concat(item, "\" must be an array or an object"));
+                global.setError("All content must be either an array or an object");
             }
         }
         else {

@@ -22,9 +22,9 @@ const generalCategory: IGeneralCategory = {
   compare: global.compare,
 
   copy(item: any): any {
-    if (global.isArray(item)) {
+    if (Array.isArray(item)) {
       return [...item];
-    } else if (item && typeof item === "object" && !global.isArray(item) && !(item instanceof Element || item instanceof HTMLElement)) {
+    } else if (item && typeof item === "object" && !Array.isArray(item) && !(item instanceof Element || item instanceof HTMLElement)) {
       return { ...item };
     }
 
@@ -44,7 +44,7 @@ const generalCategory: IGeneralCategory = {
   },
 
   extend(options: object): object {
-    if (options && typeof options === "object" && !global.isArray(options) && !(options instanceof Element || options instanceof HTMLElement)) {
+    if (options && typeof options === "object" && !Array.isArray(options) && !(options instanceof Element || options instanceof HTMLElement)) {
       for (let option in options) {
         additions.setAddition = { [option]: options[option] };
       }

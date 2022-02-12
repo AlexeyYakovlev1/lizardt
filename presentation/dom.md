@@ -670,20 +670,20 @@ undefined
 ```Javascript
 const { t } = lizardt;
 const whenShow = (target, data) => {
-  // <div class="section"></div>  'show' IntersectionObserverEntry {...}
+  // <div class="section"></div>  "show" IntersectionObserverEntry {...}
   console.log(target, "show", data);
 };
 
 const whenHide = (target, data) => {
-  // <div class="section"></div>  'hide' IntersectionObserverEntry {...}
+  // <div class="section"></div>  "hide" IntersectionObserverEntry {...}
   console.log(target, "hide", data);
 };
 
 const options = {
   // The element that is used as the viewport to test the visibility of the target element. Default is browser scope
-  root: document.querySelector('body'),
+  root: document.querySelector("body"),
   // Indentation around the root
-  rootMargin: '0px',
+  rootMargin: "0px",
   // A number or array of numbers indicating at what percentage of the selected target element the callback should fire
   threshold: 1
 }

@@ -1,13 +1,13 @@
 import {
-	IGlobal,
-	IElement,
-	ITypeOfSelector,
-	IT
-} from '../interfaces/index';
+  IGlobal,
+  IElement,
+  ITypeOfSelector,
+  IT
+} from "../interfaces/index";
 
 const global: IGlobal = {
   checkList(target: any): Boolean {
-    return global.isArray(target) || target instanceof NodeList || target instanceof HTMLCollection;
+    return Array.isArray(target) || target instanceof NodeList || target instanceof HTMLCollection;
   },
 
   createElement({ tag, text, styles, attributes }: IElement): HTMLElement {
@@ -38,7 +38,7 @@ const global: IGlobal = {
       }
 
       // Object
-      if (element && typeof element === "object" && !global.isArray(element) && !(element instanceof Element || element instanceof HTMLElement)) {
+      if (element && typeof element === "object" && !Array.isArray(element) && !(element instanceof Element || element instanceof HTMLElement)) {
         const el: HTMLElement = global.createElement(element);
 
         parent.insertAdjacentElement(pos, el);
@@ -66,7 +66,7 @@ const global: IGlobal = {
 
   setAttributes(el: HTMLElement, obj: object): HTMLElement {
     for (let attr in obj) {
-      el.setAttribute(attr, global.isArray(obj[attr]) ? obj[attr].join(" ") : obj[attr]);
+      el.setAttribute(attr, Array.isArray(obj[attr]) ? obj[attr].join(" ") : obj[attr]);
     }
 
     return el;
@@ -149,7 +149,7 @@ const global: IGlobal = {
       }
     }
 
-    if (global.isArray(this.target)) {
+    if (Array.isArray(this.target)) {
       let res = this.target.indexOf(findItem);
 
       if (res === -1) {
@@ -177,7 +177,7 @@ const global: IGlobal = {
   },
 
   isObject(item, callback?): boolean {
-    if (item && typeof item === "object" && !global.isArray(item)
+    if (item && typeof item === "object" && !Array.isArray(item)
       && !(item instanceof Element || item instanceof HTMLElement)) {
       if (global.isFunction(callback)) {
         return callback();
@@ -189,34 +189,31 @@ const global: IGlobal = {
     return false;
   },
 
-  isArray(item: any, callback?): boolean {
-    const validArray: boolean = Array.isArray(item);
+  merge(...args): IT {
+    if (global.isObject(this.target) || Array.isArray(this.target)) {
+      if (args.every(item => global.isObject(item)) || args.every(item => Array.isArray(item))) {
+        if (Array.isArray(this.target) && args.every(item => Array.isArray(item))) {
+          this.target = [...this.target].concat(args.reduce((acc, item) => {
+            acc = [...acc].concat(item);
 
-    if (validArray) {
-      if (global.isFunction(callback)) {
-        return callback();
-      }
-
-      return true;
-    };
-
-    return false;
-  },
-
-  merge(item: Array<any> | object): IT {
-    if (global.isObject(this.target) || global.isArray(this.target)) {
-      if (global.isObject(item) || global.isArray(item)) {
-        if (global.isObject(this.target) && global.isObject(item)) {
-          this.target = { ...this.target, ...item };
+            return acc;
+          }, []));
         }
 
-        if (global.isArray(this.target) && global.isArray(item)) {
-          this.target = [...this.target].concat(item);
+        if (global.isObject(this.target) && args.every(item => global.isObject(item))) {
+          this.target = {
+            ...this.target,
+            ...args.reduce((acc, item) => {
+              Object.assign(acc, item);
+
+              return acc;
+            }, {})
+          };
         }
 
         return this;
       } else {
-        global.setError(`"${item}" must be an array or an object`);
+        global.setError("All content must be either an array or an object");
       }
     } else {
       global.setError(`"${this.target}" must be an array or an object`);

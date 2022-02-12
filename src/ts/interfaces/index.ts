@@ -28,6 +28,9 @@ export interface IArrayCategory {
   merge(item: Array<any> | object): IT;
   sort(fromMore: boolean): IT;
   uniques(): IT;
+  slice(): IT;
+  splice(): IT;
+  find(): IT;
 }
 
 export interface IAjaxCategory {
@@ -187,9 +190,8 @@ export interface IGlobal {
   compare(item1: any, item2: any): boolean;
   getAllParents(num?: number): IT;
   indexOf(findItem: any): number;
-  merge(item: Array<any> | object): IT;
+  merge(): IT;
   isObject(item, callback?): boolean;
-  isArray(item: any, callback?): boolean;
   isFunction(item: any, callback?: () => any): boolean | any;
 }
 
