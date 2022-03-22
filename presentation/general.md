@@ -10,8 +10,6 @@ lizardt object
   - List **(optional)**
 - **Example**
 ```Javascript
-const { t } = lizardt;
-
 // the target will be a document.querySelector(".title");
 t("[.title]"); // lizardt object
 
@@ -40,7 +38,6 @@ Make a copy of the item
 Copy of item
 - **Example**
 ```Javascript
-const { copy } = lizardt;
 const users = ["alex", "andrey", "alexey"];
 const copyUsers = copy(users);
 
@@ -59,8 +56,6 @@ Compares 2 items
 Comparison result
 - **Example**
 ```Javascript
-const { compare, createElement } = lizardt;
-
 console.log(compare([1,2,3], [1,2,3])); // true
 console.log(compare([1,2,3], [1,2,3,4])); // false
 console.log(compare({}, {})); // true
@@ -81,8 +76,6 @@ Converts a value to a JSON string
 String JSON
 - **Example**
 ```Javascript
-const { jsonString } = lizardt;
-
 /*
 "[
  1,
@@ -104,7 +97,6 @@ Parses a JSON string
 Data
 - **Example**
 ```Javascript
-const { jsonParse, jsonString } = lizardt;
 const stringify = jsonString([1, 2, 3, 4]);
 
 // [1, 2, 3, 4]
@@ -120,8 +112,6 @@ Returns the data type
 String
 - **Example**
 ```Javascript
-const { typeOf } = lizardt;
-
 typeOf(NaN); // "NaN" (not an number)
 typeOf(null); // "null" (not an object)
 typeOf(0); // "number"
@@ -138,8 +128,6 @@ Adds new options, methods to the library
 Options
 - **Example**
 ```Javascript
-const { t, extend } = lizardt;
-
 extend({
   getElement(data = []) {
     if (data.length) {
@@ -182,8 +170,6 @@ console.log(tagOfInpit, dataOfInput);
 Boolean/Result your function
 - **Example**
 ```Javascript
-const { isArray } = lizardt;
-
 isArray([1,2,3]); // true
 isArray("") // false
 isArray([1,2,3], () => {
@@ -201,8 +187,6 @@ Creates an array from your first argument, the second argument **symb** is optio
 Array
 - **Example**
 ```Javascript
-const { array, t } = lizardt;
-
 array("abc"); // ["a","b","c"];
 array("ab,c", ","); // ["ab", "c"];
 array(t("[li]", true).target); // [li, li, li];

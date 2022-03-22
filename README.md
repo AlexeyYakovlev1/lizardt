@@ -12,17 +12,11 @@ npm install lizardt --save-dev
 
 ## Usage
 ```Javascript
-import lizardt from "lizardt";
-
-const { t, createElement, ... } = lizardt;
-```
-
-or 
-
-```Javascript
 import "lizardt";
 
-const { t, createElement, ... } = lizardt; // window.lizardt
+// window.t, window.createElement, ...
+console.log(t("231"));
+console.log(createElement({...}));
 ```
 
 ##  Methods

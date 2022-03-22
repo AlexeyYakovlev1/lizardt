@@ -30,7 +30,7 @@ for (var i in ajaxMethods) {
 for (var method in lizardt) {
     if (lizardt[method] instanceof Function) {
         lizardt[method] = lizardt[method].bind(lizardt);
+        window[method] = lizardt[method].bind(lizardt);
     }
 }
-window["lizardt"] = lizardt;
 exports.default = lizardt;

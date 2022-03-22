@@ -34,9 +34,8 @@ for (let i in ajaxMethods) {
 for (let method in lizardt) {
   if (lizardt[method] instanceof Function) {
     lizardt[method] = lizardt[method].bind(lizardt);
+    window[method] = lizardt[method].bind(lizardt);
   }
 }
-
-window["lizardt"] = lizardt;
 
 export default lizardt;
