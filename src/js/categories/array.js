@@ -213,6 +213,22 @@ var arrayCategory = {
     uniques: function () {
         if (Array.isArray(this.target)) {
             this.target = Array.from(new Set(this.target));
+            var checkOtherTypes_1 = function (arr) {
+                for (var i = 0; i < arr.length - 1; i++) {
+                    var _loop_1 = function (j) {
+                        if (index_1.default.compare(arr[i], arr[j])) {
+                            return { value: checkOtherTypes_1(arr.filter(function (item, index) { return index !== j; })) };
+                        }
+                    };
+                    for (var j = i + 1; j < arr.length; j++) {
+                        var state_1 = _loop_1(j);
+                        if (typeof state_1 === "object")
+                            return state_1.value;
+                    }
+                }
+                return arr;
+            };
+            this.target = checkOtherTypes_1(this.target);
             return this;
         }
         else {

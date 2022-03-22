@@ -220,7 +220,7 @@ t([1,4,2,3]).sort(true).target; // [4, 3, 2, 1]
 
 ### ```uniques()```:
 - **Description**
-
+Returns the unique elements in an array
 - **Return**
 Main object
 - **Example**
@@ -229,6 +229,9 @@ const { t } = lizardt;
 
 t([1,1,1,111]).uniques().target; // [1, 111]
 t([1,4,2,3,3]).uniques().target; // [1, 4, 2, 3]
+t([{ key: 1 }, { key: 1 }, 2]).uniques().target; // [{ key: 1 }, 2]
+t([{ key: 1 }, { key: 1 }, 2, document.body, document.querySelector("body")]).uniques().target; // [{ key: 1 }, 2, body]
+t([{ key: 1 }, { key: 1 }, [1,2], [1,2], document.body, document.querySelector("body")]).uniques().target; // [{ key: 1 }, [1,2], body]
 ```
 
 ### ```find()```:

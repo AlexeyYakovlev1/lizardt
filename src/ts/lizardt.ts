@@ -1,8 +1,6 @@
 // Interfaces
-import {
-  ILizardt,
-  IAjaxCategory
-} from "./interfaces/index";
+import { ILizardt } from "./interfaces/index";
+import { IAjaxCategory } from "./interfaces/categories";
 
 // Categories
 import generalCategory from "./categories/general";

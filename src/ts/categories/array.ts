@@ -224,6 +224,20 @@ const arrayCategory: IArrayCategory = {
     if (Array.isArray(this.target)) {
       this.target = Array.from(new Set(this.target));
 
+      const checkOtherTypes = arr => {
+        for (let i = 0; i < arr.length - 1; i++) {
+          for (let j = i + 1; j < arr.length; j++) {
+            if (global.compare(arr[i], arr[j])) {
+              return checkOtherTypes(arr.filter((item, index) => index !== j));
+            }
+          }
+        }
+
+        return arr;
+      }
+
+      this.target = checkOtherTypes(this.target);
+
       return this;
     } else {
       global.setError(`${this.target} must be array`);
