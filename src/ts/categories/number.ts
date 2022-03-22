@@ -1,5 +1,5 @@
 // Interfaces
-import { INumberCategory } from "../interfaces/index"
+import { INumberCategory } from "../interfaces/categories"
 
 // Global methods
 import global from "../global/index";

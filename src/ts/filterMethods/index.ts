@@ -1,5 +1,5 @@
 // Interfaces
-import { IFilterMethods } from "../interfaces/index";
+import { IFilterMethods } from "../interfaces/additional";
 
 const filterMethods: IFilterMethods = (category: object, unwanted: Array<string>, need: Array<string>): any => {
   const res = {};

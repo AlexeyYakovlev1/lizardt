@@ -2,7 +2,8 @@
 import global from "../global/index";
 
 // Interfaces
-import { IStringCategory, IT } from "../interfaces/index";
+import { IStringCategory } from "../interfaces/categories";
+import { IT } from "../interfaces/index";
 
 const stringCategory: IStringCategory = {
   hasString(str: string | Array<string>): boolean {

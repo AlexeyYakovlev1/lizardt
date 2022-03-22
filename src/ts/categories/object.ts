@@ -1,5 +1,6 @@
 // Interfaces
-import { IObjectCategory, IT } from "../interfaces/index";
+import { IObjectCategory } from "../interfaces/categories";
+import { IT } from "../interfaces/index";
 
 // Global
 import global from "../global/index";

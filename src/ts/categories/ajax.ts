@@ -1,5 +1,6 @@
 // Interfaces
-import { IAjaxCategory, IAjaxOptions } from "../interfaces/index";
+import { IAjaxOptions } from "../interfaces/options";
+import { IAjaxCategory } from "../interfaces/categories";
 
 // Global methods
 import global from "../global/index";

@@ -2,7 +2,8 @@
 import global from "../global/index";
 
 // Interfaces
-import { IArrayCategory, IT } from "../interfaces/index";
+import { IArrayCategory } from "../interfaces/categories";
+import { IT } from "../interfaces/index";
 
 const arrayCategory: IArrayCategory = {
   isEmpty: global.isEmpty,

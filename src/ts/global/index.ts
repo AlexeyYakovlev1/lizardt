@@ -1,7 +1,9 @@
 import {
-  IGlobal,
   IElement,
-  ITypeOfSelector,
+  ITypeOfSelector
+} from "../interfaces/options";
+import {
+  IGlobal,
   IT
 } from "../interfaces/index";
 

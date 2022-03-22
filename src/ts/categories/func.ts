@@ -1,6 +1,6 @@
 import {
   IFuncCategory
-} from "../interfaces/index";
+} from "../interfaces/categories";
 
 import global from "../global/index";
 
