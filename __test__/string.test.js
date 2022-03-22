@@ -170,6 +170,7 @@ test("Находит символы глобально по всей строк�
     { target: "Hello, world!", args: [["H", "l"], ["h", "L"]], toBe: "heLLo, worLd!" },
     { target: "Hello, world!", args: [["!"], ["?"]], toBe: "Hello, world?" },
     { target: "Hello, world!", args: [[",", "w"], [".", "W"]], toBe: "Hello. World!" },
+    { target: "135", args: [["1", "5"], ["2", "4"]], toBe: "234" },
   ];
 
   tests.map(({ target, args, toBe }) => expect(replaceFound.call({ target }, ...args)).toStrictEqual({ target: toBe }));

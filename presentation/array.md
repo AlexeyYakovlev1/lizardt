@@ -4,7 +4,7 @@
 - **Description**
 Returns the last element of the array
 - **Return**
-Main object
+lizardt object
 - **Example**
 ```Javascript
 t([1,2,3]).last().target; // 3
@@ -16,7 +16,7 @@ list("[li]").last().target;
 - **Description**
 Returns the center element of the array
 - **Return**
-Main object
+lizardt object
 - **Example**
 ```Javascript
 t(document.querySelectorAll("li")).center().target;
@@ -40,7 +40,7 @@ t([1,2,3,4]).each(item => item += 2);
 - **Description**
 Unpacks a nested array
 - **Return**
-Main object
+lizardt object
 - **Example**
 ```Javascript
 // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
@@ -94,7 +94,7 @@ Creates a new array with all elements that pass the test specified in the passed
   - Callback **(required)**
   - Context **(optional)**
 - **Return**
-Main object
+lizardt object
 - **Example**
 ```Javascript
 // [2, 4]
@@ -112,7 +112,7 @@ Sorting an array by groups
 - **Arguments**
   - Callback **(required)**
 - **Return**
-Main object
+lizardt object
 - **Example**
 ```Javascript
 const users = [
@@ -146,7 +146,7 @@ Replaces the value in the function ```t()``` with the found element at the index
 - **Arguments**
   - Num **(required)**
 - **Return**
-Main object
+lizardt object
 - **Example**
 ```Javascript
 console.log(t([1,2,3,4,5,6,7]).index(2).target); // 3
@@ -161,7 +161,7 @@ Adds a new element to the array
   - Item **(required)**
   - Start **(optional)**
 - **Return**
-Main object
+lizardt object
 - **Example**
 ```Javascript
 t([1, 2, 3]).addItem(4).target; // [1, 2, 3, 4]
@@ -174,7 +174,7 @@ Concatenates arrays or objects
 - **Arguments**
   - Items **(required)**
 - **Return**
-Main object
+lizardt object
 - **Example**
 ```Javascript
 t([1,2,3]).merge([4,5,6]).target; // [1,2,3,4,5,6]
@@ -187,7 +187,7 @@ Sorted array. If you use **fromMore**, then sorting will occur from the largest 
 - **Arguments**
   - fromMore **(optional)**
 - **Return**
-Main object
+lizardt object
 - **Example**
 ```Javascript
 t([1,4,2,3]).sort().target; // [1, 2, 3, 4]
@@ -198,7 +198,7 @@ t([1,4,2,3]).sort(true).target; // [4, 3, 2, 1]
 - **Description**
 Returns the unique elements in an array
 - **Return**
-Main object
+lizardt object
 - **Example**
 ```Javascript
 t([1,1,1,111]).uniques().target; // [1, 111]
@@ -214,7 +214,7 @@ Returns the first matching element
 - **Arguments**
   - callback **(required)**
 - **Return**
-Main object
+lizardt object
 - **Example**
 ```Javascript
 t([1, 4, 2, 3]).find(num => num > 2).target; // 4
@@ -228,7 +228,7 @@ Returns a new array, returns the restored part of the original array
   - begin **(optional)**
   - end **(optional)**
 - **Return**
-Main object
+lizardt object
 - **Example**
 ```Javascript
 t([1, 2, 3, 4]).slice(1, 2).target; // [2]
@@ -243,7 +243,7 @@ Modifies the contents of an array by removing existing elements and/or adding ne
   - end **(optional)**
   - replace **(optional)**
 - **Return**
-Main object
+lizardt object
 - **Example**
 ```Javascript
 t([1, 2, 3, 4, 5]).splice(0, 1).target; // [2, 3, 4, 5]

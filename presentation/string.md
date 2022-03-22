@@ -105,7 +105,7 @@ t("yes_1").hasNumbers(); // true
 - **Description**
 Finds characters globally throughout a string that can be replaced with the provided ones
 - **Return**
-Main object
+lizardt object
 - **Arguments**
   - findItems **(required)**
   - replaceValues **(required)**
@@ -113,6 +113,7 @@ Main object
 ```Javascript
 t("Hello, all!").replaceFound(["H", "l"], ["h", "L"]).target; // heLLo, aLL!
 t("aaabbbccc").replaceFound(["a", "c"], ["A", "C"]).target; // AAAbbbCCC
+t("135").replaceFound(["1", "5"], ["2", "4"]).target; // 234
 ```
 
 ### ```isEmpty()```:

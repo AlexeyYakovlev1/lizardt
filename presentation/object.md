@@ -35,7 +35,7 @@ t({ name: "Alexandr", age: 12 }).hasProperty(["name", "age", "status"]); // fals
 - **Description**
 Returns the keys of an object in an array
 - **Return**
-Main object
+lizardt object
 - **Example**
 ```Javascript
 t({ name: "alex", age: 17 }).keys().target; // ["name", "age"]
@@ -46,7 +46,7 @@ t({}).keys().target; // []
 - **Description**
 Returns the values of an object in an array
 - **Return**
-Main object
+lizardt object
 - **Example**
 ```Javascript
 t({ name: "Alexandr", age: 17 }).values().target; // ["Alexandr", 17]
@@ -55,11 +55,11 @@ t({}).values().target; // []
 
 ### ```addProperty()```:
 - **Description**
-Adds object properties to main object
+Adds object properties to lizardt object
 - **Arguments**
   - Item **(required)**
 - **Return**
-Main object
+lizardt object
 - **Example**
 ```Javascript
 t({}).addProperty({name: "Alexey", age: 17}).target; // {name: "Alexey", age: 17}
@@ -73,7 +73,7 @@ Concatenates arrays or objects
 - **Arguments**
   - Items **(required)**
 - **Return**
-Main object
+lizardt object
 - **Example**
 ```Javascript
 t({ name: "Alex" }).merge({ age: 17 }, { status: "JS-developer" }).target; // { name: "Alex", age: 17, status: "JS-developer" }

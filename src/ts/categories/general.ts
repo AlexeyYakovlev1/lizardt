@@ -1,10 +1,6 @@
 // Interfaces
-import {
-  IGeneralCategory,
-} from "../interfaces/categories";
-import {
-  IT,
-} from "../interfaces/index";
+import { IGeneralCategory } from "../interfaces/categories";
+import { IT } from "../interfaces/index";
 
 // Categories
 import arrayCategory from "../categories/array";
@@ -26,7 +22,7 @@ const generalCategory: IGeneralCategory = {
   copy(item: any): any {
     if (Array.isArray(item)) {
       return [...item];
-    } else if (item && typeof item === "object" && !Array.isArray(item) && !(item instanceof Element || item instanceof HTMLElement)) {
+    } else if (global.isObject(item)) {
       return { ...item };
     }
 
@@ -46,7 +42,7 @@ const generalCategory: IGeneralCategory = {
   },
 
   extend(options: object): object {
-    if (options && typeof options === "object" && !Array.isArray(options) && !(options instanceof Element || options instanceof HTMLElement)) {
+    if (global.isObject(options)) {
       for (let option in options) {
         additions.setAddition = { [option]: options[option] };
       }

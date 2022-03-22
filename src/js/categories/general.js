@@ -37,7 +37,7 @@ var generalCategory = {
         if (Array.isArray(item)) {
             return __spreadArray([], item, true);
         }
-        else if (item && typeof item === "object" && !Array.isArray(item) && !(item instanceof Element || item instanceof HTMLElement)) {
+        else if (index_3.default.isObject(item)) {
             return __assign({}, item);
         }
         return item;
@@ -53,7 +53,7 @@ var generalCategory = {
     },
     extend: function (options) {
         var _a;
-        if (options && typeof options === "object" && !Array.isArray(options) && !(options instanceof Element || options instanceof HTMLElement)) {
+        if (index_3.default.isObject(options)) {
             for (var option in options) {
                 index_2.default.setAddition = (_a = {}, _a[option] = options[option], _a);
             }

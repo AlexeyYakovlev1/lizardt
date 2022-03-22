@@ -4,7 +4,7 @@
 - **Description**
 Adding class or id for html element	
 - **Return**
-Main object
+lizardt object
 - **Arguments**
 	- Class names or id **(required)**
 - **Example**
@@ -16,7 +16,7 @@ t("[div]").add(".home", "#main");
 - **Description**
 Removing class or id for html element	
 - **Return**
-Main object
+lizardt object
 - **Arguments**
 	- Class names or id **(required)**
 - **Example**
@@ -28,7 +28,7 @@ t("[.title]").remove(".cursive", "#subtitle");
 - **Description**
 Add styles for html element	
 - **Return**
-Main object
+lizardt object
 - **Arguments**
 	- Object of styles **(required)**
 - **Example**
@@ -143,7 +143,7 @@ t("[input]").value();
 - **Description**
 Return current size html element
 - **Return**
-Main object
+lizardt object
 - **Example**
 ```Javascript
 t("[.title]").size().target; // { width: 500, height: 36 }
@@ -153,7 +153,7 @@ t("[.title]").size().target; // { width: 500, height: 36 }
 - **Description**
 Remove all styles from style attribute
 - **Return**
-Main object
+lizardt object
 - **Example**
 ```Javascript
 t("[.photo]").clearStyles();
@@ -208,7 +208,7 @@ t("[.wrapper]").getChildren(".title").target;
 - **Description**
 Gets the coordinates of an element on the page
 - **Return**
-Main object
+lizardt object
 - **Example**
 ```Javascript
 t("[.wrapper]").getCoordinates().target; // { top: 0, bottom: 0, left: 0, ... }
@@ -255,7 +255,7 @@ Adds a child to an element
 - **Arguments**
   - Child **(required)**
 - **Return**
-Main object
+lizardt object
 - **Example**
 ```Javascript
 t("[.wrapper]").addChild({
@@ -301,7 +301,7 @@ Removes a child from an element
 - **Arguments**
   - Child **(required)**
 - **Return**
-Main object
+lizardt object
 - **Example**
 ```Javascript
 t("[.wrapper]").removeChild(".title");
@@ -322,7 +322,7 @@ Adds the previous item
 - **Arguments**
   - Element **(required)**
 - **Return**
-Main object
+lizardt object
 - **Example**
 ```Javascript
 const block = createElement({
@@ -352,7 +352,7 @@ Adds the next item
 - **Arguments**
   - Element **(required)**
 - **Return**
-Main object
+lizardt object
 - **Example**
 ```Javascript
 const block = createElement({
@@ -382,7 +382,7 @@ Sets attributes to an element
 - **Arguments**
   - Attributes **(required)**
 - **Return**
-Main object
+lizardt object
 - **Example**
 ```Javascript
 t("[.list]").setAttribute({ "data-colors": ["green", "red", "yellow"], "data-length": "3" });
@@ -394,7 +394,7 @@ Removes attributes on an element
 - **Arguments**
   - Attribute **(required)**
 - **Return**
-Main object
+lizardt object
 - **Example**
 ```Javascript
 t("[.input]").removeAttribute("type");
@@ -408,7 +408,7 @@ allows you to return data as an array
 - **Arguments**
   - isArray **(optional)**
 - **Return**
-Main object
+lizardt object
 - **Example**
 ```Javascript
 t("[.form]").on("submit", event => {
@@ -439,7 +439,7 @@ t(document.documentElement).hasElement(document.body); // true
 - **Description**
 Removes the last html child
 - **Return**
-Main object
+lizardt object
 - **Example**
 ```Javascript
 t("[.wrapper]").removeLastChild();
@@ -449,7 +449,7 @@ t("[.wrapper]").removeLastChild();
 - **Description**
 Removes the first html child
 - **Return**
-Main object
+lizardt object
 - **Example**
 ```Javascript
 t("[.wrapper]").removeFirstChild();
@@ -474,7 +474,7 @@ Switches css classes for an html element
 - **Arguments**
   - className(s) **(required)**
 - **Return**
-Main object
+lizardt object
 - **Example**
 ```Javascript
 t("[button]").on("click", () => {
@@ -502,7 +502,7 @@ Gets the element's parent. If you use "selector", then it will find the parent b
 - **Arguments**
   - Selector **(optional)**
 - **Return**
-Main object
+lizardt object
 - **Example**
 ```Javascript
 // HTML Element with class .wrapper
@@ -521,7 +521,7 @@ Sets html markup
 - **Arguments**
   - Html string **(required)**
 - **Return**
-Main object
+lizardt object
 - **Example**
 ```Javascript
 
@@ -550,7 +550,7 @@ t(checkbox).on("click", () => console.log(t(checkbox).isChecked()));
 - **Description**
 Shows an element on the page. If you have some kind of display, then it will apply it, if not, then it will apply the block
 - **Return**
-Main object
+lizardt object
 - **Example**
 ```Javascript
 const btn = t("[.button]").target;
@@ -563,7 +563,7 @@ t(btn).on("click", () => t(target).show());
 - **Description**
 Hides an element on the page
 - **Return**
-Main object
+lizardt object
 - **Example**
 ```Javascript
 const btn = t("[.button]").target;
@@ -576,7 +576,7 @@ t(btn).on("click", () => t(target).hide());
 - **Description**
 Removes child elements
 - **Return**
-Main object
+lizardt object
 - **Example**
 ```Javascript
 t("[.list]").clearOfChilds();
@@ -586,7 +586,7 @@ t("[.list]").clearOfChilds();
 - **Description**
 Clears an element from selectors
 - **Return**
-Main object
+lizardt object
 - **Example**
 ```Javascript
 t("[.title]").clearSelectors();
