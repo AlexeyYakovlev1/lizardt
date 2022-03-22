@@ -9,8 +9,6 @@ Returns the index of the beginning of the string that matches the search. Also a
 Index of the beginning of the string
 - **Example**
 ```Javascript
-const { t } = lizardt;
-
 t("Hello, world!").indexOf("ello"); // 1
 t("Hello, world!").indexOf("D"); // -1
 t([1,2,3,4,5]).indexOf(2); // 1
@@ -26,8 +24,6 @@ Checks the contents of a string
 Boolean
 - **Example**
 ```Javascript
-const { t } = lizardt;
-
 t("Hello, world!").hasString("ello"); // true
 t("Hello, world!").hasString("D"); // false
 t("Hello, world!").hasString(["D", "ello"]); // false
@@ -44,8 +40,6 @@ Checks the beginning of a string
 Boolean
 - **Example**
 ```Javascript
-const { t } = lizardt;
-
 t("Hello, world!").beginWith("ello"); // false
 t("Hello, world!").beginWith("D"); // false
 
@@ -63,8 +57,6 @@ Checks the end of a string
 Boolean
 - **Example**
 ```Javascript
-const { t } = lizardt;
-
 t("Hello, world!").endWith("!"); // true
 t("Hello, world!").endWith("Ddwa"); // false
 
@@ -79,8 +71,6 @@ Email Checker
 Boolean
 - **Example**
 ```Javascript
-const { t } = lizardt;
-
 t("Hello, world!").isEmail(); // false
 t("lizardt@mail.com").isEmail(); // true
 ```
@@ -94,8 +84,6 @@ Checks for a date that is delimited by a **symbol**
 Boolean
 - **Example**
 ```Javascript
-const { t } = lizardt;
-
 t("10/10/2022").isDate("/"); // true
 t("10-10-2022").isDate("-"); // true
 t("10.10.2022").isDate("."); // true
@@ -109,8 +97,6 @@ Checks if there are numbers in a string
 Boolean
 - **Example**
 ```Javascript
-const { t } = lizardt;
-
 t("no").hasNumbers(); // false
 t("yes_1").hasNumbers(); // true
 ```
@@ -125,8 +111,6 @@ Main object
   - replaceValues **(required)**
 - **Example**
 ```Javascript
-const { t } = lizardt;
-
 t("Hello, all!").replaceFound(["H", "l"], ["h", "L"]).target; // heLLo, aLL!
 t("aaabbbccc").replaceFound(["a", "c"], ["A", "C"]).target; // AAAbbbCCC
 ```
@@ -138,8 +122,6 @@ Check for empty
 Boolean
 - **Example**
 ```Javascript
-const { t } = lizardt;
-
 t("hello").isEmpty(); // false
 t("").isEmpty(); // true
 ```

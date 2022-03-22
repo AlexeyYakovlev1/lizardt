@@ -7,8 +7,6 @@ Returns the last element of the array
 Main object
 - **Example**
 ```Javascript
-const { t } = lizardt;
-
 t([1,2,3]).last().target; // 3
 t(document.querySelectorAll("li")).last().target;
 list("[li]").last().target;
@@ -21,8 +19,6 @@ Returns the center element of the array
 Main object
 - **Example**
 ```Javascript
-const { t, list } = lizardt;
-
 t(document.querySelectorAll("li")).center().target;
 t([1,2,3,4,5,6,7]).center().target; // 4
 list("[li]").center().target;
@@ -37,8 +33,6 @@ Turns into an array and iterates over it
 Array
 - **Example**
 ```Javascript
-const { t } = lizardt;
-
 t([1,2,3,4]).each(item => item += 2);
 ```
 
@@ -49,8 +43,6 @@ Unpacks a nested array
 Main object
 - **Example**
 ```Javascript
-const { t } = lizardt;
-
 // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
 t([[[1, 2, 3, 4], [5, 6, [7, 8, 9, [10, 11, [12, 13]]]]]]).unfold().target;
 ```
@@ -65,8 +57,6 @@ Removes an array element by index
 Array
 - **Example**
 ```Javascript
-const { t } = lizardt;
-
 t([1, 2, 3]).removeItem(0, 500); // [500, 2, 3]
 ```
 
@@ -77,8 +67,6 @@ Checks if an element exists in an array
 Boolean
 - **Example**
 ```Javascript
-const { t } = lizardt;
-
 t([1, 2, 3, 4]).hasItem(1); // true
 t([1, 2, 3, 4]).hasItem("1"); // false
 t([{ name: "Alexandr" }, { name: "Andrey" }]).hasItem({ name: "Alexandr" }); // true
@@ -93,8 +81,6 @@ Returns the index of the beginning of the string that matches the search. Also a
 Index of the beginning of the string or index of element in array
 - **Example**
 ```Javascript
-const { t } = lizardt;
-
 t("Hello, world!").indexOf("ello"); // 1
 t("Hello, world!").indexOf("D"); // -1
 t([1,2,3,4,5]).indexOf(2); // 1
@@ -111,8 +97,6 @@ Creates a new array with all elements that pass the test specified in the passed
 Main object
 - **Example**
 ```Javascript
-const { t } = lizardt;
-
 // [2, 4]
 t([1,2,3,4,5]).filter(num => num % 2 === 0).target;
 
@@ -131,7 +115,6 @@ Sorting an array by groups
 Main object
 - **Example**
 ```Javascript
-const { t } = lizardt;
 const users = [
   { name: "Alexandr", age: 17 },
   { name: "Michail", age: 19 },
@@ -166,8 +149,6 @@ Replaces the value in the function ```t()``` with the found element at the index
 Main object
 - **Example**
 ```Javascript
-const { t } = lizardt;
-
 console.log(t([1,2,3,4,5,6,7]).index(2).target); // 3
 console.log(t([1,2,3,4,5,6,7]).index(-2).target); // 5
 t("[li]", true).index(2).styles({color: "red"}).txt("my index = 2");
@@ -183,7 +164,6 @@ Adds a new element to the array
 Main object
 - **Example**
 ```Javascript
-const { t } = lizardt;
 t([1, 2, 3]).addItem(4).target; // [1, 2, 3, 4]
 t([1, 2, 3]).addItem(4, true).target; // [4, 1, 2, 3]
 ```
@@ -197,8 +177,6 @@ Concatenates arrays or objects
 Main object
 - **Example**
 ```Javascript
-const { t } = lizardt;
-
 t([1,2,3]).merge([4,5,6]).target; // [1,2,3,4,5,6]
 t([-3, -2]).merge([-1, 0], [1, 2, 3], [4, 5, 6]).target; // [-3, -2, -1, 0, 1, 2, 3, 4, 5, 6]
 ```
@@ -212,8 +190,6 @@ Sorted array. If you use **fromMore**, then sorting will occur from the largest 
 Main object
 - **Example**
 ```Javascript
-const { t } = lizardt;
-
 t([1,4,2,3]).sort().target; // [1, 2, 3, 4]
 t([1,4,2,3]).sort(true).target; // [4, 3, 2, 1]
 ```
@@ -225,8 +201,6 @@ Returns the unique elements in an array
 Main object
 - **Example**
 ```Javascript
-const { t } = lizardt;
-
 t([1,1,1,111]).uniques().target; // [1, 111]
 t([1,4,2,3,3]).uniques().target; // [1, 4, 2, 3]
 t([{ key: 1 }, { key: 1 }, 2]).uniques().target; // [{ key: 1 }, 2]
@@ -243,8 +217,6 @@ Returns the first matching element
 Main object
 - **Example**
 ```Javascript
-const { t } = lizardt;
-
 t([1, 4, 2, 3]).find(num => num > 2).target; // 4
 t([1, 4, 2, 3]).find(num => num % 2 === 0).target; // 4
 ```
@@ -259,8 +231,6 @@ Returns a new array, returns the restored part of the original array
 Main object
 - **Example**
 ```Javascript
-const { t } = lizardt;
-
 t([1, 2, 3, 4]).slice(1, 2).target; // [2]
 t([1, 2, 3, 4]).slice(0, 2).target; // [1, 2]
 ```
@@ -276,8 +246,6 @@ Modifies the contents of an array by removing existing elements and/or adding ne
 Main object
 - **Example**
 ```Javascript
-const { t } = lizardt;
-
 t([1, 2, 3, 4, 5]).splice(0, 1).target; // [2, 3, 4, 5]
 t([1, 2, 3, 4, 5]).splice(0, 1, "0").target; // ["0", 2, 3, 4, 5]
 ```
@@ -289,8 +257,6 @@ Check for empty
 Boolean
 - **Example**
 ```Javascript
-const { t } = lizardt;
-
 t([]).isEmpty(); // true
 t([1]).isEmpty(); // false
 ```

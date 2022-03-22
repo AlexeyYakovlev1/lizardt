@@ -10,8 +10,6 @@
 Boolean/Result your function
 - **Example**
 ```Javascript
-const {isObject} = lizardt;
-
 isObject({}); // true
 isObject("") // false
 isObject({}, () => {
@@ -28,8 +26,6 @@ Checks for the presence of a property in an object. If you pass an array, then i
 Boolean
 - **Example**
 ```Javascript
-const { t } = lizardt;
-
 t({}).hasProperty("name"); // false
 t({ name: "Alexandr", age: 12 }).hasProperty(["name", "age"]); // true
 t({ name: "Alexandr", age: 12 }).hasProperty(["name", "age", "status"]); // false
@@ -42,8 +38,6 @@ Returns the keys of an object in an array
 Main object
 - **Example**
 ```Javascript
-const { t } = lizardt;
-
 t({ name: "alex", age: 17 }).keys().target; // ["name", "age"]
 t({}).keys().target; // []
 ```
@@ -55,8 +49,6 @@ Returns the values of an object in an array
 Main object
 - **Example**
 ```Javascript
-const { t } = lizardt;
-
 t({ name: "Alexandr", age: 17 }).values().target; // ["Alexandr", 17]
 t({}).values().target; // []
 ```
@@ -70,8 +62,6 @@ Adds object properties to main object
 Main object
 - **Example**
 ```Javascript
-const { t } = lizardt;
-
 t({}).addProperty({name: "Alexey", age: 17}).target; // {name: "Alexey", age: 17}
 t({name: "Alexey"}).addProperty({age: 17}).target; // {name: "Alexey", age: 17}
 t({}).addProperty([{name: "Alexey"}, {age: 17}]).target; // {name: "Alexey", age: 17}
@@ -86,8 +76,6 @@ Concatenates arrays or objects
 Main object
 - **Example**
 ```Javascript
-const { t } = lizardt;
-
 t({ name: "Alex" }).merge({ age: 17 }, { status: "JS-developer" }).target; // { name: "Alex", age: 17, status: "JS-developer" }
 t({ name: "A" }).merge({ status: "junior" }).target; // { name: "A", status: "junior" }
 ```
@@ -99,8 +87,6 @@ Check for empty
 Boolean
 - **Example**
 ```Javascript
-const { t } = lizardt;
-
 t({}).isEmpty(); // true
 t({ name: "alex" }).isEmpty(); // false
 ```

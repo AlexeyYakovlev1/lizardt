@@ -9,8 +9,6 @@ Main object
 	- Class names or id **(required)**
 - **Example**
 ```Javascript
-const { t } = lizardt;
-
 t("[div]").add(".home", "#main");
 ```
 
@@ -23,8 +21,6 @@ Main object
 	- Class names or id **(required)**
 - **Example**
 ```Javascript
-const { t } = lizardt;
-
 t("[.title]").remove(".cursive", "#subtitle");
 ```
 
@@ -37,8 +33,6 @@ Main object
 	- Object of styles **(required)**
 - **Example**
 ```Javascript
-const { t } = lizardt;
-
 t("[div]").styles({ width: "125px" });
 ```
 
@@ -53,7 +47,7 @@ undefined
 	- Options **(optional)**
 - **Example**
 ```Javascript
-const { t } = lizardt;
+
 
 t("[button]").on("click", () =>  {
 	console.log("Hello");
@@ -63,8 +57,6 @@ t("[button]").on("click", () =>  {
 or
 
 ```Javascript
-const { t } = lizardt;
-
 t("[button]").on("click", () =>  {
 	console.log("Hello");
 }, { once: true });
@@ -82,7 +74,7 @@ undefined
 	- Use capture **(optional)**
 - **Example**
 ```Javascript
-const { t } = lizardt;
+
 
 let count = 0;
 
@@ -102,8 +94,6 @@ t("[.button]").on("click", counter);
 or
 
 ```Javascript
-const { t } = lizardt;
-
 let count = 0;
 
 function counter() {
@@ -128,8 +118,6 @@ Sets the text of an element or returns it
 Text of element
 - **Example**
 ```Javascript
-const { t } = lizardt;
-
 t("[.btn]").txt("Click me!");
 
 // "Click me!"
@@ -145,8 +133,6 @@ Sets a value to an element or returns it
 Value of element
 - **Example**
 ```Javascript
-const { t } = lizardt;
-
 t("[input]").value("Enter password");
 
 // "Enter password"
@@ -160,8 +146,6 @@ Return current size html element
 Main object
 - **Example**
 ```Javascript
-const { t } = lizardt;
-
 t("[.title]").size().target; // { width: 500, height: 36 }
 ```
 
@@ -172,8 +156,6 @@ Remove all styles from style attribute
 Main object
 - **Example**
 ```Javascript
-const { t } = lizardt;
-
 t("[.photo]").clearStyles();
 ```
 
@@ -186,14 +168,12 @@ List of attributes. When used **attribute** returns an object with attribute dat
   - Attribute **(optional)**
 - **Example**
 ```Javascript
-const { t } = lizardt;
+
 
 t("[.button]").getAttributes().target; // [{ name: "type", val... }]
 ```
 or
 ```Javascript
-const { t } = lizardt;
-
 t("[.button]").getAttributes("type").target; // { name: "type", val... }
 ```
 
@@ -206,8 +186,6 @@ Gets all children in this element
 List of children. When we use **selector**, it returns the element itself
 - **Example**
 ```Javascript
-const { t } = lizardt;
-
 /*
 [{
   $nextEl: null,
@@ -222,8 +200,6 @@ t("[.wrapper]").getChildren().target;
 or
 
 ```Javascript
-const { t } = lizardt;
-
 // Html element
 t("[.wrapper]").getChildren(".title").target;
 ```
@@ -235,8 +211,6 @@ Gets the coordinates of an element on the page
 Main object
 - **Example**
 ```Javascript
-const { t } = lizardt;
-
 t("[.wrapper]").getCoordinates().target; // { top: 0, bottom: 0, left: 0, ... }
 ```
 
@@ -249,15 +223,13 @@ Gets all the parents of an element, including itself. When we use **num** the pa
 List of parents
 - **Example**
 ```Javascript
-const { t } = lizardt;
-
 t("[.wrapper]").getAllParents(); // [HtmlElement, ...]
 ```
-or
-```Javascript
-const { t } = lizardt;
 
-t("[.wrapper]").getAllParents(1); HtmlElement under the number 1
+or
+
+```Javascript
+t("[.wrapper]").getAllParents(1); // HtmlElement under the number 1
 ```
 
 ### ```createElement()```:
@@ -269,8 +241,6 @@ Creates HTML an element
 HTML element
 - **Example**
 ```Javascript
-const { createElement } = lizardt;
-
 const title = createElement({
     tag: "h1",
     text: "Hello, Lizard!",
@@ -288,8 +258,6 @@ Adds a child to an element
 Main object
 - **Example**
 ```Javascript
-const { t } = lizardt;
-
 t("[.wrapper]").addChild({
     tag: "h1",
     text: "Hello, Lizard!",
@@ -301,7 +269,6 @@ t("[.wrapper]").addChild({
 or
 
 ```Javascript
-const { t, createElement } = lizardt;
 const subtitle = createElement({ tag: "h2", text: "Subtitle" });
 
 t("[.wrapper]").addChild([
@@ -318,7 +285,6 @@ t("[.wrapper]").addChild([
 or 
 
 ```Javascript
-const { t, createElement } = lizardt;
 const title = createElement({
     tag: "h1",
     text: "Hello, Lizard!",
@@ -338,15 +304,12 @@ Removes a child from an element
 Main object
 - **Example**
 ```Javascript
-const { t } = lizardt;
-
 t("[.wrapper]").removeChild(".title");
 ```
 
 or
 
 ```Javascript
-const { t } = lizardt;
 const title = t("[.wrapper]").getChildren(".title");
 
 t("[.wrapper]").removeChild([title, ".subtitle"]);
@@ -362,7 +325,6 @@ Adds the previous item
 Main object
 - **Example**
 ```Javascript
-const { t } = lizardt;
 const block = createElement({
   tag: "div",
   styles: {
@@ -393,7 +355,6 @@ Adds the next item
 Main object
 - **Example**
 ```Javascript
-const { t } = lizardt;
 const block = createElement({
   tag: "div",
   styles: {
@@ -424,8 +385,6 @@ Sets attributes to an element
 Main object
 - **Example**
 ```Javascript
-const { t } = lizardt;
-
 t("[.list]").setAttribute({ "data-colors": ["green", "red", "yellow"], "data-length": "3" });
 ```
 
@@ -438,8 +397,6 @@ Removes attributes on an element
 Main object
 - **Example**
 ```Javascript
-const { t } = lizardt;
-
 t("[.input]").removeAttribute("type");
 t("[.input]").removeAttribute(["type", "placeholder"]);
 ```
@@ -454,8 +411,6 @@ allows you to return data as an array
 Main object
 - **Example**
 ```Javascript
-const { t } = lizardt;
-
 t("[.form]").on("submit", event => {
     event.preventDefault();
 
@@ -463,7 +418,6 @@ t("[.form]").on("submit", event => {
     console.log(t("[.form]").data(true).target); // ["name: 'Alex'", "email: 'al@gmail.com'"", ...]
 })
 ```
-
 ### ```hasElement()```:
 - **Description**
 Checks if the parent element has a child element. If you pass an array then it will check for the presence of each child in the parent
@@ -473,7 +427,6 @@ Checks if the parent element has a child element. If you pass an array then it w
 Boolean
 - **Example**
 ```Javascript
-const { t } = lizardt;
 const subtitle = t("[.subtitle]").target;
 
 t("[.wrapper]").hasElement([".title", subtitle]); // true
@@ -489,8 +442,6 @@ Removes the last html child
 Main object
 - **Example**
 ```Javascript
-const { t } = lizardt;
-
 t("[.wrapper]").removeLastChild();
 ```
 
@@ -501,8 +452,6 @@ Removes the first html child
 Main object
 - **Example**
 ```Javascript
-const { t } = lizardt;
-
 t("[.wrapper]").removeFirstChild();
 ```
 
@@ -515,8 +464,6 @@ Checks for the presence of classes/ids on an html element
 Boolean
 - **Example**
 ```Javascript
-const { t } = lizardt;
-
 t("[.wrapper]").contains("#block"); // true
 t("[.wrapper]").contains(".block", "#item"); // false
 ```
@@ -530,8 +477,6 @@ Switches css classes for an html element
 Main object
 - **Example**
 ```Javascript
-const {t} = lizardt;
-
 t("[button]").on("click", () => {
     t("[.title]").toggle("hidden", "subtitle");
 })
@@ -546,8 +491,6 @@ Checks if an element has a parent
 Boolean
 - **Example**
 ```Javascript
-const { t } = lizardt;
-
 t("[.title]").hasParent(".wrapper"); // true
 t("[.title]").hasParent(document.documentElement); // true
 t("[.title]").hasParent(".subtitle"); // false
@@ -562,8 +505,6 @@ Gets the element's parent. If you use "selector", then it will find the parent b
 Main object
 - **Example**
 ```Javascript
-const { t } = lizardt;
-
 // HTML Element with class .wrapper
 t("[body > .wrapper > .title]").getParent().target;
 
@@ -583,7 +524,7 @@ Sets html markup
 Main object
 - **Example**
 ```Javascript
-const { t } = lizardt;
+
 
 /*
   <body>
@@ -600,7 +541,6 @@ Returns the state of the checkbox or radio
 Boolean
 - **Example**
 ```Javascript
-const { t } = lizardt;
 const checkbox = t("[input[type=checkbox]]").target;
 
 t(checkbox).on("click", () => console.log(t(checkbox).isChecked()));
@@ -613,7 +553,6 @@ Shows an element on the page. If you have some kind of display, then it will app
 Main object
 - **Example**
 ```Javascript
-const { t } = lizardt;
 const btn = t("[.button]").target;
 const target = t("[.target]").target;
 
@@ -627,7 +566,6 @@ Hides an element on the page
 Main object
 - **Example**
 ```Javascript
-const { t } = lizardt;
 const btn = t("[.button]").target;
 const target = t("[.target]").target;
 
@@ -641,7 +579,6 @@ Removes child elements
 Main object
 - **Example**
 ```Javascript
-const { t } = lizardt;
 t("[.list]").clearOfChilds();
 ```
 
@@ -652,8 +589,6 @@ Clears an element from selectors
 Main object
 - **Example**
 ```Javascript
-const { t } = lizardt;
-
 t("[.title]").clearSelectors();
 ```
 
@@ -668,7 +603,6 @@ Helps to asynchronously track the change of the intersection of an element with 
 undefined
 - **Example**
 ```Javascript
-const { t } = lizardt;
 const whenShow = (target, data) => {
   // <div class="section"></div>  "show" IntersectionObserverEntry {...}
   console.log(target, "show", data);
@@ -701,8 +635,6 @@ Scrolls the page to a specific element
 undefined
 - **Example**
 ```Javascript
-const { t, scrollToElement } = lizardt;
-
 t("[button]").on("click", () => {
   scrollToElement(t("[header]").target, {
     behavior: "smooth", // Scroll animation ("smooth" or "auto")
@@ -719,8 +651,6 @@ Check for empty
 Boolean
 - **Example**
 ```Javascript
-const { t, createElement } = lizardt;
-
 // Haven't children
 t(createElement({ tag: "h1", text: "Hello, all!" })).isEmpty(); // true
 // Have children

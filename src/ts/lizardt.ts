@@ -17,14 +17,13 @@ import filterMethods from "./filterMethods/index";
 const lizardt: ILizardt = {
   ...generalCategory,
   ...numberCategory,
-  ...filterMethods({ ...ajaxCategory }, ["success"]),
   ...filterMethods(
     { ...domCategory, ...arrayCategory, ...objectCategory, ...functionCategory, ...ajaxCategory },
     [],
-    ["createElement", "isArray", "isObject", "isFunction", "index", "scrollToElement", "allComplete"]
+    ["createElement", "isArray", "isObject", "isFunction", "index", "scrollToElement", "allComplete", "ajax"]
   ),
 };
-const ajaxMethods: Omit<IAjaxCategory, "ajax" | "allComplete"> = filterMethods({ ...ajaxCategory }, ["ajax"]);
+const ajaxMethods: Omit<IAjaxCategory, "ajax" | "allComplete"> = filterMethods(ajaxCategory, ["ajax"]);
 
 for (let i in ajaxMethods) {
   Promise.prototype[i] = ajaxMethods[i];
@@ -33,8 +32,8 @@ for (let i in ajaxMethods) {
 // Set context at lizardt
 for (let method in lizardt) {
   if (lizardt[method] instanceof Function) {
-    lizardt[method] = lizardt[method].bind(lizardt);
     window[method] = lizardt[method].bind(lizardt);
+    lizardt[method] = lizardt[method].bind(lizardt);
   }
 }
 

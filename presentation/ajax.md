@@ -10,7 +10,6 @@ Promise
   - options **(required)** default { method: "GET" }
 - **Example**
 ```Javascript
-const { ajax } = lizardt;
 const res = ajax("https://api.nasa.gov/planetary/apod?api_key=dYu7b9XH8BUjyRmkydd61ApW3eZBJFTN88jQRsJJ", {
   method: "GET",
   // Fires before sending data to the server
@@ -37,7 +36,6 @@ Promise
   - callback **(required)**
 - **Example**
 ```Javascript
-const { ajax } = lizardt;
 const res = ajax("https://api.nasa.gov/planetary/apod?api_key=dYu7b9XH8BUjyRmkydd61ApW3eZBJFTN88jQRsJJ");
 
 res.success(data => data.json());
@@ -52,7 +50,6 @@ Promise
   - callback **(required)**
 - **Example**
 ```Javascript
-const { ajax } = lizardt;
 const res = ajax("https://api.nasa.gov/planetary/apod?api_key=dYu7b9XH8BUjyRmkydd61ApW3eZBJFTN88jQRsJ");
 
 res.failure(err => {
@@ -69,7 +66,6 @@ Values
   - Promises **(required)**
 - **Example**
 ```Javascript
-const { allComplete } = lizardt;
 const p1 = new Promise((res, rej) => {
   setTimeout(() => {
     return res(2);

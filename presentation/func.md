@@ -10,8 +10,6 @@
 Boolean/Result your function
 - **Example**
 ```Javascript
-const { isFunction } = lizardt;
-
 isFunction("12") // false
 isFunction(console.log) // true
 isFunction(console.log, () => {

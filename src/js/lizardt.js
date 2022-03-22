@@ -21,16 +21,16 @@ var array_1 = require("./categories/array");
 var ajax_1 = require("./categories/ajax");
 // Additional methods
 var index_1 = require("./filterMethods/index");
-var lizardt = __assign(__assign(__assign(__assign({}, general_1.default), number_1.default), (0, index_1.default)(__assign({}, ajax_1.default), ["success"])), (0, index_1.default)(__assign(__assign(__assign(__assign(__assign({}, dom_1.default), array_1.default), object_1.default), func_1.default), ajax_1.default), [], ["createElement", "isArray", "isObject", "isFunction", "index", "scrollToElement", "allComplete"]));
-var ajaxMethods = (0, index_1.default)(__assign({}, ajax_1.default), ["ajax"]);
+var lizardt = __assign(__assign(__assign({}, general_1.default), number_1.default), (0, index_1.default)(__assign(__assign(__assign(__assign(__assign({}, dom_1.default), array_1.default), object_1.default), func_1.default), ajax_1.default), [], ["createElement", "isArray", "isObject", "isFunction", "index", "scrollToElement", "allComplete", "ajax"]));
+var ajaxMethods = (0, index_1.default)(ajax_1.default, ["ajax"]);
 for (var i in ajaxMethods) {
     Promise.prototype[i] = ajaxMethods[i];
 }
 // Set context at lizardt
 for (var method in lizardt) {
     if (lizardt[method] instanceof Function) {
-        lizardt[method] = lizardt[method].bind(lizardt);
         window[method] = lizardt[method].bind(lizardt);
+        lizardt[method] = lizardt[method].bind(lizardt);
     }
 }
 exports.default = lizardt;

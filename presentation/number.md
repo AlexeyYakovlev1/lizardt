@@ -10,8 +10,6 @@ Gets a random number
 Random number
 - **Example**
 ```Javascript
-const { getRandom } = lizardt;
-
 getRandom(0, 5); // 1.1481...
 ```
 
@@ -26,8 +24,6 @@ Returns the percentage
 Percent
 - **Example**
 ```Javascript
-const { getPercent } = lizardt;
-
 getPercent(50, 100); // 50
 getPercent(22, 150); // 14.6666...
 
@@ -46,8 +42,6 @@ Returns a number from a percentage
 Number
 - **Example**
 ```Javascript
-const { getNumFromPercent } = lizardt;
-
 getNumFromPercent(50, 100); // 50
 getNumFromPercent(22, 120); // 26.4
 
