@@ -206,6 +206,7 @@ t([1,4,2,3,3]).uniques().target; // [1, 4, 2, 3]
 t([{ key: 1 }, { key: 1 }, 2]).uniques().target; // [{ key: 1 }, 2]
 t([{ key: 1 }, { key: 1 }, 2, document.body, document.querySelector("body")]).uniques().target; // [{ key: 1 }, 2, body]
 t([{ key: 1 }, { key: 1 }, [1,2], [1,2], document.body, document.querySelector("body")]).uniques().target; // [{ key: 1 }, [1,2], body]
+t([{ key: 1 }, { key: 1 }, [1,2, [2, [5,6],4]], [1,2,[2,4,[5,6]]], document.body, document.querySelector("body")]).uniques().target; // [{ key: 1 }, [1,2, [2,4, [5, 6]]], body]
 ```
 
 ### ```find()```:

@@ -280,7 +280,9 @@ test("Вывод уникальных элементов", () => {
     { target: [2, 2, 2, 2], toBe: [2] },
     { target: [{ key: 1 }, { key: 1 }], toBe: [{ key: 1 }] },
     { target: [{ key: 1 }, document.body, document.querySelector("body")], toBe: [{ key: 1 }, document.body] },
-    { target: [{ key: 1 }, document.body, document.querySelector("body"), [1, 2], [1, 2]], toBe: [{ key: 1 }, document.body, [1, 2]] }
+    { target: [{ key: 1 }, document.body, document.querySelector("body"), [1, 2], [1, 2]], toBe: [{ key: 1 }, document.body, [1, 2]] },
+    { target: [{ key: 1, 2: { f: 2, s: 2 } }, { 2: { f: 2, s: 2 }, key: 1 }], toBe: [{ 2: { f: 2, s: 2 }, key: 1 }] },
+    { target: [[1, 2, [1, 3]], [1, [1, 3], 2], { 1: 2, 3: 4 }, { 3: 4, 1: 2 }, document.body, document.querySelector("body"), 1, 1, "2", "2"], toBe: [[1, [1, 3], 2], { 1: 2, 3: 4 }, document.body, 1, "2"] },
   ];
 
   tests.map(({ target, toBe }) => expect(uniques.call({ target })).toStrictEqual({ target: toBe }));

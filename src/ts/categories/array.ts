@@ -222,21 +222,12 @@ const arrayCategory: IArrayCategory = {
 
   uniques(): IT {
     if (Array.isArray(this.target)) {
-      this.target = Array.from(new Set(this.target));
+      let res: Array<any> = Array.from(new Set(this.target));
 
-      const checkOtherTypes = (arr): Array<any> => {
-        for (let i = 0; i < arr.length - 1; i++) {
-          for (let j = i + 1; j < arr.length; j++) {
-            if (global.compare(arr[i], arr[j])) {
-              return checkOtherTypes(arr.filter((item, index) => index !== j));
-            }
-          }
-        }
+      res = this.target.map(item => global.isObject(item) ? JSON.stringify(item) : Array.isArray(item) ? JSON.stringify(item.sort()) : item);
+      res = Array.from(new Set(res)).map(item => (typeof item === "string" && (global.isObject(JSON.parse(item)) || Array.isArray(JSON.parse(item)))) ? JSON.parse(item) : item);
 
-        return arr;
-      }
-
-      this.target = checkOtherTypes(this.target);
+      this.target = res;
 
       return this;
     } else {
