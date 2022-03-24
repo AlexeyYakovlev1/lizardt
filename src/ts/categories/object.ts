@@ -72,6 +72,20 @@ const objectCategory: IObjectCategory = {
     } else {
       global.setError(`"${this.target}" is not an object`);
     }
+  },
+
+  removeProperty(...args): IT {
+    if (global.isObject(this.target)) {
+      if (args.every(item => typeof item === "string")) {
+        args.map(key => key in this.target && delete this.target[key]);
+      } else {
+        global.setError("Parameters must be of type string");
+      }
+
+      return this;
+    } else {
+      global.setError(`"${this.target}" is not an object`);
+    }
   }
 }
 

@@ -65,6 +65,25 @@ var objectCategory = {
         else {
             index_1.default.setError("\"".concat(this.target, "\" is not an object"));
         }
+    },
+    removeProperty: function () {
+        var _this = this;
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        if (index_1.default.isObject(this.target)) {
+            if (args.every(function (item) { return typeof item === "string"; })) {
+                args.map(function (key) { return key in _this.target && delete _this.target[key]; });
+            }
+            else {
+                index_1.default.setError("Parameters must be of type string");
+            }
+            return this;
+        }
+        else {
+            index_1.default.setError("\"".concat(this.target, "\" is not an object"));
+        }
     }
 };
 for (var i in objectCategory) {

@@ -2,7 +2,7 @@
 
 ### ```indexOf()```:
 - **Description**
-Returns the index of the beginning of the string that matches the search. Also applicable to array
+Returns the index of the beginning of the string that matches the search
 - **Arguments**
   - Item **(required)**
 - **Return**
@@ -11,8 +11,6 @@ Index of the beginning of the string
 ```Javascript
 t("Hello, world!").indexOf("ello"); // 1
 t("Hello, world!").indexOf("D"); // -1
-t([1,2,3,4,5]).indexOf(2); // 1
-t([{ name: "Alex" }]).indexOf({ name: "Alex" }); // 0
 ```
 
 ### ```hasString()```:
@@ -125,4 +123,15 @@ Boolean
 ```Javascript
 t("hello").isEmpty(); // false
 t("").isEmpty(); // true
+```
+
+### ```reverse()```:
+- **Description**
+Flips an string
+- **Return**
+lizardt object
+- **Example**
+```Javascript
+// "!dlrow ,olleH"
+console.log(t("Hello, world!").reverse().target);
 ```

@@ -116,6 +116,7 @@ var stringCategory = {
     },
     indexOf: index_1.default.indexOf,
     isEmpty: index_1.default.isEmpty,
+    reverse: index_1.default.reverse,
 };
 for (var i in stringCategory) {
     if (stringCategory[i] instanceof Function) {

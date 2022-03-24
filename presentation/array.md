@@ -74,15 +74,13 @@ t([{ name: "Alexandr" }, { name: "Andrey" }]).hasItem({ name: "Alexandr" }); // 
 
 ### ```indexOf()```:
 - **Description**
-Returns the index of the beginning of the string that matches the search. Also applicable to array
+Returns the index of the searched element
 - **Arguments**
   - Item **(required)**
 - **Return**
-Index of the beginning of the string or index of element in array
+Index of the searched element
 - **Example**
 ```Javascript
-t("Hello, world!").indexOf("ello"); // 1
-t("Hello, world!").indexOf("D"); // -1
 t([1,2,3,4,5]).indexOf(2); // 1
 t([{ name: "Alex" }]).indexOf({ name: "Alex" }); // 0
 ```
@@ -297,4 +295,50 @@ for (let i = 0; i < arr.target.length; i++) {
 
 // [3, 4, 5, 6, 7]
 console.log(arr.target);
+```
+
+### ```findByIndexAndRemove()```:
+- **Description**
+Removes an element by index
+- **Arguments**
+  - Index **(required)**
+- **Return**
+lizardt object
+- **Example**
+```Javascript
+// [2,3]
+console.log(t([1, 2, 3]).findByIndexAndRemove(0).target);
+// [1,2,4]
+console.log(t([1, 2, 3, 4]).findByIndexAndRemove(2).target);
+```
+
+### ```fillFull()```:
+- **Description**
+Populates the entire array with one value **item** **amount** times. 
+- **Arguments**
+  - Item **(required)**
+  - Amount **(required)**
+- **Return**
+lizardt object
+- **Example**
+```Javascript
+// [1,1,1]
+console.log(t([]).fillFull(1, 3).target);
+
+// ["Hello", "Hello"]
+console.log(t([]).fillFull("Hello", "Hello", 2).target);
+
+// [2,2,2,2,2]
+console.log(t([1,1]).fillFull(2, 5).target);
+```
+
+### ```reverse()```:
+- **Description**
+Flips an array
+- **Return**
+lizardt object
+- **Example**
+```Javascript
+// [4,3,2,1]
+console.log(t([1, 2, 3, 4]).reverse().target);
 ```

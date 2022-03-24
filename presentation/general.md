@@ -204,3 +204,38 @@ repeat(3, i => a += i);
 // 3
 console.log(a);
 ```
+
+### ```toString()```:
+- **Description**
+Turns into a string
+- **Arguments**
+  - Item **(required)**
+- **Return**
+String
+- **Example**
+```Javascript
+// "41"
+console.log(toString(41));
+
+// 11,11
+console.log(toString([11, 11]));
+```
+
+### ```toNumber()```:
+- **Description**
+Turns into a number
+- **Arguments**
+  - Item **(required)**
+- **Return**
+Number
+- **Example**
+```Javascript
+// 41
+console.log(toString("41"));
+
+// Error
+console.log(toString([11, 11]));
+
+// 11
+console.log(toString("11"));
+```

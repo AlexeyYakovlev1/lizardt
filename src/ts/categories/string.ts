@@ -109,6 +109,7 @@ const stringCategory: IStringCategory = {
 
   indexOf: global.indexOf,
   isEmpty: global.isEmpty,
+  reverse: global.reverse,
 }
 
 for (let i in stringCategory) {

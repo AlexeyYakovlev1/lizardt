@@ -110,6 +110,22 @@ var generalCategory = {
         else {
             index_3.default.setError("\"".concat(num, "\" must be a number and greater than 0"));
         }
+    },
+    toString: function (item) {
+        if (!["undefined", "number"].includes(typeof item) && !index_3.default.isObject(item) || isNaN(item)) {
+            return item.toString();
+        }
+        else {
+            index_3.default.setError("\"".concat(item, "\" must not have types: undefined, object and number"));
+        }
+    },
+    toNumber: function (item) {
+        if (typeof item === "string") {
+            return +item;
+        }
+        else {
+            index_3.default.setError("\"".concat(item, "\" must be a string"));
+        }
     }
 };
 for (var i in generalCategory) {

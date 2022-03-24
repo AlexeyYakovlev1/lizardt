@@ -1,4 +1,4 @@
-import { isObject, hasProperty, keys, values, addProperty, merge, isEmpty } from "../src/js/categories/object";
+import { isObject, hasProperty, keys, values, addProperty, merge, isEmpty, removeProperty } from "../src/js/categories/object";
 
 // isEmpty
 test("Проверка на пустоту", () => {
@@ -99,4 +99,15 @@ test("Объединение объектов", () => {
   ];
 
   tests.map(({ target, args, toBe }) => expect(merge.call({ target }, ...args)).toStrictEqual({ target: toBe }));
+});
+
+// removeProperty
+test("Удаление свойства", () => {
+  const tests = [
+    { target: { name: "Alex", age: 16 }, args: ["name"], toBe: { age: 16 } },
+    { target: { name: "Alex", age: 16 }, args: ["status"], toBe: { age: 16, name: "Alex" } },
+    { target: { name: "Alex", age: 16, status: "Child" }, args: ["name", "age", "status"], toBe: {} },
+  ];
+
+  tests.map(({ target, toBe, args }) => expect(removeProperty.call({ target }, ...args)).toStrictEqual({ target: toBe }));
 });

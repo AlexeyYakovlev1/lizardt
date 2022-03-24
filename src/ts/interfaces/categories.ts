@@ -12,6 +12,7 @@ export interface IStringCategory {
   hasNumbers(): boolean;
   replaceFound(findItems: Array<string>, replaceValues: Array<string>): IT;
   isEmpty(): boolean;
+  reverse(): IT;
 }
 
 // Function
@@ -40,7 +41,10 @@ export interface IArrayCategory {
   find(): IT;
   isEmpty(): boolean;
   findByIndexAndUpdate(index: number, updates: any): IT;
+  findByIndexAndRemove(index: number): IT;
   isArray(item: any, callback?): boolean;
+  fillFull(item: any, amount: number): IT;
+  reverse(): IT;
 }
 
 // Ajax
@@ -104,6 +108,8 @@ export interface IGeneralCategory {
   array(item: any, symb?: string): Array<any>;
   getPageInfo(): IPageData;
   repeat(num: number, callback: (iteration: number) => void): void;
+  toString(item: any): string;
+  toNumber(item: any): number;
 }
 
 // Number
@@ -111,6 +117,7 @@ export interface INumberCategory {
   getRandom(min: number, max: number): number;
   getPercent(current: number, endNum: number, round?: boolean): number;
   getNumFromPercent(percent: number, num: number, round?: boolean): number;
+  reverse(): IT;
 }
 
 // Object
@@ -120,6 +127,7 @@ export interface IObjectCategory {
   keys(): IT;
   values(): IT;
   addProperty(item: Object): IT;
+  removeProperty(key: string): IT;
   merge(item: Array<any> | object): IT;
   isEmpty(): boolean;
 }

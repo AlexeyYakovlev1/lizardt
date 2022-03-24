@@ -53,7 +53,7 @@ const arrayCategory: IArrayCategory = {
 
   groupBy(callback: (el?, index?, array?) => any, cat?: string): IT {
     if (Array.isArray(this.target)) {
-      if (callback instanceof Function) {
+      if (global.isFunction(callback)) {
         const groups: object = this.target.reduce((acc, item, index, array) => {
           const res: any = callback(item, index, array);
 
@@ -135,7 +135,7 @@ const arrayCategory: IArrayCategory = {
   },
 
   each(callback: () => Array<any>): Array<any> {
-    if (global.checkList(this.target) && callback instanceof Function) {
+    if (global.checkList(this.target) && global.isFunction(callback)) {
       return Array.from(this.target).map(callback);
     } else {
       global.setError(`"${this.target}" is not a list or your callback is not a function`);
@@ -167,7 +167,7 @@ const arrayCategory: IArrayCategory = {
 
   filter(callback: () => any, thisArg?: any): any {
     if (Array.isArray(this.target)) {
-      if (callback instanceof Function) {
+      if (global.isFunction(callback)) {
         this.target = thisArg ? this.target.filter(callback, thisArg) : this.target.filter(callback);
 
         return this;
@@ -186,7 +186,7 @@ const arrayCategory: IArrayCategory = {
       this.target[!position ? "push" : "unshift"](item);
       return this;
     } else {
-      global.setError(`${this.target} must be array`);
+      global.setError(`"${this.target}" must be array`);
     }
   },
 
@@ -216,7 +216,7 @@ const arrayCategory: IArrayCategory = {
         global.setError("The content of the array must be of type number");
       }
     } else {
-      global.setError(`${this.target} must be array`);
+      global.setError(`"${this.target}" must be array`);
     }
   },
 
@@ -231,7 +231,7 @@ const arrayCategory: IArrayCategory = {
 
       return this;
     } else {
-      global.setError(`${this.target} must be array`);
+      global.setError(`"${this.target}" must be array`);
     }
   },
 
@@ -257,10 +257,43 @@ const arrayCategory: IArrayCategory = {
 
       return this;
     } else {
-      global.setError(`${this.target} must be array`);
+      global.setError(`"${this.target}" must be array`);
     }
   },
 
+  fillFull(item: any, amount: number): IT {
+    if (Array.isArray(this.target)) {
+      if (typeof amount === "number" && amount) {
+        const res: Array<any> = [];
+
+        for (let i = 0; i < amount; i++) {
+          res.push(item);
+        }
+
+        this.target = res;
+
+        return this;
+      } else {
+        global.setError(`"${amount}" must be number`);
+      }
+    } else {
+      global.setError(`"${this.target}" must be array`);
+    }
+  },
+
+  findByIndexAndRemove(index: number): IT {
+    if (Array.isArray(this.target)) {
+      if (typeof index === "number" && index >= 0 && index <= this.target.length - 1) {
+        this.target = this.target.filter((item, idx) => idx !== index);
+      }
+
+      return this;
+    } else {
+      global.setError(`"${this.target}" must be array`);
+    }
+  },
+
+  reverse: global.reverse,
   merge: global.merge
 }
 

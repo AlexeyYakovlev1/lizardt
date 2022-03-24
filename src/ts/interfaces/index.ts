@@ -26,6 +26,7 @@ export interface IGlobal {
   isObject(item, callback?): boolean;
   isFunction(item: any, callback?: () => any): boolean | any;
   isEmpty(): boolean;
+  reverse(): IT;
 }
 
 export interface ILizardt extends IGeneralCategory, INumberCategory {

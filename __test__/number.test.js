@@ -1,4 +1,4 @@
-import { getPercent, getNumFromPercent } from "../src/js/categories/number";
+import { getPercent, getNumFromPercent, reverse } from "../src/js/categories/number";
 
 // getPercent
 test("Вывод процента", () => {
@@ -20,4 +20,14 @@ test("Вывод числа от процента", () => {
   ];
 
   tests.map(({ args, toBe }) => expect(getNumFromPercent(...args)).toStrictEqual(toBe));
+});
+
+// reverse
+test("Перевернуть число", () => {
+  const tests = [
+    { target: 123, toBe: 321 },
+    { target: 1000, toBe: 1 },
+  ];
+
+  tests.map(({ target, toBe }) => expect(reverse.call({ target })).toStrictEqual({ target: toBe }));
 });

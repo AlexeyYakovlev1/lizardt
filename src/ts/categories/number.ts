@@ -31,7 +31,9 @@ const numberCategory: INumberCategory = {
     } else {
       global.setError(`"${percent}" or "${num}" not a number`);
     }
-  }
+  },
+
+  reverse: global.reverse,
 }
 
 for (let i in numberCategory) {

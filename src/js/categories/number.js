@@ -28,7 +28,8 @@ var numberCategory = {
         else {
             index_1.default.setError("\"".concat(percent, "\" or \"").concat(num, "\" not a number"));
         }
-    }
+    },
+    reverse: index_1.default.reverse,
 };
 for (var i in numberCategory) {
     // Exports every separately method

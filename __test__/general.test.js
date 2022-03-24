@@ -7,7 +7,9 @@ import {
   typeOf,
   extend,
   array,
-  repeat
+  repeat,
+  toString,
+  toNumber
 } from "../src/js/categories/general";
 
 // compare
@@ -170,4 +172,25 @@ test("Повтор функции", () => {
     repeat(...args);
     expect(target).toStrictEqual(toBe);
   });
+});
+
+// toString
+test("Превращение в строку", () => {
+  const tests = [
+    { args: [[1, 1]], toBe: "1,1" },
+    { args: [NaN], toBe: "NaN" },
+    { args: [Symbol(321)], toBe: "Symbol(321)" },
+  ];
+
+  tests.map(({ args, toBe }) => expect(toString(...args)).toStrictEqual(toBe));
+});
+
+// toString
+test("Превращение в цифру", () => {
+  const tests = [
+    { args: ["31"], toBe: 31 },
+    { args: ["444"], toBe: 444 },
+  ];
+
+  tests.map(({ args, toBe }) => expect(toNumber(...args)).toStrictEqual(toBe));
 });

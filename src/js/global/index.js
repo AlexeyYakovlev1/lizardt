@@ -222,6 +222,24 @@ var global = {
         else {
             global.setError("\"".concat(this.target, "\" must be one of the following types: array, string, object or HTML element"));
         }
-    }
+    },
+    reverse: function () {
+        if ((["string", "number"].includes(typeof this.target) || Array.isArray(this.target)) && this.target) {
+            switch (typeof this.target) {
+                case "string":
+                    this.target = this.target.split("").reverse().join("");
+                    break;
+                case "number":
+                    this.target = +(this.target.toString().split("").reverse().join(""));
+                    break;
+                default:
+                    this.target = this.target.reverse();
+            }
+            return this;
+        }
+        else {
+            global.setError("\"".concat(this.target, "\" must be one of the following types: array, string or number"));
+        }
+    },
 };
 exports.default = global;

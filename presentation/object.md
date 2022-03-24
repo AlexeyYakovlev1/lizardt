@@ -67,6 +67,27 @@ t({name: "Alexey"}).addProperty({age: 17}).target; // {name: "Alexey", age: 17}
 t({}).addProperty([{name: "Alexey"}, {age: 17}]).target; // {name: "Alexey", age: 17}
 ```
 
+### ```removeProperty()```:
+- **Description**
+Removes the properties of an object
+- **Arguments**
+  - Key **(required)**
+- **Return**
+lizardt object
+- **Example**
+```Javascript
+const user = t({
+  name: "Alex",
+  age: 16,
+  status: "Child"
+});
+
+user.removeProperty("name", "age");
+
+// { status: "Child" }
+console.log(user.target);
+```
+
 ### ```merge()```:
 - **Description**
 Concatenates arrays or objects

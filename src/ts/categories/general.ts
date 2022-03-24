@@ -113,6 +113,22 @@ const generalCategory: IGeneralCategory = {
     } else {
       global.setError(`"${num}" must be a number and greater than 0`);
     }
+  },
+
+  toString(item: any): string {
+    if (!["undefined", "number"].includes(typeof item) && !global.isObject(item) || isNaN(item)) {
+      return item.toString();
+    } else {
+      global.setError(`"${item}" must not have types: undefined, object and number`);
+    }
+  },
+
+  toNumber(item: any): number {
+    if (typeof item === "string") {
+      return +item;
+    } else {
+      global.setError(`"${item}" must be a string`);
+    }
   }
 }
 

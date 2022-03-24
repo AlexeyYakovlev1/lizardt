@@ -6,6 +6,7 @@ import {
   merge, sort, uniques,
   find, slice, splice,
   findByIndexAndUpdate, isArray,
+  fillFull, reverse, findByIndexAndRemove
 } from "../src/js/categories/array";
 
 // find
@@ -310,4 +311,35 @@ test("Определение массива", () => {
   ];
 
   tests.map(({ target, toBe }) => expect(isArray(target))[toBe]());
+});
+
+// fillFull
+test("Заполнить весь массив полностью", () => {
+  const tests = [
+    { target: [], args: [5, 1], toBe: [5] },
+    { target: [], args: [1, 5], toBe: [1, 1, 1, 1, 1] },
+    { target: [], args: ["String", 3], toBe: ["String", "String", "String"] },
+  ];
+
+  tests.map(({ target, toBe, args }) => expect(fillFull.call({ target }, ...args)).toStrictEqual({ target: toBe }));
+});
+
+// reverse
+test("Перевернуть массив", () => {
+  const tests = [
+    { target: [1, 2, 3], toBe: [3, 2, 1] },
+    { target: ["H", "e", "l", "l", "o"], toBe: ["o", "l", "l", "e", "H"] },
+  ];
+
+  tests.map(({ target, toBe }) => expect(reverse.call({ target })).toStrictEqual({ target: toBe }));
+});
+
+// findByIndexAndRemove
+test("Удалить элемент по индексу", () => {
+  const tests = [
+    { target: [1, 2, 3], args: [2], toBe: [1, 2] },
+    { target: ["H", "e", "l", "l", "o"], args: [2], toBe: ["H", "e", "l", "o"] },
+  ];
+
+  tests.map(({ target, toBe, args }) => expect(findByIndexAndRemove.call({ target }, ...args)).toStrictEqual({ target: toBe }));
 });

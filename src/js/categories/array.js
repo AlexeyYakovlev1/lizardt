@@ -59,7 +59,7 @@ var arrayCategory = {
     },
     groupBy: function (callback, cat) {
         if (Array.isArray(this.target)) {
-            if (callback instanceof Function) {
+            if (index_1.default.isFunction(callback)) {
                 var groups = this.target.reduce(function (acc, item, index, array) {
                     var res = callback(item, index, array);
                     if (res) {
@@ -134,7 +134,7 @@ var arrayCategory = {
         return this;
     },
     each: function (callback) {
-        if (index_1.default.checkList(this.target) && callback instanceof Function) {
+        if (index_1.default.checkList(this.target) && index_1.default.isFunction(callback)) {
             return Array.from(this.target).map(callback);
         }
         else {
@@ -162,7 +162,7 @@ var arrayCategory = {
     },
     filter: function (callback, thisArg) {
         if (Array.isArray(this.target)) {
-            if (callback instanceof Function) {
+            if (index_1.default.isFunction(callback)) {
                 this.target = thisArg ? this.target.filter(callback, thisArg) : this.target.filter(callback);
                 return this;
             }
@@ -181,7 +181,7 @@ var arrayCategory = {
             return this;
         }
         else {
-            index_1.default.setError("".concat(this.target, " must be array"));
+            index_1.default.setError("\"".concat(this.target, "\" must be array"));
         }
     },
     sort: function (fromMore) {
@@ -207,7 +207,7 @@ var arrayCategory = {
             }
         }
         else {
-            index_1.default.setError("".concat(this.target, " must be array"));
+            index_1.default.setError("\"".concat(this.target, "\" must be array"));
         }
     },
     uniques: function () {
@@ -219,7 +219,7 @@ var arrayCategory = {
             return this;
         }
         else {
-            index_1.default.setError("".concat(this.target, " must be array"));
+            index_1.default.setError("\"".concat(this.target, "\" must be array"));
         }
     },
     isArray: function (item, callback) {
@@ -241,9 +241,39 @@ var arrayCategory = {
             return this;
         }
         else {
-            index_1.default.setError("".concat(this.target, " must be array"));
+            index_1.default.setError("\"".concat(this.target, "\" must be array"));
         }
     },
+    fillFull: function (item, amount) {
+        if (Array.isArray(this.target)) {
+            if (typeof amount === "number" && amount) {
+                var res = [];
+                for (var i = 0; i < amount; i++) {
+                    res.push(item);
+                }
+                this.target = res;
+                return this;
+            }
+            else {
+                index_1.default.setError("\"".concat(amount, "\" must be number"));
+            }
+        }
+        else {
+            index_1.default.setError("\"".concat(this.target, "\" must be array"));
+        }
+    },
+    findByIndexAndRemove: function (index) {
+        if (Array.isArray(this.target)) {
+            if (typeof index === "number" && index >= 0 && index <= this.target.length - 1) {
+                this.target = this.target.filter(function (item, idx) { return idx !== index; });
+            }
+            return this;
+        }
+        else {
+            index_1.default.setError("\"".concat(this.target, "\" must be array"));
+        }
+    },
+    reverse: index_1.default.reverse,
     merge: index_1.default.merge
 };
 for (var i in arrayCategory) {

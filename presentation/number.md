@@ -48,3 +48,14 @@ getNumFromPercent(22, 120); // 26.4
 // Number rounding
 getNumFromPercent(22, 120, true); // 26
 ```
+
+### ```reverse()```:
+- **Description**
+Flips an number
+- **Return**
+lizardt object
+- **Example**
+```Javascript
+// 321
+console.log(t(123).reverse().target);
+```

@@ -7,7 +7,8 @@ import {
   hasNumbers,
   isDate,
   replaceFound,
-  isEmpty
+  isEmpty,
+  reverse
 } from "../src/js/categories/string";
 
 // isEmpty
@@ -174,4 +175,14 @@ test("Находит символы глобально по всей строк�
   ];
 
   tests.map(({ target, args, toBe }) => expect(replaceFound.call({ target }, ...args)).toStrictEqual({ target: toBe }));
+});
+
+// reverse
+test("Перевернуть строку", () => {
+  const tests = [
+    { target: "Hello, world!", toBe: "!dlrow ,olleH" },
+    { target: "1000", toBe: "0001" },
+  ];
+
+  tests.map(({ target, toBe }) => expect(reverse.call({ target })).toStrictEqual({ target: toBe }));
 });
