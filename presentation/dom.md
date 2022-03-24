@@ -47,8 +47,6 @@ undefined
 	- Options **(optional)**
 - **Example**
 ```Javascript
-
-
 t("[button]").on("click", () =>  {
 	console.log("Hello");
 });
@@ -74,8 +72,6 @@ undefined
 	- Use capture **(optional)**
 - **Example**
 ```Javascript
-
-
 let count = 0;
 
 function counter() {
@@ -163,13 +159,11 @@ t("[.photo]").clearStyles();
 - **Description**
 Gets all the attributes of the element
 - **Return**
-List of attributes. When used **attribute** returns an object with attribute data
+lizardt object
 - **Arguments**
   - Attribute **(optional)**
 - **Example**
 ```Javascript
-
-
 t("[.button]").getAttributes().target; // [{ name: "type", val... }]
 ```
 or
@@ -183,7 +177,7 @@ Gets all children in this element
 - **Arguments**
   - Selector **(optional)**
 - **Return**
-List of children. When we use **selector**, it returns the element itself
+lizardt object
 - **Example**
 ```Javascript
 /*
@@ -524,8 +518,6 @@ Sets html markup
 lizardt object
 - **Example**
 ```Javascript
-
-
 /*
   <body>
     <div>Hello, lizard!</div>

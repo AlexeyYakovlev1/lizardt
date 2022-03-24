@@ -106,7 +106,7 @@ const global: IGlobal = {
   },
 
   compare(item1: any, item2: any): boolean {
-    const items = [item1, item2];
+    const items: Array<any> = [item1, item2];
 
     if (items.every(item => item instanceof Element)) {
       return item1.isEqualNode(item2);

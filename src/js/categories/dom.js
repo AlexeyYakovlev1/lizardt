@@ -486,7 +486,7 @@ var domCategory = {
     },
     observer: function (callbackWhenShow, callbackWhenHide, options) {
         if (this.target instanceof Element) {
-            new IntersectionObserver(function (entries, observer) {
+            new IntersectionObserver(function (entries) {
                 entries.forEach(function (item) {
                     if (callbackWhenShow && callbackWhenShow instanceof Function) {
                         item.isIntersecting && callbackWhenShow(item.target, item);
