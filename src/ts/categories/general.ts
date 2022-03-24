@@ -99,6 +99,20 @@ const generalCategory: IGeneralCategory = {
     });
 
     return res;
+  },
+
+  repeat(num: number, callback: (iteration: number) => void): void {
+    if (typeof num === "number" && num > 0) {
+      if (global.isFunction(callback)) {
+        for (let i = 0; i < num; i++) {
+          callback(i);
+        }
+      } else {
+        global.setError(`"${callback}" must be a function`);
+      }
+    } else {
+      global.setError(`"${num}" must be a number and greater than 0`);
+    }
   }
 }
 

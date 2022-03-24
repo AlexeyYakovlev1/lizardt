@@ -95,6 +95,21 @@ var generalCategory = {
             res[key] = window.location[key];
         });
         return res;
+    },
+    repeat: function (num, callback) {
+        if (typeof num === "number" && num > 0) {
+            if (index_3.default.isFunction(callback)) {
+                for (var i = 0; i < num; i++) {
+                    callback(i);
+                }
+            }
+            else {
+                index_3.default.setError("\"".concat(callback, "\" must be a function"));
+            }
+        }
+        else {
+            index_3.default.setError("\"".concat(num, "\" must be a number and greater than 0"));
+        }
     }
 };
 for (var i in generalCategory) {

@@ -185,3 +185,22 @@ Page data
 // { href: 'http://127.0.0.1:5500/index.html', origin: 'http://127.0.0.1:5500', protocol: 'http:', host: '127.0.0.1:5500', … }
 console.log(getPageInfo());
 ```
+
+### ```repeat()```:
+- **Description**
+Repeats a function a specified number of times. The **Iterations** parameter must be greater than 0
+- **Arguments**
+  - Iterations **(required)**
+  - Callback **(required)**
+- **Return**
+undefined
+- **Example**
+```Javascript
+let a = 0;
+
+// i - active iteration
+repeat(3, i => a += i);
+
+// 3
+console.log(a);
+```

@@ -103,6 +103,7 @@ export interface IGeneralCategory {
   extend(options: object): object;
   array(item: any, symb?: string): Array<any>;
   getPageInfo(): IPageData;
+  repeat(num: number, callback: (iteration: number) => void): void;
 }
 
 // Number

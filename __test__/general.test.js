@@ -6,7 +6,8 @@ import {
   t,
   typeOf,
   extend,
-  array
+  array,
+  repeat
 } from "../src/js/categories/general";
 
 // compare
@@ -153,4 +154,20 @@ test("Создание массива", () => {
   ];
 
   tests.map(({ target, toBe, args }) => expect(array(target, ...args)).toStrictEqual(toBe));
+});
+
+// repeat
+test("Повтор функции", () => {
+  let target = 1;
+
+  const tests = [
+    { args: [2, i => (target += i)], toBe: 2 },
+    { args: [10, i => (target *= i)], toBe: 0 },
+    { args: [10, i => (target += i + 1)], toBe: 55 },
+  ];
+
+  tests.map(({ args, toBe }) => {
+    repeat(...args);
+    expect(target).toStrictEqual(toBe);
+  });
 });
