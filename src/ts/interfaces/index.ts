@@ -34,4 +34,4 @@ export interface ILizardt extends IGeneralCategory, INumberCategory {
   isObject(item, callback?): boolean;
   isFunction(item: any, callback?: () => any): boolean | any;
   index(num: number): IT;
-}3
+}

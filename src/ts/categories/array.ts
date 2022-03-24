@@ -235,6 +235,18 @@ const arrayCategory: IArrayCategory = {
     }
   },
 
+  findByIndexAndUpdate(index: number, updates: any): IT {
+    if (Array.isArray(this.target)) {
+      if (index <= this.target.length - 1 && index >= 0) {
+        this.target[index] = updates;
+      }
+
+      return this;
+    } else {
+      global.setError(`${this.target} must be array`);
+    }
+  },
+
   merge: global.merge
 }
 

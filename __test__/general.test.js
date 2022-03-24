@@ -13,38 +13,21 @@ import {
 // compare
 test("Сравнение двух элементов", () => {
   const tests = [
-    {
-      args: [[1, 2, 3], [1, 2, 3]],
-      toBe: "toBeTruthy"
-    },
-    {
-      args: [[1, 2, 3], []],
-      toBe: "toBeFalsy"
-    },
-    {
-      args: [{}, {}],
-      toBe: "toBeTruthy"
-    },
-    {
-      args: [1, []],
-      toBe: "toBeFalsy"
-    },
-    {
-      args: [[1], [1]],
-      toBe: "toBeTruthy"
-    },
-    {
-      args: ["[1,2,3]", ""],
-      toBe: "toBeFalsy"
-    },
-    {
-      args: ["ad", "ad"],
-      toBe: "toBeTruthy"
-    },
+    { args: [[1, 2, 3], [1, 2, 3]], toBe: "toBeTruthy" },
+    { args: [[1, 2, 3], []], toBe: "toBeFalsy" },
+    { args: [{}, {}], toBe: "toBeTruthy" },
+    { args: [1, []], toBe: "toBeFalsy" },
+    { args: [[1], [1]], toBe: "toBeTruthy" },
+    { args: ["[1,2,3]", ""], toBe: "toBeFalsy" },
+    { args: ["ad", "ad"], toBe: "toBeTruthy" },
+    { args: [Symbol(131), Symbol(131)], toBe: "toBeTruthy" },
+    { args: [Symbol(131), Symbol(231)], toBe: "toBeFalsy" },
+    { args: [Symbol(131), BigInt(131)], toBe: "toBeFalsy" },
+    { args: [BigInt(22), BigInt(22)], toBe: "toBeTruthy" },
   ];
 
   tests.map(({ args, toBe }) => expect(compare(...args))[toBe]());
-})
+});
 
 // isArray
 test("Определение массива", () => {

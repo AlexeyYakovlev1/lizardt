@@ -238,7 +238,7 @@ t([1, 2, 3, 4]).slice(0, 2).target; // [1, 2]
 
 ### ```splice()```:
 - **Description**
-Modifies the contents of an array by removing existing elements and/or adding new ones.
+Modifies the contents of an array by removing existing elements and/or adding new ones
 - **Arguments**
   - begin **(required)**
   - end **(optional)**
@@ -260,4 +260,24 @@ Boolean
 ```Javascript
 t([]).isEmpty(); // true
 t([1]).isEmpty(); // false
+```
+
+### ```findByIndexAndUpdate()```:
+- **Description**
+Finds an element by index and modifies it. If the element was not found, no changes will be made
+- **Arguments**
+  - Index **(required)**
+  - Updates **(required)**
+- **Return**
+lizardt object
+- **Example**
+```Javascript
+const arr = t([1, 2, 3, 4, 5]);
+
+for (let i = 0; i < arr.target.length; i++) {
+  arr.findByIndexAndUpdate(i, arr.target[i] + 2);
+}
+
+// [3, 4, 5, 6, 7]
+console.log(arr.target);
 ```

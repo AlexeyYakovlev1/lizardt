@@ -106,9 +106,13 @@ const global: IGlobal = {
   },
 
   compare(item1: any, item2: any): boolean {
-    if ([item1, item2].every(item => item instanceof Element)) {
+    const items = [item1, item2];
+
+    if (items.every(item => item instanceof Element)) {
       return item1.isEqualNode(item2);
-    } else if ([item1, item2].some(item => item instanceof Element)) {
+    } else if (items.every(item => ["bigint", "symbol"].includes(typeof item))) {
+      return item1.toString() === item2.toString();
+    } else if (items.some(item => item instanceof Element) || items.some(item => ["bigint", "symbol"].includes(typeof item))) {
       return false;
     } else {
       return JSON.stringify(item1) === JSON.stringify(item2);

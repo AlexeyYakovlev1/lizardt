@@ -100,10 +100,14 @@ var global = {
         }
     },
     compare: function (item1, item2) {
-        if ([item1, item2].every(function (item) { return item instanceof Element; })) {
+        var items = [item1, item2];
+        if (items.every(function (item) { return item instanceof Element; })) {
             return item1.isEqualNode(item2);
         }
-        else if ([item1, item2].some(function (item) { return item instanceof Element; })) {
+        else if (items.every(function (item) { return ["bigint", "symbol"].includes(typeof item); })) {
+            return item1.toString() === item2.toString();
+        }
+        else if (items.some(function (item) { return item instanceof Element; }) || items.some(function (item) { return ["bigint", "symbol"].includes(typeof item); })) {
             return false;
         }
         else {

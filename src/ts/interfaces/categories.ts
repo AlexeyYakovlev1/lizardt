@@ -39,6 +39,7 @@ export interface IArrayCategory {
   splice(): IT;
   find(): IT;
   isEmpty(): boolean;
+  findByIndexAndUpdate(index: number, updates: any): IT;
 }
 
 // Ajax

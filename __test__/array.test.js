@@ -4,7 +4,8 @@ import {
   hasItem, index, indexOf,
   filter, groupBy, addItem,
   merge, sort, uniques,
-  find, slice, splice
+  find, slice, splice,
+  findByIndexAndUpdate
 } from "../src/js/categories/array";
 
 // find
@@ -286,4 +287,15 @@ test("Вывод уникальных элементов", () => {
   ];
 
   tests.map(({ target, toBe }) => expect(uniques.call({ target })).toStrictEqual({ target: toBe }));
+});
+
+// findByIndexAndUpdate
+test("Найти элемент по индексу и удалить", () => {
+  const tests = [
+    { target: [1, 2, 3, 4], args: [2, 5], toBe: [1, 2, 5, 4] },
+    { target: [1, 2, 3, 4], args: [10, 5], toBe: [1, 2, 3, 4] },
+    { target: ["Hello", ", ", "world"], args: [1, "!"], toBe: ["Hello", "!", "world"] },
+  ];
+
+  tests.map(({ target, toBe, args }) => expect(findByIndexAndUpdate.call({ target }, ...args)).toStrictEqual({ target: toBe }));
 });

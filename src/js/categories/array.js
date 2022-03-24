@@ -222,6 +222,17 @@ var arrayCategory = {
             index_1.default.setError("".concat(this.target, " must be array"));
         }
     },
+    findByIndexAndUpdate: function (index, updates) {
+        if (Array.isArray(this.target)) {
+            if (index <= this.target.length - 1 && index >= 0) {
+                this.target[index] = updates;
+            }
+            return this;
+        }
+        else {
+            index_1.default.setError("".concat(this.target, " must be array"));
+        }
+    },
     merge: index_1.default.merge
 };
 for (var i in arrayCategory) {
