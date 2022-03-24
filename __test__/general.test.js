@@ -24,6 +24,10 @@ test("Сравнение двух элементов", () => {
     { args: [Symbol(131), Symbol(231)], toBe: "toBeFalsy" },
     { args: [Symbol(131), BigInt(131)], toBe: "toBeFalsy" },
     { args: [BigInt(22), BigInt(22)], toBe: "toBeTruthy" },
+    { args: [NaN, NaN], toBe: "toBeTruthy" },
+    { args: [null, null], toBe: "toBeTruthy" },
+    { args: [NaN, null], toBe: "toBeFalsy" },
+    { args: [NaN, Symbol(13)], toBe: "toBeFalsy" },
   ];
 
   tests.map(({ args, toBe }) => expect(compare(...args))[toBe]());

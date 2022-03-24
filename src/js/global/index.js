@@ -104,10 +104,10 @@ var global = {
         if (items.every(function (item) { return item instanceof Element; })) {
             return item1.isEqualNode(item2);
         }
-        else if (items.every(function (item) { return ["bigint", "symbol"].includes(typeof item); })) {
+        else if (items.every(function (item) { return ["bigint", "symbol"].includes(typeof item) || isNaN(item); })) {
             return item1.toString() === item2.toString();
         }
-        else if (items.some(function (item) { return item instanceof Element; }) || items.some(function (item) { return ["bigint", "symbol"].includes(typeof item); })) {
+        else if (items.some(function (item) { return item instanceof Element; }) || items.some(function (item) { return ["bigint", "symbol"].includes(typeof item) || isNaN(item); })) {
             return false;
         }
         else {

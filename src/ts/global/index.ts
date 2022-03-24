@@ -110,9 +110,9 @@ const global: IGlobal = {
 
     if (items.every(item => item instanceof Element)) {
       return item1.isEqualNode(item2);
-    } else if (items.every(item => ["bigint", "symbol"].includes(typeof item))) {
+    } else if (items.every(item => ["bigint", "symbol"].includes(typeof item) || isNaN(item))) {
       return item1.toString() === item2.toString();
-    } else if (items.some(item => item instanceof Element) || items.some(item => ["bigint", "symbol"].includes(typeof item))) {
+    } else if (items.some(item => item instanceof Element) || items.some(item => ["bigint", "symbol"].includes(typeof item) || isNaN(item))) {
       return false;
     } else {
       return JSON.stringify(item1) === JSON.stringify(item2);
