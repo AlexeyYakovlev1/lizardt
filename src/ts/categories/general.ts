@@ -1,6 +1,7 @@
 // Interfaces
 import { IGeneralCategory } from "../interfaces/categories";
 import { IT } from "../interfaces/index";
+import { IPageData } from "../interfaces/options";
 
 // Categories
 import arrayCategory from "../categories/array";
@@ -67,20 +68,6 @@ const generalCategory: IGeneralCategory = {
     return res;
   },
 
-  isArray(item: any, callback?): boolean {
-    const validArray: boolean = Array.isArray(item);
-
-    if (validArray) {
-      if (global.isFunction(callback)) {
-        return callback();
-      }
-
-      return true;
-    };
-
-    return false;
-  },
-
   t(target: any, list?: boolean): IT {
     let trt: any;
 
@@ -103,6 +90,16 @@ const generalCategory: IGeneralCategory = {
       ...additions.getAdditions,
     }
   },
+
+  getPageInfo(): IPageData {
+    const res: IPageData = {};
+
+    Object.keys(window.location).filter(key => !global.isFunction(window.location[key])).map(key => {
+      res[key] = window.location[key];
+    });
+
+    return res;
+  }
 }
 
 for (let i in generalCategory) {

@@ -160,23 +160,6 @@ const tagOfInpit = t("[input]").getTag();
 console.log(tagOfInpit, dataOfInput);
 ```
 
-### ```isArray()```:
-- **Description**
-Сhecks if the passed element is an array. The second argument (optional) is a function that is called if the first argument is an array.
-- **Arguments**
-  - Item **(required)**
-  - Callback **(optional)**
-- **Return**
-Boolean/Result your function
-- **Example**
-```Javascript
-isArray([1,2,3]); // true
-isArray("") // false
-isArray([1,2,3], () => {
-  console.log(1)
-}); // 1
-```
-
 ### ```array()```:
 - **Description**
 Creates an array from your first argument, the second argument **symb** is optional, it separates your first argument with a unique character, which will help create the array
@@ -190,4 +173,15 @@ Array
 array("abc"); // ["a","b","c"];
 array("ab,c", ","); // ["ab", "c"];
 array(t("[li]", true).target); // [li, li, li];
+```
+
+### ```getPageInfo()```:
+- **Description**
+Gets page data
+- **Return**
+Page data
+- **Example**
+```Javascript
+// { href: 'http://127.0.0.1:5500/index.html', origin: 'http://127.0.0.1:5500', protocol: 'http:', host: '127.0.0.1:5500', … }
+console.log(getPageInfo());
 ```

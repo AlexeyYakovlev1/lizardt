@@ -222,6 +222,17 @@ var arrayCategory = {
             index_1.default.setError("".concat(this.target, " must be array"));
         }
     },
+    isArray: function (item, callback) {
+        var validArray = Array.isArray(item);
+        if (validArray) {
+            if (index_1.default.isFunction(callback)) {
+                return callback();
+            }
+            return true;
+        }
+        ;
+        return false;
+    },
     findByIndexAndUpdate: function (index, updates) {
         if (Array.isArray(this.target)) {
             if (index <= this.target.length - 1 && index >= 0) {

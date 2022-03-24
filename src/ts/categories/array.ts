@@ -235,6 +235,20 @@ const arrayCategory: IArrayCategory = {
     }
   },
 
+  isArray(item: any, callback?): boolean {
+    const validArray: boolean = Array.isArray(item);
+
+    if (validArray) {
+      if (global.isFunction(callback)) {
+        return callback();
+      }
+
+      return true;
+    };
+
+    return false;
+  },
+
   findByIndexAndUpdate(index: number, updates: any): IT {
     if (Array.isArray(this.target)) {
       if (index <= this.target.length - 1 && index >= 0) {

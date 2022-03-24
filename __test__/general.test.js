@@ -6,7 +6,6 @@ import {
   t,
   typeOf,
   extend,
-  isArray,
   array
 } from "../src/js/categories/general";
 
@@ -31,18 +30,6 @@ test("Сравнение двух элементов", () => {
   ];
 
   tests.map(({ args, toBe }) => expect(compare(...args))[toBe]());
-});
-
-// isArray
-test("Определение массива", () => {
-  const tests = [
-    { target: [1, 2, 3, 4], toBe: "toBeTruthy", },
-    { target: "Hello, world!", toBe: "toBeFalsy", },
-    { target: {}, toBe: "toBeFalsy" },
-    { target: 123, toBe: "toBeFalsy", },
-  ];
-
-  tests.map(({ target, toBe }) => expect(isArray(target))[toBe]());
 });
 
 // copy

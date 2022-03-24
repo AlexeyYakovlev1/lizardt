@@ -1,4 +1,4 @@
-import { IAjaxOptions, IAttribute, IElement, IScrollOptions } from "./options";
+import { IAjaxOptions, IAttribute, IElement, IScrollOptions, IPageData } from "./options";
 import { IT } from "./index";
 
 // String
@@ -40,6 +40,7 @@ export interface IArrayCategory {
   find(): IT;
   isEmpty(): boolean;
   findByIndexAndUpdate(index: number, updates: any): IT;
+  isArray(item: any, callback?): boolean;
 }
 
 // Ajax
@@ -100,8 +101,8 @@ export interface IGeneralCategory {
   t(target: any, list?: boolean): IT;
   typeOf(item: any): string;
   extend(options: object): object;
-  isArray(item: any, callback?): boolean;
   array(item: any, symb?: string): Array<any>;
+  getPageInfo(): IPageData;
 }
 
 // Number

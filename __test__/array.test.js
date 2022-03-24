@@ -5,7 +5,7 @@ import {
   filter, groupBy, addItem,
   merge, sort, uniques,
   find, slice, splice,
-  findByIndexAndUpdate
+  findByIndexAndUpdate, isArray,
 } from "../src/js/categories/array";
 
 // find
@@ -298,4 +298,16 @@ test("Найти элемент по индексу и удалить", () => {
   ];
 
   tests.map(({ target, toBe, args }) => expect(findByIndexAndUpdate.call({ target }, ...args)).toStrictEqual({ target: toBe }));
+});
+
+// isArray
+test("Определение массива", () => {
+  const tests = [
+    { target: [1, 2, 3, 4], toBe: "toBeTruthy", },
+    { target: "Hello, world!", toBe: "toBeFalsy", },
+    { target: {}, toBe: "toBeFalsy" },
+    { target: 123, toBe: "toBeFalsy", },
+  ];
+
+  tests.map(({ target, toBe }) => expect(isArray(target))[toBe]());
 });

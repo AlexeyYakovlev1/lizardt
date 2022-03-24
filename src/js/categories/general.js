@@ -73,17 +73,6 @@ var generalCategory = {
         }
         return res;
     },
-    isArray: function (item, callback) {
-        var validArray = Array.isArray(item);
-        if (validArray) {
-            if (index_3.default.isFunction(callback)) {
-                return callback();
-            }
-            return true;
-        }
-        ;
-        return false;
-    },
     t: function (target, list) {
         var trt;
         if (typeof target === "string" && /^\[.+\]$/.test(target)) {
@@ -100,6 +89,13 @@ var generalCategory = {
         }
         return __assign(__assign({ target: trt ? trt : target }, (0, index_1.default)(__assign(__assign(__assign(__assign(__assign({}, dom_1.default), array_1.default), func_1.default), object_1.default), string_1.default), ["createElement", "isArray", "isFunction", "isObject"])), index_2.default.getAdditions);
     },
+    getPageInfo: function () {
+        var res = {};
+        Object.keys(window.location).filter(function (key) { return !index_3.default.isFunction(window.location[key]); }).map(function (key) {
+            res[key] = window.location[key];
+        });
+        return res;
+    }
 };
 for (var i in generalCategory) {
     // Exports every separately method
