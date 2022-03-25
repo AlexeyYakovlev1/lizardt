@@ -7,7 +7,7 @@ import {
   find, slice, splice,
   findByIndexAndUpdate,
   fillFull, reverse, findByIndexAndRemove,
-  onlyFalsy, onlyTruthy
+  onlyFalsy, onlyTruthy, findByIndexAndUpdateProperty
 } from "../src/js/categories/array";
 
 // find
@@ -351,4 +351,15 @@ test("Только правдивые элементы", () => {
   ];
 
   tests.map(({ target, toBe }) => expect(onlyTruthy.call({ target })).toStrictEqual({ target: toBe }));
+});
+
+// findByIndexAndUpdateProperty
+test("Найти по индексу и обновить свойство", () => {
+  const tests = [
+    { target: [{ key1: { key2: { val: 5 } } }], args: [0, ["key1", "key2", "val"], 1], toBe: [{ key1: { key2: { val: 1 } } }] },
+    { target: [{ key1: { key2: { val: 5 } } }], args: [0, ["key1", "key2"], {}], toBe: [{ key1: { key2: {} } }] },
+    { target: [{ key1: { key2: { val: 5 } } }], args: [0, "key1", {}], toBe: [{ key1: {} }] },
+  ];
+
+  tests.map(({ target, args, toBe }) => expect(findByIndexAndUpdateProperty.call({ target }, ...args)).toStrictEqual({ target: toBe }));
 });

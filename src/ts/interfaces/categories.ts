@@ -37,6 +37,7 @@ export interface IArrayCategory {
   isEmpty(): boolean;
   findByIndexAndUpdate(index: number, updates: any): IT;
   findByIndexAndRemove(index: number): IT;
+  findByIndexAndUpdateProperty(index: number, prop: string | Array<string>, val: any): IT;
   fillFull(item: any, amount: number): IT;
   reverse(): IT;
   onlyTruthy(): IT;

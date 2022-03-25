@@ -262,6 +262,31 @@ var arrayCategory = {
             index_1.default.setError("\"".concat(this.target, "\" must be array"));
         }
     },
+    findByIndexAndUpdateProperty: function (index, prop, val) {
+        if (Array.isArray(this.target)) {
+            if (typeof index === "number" && (typeof prop === "string" || Array.isArray(prop))) {
+                if (typeof prop === "string") {
+                    this.target[index][prop] = val;
+                }
+                if (Array.isArray(prop)) {
+                    var setValToProp_1 = function (res, endPoint, keys, value) {
+                        if (keys[0] !== endPoint) {
+                            return setValToProp_1(res[keys[0]], endPoint, keys.filter(function (key, idx) { return idx !== 0; }), value);
+                        }
+                        res[keys[0]] = val;
+                    };
+                    setValToProp_1(this.target[index], prop[prop.length - 1], prop, val);
+                }
+                return this;
+            }
+            else {
+                index_1.default.setError("The index parameter must be of type number and the property must be of type string or array");
+            }
+        }
+        else {
+            index_1.default.setError("\"".concat(this.target, "\" must be array"));
+        }
+    },
     onlyTruthy: index_1.default.onlyTruthy,
     onlyFalsy: index_1.default.onlyFalsy,
     reverse: index_1.default.reverse,

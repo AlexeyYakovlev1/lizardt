@@ -279,6 +279,34 @@ const arrayCategory: IArrayCategory = {
     }
   },
 
+  findByIndexAndUpdateProperty(index: number, prop: string | Array<string>, val: any): IT {
+    if (Array.isArray(this.target)) {
+      if (typeof index === "number" && (typeof prop === "string" || Array.isArray(prop))) {
+        if (typeof prop === "string") {
+          this.target[index][prop] = val;
+        }
+
+        if (Array.isArray(prop)) {
+          const setValToProp = (res: any, endPoint: string, keys: Array<any>, value: any) => {
+            if (keys[0] !== endPoint) {
+              return setValToProp(res[keys[0]], endPoint, keys.filter((key, idx) => idx !== 0), value);
+            }
+
+            res[keys[0]] = val;
+          }
+
+          setValToProp(this.target[index], prop[prop.length - 1], prop, val);
+        }
+
+        return this;
+      } else {
+        global.setError("The index parameter must be of type number and the property must be of type string or array");
+      }
+    } else {
+      global.setError(`"${this.target}" must be array`);
+    }
+  },
+
   onlyTruthy: global.onlyTruthy,
   onlyFalsy: global.onlyFalsy,
   reverse: global.reverse,

@@ -295,6 +295,52 @@ console.log(t([1, 2, 3]).findByIndexAndRemove(0).target);
 console.log(t([1, 2, 3, 4]).findByIndexAndRemove(2).target);
 ```
 
+### ```findByIndexAndUpdateProperty()```:
+- **Description**
+Finds an element by index and updates its property. The **property** parameter can be an array
+- **Arguments**
+  - Index **(required)**
+  - Property **(required)**
+  - Value **(required)**
+- **Return**
+lizardt object
+- **Example**
+```Javascript
+const obj = t([
+  {
+    house1: {
+      floor1: {
+        window: false,
+        floor2: {
+          window: false,
+          floor3: {
+            window: true
+          }
+        }
+      }
+    },
+  },
+  {
+    house2: {
+      floor1: {
+        window: false,
+        floor2: {
+          window: false,
+        }
+      }
+    }
+  }
+]);
+
+obj.findByIndexAndUpdateProperty(0, ["house1", "floor1", "floor2", "window"], true);
+
+// // house1 -> floor1 -> floor2 -> window = true
+console.log(obj.target);
+
+// [{ key: 10 }, { key: 2 }]
+t([{ key: 1 }, { key: 2 }]).findByIndexAndUpdateProperty(1, "key", 10).target;
+```
+
 ### ```fillFull()```:
 - **Description**
 Populates the entire array with one value **item** **amount** times. 
