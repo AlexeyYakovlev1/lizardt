@@ -355,7 +355,7 @@ lizardt object
 console.log(t([]).fillFull(1, 3).target);
 
 // ["Hello", "Hello"]
-console.log(t([]).fillFull("Hello", "Hello", 2).target);
+console.log(t([]).fillFull("Hello", 2).target);
 
 // [2,2,2,2,2]
 console.log(t([1,1]).fillFull(2, 5).target);
