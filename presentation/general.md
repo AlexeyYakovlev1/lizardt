@@ -214,7 +214,7 @@ Turns into a string
 String
 - **Example**
 ```Javascript
-// "41"
+// 41
 console.log(toString(41));
 
 // 11,11
