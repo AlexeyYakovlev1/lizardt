@@ -30,6 +30,7 @@ export interface IGlobal {
 }
 
 export interface ILizardt extends IGeneralCategory, INumberCategory {
+  store:Object,
   createElement(options: IElement): HTMLElement;
   isArray(item: any, callback?): boolean;
   isObject(item, callback?): boolean;

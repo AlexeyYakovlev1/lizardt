@@ -474,3 +474,21 @@ len(document.querySelector(".wrapper")); // 2
 len(2342); // 4
 len(3); // 1
 ```
+
+### ```storage```:
+- **Description**
+Interacts with data stored in the global store object.
+- **Arguments**
+  - Action **(required)**
+  - Name **(required)**
+  - Data **(optional)**
+- **Return**
+Data or nothing
+- **Example**
+```Javascript
+storage("set", "user", { name: "Petr", age: 28 });
+storage("get", "user"); // { name: "Petr", age: 28 };
+
+storage("delete", "user");
+storage("get", "user"); // undefined
+```

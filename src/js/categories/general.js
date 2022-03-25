@@ -30,6 +30,8 @@ var index_1 = require("../filterMethods/index");
 var index_2 = require("../additions/index");
 // Global methods
 var index_3 = require("../global/index");
+// Lizardt
+var lizardt_1 = require("../lizardt");
 var generalCategory = {
     compare: index_3.default.compare,
     copy: function (item) {
@@ -256,6 +258,22 @@ var generalCategory = {
             case "string": return "".concat(item).length;
             case "number": return "".concat(item).length;
             default: return -1;
+        }
+    },
+    storage: function (action, name, data) {
+        if ((action !== "set" && action !== "get" && action !== "delete") || !name)
+            return index_3.default.setError("\n\t\t\t\tThe action can only be \"set\" or \"get\", or the name is not defined\n\t\t\t");
+        switch (action) {
+            case "set":
+                lizardt_1.default.store[name] = data;
+                break;
+            case "get":
+                return lizardt_1.default.store[name];
+            case "delete":
+                delete lizardt_1.default.store[name];
+                break;
+            default:
+                return lizardt_1.default.store;
         }
     },
     isFunction: index_3.default.isFunction,

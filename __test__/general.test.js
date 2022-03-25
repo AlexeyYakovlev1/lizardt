@@ -6,7 +6,7 @@ import {
   isFunction, isObject, isNumber,
   isString, isSymbol, isBigInt,
   isBoolean, isUndefined, isNull,
-  isElement, len
+  isElement, len, storage
 } from "../src/js/categories/general";
 
 // compare
@@ -400,4 +400,23 @@ test("Длина элемента", () => {
 	];
 
 	tests.map(({ target, res }) => expect(len(target)).toStrictEqual(res));
+});
+
+// storage
+test("Хранение/получение данных", () => {
+	const tests = [
+		{ data: { name: "Alexey", age: 17 }, name: "user", res: { name: "Alexey", age: 17 } },
+    { data: ["Javascript", "Typescript"], name: "skills", res: ["Javascript", "Typescript"] },
+    { data: "Audi", name: "carName", res: "Audi" }
+  ];
+
+	tests.forEach(({ data, name, res }) => {
+    storage("set", name, data);
+    expect(storage("get", name)).toStrictEqual(res);
+  })
+
+  tests.forEach(({ name }) => {
+    storage("delete", name);
+    expect(storage("get", name)).toStrictEqual(undefined);
+  })
 });

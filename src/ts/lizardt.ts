@@ -14,6 +14,7 @@ import ajaxCategory from "./categories/ajax";
 import filterMethods from "./filterMethods/index";
 
 const lizardt: ILizardt = {
+  store: {},
   ...generalCategory,
   ...numberCategory,
   ...filterMethods(

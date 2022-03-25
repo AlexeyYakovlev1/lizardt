@@ -16,6 +16,9 @@ import additions from "../additions/index";
 // Global methods
 import global from "../global/index";
 
+// Lizardt
+import lizardt from "../lizardt";
+
 const generalCategory: IGeneralCategory = {
 	compare: global.compare,
 
@@ -283,6 +286,26 @@ const generalCategory: IGeneralCategory = {
 			case "string": return `${item}`.length;
 			case "number": return `${item}`.length;
 			default: return -1;
+		}
+	},
+
+	storage(action, name, data) {
+		if ((action !== "set" && action !== "get" && action !== "delete") || !name)
+			return global.setError(`
+				The action can only be "set" or "get", or the name is not defined
+			`);
+
+		switch(action) {
+			case "set":
+				lizardt.store[name] = data;
+				break;
+			case "get":
+				return lizardt.store[name];
+			case "delete":
+				delete lizardt.store[name];
+				break;
+			default:
+				return lizardt.store;
 		}
 	},
 
