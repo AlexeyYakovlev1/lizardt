@@ -22,8 +22,8 @@ var ajax_1 = require("./categories/ajax");
 var index_1 = require("./filterMethods/index");
 var lizardt = __assign(__assign(__assign({ store: {} }, general_1.default), number_1.default), (0, index_1.default)(__assign(__assign(__assign(__assign({}, dom_1.default), array_1.default), object_1.default), ajax_1.default), [], ["createElement", "index", "scrollToElement", "allComplete", "ajax"]));
 var ajaxMethods = (0, index_1.default)(ajax_1.default, ["ajax"]);
-for (var i in ajaxMethods) {
-    Promise.prototype[i] = ajaxMethods[i];
+for (var key in ajaxMethods) {
+    Promise.prototype[key] = ajaxMethods[key];
 }
 // Set context at lizardt
 for (var method in lizardt) {

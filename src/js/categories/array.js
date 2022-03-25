@@ -262,6 +262,8 @@ var arrayCategory = {
             index_1.default.setError("\"".concat(this.target, "\" must be array"));
         }
     },
+    onlyTruthy: index_1.default.onlyTruthy,
+    onlyFalsy: index_1.default.onlyFalsy,
     reverse: index_1.default.reverse,
     merge: index_1.default.merge
 };

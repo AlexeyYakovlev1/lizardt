@@ -261,8 +261,9 @@ var generalCategory = {
         }
     },
     storage: function (action, name, data) {
-        if ((action !== "set" && action !== "get" && action !== "delete") || !name)
-            return index_3.default.setError("\n\t\t\t\tThe action can only be \"set\" or \"get\", or the name is not defined\n\t\t\t");
+        var commands = ["set", "get", "delete"];
+        if (!commands.includes(action) || !name)
+            return index_3.default.setError("The action can only be \"set\" or \"get\", or the name is not defined");
         switch (action) {
             case "set":
                 lizardt_1.default.store[name] = data;

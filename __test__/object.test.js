@@ -1,4 +1,4 @@
-import { hasProperty, keys, values, addProperty, merge, isEmpty, removeProperty } from "../src/js/categories/object";
+import { hasProperty, keys, values, addProperty, merge, isEmpty, removeProperty, onlyFalsy, onlyTruthy } from "../src/js/categories/object";
 
 // isEmpty
 test("Проверка на пустоту", () => {
@@ -94,4 +94,24 @@ test("Удаление свойства", () => {
   ];
 
   tests.map(({ target, toBe, args }) => expect(removeProperty.call({ target }, ...args)).toStrictEqual({ target: toBe }));
+});
+
+// onlyFalsy
+test("Только ложные значения", () => {
+  const tests = [
+    { target: { key1: false, key2: true }, toBe: { key1: false } },
+    { target: { key1: true, key2: true }, toBe: {} },
+  ];
+
+  tests.map(({ target, toBe }) => expect(onlyFalsy.call({ target })).toStrictEqual({ target: toBe }));
+});
+
+// onlyTruthy
+test("Только правдивые значения", () => {
+  const tests = [
+    { target: { key1: "Hello", key2: 0 }, toBe: { key1: "Hello" } },
+    { target: {}, toBe: {} },
+  ];
+
+  tests.map(({ target, toBe }) => expect(onlyTruthy.call({ target })).toStrictEqual({ target: toBe }));
 });

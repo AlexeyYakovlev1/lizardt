@@ -83,7 +83,9 @@ var objectCategory = {
         else {
             index_1.default.setError("\"".concat(this.target, "\" is not an object"));
         }
-    }
+    },
+    onlyTruthy: index_1.default.onlyTruthy,
+    onlyFalsy: index_1.default.onlyFalsy,
 };
 for (var i in objectCategory) {
     // Exports every separately method

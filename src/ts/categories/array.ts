@@ -279,6 +279,8 @@ const arrayCategory: IArrayCategory = {
     }
   },
 
+  onlyTruthy: global.onlyTruthy,
+  onlyFalsy: global.onlyFalsy,
   reverse: global.reverse,
   merge: global.merge
 }

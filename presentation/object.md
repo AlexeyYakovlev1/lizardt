@@ -94,3 +94,25 @@ Boolean
 t({}).isEmpty(); // true
 t({ name: "alex" }).isEmpty(); // false
 ```
+
+### ```onlyFalsy()```:
+- **Description**
+Takes only falsy object values
+- **Return**
+lizardt object
+- **Example**
+```Javascript
+// { key: false, key3: false }
+console.log(t({ key: false, key2: true, key3: false }).onlyFalsy().target);
+```
+
+### ```onlyTruthy()```:
+- **Description**
+Takes only truthy object values
+- **Return**
+lizardt object
+- **Example**
+```Javascript
+// { key2: true }
+console.log(t({ key: false, key2: true, key3: false }).onlyTruthy().target);
+```

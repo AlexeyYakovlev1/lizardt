@@ -6,7 +6,8 @@ import {
   merge, sort, uniques,
   find, slice, splice,
   findByIndexAndUpdate,
-  fillFull, reverse, findByIndexAndRemove
+  fillFull, reverse, findByIndexAndRemove,
+  onlyFalsy, onlyTruthy
 } from "../src/js/categories/array";
 
 // find
@@ -330,4 +331,24 @@ test("Удалить элемент по индексу", () => {
   ];
 
   tests.map(({ target, toBe, args }) => expect(findByIndexAndRemove.call({ target }, ...args)).toStrictEqual({ target: toBe }));
+});
+
+// onlyFalsy
+test("Только ложные элементы", () => {
+  const tests = [
+    { target: [1, 2, 3], toBe: [] },
+    { target: [0, 1, 2, 3, NaN], toBe: [0, NaN] },
+  ];
+
+  tests.map(({ target, toBe }) => expect(onlyFalsy.call({ target })).toStrictEqual({ target: toBe }));
+});
+
+// onlyTruthy
+test("Только правдивые элементы", () => {
+  const tests = [
+    { target: [1, 2, 3], toBe: [1, 2, 3] },
+    { target: [0, 1, 2, 3, NaN], toBe: [1, 2, 3] },
+  ];
+
+  tests.map(({ target, toBe }) => expect(onlyTruthy.call({ target })).toStrictEqual({ target: toBe }));
 });

@@ -27,10 +27,12 @@ export interface IGlobal {
   isFunction(item: any, callback?: () => any): boolean | any;
   isEmpty(): boolean;
   reverse(): IT;
+  onlyTruthy(): IT;
+  onlyFalsy(): IT;
 }
 
 export interface ILizardt extends IGeneralCategory, INumberCategory {
-  store:Object,
+  store: Object,
   createElement(options: IElement): HTMLElement;
   isArray(item: any, callback?): boolean;
   isObject(item, callback?): boolean;

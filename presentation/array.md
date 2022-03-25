@@ -325,3 +325,25 @@ lizardt object
 // [4,3,2,1]
 console.log(t([1, 2, 3, 4]).reverse().target);
 ```
+
+### ```onlyFalsy()```:
+- **Description**
+Takes only falsy array values
+- **Return**
+lizardt object
+- **Example**
+```Javascript
+// [null, undefined, 0, "", false, NaN]
+console.log(t([null, undefined, 0, 321, "", false, NaN]).onlyFalsy().target);
+```
+
+### ```onlyTruthy()```:
+- **Description**
+Takes only truthy array values
+- **Return**
+lizardt object
+- **Example**
+```Javascript
+// [321]
+console.log(t([null, undefined, 0, 321, "", false, NaN]).onlyTruthy().target);
+```

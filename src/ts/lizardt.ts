@@ -25,8 +25,8 @@ const lizardt: ILizardt = {
 };
 const ajaxMethods: Omit<IAjaxCategory, "ajax" | "allComplete"> = filterMethods(ajaxCategory, ["ajax"]);
 
-for (let i in ajaxMethods) {
-  Promise.prototype[i] = ajaxMethods[i];
+for (let key in ajaxMethods) {
+  Promise.prototype[key] = ajaxMethods[key];
 }
 
 // Set context at lizardt

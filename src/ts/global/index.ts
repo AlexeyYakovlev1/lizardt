@@ -264,6 +264,45 @@ const global: IGlobal = {
     } else {
       global.setError(`"${this.target}" must be one of the following types: array, string or number`);
     }
+  },
+
+  onlyTruthy(): IT {
+    if (global.isObject(this.target) || Array.isArray(this.target)) {
+      if (global.isObject(this.target)) {
+        for (let key in this.target) {
+          if (!this.target[key]) {
+            delete this.target[key];
+          }
+        }
+      }
+
+      if (Array.isArray(this.target)) {
+        this.target = this.target.filter(Boolean);
+      }
+
+      return this;
+    } else {
+      global.setError(`"${this.target}" must be either an array or an object`);
+    }
+  },
+  onlyFalsy(): IT {
+    if (global.isObject(this.target) || Array.isArray(this.target)) {
+      if (global.isObject(this.target)) {
+        for (let key in this.target) {
+          if (this.target[key]) {
+            delete this.target[key];
+          }
+        }
+      }
+
+      if (Array.isArray(this.target)) {
+        this.target = this.target.filter(item => !Boolean(item));
+      }
+
+      return this;
+    } else {
+      global.setError(`"${this.target}" must be either an array or an object`);
+    }
   }
 };
 

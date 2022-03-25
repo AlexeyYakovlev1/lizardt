@@ -85,7 +85,10 @@ const objectCategory: IObjectCategory = {
     } else {
       global.setError(`"${this.target}" is not an object`);
     }
-  }
+  },
+
+  onlyTruthy: global.onlyTruthy,
+  onlyFalsy: global.onlyFalsy,
 }
 
 for (let i in objectCategory) {

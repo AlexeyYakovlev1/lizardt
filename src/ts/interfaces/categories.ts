@@ -39,6 +39,8 @@ export interface IArrayCategory {
   findByIndexAndRemove(index: number): IT;
   fillFull(item: any, amount: number): IT;
   reverse(): IT;
+  onlyTruthy(): IT;
+  onlyFalsy(): IT;
 }
 
 // Ajax
@@ -116,7 +118,7 @@ export interface IGeneralCategory {
   isNull(item: any, callback?: () => any): any;
   isElement(item: any, callback?: () => any): any;
   len(item: Array<any> | Object | string | HTMLCollection | Element | number): number;
-  storage(action: "set" | "get" | "delete", name: string, data?: any):any;
+  storage(action: "set" | "get" | "delete", name: string, data?: any): any;
 }
 
 // Number
@@ -138,4 +140,6 @@ export interface IObjectCategory {
   removeProperty(key: string): IT;
   merge(item: Array<any> | object): IT;
   isEmpty(): boolean;
+  onlyTruthy(): IT;
+  onlyFalsy(): IT;
 }
