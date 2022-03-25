@@ -450,3 +450,27 @@ isNull(parseInt({}), () => console.log("Yes"));
 // false
 isNull(undefined);
 ```
+
+### ```len```:
+- **Description**
+Returns the length of the passed argument.
+- **Arguments**
+  - Item **(required)**
+- **Return**
+Length number
+- **Example**
+```html
+<div class="wrapper">
+		<h1>Title</h1>
+    <p>Text</p>
+</div>
+```
+
+```Javascript
+len([1,2,3,4]); // 4
+len("hello"); // 5
+len({ a: 1, b: 2 }); // 2
+len(document.querySelector(".wrapper")); // 2
+len(2342); // 4
+len(3); // 1
+```

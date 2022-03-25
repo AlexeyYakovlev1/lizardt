@@ -6,6 +6,7 @@ import {
   IGlobal,
   IT
 } from "../interfaces/index";
+import generalCategory from "../categories/general";
 
 const global: IGlobal = {
   checkList(target: any): Boolean {
@@ -263,7 +264,7 @@ const global: IGlobal = {
     } else {
       global.setError(`"${this.target}" must be one of the following types: array, string or number`);
     }
-  },
+  }
 };
 
 export default global;

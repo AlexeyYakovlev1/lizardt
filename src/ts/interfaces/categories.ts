@@ -115,6 +115,7 @@ export interface IGeneralCategory {
   isUndefined(item: any, callback?: () => any): any;
   isNull(item: any, callback?: () => any): any;
   isElement(item: any, callback?: () => any): any;
+  len(item: Array<any> | Object | string | HTMLCollection | Element | number): number;
 }
 
 // Number

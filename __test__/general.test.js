@@ -6,7 +6,7 @@ import {
   isFunction, isObject, isNumber,
   isString, isSymbol, isBigInt,
   isBoolean, isUndefined, isNull,
-  isElement
+  isElement, len
 } from "../src/js/categories/general";
 
 // compare
@@ -375,4 +375,29 @@ test("Проверка на DOM элемент", () => {
   ];
 
   tests.map(({ target, toBe }) => expect(isElement(target))[toBe]());
+});
+
+// len
+test("Длина элемента", () => {
+	document.body.innerHTML = `<div class="wrapper">
+		<h1 class="title"></h1>
+		<ul class="list">
+			<li class="elem">1</li>
+			<li class="elem">2</li>	
+			<li class="elem">3</li>
+		</ul>
+	</div>`;
+
+	const nodeList = document.querySelector(".wrapper");
+
+	const tests = [
+		{ target: [1,2,3,4], res: 4 },
+		{ target: "hello", res: 5 },
+		{ target: { a: 1, b: 2 }, res: 2 },
+		{ target: nodeList, res: 2 },
+    { target: 2342, res: 4 },
+    { target: 3, res: 1 }
+	];
+
+	tests.map(({ target, res }) => expect(len(target)).toStrictEqual(res));
 });

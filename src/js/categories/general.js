@@ -234,8 +234,32 @@ var generalCategory = {
         }
         return res;
     },
+    len: function (item) {
+        // Проверка на поддержку
+        if (!index_3.default.checkList(item) && typeof item !== "string" &&
+            !index_3.default.isObject(item) && !generalCategory.isElement(item) &&
+            !generalCategory.isNumber(item))
+            return index_3.default.setError("\n\t\t\t\tSupported only: Array, String, NodeList, Object, html element, number, but not \"".concat(typeof item, "\"\n\t\t\t"));
+        // Проверка на массив
+        if (Array.isArray(item))
+            return item.length;
+        var nodes = Object.prototype.toString.call(item);
+        var el = item;
+        // Проверка на html
+        if (nodes === "[object HTMLCollection]" || nodes === "[object NodeList]")
+            return el.length;
+        else if (generalCategory.isElement(item))
+            return el.children.length;
+        // Проверка на типы
+        switch (typeof item) {
+            case "object": return Object.keys(item).length;
+            case "string": return "".concat(item).length;
+            case "number": return "".concat(item).length;
+            default: return -1;
+        }
+    },
     isFunction: index_3.default.isFunction,
-    isObject: index_3.default.isObject,
+    isObject: index_3.default.isObject
 };
 for (var i in generalCategory) {
     // Exports every separately method

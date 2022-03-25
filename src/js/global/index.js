@@ -245,6 +245,6 @@ var global = {
         else {
             global.setError("\"".concat(this.target, "\" must be one of the following types: array, string or number"));
         }
-    },
+    }
 };
 exports.default = global;
