@@ -7,7 +7,6 @@ import global from "../global/index";
 
 const objectCategory: IObjectCategory = {
   merge: global.merge,
-  isObject: global.isObject,
   isEmpty: global.isEmpty,
 
   hasProperty(property: string | Array<string>): boolean {
@@ -49,10 +48,10 @@ const objectCategory: IObjectCategory = {
   },
 
   addProperty(item: object): IT {
-    if (objectCategory.isObject(this.target)) {
-      if (objectCategory.isObject(item) || Array.isArray(item)) {
+    if (global.isObject(this.target)) {
+      if (global.isObject(item) || Array.isArray(item)) {
         if (Array.isArray(item)) {
-          const done = item.every(el => objectCategory.isObject(el));
+          const done = item.every(el => global.isObject(el));
 
           if (!done) {
             global.setError(`In array: ${item} all elements must be object`);

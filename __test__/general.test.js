@@ -1,15 +1,12 @@
 import {
-  compare,
-  copy,
-  jsonParse,
-  jsonString,
-  t,
-  typeOf,
-  extend,
-  array,
-  repeat,
-  toString,
-  toNumber
+  compare, copy, jsonParse,
+  jsonString, t, typeOf,
+  extend, array, repeat,
+  toString, toNumber, isArray,
+  isFunction, isObject, isNumber,
+  isString, isSymbol, isBigInt,
+  isBoolean, isUndefined, isNull,
+  isElement
 } from "../src/js/categories/general";
 
 // compare
@@ -193,4 +190,189 @@ test("Превращение в цифру", () => {
   ];
 
   tests.map(({ args, toBe }) => expect(toNumber(...args)).toStrictEqual(toBe));
+});
+
+// isArray
+test("Определение массива", () => {
+  const tests = [
+    { target: [1, 2, 3, 4], toBe: "toBeTruthy", },
+    { target: "Hello, world!", toBe: "toBeFalsy", },
+    { target: {}, toBe: "toBeFalsy" },
+    { target: 123, toBe: "toBeFalsy", },
+  ];
+
+  tests.map(({ target, toBe }) => expect(isArray(target))[toBe]());
+});
+
+// isFunction
+test("Проверка элемента на функцию", () => {
+  const tests = [
+    {
+      target: {},
+      toBe: "toBeFalsy",
+      args: []
+    },
+    {
+      target: [],
+      toBe: "toBeFalsy",
+      args: []
+    },
+    {
+      target: () => { },
+      toBe: "toBeTruthy",
+      args: []
+    },
+    {
+      target: "console.log",
+      args: [() => 1],
+      toBe: "toBeFalsy"
+    },
+  ];
+
+  tests.map(({ target, toBe, args }) => expect(isFunction(target, ...args))[toBe]());
+});
+
+// isObject
+test("Проверка на объект", () => {
+  const tests = [
+    { target: {}, toBe: "toBeTruthy" },
+    { target: [], toBe: "toBeFalsy" },
+    { target: "", toBe: "toBeFalsy" },
+    { target: 0, toBe: "toBeFalsy" },
+    { target: undefined, toBe: "toBeFalsy" },
+    { target: null, toBe: "toBeFalsy" },
+    { target: Infinity, toBe: "toBeFalsy" },
+    { target: new Function, toBe: "toBeFalsy" },
+  ];
+
+  tests.map(({ target, toBe }) => expect(isObject(target))[toBe]());
+});
+
+// isNumber
+test("Проверка на цифру", () => {
+  const tests = [
+    { target: {}, toBe: "toBeFalsy" },
+    { target: [], toBe: "toBeFalsy" },
+    { target: "", toBe: "toBeFalsy" },
+    { target: 0, toBe: "toBeTruthy" },
+    { target: undefined, toBe: "toBeFalsy" },
+    { target: null, toBe: "toBeFalsy" },
+    { target: Infinity, toBe: "toBeTruthy" },
+    { target: new Function, toBe: "toBeFalsy" },
+    { target: "31", toBe: "toBeFalsy" },
+  ];
+
+  tests.map(({ target, toBe }) => expect(isNumber(target))[toBe]());
+});
+
+// isString
+test("Проверка на строку", () => {
+  const tests = [
+    { target: {}, toBe: "toBeFalsy" },
+    { target: [], toBe: "toBeFalsy" },
+    { target: "", toBe: "toBeTruthy" },
+    { target: 0, toBe: "toBeFalsy" },
+    { target: undefined, toBe: "toBeFalsy" },
+    { target: null, toBe: "toBeFalsy" },
+    { target: Infinity, toBe: "toBeFalsy" },
+    { target: new Function, toBe: "toBeFalsy" },
+    { target: "31", toBe: "toBeTruthy" },
+  ];
+
+  tests.map(({ target, toBe }) => expect(isString(target))[toBe]());
+});
+
+// isSymbol
+test("Проверка на символ", () => {
+  const tests = [
+    { target: {}, toBe: "toBeFalsy" },
+    { target: [], toBe: "toBeFalsy" },
+    { target: Symbol(31), toBe: "toBeTruthy" },
+    { target: 0, toBe: "toBeFalsy" },
+    { target: undefined, toBe: "toBeFalsy" },
+    { target: null, toBe: "toBeFalsy" },
+    { target: Infinity, toBe: "toBeFalsy" },
+    { target: new Function, toBe: "toBeFalsy" },
+    { target: Symbol(3122), toBe: "toBeTruthy" },
+  ];
+
+  tests.map(({ target, toBe }) => expect(isSymbol(target))[toBe]());
+});
+
+// isBigInt
+test("Проверка на большое число", () => {
+  const tests = [
+    { target: {}, toBe: "toBeFalsy" },
+    { target: [], toBe: "toBeFalsy" },
+    { target: BigInt(231), toBe: "toBeTruthy" },
+    { target: 0, toBe: "toBeFalsy" },
+    { target: undefined, toBe: "toBeFalsy" },
+    { target: null, toBe: "toBeFalsy" },
+    { target: Infinity, toBe: "toBeFalsy" },
+    { target: new Function, toBe: "toBeFalsy" },
+    { target: BigInt(23221), toBe: "toBeTruthy" },
+  ];
+
+  tests.map(({ target, toBe }) => expect(isBigInt(target))[toBe]());
+});
+
+// isBoolean
+test("Проверка на булево значение", () => {
+  const tests = [
+    { target: {}, toBe: "toBeFalsy" },
+    { target: [], toBe: "toBeFalsy" },
+    { target: 1 === 1, toBe: "toBeTruthy" },
+    { target: 0, toBe: "toBeFalsy" },
+    { target: undefined, toBe: "toBeFalsy" },
+    { target: null, toBe: "toBeFalsy" },
+    { target: Infinity, toBe: "toBeFalsy" },
+    { target: new Function, toBe: "toBeFalsy" },
+    { target: false, toBe: "toBeTruthy" },
+  ];
+
+  tests.map(({ target, toBe }) => expect(isBoolean(target))[toBe]());
+});
+
+// isUndefined
+test("Проверка на undefined", () => {
+  const tests = [
+    { target: {}, toBe: "toBeFalsy" },
+    { target: [], toBe: "toBeFalsy" },
+    { target: undefined, toBe: "toBeTruthy" },
+    { target: 0, toBe: "toBeFalsy" },
+    { target: null, toBe: "toBeFalsy" },
+    { target: Infinity, toBe: "toBeFalsy" },
+    { target: new Function, toBe: "toBeFalsy" },
+  ];
+
+  tests.map(({ target, toBe }) => expect(isUndefined(target))[toBe]());
+});
+
+// isNull
+test("Проверка на null", () => {
+  const tests = [
+    { target: {}, toBe: "toBeFalsy" },
+    { target: [], toBe: "toBeFalsy" },
+    { target: null, toBe: "toBeTruthy" },
+    { target: 0, toBe: "toBeFalsy" },
+    { target: Infinity, toBe: "toBeFalsy" },
+    { target: new Function, toBe: "toBeFalsy" },
+  ];
+
+  tests.map(({ target, toBe }) => expect(isNull(target))[toBe]());
+});
+
+// isElement
+test("Проверка на DOM элемент", () => {
+  const tests = [
+    { target: {}, toBe: "toBeFalsy" },
+    { target: [], toBe: "toBeFalsy" },
+    { target: null, toBe: "toBeFalsy" },
+    { target: 0, toBe: "toBeFalsy" },
+    { target: Infinity, toBe: "toBeFalsy" },
+    { target: new Function, toBe: "toBeFalsy" },
+    { target: document.body, toBe: "toBeTruthy" },
+  ];
+
+  tests.map(({ target, toBe }) => expect(isElement(target))[toBe]());
 });

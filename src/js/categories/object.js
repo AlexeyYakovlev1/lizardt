@@ -4,7 +4,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var index_1 = require("../global/index");
 var objectCategory = {
     merge: index_1.default.merge,
-    isObject: index_1.default.isObject,
     isEmpty: index_1.default.isEmpty,
     hasProperty: function (property) {
         var _this = this;
@@ -42,10 +41,10 @@ var objectCategory = {
     },
     addProperty: function (item) {
         var _this = this;
-        if (objectCategory.isObject(this.target)) {
-            if (objectCategory.isObject(item) || Array.isArray(item)) {
+        if (index_1.default.isObject(this.target)) {
+            if (index_1.default.isObject(item) || Array.isArray(item)) {
                 if (Array.isArray(item)) {
-                    var done = item.every(function (el) { return objectCategory.isObject(el); });
+                    var done = item.every(function (el) { return index_1.default.isObject(el); });
                     if (!done) {
                         index_1.default.setError("In array: ".concat(item, " all elements must be object"));
                     }

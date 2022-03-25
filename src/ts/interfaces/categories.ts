@@ -15,11 +15,6 @@ export interface IStringCategory {
   reverse(): IT;
 }
 
-// Function
-export interface IFuncCategory {
-  isFunction(item: any, callback?: () => any): boolean | any;
-}
-
 // Array
 export interface IArrayCategory {
   last(): IT,
@@ -42,7 +37,6 @@ export interface IArrayCategory {
   isEmpty(): boolean;
   findByIndexAndUpdate(index: number, updates: any): IT;
   findByIndexAndRemove(index: number): IT;
-  isArray(item: any, callback?): boolean;
   fillFull(item: any, amount: number): IT;
   reverse(): IT;
 }
@@ -110,6 +104,17 @@ export interface IGeneralCategory {
   repeat(num: number, callback: (iteration: number) => void): void;
   toString(item: any): string;
   toNumber(item: any): number;
+  isObject(item, callback?: () => any): any;
+  isArray(item: any, callback?: () => any): any;
+  isFunction(item: any, callback?: () => any): any;
+  isNumber(item: any, callback?: () => any): any;
+  isString(item: any, callback?: () => any): any;
+  isSymbol(item: any, callback?: () => any): any;
+  isBigInt(item: any, callback?: () => any): any;
+  isBoolean(item: any, callback?: () => any): any;
+  isUndefined(item: any, callback?: () => any): any;
+  isNull(item: any, callback?: () => any): any;
+  isElement(item: any, callback?: () => any): any;
 }
 
 // Number
@@ -118,11 +123,12 @@ export interface INumberCategory {
   getPercent(current: number, endNum: number, round?: boolean): number;
   getNumFromPercent(percent: number, num: number, round?: boolean): number;
   reverse(): IT;
+  min(num: number): number;
+  max(num: number): number;
 }
 
 // Object
 export interface IObjectCategory {
-  isObject(item, callback?): boolean;
   hasProperty(property: string | Array<string>): boolean;
   keys(): IT;
   values(): IT;

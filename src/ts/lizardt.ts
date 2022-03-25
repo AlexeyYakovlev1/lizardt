@@ -6,7 +6,6 @@ import { IAjaxCategory } from "./interfaces/categories";
 import generalCategory from "./categories/general";
 import numberCategory from "./categories/number";
 import domCategory from "./categories/dom";
-import functionCategory from "./categories/func";
 import objectCategory from "./categories/object";
 import arrayCategory from "./categories/array";
 import ajaxCategory from "./categories/ajax";
@@ -18,9 +17,9 @@ const lizardt: ILizardt = {
   ...generalCategory,
   ...numberCategory,
   ...filterMethods(
-    { ...domCategory, ...arrayCategory, ...objectCategory, ...functionCategory, ...ajaxCategory },
+    { ...domCategory, ...arrayCategory, ...objectCategory, ...ajaxCategory },
     [],
-    ["createElement", "isArray", "isObject", "isFunction", "index", "scrollToElement", "allComplete", "ajax"]
+    ["createElement", "index", "scrollToElement", "allComplete", "ajax"]
   ),
 };
 const ajaxMethods: Omit<IAjaxCategory, "ajax" | "allComplete"> = filterMethods(ajaxCategory, ["ajax"]);

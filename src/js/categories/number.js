@@ -29,6 +29,30 @@ var numberCategory = {
             index_1.default.setError("\"".concat(percent, "\" or \"").concat(num, "\" not a number"));
         }
     },
+    min: function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        if (args.every(function (item) { return typeof item === "number"; })) {
+            return Math.min.apply(Math, args);
+        }
+        else {
+            index_1.default.setError("All arguments must be of type number");
+        }
+    },
+    max: function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        if (args.every(function (item) { return typeof item === "number"; })) {
+            return Math.max.apply(Math, args);
+        }
+        else {
+            index_1.default.setError("All arguments must be of type number");
+        }
+    },
     reverse: index_1.default.reverse,
 };
 for (var i in numberCategory) {

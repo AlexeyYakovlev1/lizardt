@@ -1,8 +1,8 @@
-import { IArrayCategory, IDomCategory, IFuncCategory, IGeneralCategory, INumberCategory, IObjectCategory, IStringCategory } from "./categories";
+import { IArrayCategory, IDomCategory, IGeneralCategory, INumberCategory, IObjectCategory, IStringCategory } from "./categories";
 import { IElement, ITypeOfSelector } from "./options";
 
 // Main
-export interface IT extends IDomCategory, IArrayCategory, IFuncCategory, IObjectCategory, IStringCategory {
+export interface IT extends IDomCategory, IArrayCategory, IObjectCategory, IStringCategory {
   target: any,
   createElement: undefined;
   isArray: undefined;

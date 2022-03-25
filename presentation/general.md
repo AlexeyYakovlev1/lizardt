@@ -239,3 +239,214 @@ console.log(toString([11, 11]));
 // 11
 console.log(toString("11"));
 ```
+
+### ```isArray()```:
+- **Description**
+Сhecks if the passed element is an array. The second argument (optional) is a function that is called if the first argument is an array.
+- **Arguments**
+  - Item **(required)**
+  - Callback **(optional)**
+- **Return**
+Boolean/Result your function
+- **Example**
+```Javascript
+isArray([1,2,3]); // true
+isArray("") // false
+isArray([1,2,3], () => {
+  console.log(1)
+}); // 1
+```
+
+### ```isFunction()```:
+- **Description**
+Сhecks if the passed element is an function. The second argument (optional) is a function that is called if the first argument is an function.
+- **Arguments**
+  - Item **(required)**
+  - Callback **(optional)**
+- **Return**
+Boolean/Result your function
+- **Example**
+```Javascript
+isFunction("12") // false
+isFunction(console.log) // true
+isFunction(console.log, () => {
+  console.log("yes");
+}) // yes
+```
+
+### ```isObject()```:
+- **Description**
+Сhecks if the passed element is an object. The second argument (optional) is a function that is called if the first argument is an object.
+- **Arguments**
+  - Item **(required)**
+  - Callback **(optional)**
+- **Return**
+Boolean/Result your function
+- **Example**
+```Javascript
+isObject({}); // true
+isObject("") // false
+isObject({}, () => {
+  console.log(1)
+}); // 1
+```
+
+### ```isNumber()```:
+- **Description**
+Checks if the given element is a number. The second argument (optional) is a function that is called if the first argument is a number.
+- **Arguments**
+  - Item **(required)**
+  - Callback **(optional)**
+- **Return**
+Boolean/Result your function
+- **Example**
+```Javascript
+// false
+isNumber("2", () => console.log("Yes"));
+
+// Yes
+isNumber(2, () => console.log("Yes"));
+
+// true
+isNumber(2);
+```
+
+### ```isString()```:
+- **Description**
+Checks if the given element is a string. The second argument (optional) is a function that is called if the first argument is a string.
+- **Arguments**
+  - Item **(required)**
+  - Callback **(optional)**
+- **Return**
+Boolean/Result your function
+- **Example**
+```Javascript
+// Yes
+isString("Hello", () => console.log("Yes"));
+
+// false
+isString({}, () => console.log("Yes"));
+
+// true
+isString("Hello, lizard!");
+```
+
+### ```isElement()```:
+- **Description**
+Checks if the given element is a DOM element. The second argument (optional) is a function that is called if the first argument is a DOM element.
+- **Arguments**
+  - Item **(required)**
+  - Callback **(optional)**
+- **Return**
+Boolean/Result your function
+- **Example**
+```Javascript
+// Yes
+isElement(document.body, () => console.log("Yes"));
+
+// false
+isElement({}, () => console.log("Yes"));
+
+// true
+isElement(document.documentElement);
+```
+
+### ```isSymbol()```:
+- **Description**
+Checks if the given element is a Symbol. The second argument (optional) is a function that is called if the first argument is a Symbol.
+- **Arguments**
+  - Item **(required)**
+  - Callback **(optional)**
+- **Return**
+Boolean/Result your function
+- **Example**
+```Javascript
+// Yes
+isSymbol(Symbol(31), () => console.log("Yes"));
+
+// false
+isSymbol(231, () => console.log("Yes"));
+
+// true
+isSymbol(Symbol(31));
+```
+
+### ```isBigInt()```:
+- **Description**
+Checks if the given element is a BigInt. The second argument (optional) is a function that is called if the first argument is a BigInt.
+- **Arguments**
+  - Item **(required)**
+  - Callback **(optional)**
+- **Return**
+Boolean/Result your function
+- **Example**
+```Javascript
+// Yes
+isBigInt(BigInt(322), () => console.log("Yes"));
+
+// false
+isBigInt(23231, () => console.log("Yes"));
+
+// true
+isBigInt(BigInt(322));
+```
+
+### ```isBoolean()```:
+- **Description**
+Checks if the given element is a boolean. The second argument (optional) is a function that is called if the first argument is a boolean.
+- **Arguments**
+  - Item **(required)**
+  - Callback **(optional)**
+- **Return**
+Boolean/Result your function
+- **Example**
+```Javascript
+// Yes
+isBoolean(1 === 1, () => console.log("Yes"));
+
+// false
+isBoolean(null, () => console.log("Yes"));
+
+// true
+isBoolean(true);
+```
+
+### ```isUndefined()```:
+- **Description**
+Checks if the given element is a undefined. The second argument (optional) is a function that is called if the first argument is a undefined.
+- **Arguments**
+  - Item **(required)**
+  - Callback **(optional)**
+- **Return**
+Boolean/Result your function
+- **Example**
+```Javascript
+// Yes
+isUndefined(undefined, () => console.log("Yes"));
+
+// false
+isUndefined(null, () => console.log("Yes"));
+
+// true
+isUndefined(undefined);
+```
+
+### ```isNull()```:
+- **Description**
+Checks if the given element is a null. The second argument (optional) is a function that is called if the first argument is a null.
+- **Arguments**
+  - Item **(required)**
+  - Callback **(optional)**
+- **Return**
+Boolean/Result your function
+- **Example**
+```Javascript
+// Yes
+isNull(null, () => console.log("Yes"));
+
+// Yes
+isNull(parseInt({}), () => console.log("Yes"));
+
+// false
+isNull(undefined);
+```

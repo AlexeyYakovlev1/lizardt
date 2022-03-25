@@ -15,13 +15,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var general_1 = require("./categories/general");
 var number_1 = require("./categories/number");
 var dom_1 = require("./categories/dom");
-var func_1 = require("./categories/func");
 var object_1 = require("./categories/object");
 var array_1 = require("./categories/array");
 var ajax_1 = require("./categories/ajax");
 // Additional methods
 var index_1 = require("./filterMethods/index");
-var lizardt = __assign(__assign(__assign({}, general_1.default), number_1.default), (0, index_1.default)(__assign(__assign(__assign(__assign(__assign({}, dom_1.default), array_1.default), object_1.default), func_1.default), ajax_1.default), [], ["createElement", "isArray", "isObject", "isFunction", "index", "scrollToElement", "allComplete", "ajax"]));
+var lizardt = __assign(__assign(__assign({}, general_1.default), number_1.default), (0, index_1.default)(__assign(__assign(__assign(__assign({}, dom_1.default), array_1.default), object_1.default), ajax_1.default), [], ["createElement", "index", "scrollToElement", "allComplete", "ajax"]));
 var ajaxMethods = (0, index_1.default)(ajax_1.default, ["ajax"]);
 for (var i in ajaxMethods) {
     Promise.prototype[i] = ajaxMethods[i];

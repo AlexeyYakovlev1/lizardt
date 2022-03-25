@@ -1,22 +1,5 @@
 # Object Methods
 
-### ```isObject()```:
-- **Description**
-Сhecks if the passed element is an object. The second argument (optional) is a function that is called if the first argument is an object.
-- **Arguments**
-  - Item **(required)**
-  - Callback **(optional)**
-- **Return**
-Boolean/Result your function
-- **Example**
-```Javascript
-isObject({}); // true
-isObject("") // false
-isObject({}, () => {
-  console.log(1)
-}); // 1
-```
-
 ### ```hasProperty()```:
 - **Description**
 Checks for the presence of a property in an object. If you pass an array, then it will check for the presence of each property in the object

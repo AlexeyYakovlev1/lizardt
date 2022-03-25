@@ -1,4 +1,4 @@
-import { isObject, hasProperty, keys, values, addProperty, merge, isEmpty, removeProperty } from "../src/js/categories/object";
+import { hasProperty, keys, values, addProperty, merge, isEmpty, removeProperty } from "../src/js/categories/object";
 
 // isEmpty
 test("Проверка на пустоту", () => {
@@ -8,22 +8,6 @@ test("Проверка на пустоту", () => {
   ];
 
   tests.map(({ target, toBe }) => expect(isEmpty.call({ target }))[toBe]());
-});
-
-// isObject
-test("Проверка на объект", () => {
-  const tests = [
-    { target: {}, toBe: "toBeTruthy" },
-    { target: [], toBe: "toBeFalsy" },
-    { target: "", toBe: "toBeFalsy" },
-    { target: 0, toBe: "toBeFalsy" },
-    { target: undefined, toBe: "toBeFalsy" },
-    { target: null, toBe: "toBeFalsy" },
-    { target: Infinity, toBe: "toBeFalsy" },
-    { target: new Function, toBe: "toBeFalsy" },
-  ];
-
-  tests.map(({ target, toBe }) => expect(isObject(target))[toBe]());
 });
 
 // hasProperty

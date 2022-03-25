@@ -59,3 +59,35 @@ lizardt object
 // 321
 console.log(t(123).reverse().target);
 ```
+
+### ```min()```:
+- **Description**
+Returns the smallest number given
+- **Arguments**
+  - Numbers **(required)**
+- **Return**
+Smallest of digits
+- **Example**
+```Javascript
+// -1
+min(-1, 0, 1, 2, 3);
+
+// 10
+min(10, 20, 331, 442, 1233);
+```
+
+### ```max()```:
+- **Description**
+Returns the largest number given
+- **Arguments**
+  - Numbers **(required)**
+- **Return**
+Largest number
+- **Example**
+```Javascript
+// 3
+max(-1, 0, 1, 2, 3);
+
+// 1233
+max(10, 20, 331, 442, 1233);
+```

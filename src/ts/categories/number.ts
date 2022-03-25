@@ -1,5 +1,5 @@
 // Interfaces
-import { INumberCategory } from "../interfaces/categories"
+import { INumberCategory } from "../interfaces/categories";
 
 // Global methods
 import global from "../global/index";
@@ -30,6 +30,22 @@ const numberCategory: INumberCategory = {
       return round ? Math.round(number) : number;
     } else {
       global.setError(`"${percent}" or "${num}" not a number`);
+    }
+  },
+
+  min(...args): number {
+    if (args.every(item => typeof item === "number")) {
+      return Math.min(...args);
+    } else {
+      global.setError("All arguments must be of type number");
+    }
+  },
+
+  max(...args): number {
+    if (args.every(item => typeof item === "number")) {
+      return Math.max(...args);
+    } else {
+      global.setError("All arguments must be of type number");
     }
   },
 

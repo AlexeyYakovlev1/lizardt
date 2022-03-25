@@ -23,7 +23,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // Categories
 var array_1 = require("../categories/array");
 var dom_1 = require("../categories/dom");
-var func_1 = require("../categories/func");
 var object_1 = require("./object");
 var string_1 = require("./string");
 // Additional methods
@@ -87,7 +86,7 @@ var generalCategory = {
                 trt = target;
             }
         }
-        return __assign(__assign({ target: trt ? trt : target }, (0, index_1.default)(__assign(__assign(__assign(__assign(__assign({}, dom_1.default), array_1.default), func_1.default), object_1.default), string_1.default), ["createElement", "isArray", "isFunction", "isObject"])), index_2.default.getAdditions);
+        return __assign(__assign({ target: trt ? trt : target }, (0, index_1.default)(__assign(__assign(__assign(__assign({}, dom_1.default), array_1.default), object_1.default), string_1.default), ["createElement", "isArray", "isFunction", "isObject"])), index_2.default.getAdditions);
     },
     getPageInfo: function () {
         var res = {};
@@ -126,7 +125,117 @@ var generalCategory = {
         else {
             index_3.default.setError("\"".concat(item, "\" must be a string"));
         }
-    }
+    },
+    isArray: function (item, callback) {
+        var res = Array.isArray(item);
+        if (callback) {
+            if (index_3.default.isFunction(callback)) {
+                return res && callback();
+            }
+            else {
+                index_3.default.setError("\"".concat(callback, "\" must be a function"));
+            }
+        }
+        return res;
+    },
+    isNumber: function (item, callback) {
+        var res = typeof item === "number" && !isNaN(item);
+        if (callback) {
+            if (index_3.default.isFunction(callback)) {
+                return res && callback();
+            }
+            else {
+                index_3.default.setError("\"".concat(callback, "\" must be a function"));
+            }
+        }
+        return res;
+    },
+    isString: function (item, callback) {
+        var res = typeof item === "string";
+        if (callback) {
+            if (index_3.default.isFunction(callback)) {
+                return res && callback();
+            }
+            else {
+                index_3.default.setError("\"".concat(callback, "\" must be a function"));
+            }
+        }
+        return res;
+    },
+    isSymbol: function (item, callback) {
+        var res = typeof item === "symbol";
+        if (callback) {
+            if (index_3.default.isFunction(callback)) {
+                return res && callback();
+            }
+            else {
+                index_3.default.setError("\"".concat(callback, "\" must be a function"));
+            }
+        }
+        return res;
+    },
+    isBigInt: function (item, callback) {
+        var res = typeof item === "bigint";
+        if (callback) {
+            if (index_3.default.isFunction(callback)) {
+                return res && callback();
+            }
+            else {
+                index_3.default.setError("\"".concat(callback, "\" must be a function"));
+            }
+        }
+        return res;
+    },
+    isBoolean: function (item, callback) {
+        var res = typeof item === "boolean";
+        if (callback) {
+            if (index_3.default.isFunction(callback)) {
+                return res && callback();
+            }
+            else {
+                index_3.default.setError("\"".concat(callback, "\" must be a function"));
+            }
+        }
+        return res;
+    },
+    isUndefined: function (item, callback) {
+        var res = typeof item === "undefined";
+        if (callback) {
+            if (index_3.default.isFunction(callback)) {
+                return res && callback();
+            }
+            else {
+                index_3.default.setError("\"".concat(callback, "\" must be a function"));
+            }
+        }
+        return res;
+    },
+    isNull: function (item, callback) {
+        var res = item === null;
+        if (callback) {
+            if (index_3.default.isFunction(callback)) {
+                return res && callback();
+            }
+            else {
+                index_3.default.setError("\"".concat(callback, "\" must be a function"));
+            }
+        }
+        return res;
+    },
+    isElement: function (item, callback) {
+        var res = item instanceof Element;
+        if (callback) {
+            if (index_3.default.isFunction(callback)) {
+                return res && callback();
+            }
+            else {
+                index_3.default.setError("\"".concat(callback, "\" must be a function"));
+            }
+        }
+        return res;
+    },
+    isFunction: index_3.default.isFunction,
+    isObject: index_3.default.isObject,
 };
 for (var i in generalCategory) {
     // Exports every separately method

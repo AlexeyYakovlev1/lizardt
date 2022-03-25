@@ -260,23 +260,6 @@ t([]).isEmpty(); // true
 t([1]).isEmpty(); // false
 ```
 
-### ```isArray()```:
-- **Description**
-Сhecks if the passed element is an array. The second argument (optional) is a function that is called if the first argument is an array.
-- **Arguments**
-  - Item **(required)**
-  - Callback **(optional)**
-- **Return**
-Boolean/Result your function
-- **Example**
-```Javascript
-isArray([1,2,3]); // true
-isArray("") // false
-isArray([1,2,3], () => {
-  console.log(1)
-}); // 1
-```
-
 ### ```findByIndexAndUpdate()```:
 - **Description**
 Finds an element by index and modifies it. If the element was not found, no changes will be made

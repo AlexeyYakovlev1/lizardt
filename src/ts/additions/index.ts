@@ -2,7 +2,6 @@
 import arrayCategory from "../categories/array";
 import numberCategory from "../categories/number";
 import stringCategory from "../categories/string";
-import funcCategory from "../categories/func";
 import objectCategory from "../categories/object";
 import domCategory from "../categories/dom";
 import generalCategory from "../categories/general";
@@ -15,7 +14,6 @@ const allMethods: object = {
   ...domCategory,
   ...generalCategory,
   ...objectCategory,
-  ...funcCategory,
   ...numberCategory,
   ...stringCategory,
 }

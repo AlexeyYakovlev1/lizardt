@@ -156,24 +156,29 @@ var global = {
         }
     },
     isFunction: function (item, callback) {
-        if (item && {}.toString.call(item) === "[object Function]") {
-            if (callback instanceof Function) {
-                return callback();
+        var res = {}.toString.call(item) === "[object Function]";
+        if (callback) {
+            if (global.isFunction(callback)) {
+                return res && callback();
             }
-            return true;
+            else {
+                global.setError("\"".concat(callback, "\" must be a function"));
+            }
         }
-        ;
-        return false;
+        return res;
     },
     isObject: function (item, callback) {
-        if (item && typeof item === "object" && !Array.isArray(item)
-            && !(item instanceof Element || item instanceof HTMLElement)) {
+        var res = item && typeof item === "object" && !Array.isArray(item)
+            && !(item instanceof Element || item instanceof HTMLElement);
+        if (callback) {
             if (global.isFunction(callback)) {
-                return callback();
+                return res && callback();
             }
-            return true;
+            else {
+                global.setError("\"".concat(callback, "\" must be a function"));
+            }
         }
-        return false;
+        return res;
     },
     merge: function () {
         var args = [];

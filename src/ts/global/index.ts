@@ -171,28 +171,32 @@ const global: IGlobal = {
   },
 
   isFunction(item: any, callback?): boolean {
-    if (item && {}.toString.call(item) === "[object Function]") {
-      if (callback instanceof Function) {
-        return callback();
+    const res: boolean = {}.toString.call(item) === "[object Function]";
+
+    if (callback) {
+      if (global.isFunction(callback)) {
+        return res && callback();
+      } else {
+        global.setError(`"${callback}" must be a function`);
       }
+    }
 
-      return true;
-    };
-
-    return false;
+    return res;
   },
 
   isObject(item, callback?): boolean {
-    if (item && typeof item === "object" && !Array.isArray(item)
-      && !(item instanceof Element || item instanceof HTMLElement)) {
-      if (global.isFunction(callback)) {
-        return callback();
-      }
+    const res: boolean = item && typeof item === "object" && !Array.isArray(item)
+      && !(item instanceof Element || item instanceof HTMLElement);
 
-      return true;
+    if (callback) {
+      if (global.isFunction(callback)) {
+        return res && callback();
+      } else {
+        global.setError(`"${callback}" must be a function`);
+      }
     }
 
-    return false;
+    return res;
   },
 
   merge(...args): IT {

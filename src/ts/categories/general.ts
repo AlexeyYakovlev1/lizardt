@@ -6,7 +6,6 @@ import { IPageData } from "../interfaces/options";
 // Categories
 import arrayCategory from "../categories/array";
 import domCategory from "../categories/dom";
-import functionCategory from "../categories/func";
 import objectCategory from "./object";
 import stringCategory from "./string";
 
@@ -86,7 +85,7 @@ const generalCategory: IGeneralCategory = {
 
     return {
       target: trt ? trt : target,
-      ...filterMethods({ ...domCategory, ...arrayCategory, ...functionCategory, ...objectCategory, ...stringCategory }, ["createElement", "isArray", "isFunction", "isObject"]),
+      ...filterMethods({ ...domCategory, ...arrayCategory, ...objectCategory, ...stringCategory }, ["createElement", "isArray", "isFunction", "isObject"]),
       ...additions.getAdditions,
     }
   },
@@ -129,7 +128,136 @@ const generalCategory: IGeneralCategory = {
     } else {
       global.setError(`"${item}" must be a string`);
     }
-  }
+  },
+
+  isArray(item: any, callback?): boolean {
+    const res: boolean = Array.isArray(item);
+
+    if (callback) {
+      if (global.isFunction(callback)) {
+        return res && callback();
+      } else {
+        global.setError(`"${callback}" must be a function`);
+      }
+    }
+
+    return res;
+  },
+
+  isNumber(item: any, callback?: () => any): any {
+    const res: boolean = typeof item === "number" && !isNaN(item);
+
+    if (callback) {
+      if (global.isFunction(callback)) {
+        return res && callback();
+      } else {
+        global.setError(`"${callback}" must be a function`);
+      }
+    }
+
+    return res;
+  },
+
+  isString(item: any, callback?: () => any): any {
+    const res: boolean = typeof item === "string";
+
+    if (callback) {
+      if (global.isFunction(callback)) {
+        return res && callback();
+      } else {
+        global.setError(`"${callback}" must be a function`);
+      }
+    }
+
+    return res;
+  },
+
+  isSymbol(item: any, callback?: () => any): any {
+    const res: boolean = typeof item === "symbol";
+
+    if (callback) {
+      if (global.isFunction(callback)) {
+        return res && callback();
+      } else {
+        global.setError(`"${callback}" must be a function`);
+      }
+    }
+
+    return res;
+  },
+
+  isBigInt(item: any, callback?: () => any): any {
+    const res: boolean = typeof item === "bigint";
+
+    if (callback) {
+      if (global.isFunction(callback)) {
+        return res && callback();
+      } else {
+        global.setError(`"${callback}" must be a function`);
+      }
+    }
+
+    return res;
+  },
+
+  isBoolean(item: any, callback?: () => any): any {
+    const res: boolean = typeof item === "boolean";
+
+    if (callback) {
+      if (global.isFunction(callback)) {
+        return res && callback();
+      } else {
+        global.setError(`"${callback}" must be a function`);
+      }
+    }
+
+    return res;
+  },
+
+  isUndefined(item: any, callback?: () => any): any {
+    const res: boolean = typeof item === "undefined";
+
+    if (callback) {
+      if (global.isFunction(callback)) {
+        return res && callback();
+      } else {
+        global.setError(`"${callback}" must be a function`);
+      }
+    }
+
+    return res;
+  },
+
+  isNull(item: any, callback?: () => any): any {
+    const res: boolean = item === null;
+
+    if (callback) {
+      if (global.isFunction(callback)) {
+        return res && callback();
+      } else {
+        global.setError(`"${callback}" must be a function`);
+      }
+    }
+
+    return res;
+  },
+
+  isElement(item: any, callback?: () => any): any {
+    const res: boolean = item instanceof Element;
+
+    if (callback) {
+      if (global.isFunction(callback)) {
+        return res && callback();
+      } else {
+        global.setError(`"${callback}" must be a function`);
+      }
+    }
+
+    return res;
+  },
+
+  isFunction: global.isFunction,
+  isObject: global.isObject,
 }
 
 for (let i in generalCategory) {
