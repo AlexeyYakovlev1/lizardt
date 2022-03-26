@@ -33,9 +33,8 @@ var index_3 = require("../global/index");
 // Lizardt
 var lizardt_1 = require("../lizardt");
 var generalCategory = {
-    compare: index_3.default.compare,
     copy: function (item) {
-        if (Array.isArray(item)) {
+        if (index_3.default.isArray(item)) {
             return __spreadArray([], item, true);
         }
         else if (index_3.default.isObject(item)) {
@@ -76,7 +75,7 @@ var generalCategory = {
     },
     t: function (target, list) {
         var trt;
-        if (typeof target === "string" && /^\[.+\]$/.test(target)) {
+        if (index_3.default.isString(target) && /^\[.+\]$/.test(target)) {
             try {
                 var selector = target.replace(/^\[/, "").replace(/\]$/, "");
                 var element = list ? document.querySelectorAll(selector) : document.querySelector(selector);
@@ -104,7 +103,7 @@ var generalCategory = {
         }, {});
     },
     repeat: function (num, callback) {
-        if (typeof num === "number" && num > 0) {
+        if (index_3.default.isNumber(num) && num > 0) {
             if (index_3.default.isFunction(callback)) {
                 for (var i = 0; i < num; i++) {
                     callback(i);
@@ -127,141 +126,33 @@ var generalCategory = {
         }
     },
     toNumber: function (item) {
-        if (typeof item === "string") {
+        if (index_3.default.isString(item)) {
             return +item;
         }
         else {
             index_3.default.setError("\"".concat(item, "\" must be a string"));
         }
     },
-    isArray: function (item, callback) {
-        var res = Array.isArray(item);
-        if (callback) {
-            if (index_3.default.isFunction(callback)) {
-                return res && callback();
-            }
-            else {
-                index_3.default.setError("\"".concat(callback, "\" must be a function"));
-            }
-        }
-        return res;
-    },
-    isNumber: function (item, callback) {
-        var res = typeof item === "number" && !isNaN(item);
-        if (callback) {
-            if (index_3.default.isFunction(callback)) {
-                return res && callback();
-            }
-            else {
-                index_3.default.setError("\"".concat(callback, "\" must be a function"));
-            }
-        }
-        return res;
-    },
-    isString: function (item, callback) {
-        var res = typeof item === "string";
-        if (callback) {
-            if (index_3.default.isFunction(callback)) {
-                return res && callback();
-            }
-            else {
-                index_3.default.setError("\"".concat(callback, "\" must be a function"));
-            }
-        }
-        return res;
-    },
-    isSymbol: function (item, callback) {
-        var res = typeof item === "symbol";
-        if (callback) {
-            if (index_3.default.isFunction(callback)) {
-                return res && callback();
-            }
-            else {
-                index_3.default.setError("\"".concat(callback, "\" must be a function"));
-            }
-        }
-        return res;
-    },
-    isBigInt: function (item, callback) {
-        var res = typeof item === "bigint";
-        if (callback) {
-            if (index_3.default.isFunction(callback)) {
-                return res && callback();
-            }
-            else {
-                index_3.default.setError("\"".concat(callback, "\" must be a function"));
-            }
-        }
-        return res;
-    },
-    isBoolean: function (item, callback) {
-        var res = typeof item === "boolean";
-        if (callback) {
-            if (index_3.default.isFunction(callback)) {
-                return res && callback();
-            }
-            else {
-                index_3.default.setError("\"".concat(callback, "\" must be a function"));
-            }
-        }
-        return res;
-    },
-    isUndefined: function (item, callback) {
-        var res = typeof item === "undefined";
-        if (callback) {
-            if (index_3.default.isFunction(callback)) {
-                return res && callback();
-            }
-            else {
-                index_3.default.setError("\"".concat(callback, "\" must be a function"));
-            }
-        }
-        return res;
-    },
-    isNull: function (item, callback) {
-        var res = item === null;
-        if (callback) {
-            if (index_3.default.isFunction(callback)) {
-                return res && callback();
-            }
-            else {
-                index_3.default.setError("\"".concat(callback, "\" must be a function"));
-            }
-        }
-        return res;
-    },
-    isElement: function (item, callback) {
-        var res = item instanceof Element;
-        if (callback) {
-            if (index_3.default.isFunction(callback)) {
-                return res && callback();
-            }
-            else {
-                index_3.default.setError("\"".concat(callback, "\" must be a function"));
-            }
-        }
-        return res;
-    },
     len: function (item) {
         // Проверка на поддержку
-        if (!index_3.default.checkList(item) && typeof item !== "string" &&
-            !index_3.default.isObject(item) && !generalCategory.isElement(item) &&
-            !generalCategory.isNumber(item))
+        if (!index_3.default.checkList(item) && !index_3.default.isString(item) &&
+            !index_3.default.isObject(item) && !index_3.default.isElement(item) &&
+            !index_3.default.isNumber(item))
             index_3.default.setError("\n\t\t\t\tSupported only: Array, String, NodeList, Object, html element, number, but not \"".concat(typeof item, "\"\n\t\t\t"));
         // Проверка на массив
-        if (Array.isArray(item))
-            return item.length;
+        if (index_3.default.isArray(item))
+            return item["length"];
         var nodes = Object.prototype.toString.call(item);
         var el = item;
         // Проверка на html
         if (nodes === "[object HTMLCollection]" || nodes === "[object NodeList]")
             return el.length;
-        else if (generalCategory.isElement(item))
+        else if (index_3.default.isElement(item))
             return el.children.length;
         // Проверка на типы
         switch (typeof item) {
             case "object": return Object.keys(item).length;
-            case "string": return "".concat(item).length;
+            case "string": return item.length;
             case "number": return "".concat(item).length;
             default: return -1;
         }
@@ -283,7 +174,18 @@ var generalCategory = {
         }
     },
     isFunction: index_3.default.isFunction,
-    isObject: index_3.default.isObject
+    isObject: index_3.default.isObject,
+    isArray: index_3.default.isArray,
+    isNumber: index_3.default.isNumber,
+    isString: index_3.default.isString,
+    isSymbol: index_3.default.isSymbol,
+    isBigInt: index_3.default.isBigInt,
+    isBoolean: index_3.default.isBoolean,
+    isUndefined: index_3.default.isUndefined,
+    isNull: index_3.default.isNull,
+    isElement: index_3.default.isElement,
+    isPromise: index_3.default.isPromise,
+    compare: index_3.default.compare,
 };
 for (var i in generalCategory) {
     // Exports every separately method

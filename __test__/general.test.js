@@ -6,7 +6,7 @@ import {
   isFunction, isObject, isNumber,
   isString, isSymbol, isBigInt,
   isBoolean, isUndefined, isNull,
-  isElement, len, storage
+  isElement, len, storage, isPromise
 } from "../src/js/categories/general";
 
 // compare
@@ -379,7 +379,7 @@ test("Проверка на DOM элемент", () => {
 
 // len
 test("Длина элемента", () => {
-	document.body.innerHTML = `<div class="wrapper">
+  document.body.innerHTML = `<div class="wrapper">
 		<h1 class="title"></h1>
 		<ul class="list">
 			<li class="elem">1</li>
@@ -388,29 +388,29 @@ test("Длина элемента", () => {
 		</ul>
 	</div>`;
 
-	const nodeList = document.querySelector(".wrapper");
+  const nodeList = document.querySelector(".wrapper");
 
-	const tests = [
-		{ target: [1,2,3,4], res: 4 },
-		{ target: "hello", res: 5 },
-		{ target: { a: 1, b: 2 }, res: 2 },
-		{ target: nodeList, res: 2 },
+  const tests = [
+    { target: [1, 2, 3, 4], res: 4 },
+    { target: "hello", res: 5 },
+    { target: { a: 1, b: 2 }, res: 2 },
+    { target: nodeList, res: 2 },
     { target: 2342, res: 4 },
     { target: 3, res: 1 }
-	];
+  ];
 
-	tests.map(({ target, res }) => expect(len(target)).toStrictEqual(res));
+  tests.map(({ target, res }) => expect(len(target)).toStrictEqual(res));
 });
 
 // storage
 test("Хранение/получение данных", () => {
-	const tests = [
-		{ data: { name: "Alexey", age: 17 }, name: "user", res: { name: "Alexey", age: 17 } },
+  const tests = [
+    { data: { name: "Alexey", age: 17 }, name: "user", res: { name: "Alexey", age: 17 } },
     { data: ["Javascript", "Typescript"], name: "skills", res: ["Javascript", "Typescript"] },
     { data: "Audi", name: "carName", res: "Audi" }
   ];
 
-	tests.forEach(({ data, name, res }) => {
+  tests.forEach(({ data, name, res }) => {
     storage("set", name, data);
     expect(storage("get", name)).toStrictEqual(res);
   })
@@ -421,4 +421,15 @@ test("Хранение/получение данных", () => {
   })
 
   expect(storage("clear")).toStrictEqual({});
+});
+
+// isPromise
+test("Проверка на Promise", () => {
+  const tests = [
+    { args: [new Promise((res, rej) => setTimeout(() => res(31), 0))], toBe: "toBeTruthy" },
+    { args: [9], toBe: "toBeFalsy" },
+    { args: [false], toBe: "toBeFalsy" },
+  ];
+
+  tests.map(({ args, toBe }) => expect(isPromise(...args))[toBe]());
 });

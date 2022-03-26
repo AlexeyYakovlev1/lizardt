@@ -119,6 +119,7 @@ export interface IGeneralCategory {
   isUndefined(item: any, callback?: () => any): any;
   isNull(item: any, callback?: () => any): any;
   isElement(item: any, callback?: () => any): any;
+  isPromise(item: any, callback?: () => any): any;
   len(item: Array<any> | Object | string | HTMLCollection | Element | number): number;
   storage(action: "set" | "get" | "delete" | "clear", name?: string, data?: any): any;
 }
@@ -138,7 +139,7 @@ export interface IObjectCategory {
   hasProperty(property: string | Array<string>): boolean;
   keys(): IT;
   values(): IT;
-  addProperty(item: Object): IT;
+  addProperty(item: object | Array<any>): IT;
   removeProperty(key: string): IT;
   merge(item: Array<any> | object): IT;
   isEmpty(): boolean;

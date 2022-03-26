@@ -257,6 +257,28 @@ isArray([1,2,3], () => {
 }); // 1
 ```
 
+### ```isPromise()```:
+- **Description**
+Checks if the passed element is a promise. The second argument (optional) is a function to be called if the first argument is a promise.
+- **Arguments**
+  - Item **(required)**
+  - Callback **(optional)**
+- **Return**
+Boolean/Result your function
+- **Example**
+```Javascript
+const promise = ajax("https://api.nasa.gov/planetary/apod?api_key=ka3TPNf6RdGollG5PrLreswb8MklmaarsMIZnHUh");
+
+// true
+console.log(isPromise(promise));
+
+// Yes
+isPromise(promise, () => console.log("Yes"));
+
+// false
+console.log(isPromise(false));
+```
+
 ### ```isFunction()```:
 - **Description**
 Сhecks if the passed element is an function. The second argument (optional) is a function that is called if the first argument is an function.

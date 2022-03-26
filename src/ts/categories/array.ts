@@ -6,8 +6,6 @@ import { IArrayCategory } from "../interfaces/categories";
 import { IT } from "../interfaces/index";
 
 const arrayCategory: IArrayCategory = {
-  isEmpty: global.isEmpty,
-
   last(): IT {
     if (global.checkList(this.target)) {
       const arr: Array<any> = this.target;
@@ -22,7 +20,7 @@ const arrayCategory: IArrayCategory = {
   },
 
   find(...args): IT {
-    if (Array.isArray(this.target)) {
+    if (global.isArray(this.target)) {
       this.target = this.target.find(...args);
 
       return this;
@@ -32,7 +30,7 @@ const arrayCategory: IArrayCategory = {
   },
 
   slice(...args): IT {
-    if (Array.isArray(this.target)) {
+    if (global.isArray(this.target)) {
       this.target = this.target.slice(...args);
 
       return this;
@@ -42,7 +40,7 @@ const arrayCategory: IArrayCategory = {
   },
 
   splice(...args): IT {
-    if (Array.isArray(this.target)) {
+    if (global.isArray(this.target)) {
       this.target = this.target.splice(...args);
 
       return this;
@@ -52,7 +50,7 @@ const arrayCategory: IArrayCategory = {
   },
 
   groupBy(callback: (el?, index?, array?) => any, cat?: string): IT {
-    if (Array.isArray(this.target)) {
+    if (global.isArray(this.target)) {
       if (global.isFunction(callback)) {
         const groups: object = this.target.reduce((acc, item, index, array) => {
           const res: any = callback(item, index, array);
@@ -66,7 +64,7 @@ const arrayCategory: IArrayCategory = {
             }
           } else {
             if (cat) {
-              if (typeof cat === "string" && cat.length) {
+              if (global.isString(cat) && cat.length) {
                 acc[cat] = [];
                 acc[cat].push(item);
               } else {
@@ -90,8 +88,8 @@ const arrayCategory: IArrayCategory = {
   },
 
   removeItem(num: number, val?: any): Array<any> {
-    if (Array.isArray(this.target)) {
-      val || typeof val === "number" && val >= 0 ? this.target.splice(num, 1, val) : this.target.splice(num, 1);
+    if (global.isArray(this.target)) {
+      global.isNumber(val) && val >= 0 ? this.target.splice(num, 1, val) : this.target.splice(num, 1);
 
       return this.target;
     } else {
@@ -115,10 +113,10 @@ const arrayCategory: IArrayCategory = {
   unfold(): IT {
     const res: Array<any> = [];
 
-    if (Array.isArray(this.target) && this.target.length) {
+    if (global.isArray(this.target) && this.target.length) {
       const unfoldArray = (array: Array<any>): void => {
         array.map(item => {
-          if (Array.isArray(item)) {
+          if (global.isArray(item)) {
             return unfoldArray(item);
           } else {
             res.push(item);
@@ -143,7 +141,7 @@ const arrayCategory: IArrayCategory = {
   },
 
   hasItem(item: any): boolean {
-    if (Array.isArray(this.target)) {
+    if (global.isArray(this.target)) {
       return Boolean(this.target.find(el => global.compare(el, item)));
     } else {
       global.setError(`"${this.target}" is not an array`);
@@ -151,22 +149,24 @@ const arrayCategory: IArrayCategory = {
   },
 
   index(num: number): any {
-    !num && typeof num !== "number" && global.setError(`Invalid value num: "${num}"`);
+    if (!global.isNumber(num)) {
+      global.setError(`Invalid value num: "${num}"`);
+    }
 
-    if (global.checkList(this.target) || typeof this.target == "string") {
-      let el = this.target[num];
+    if (global.checkList(this.target) || global.isString(this.target)) {
+      let el: any = this.target[num];
       if (num < 0) el = this.target[(this.target.length - 1) + num];
 
       this.target = el;
 
       return this;
+    } else {
+      global.setError(`"${this.target}" must be a array, string, HTMLCollection or NodeList`);
     }
-
-    global.setError(`"${this.target}" must be a array, string, HTMLCollection or NodeList`);
   },
 
   filter(callback: () => any, thisArg?: any): any {
-    if (Array.isArray(this.target)) {
+    if (global.isArray(this.target)) {
       if (global.isFunction(callback)) {
         this.target = thisArg ? this.target.filter(callback, thisArg) : this.target.filter(callback);
 
@@ -179,10 +179,8 @@ const arrayCategory: IArrayCategory = {
     }
   },
 
-  indexOf: global.indexOf,
-
   addItem(item: any, position?: boolean): IT {
-    if (Array.isArray(this.target)) {
+    if (global.isArray(this.target)) {
       this.target[!position ? "push" : "unshift"](item);
       return this;
     } else {
@@ -191,8 +189,8 @@ const arrayCategory: IArrayCategory = {
   },
 
   sort(fromMore: boolean): IT {
-    if (Array.isArray(this.target)) {
-      if (this.target.every(num => typeof num === "number")) {
+    if (global.isArray(this.target)) {
+      if (this.target.every(item => global.isNumber(item))) {
         const quickSort = (arr: Array<any>): Array<any> => {
           if (arr.length < 2) {
             return arr;
@@ -221,11 +219,11 @@ const arrayCategory: IArrayCategory = {
   },
 
   uniques(): IT {
-    if (Array.isArray(this.target)) {
+    if (global.isArray(this.target)) {
       let res: Array<any> = Array.from(new Set(this.target));
 
-      res = this.target.map(item => global.isObject(item) ? JSON.stringify(item) : Array.isArray(item) ? JSON.stringify(item.sort()) : item);
-      res = Array.from(new Set(res)).map(item => (typeof item === "string" && (global.isObject(JSON.parse(item)) || Array.isArray(JSON.parse(item)))) ? JSON.parse(item) : item);
+      res = this.target.map(item => global.isObject(item) ? JSON.stringify(item) : global.isArray(item) ? JSON.stringify(item.sort()) : item);
+      res = Array.from(new Set(res)).map(item => (global.isString(item) && (global.isObject(JSON.parse(item)) || global.isArray(JSON.parse(item)))) ? JSON.parse(item) : item);
 
       this.target = res;
 
@@ -236,7 +234,7 @@ const arrayCategory: IArrayCategory = {
   },
 
   findByIndexAndUpdate(index: number, updates: any): IT {
-    if (Array.isArray(this.target)) {
+    if (global.isArray(this.target)) {
       if (index <= this.target.length - 1 && index >= 0) {
         this.target[index] = updates;
       }
@@ -248,8 +246,8 @@ const arrayCategory: IArrayCategory = {
   },
 
   fillFull(item: any, amount: number): IT {
-    if (Array.isArray(this.target)) {
-      if (typeof amount === "number" && amount) {
+    if (global.isArray(this.target)) {
+      if (global.isNumber(amount)) {
         const res: Array<any> = [];
 
         for (let i = 0; i < amount; i++) {
@@ -268,8 +266,8 @@ const arrayCategory: IArrayCategory = {
   },
 
   findByIndexAndRemove(index: number): IT {
-    if (Array.isArray(this.target)) {
-      if (typeof index === "number" && index >= 0 && index <= this.target.length - 1) {
+    if (global.isArray(this.target)) {
+      if (global.isNumber(index) && index >= 0 && index <= this.target.length - 1) {
         this.target = this.target.filter((item, idx) => idx !== index);
       }
 
@@ -280,13 +278,13 @@ const arrayCategory: IArrayCategory = {
   },
 
   findByIndexAndUpdateProperty(index: number, prop: string | Array<string>, val: any): IT {
-    if (Array.isArray(this.target)) {
-      if (typeof index === "number" && (typeof prop === "string" || Array.isArray(prop))) {
-        if (typeof prop === "string") {
-          this.target[index][prop] = val;
+    if (global.isArray(this.target)) {
+      if (global.isNumber(index) && (global.isString(prop) || global.isArray(prop))) {
+        if (global.isString(prop)) {
+          this.target[index][prop.toString()] = val;
         }
 
-        if (Array.isArray(prop)) {
+        if (global.isArray(prop)) {
           const setValToProp = (res: any, endPoint: string, keys: Array<any>, value: any) => {
             if (keys[0] !== endPoint) {
               return setValToProp(res[keys[0]], endPoint, keys.filter((key, idx) => idx !== 0), value);
@@ -295,7 +293,7 @@ const arrayCategory: IArrayCategory = {
             res[keys[0]] = val;
           }
 
-          setValToProp(this.target[index], prop[prop.length - 1], prop, val);
+          setValToProp(this.target[index], prop[prop.length - 1], Array.from(prop), val);
         }
 
         return this;
@@ -308,7 +306,7 @@ const arrayCategory: IArrayCategory = {
   },
 
   randomItem(): IT {
-    if (Array.isArray(this.target)) {
+    if (global.isArray(this.target)) {
       this.target = this.target[Math.floor(global.getRandom(0, this.target.length - 1))];
 
       return this;
@@ -320,7 +318,9 @@ const arrayCategory: IArrayCategory = {
   onlyTruthy: global.onlyTruthy,
   onlyFalsy: global.onlyFalsy,
   reverse: global.reverse,
-  merge: global.merge
+  merge: global.merge,
+  isEmpty: global.isEmpty,
+  indexOf: global.indexOf,
 }
 
 for (let i in arrayCategory) {

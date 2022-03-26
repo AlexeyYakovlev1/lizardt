@@ -7,7 +7,7 @@ import global from "../global/index";
 
 const ajaxCategory: IAjaxCategory = {
   success(callback: (data: any) => any): Promise<any> {
-    if (this instanceof Promise) {
+    if (global.isPromise(this)) {
       return this.then(callback);
     } else {
       global.setError(`"${this}" should be a promise`);
@@ -15,7 +15,7 @@ const ajaxCategory: IAjaxCategory = {
   },
 
   failure(callback: (error: never) => any): Promise<any> {
-    if (this instanceof Promise) {
+    if (global.isPromise(this)) {
       return this.catch(callback);
     } else {
       global.setError(`"${this}" should be a promise`);
@@ -23,7 +23,7 @@ const ajaxCategory: IAjaxCategory = {
   },
 
   ajax(url: string, options?: IAjaxOptions): Promise<any> {
-    if (typeof url === "string") {
+    if (global.isString(url)) {
       const data: IAjaxOptions = (options && Object.keys(options).length) ? options : { method: "GET" };
 
       "beforeSend" in data && data.beforeSend();
@@ -35,7 +35,7 @@ const ajaxCategory: IAjaxCategory = {
   },
 
   allComplete(...args): Promise<any> {
-    if (args.length && args.every(item => item instanceof Promise)) {
+    if (args.length && args.every(item => global.isPromise(item))) {
       return Promise.all(args);
     } else {
       global.setError("The argument list must not be empty and the content must be of type Promise");

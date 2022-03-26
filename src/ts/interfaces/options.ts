@@ -30,10 +30,10 @@ export interface ITypeOfSelector {
 }
 
 export interface IChild {
-  $nextEl: Element | null,
+  nextEl: Element | null,
   name: string,
   text: string,
-  $el: HTMLElement
+  el: HTMLElement
 }
 
 export interface ICoordinates {

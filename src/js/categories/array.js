@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // Global methods
 var index_1 = require("../global/index");
 var arrayCategory = {
-    isEmpty: index_1.default.isEmpty,
     last: function () {
         if (index_1.default.checkList(this.target)) {
             var arr = this.target;
@@ -21,7 +20,7 @@ var arrayCategory = {
         for (var _i = 0; _i < arguments.length; _i++) {
             args[_i] = arguments[_i];
         }
-        if (Array.isArray(this.target)) {
+        if (index_1.default.isArray(this.target)) {
             this.target = (_a = this.target).find.apply(_a, args);
             return this;
         }
@@ -35,7 +34,7 @@ var arrayCategory = {
         for (var _i = 0; _i < arguments.length; _i++) {
             args[_i] = arguments[_i];
         }
-        if (Array.isArray(this.target)) {
+        if (index_1.default.isArray(this.target)) {
             this.target = (_a = this.target).slice.apply(_a, args);
             return this;
         }
@@ -49,7 +48,7 @@ var arrayCategory = {
         for (var _i = 0; _i < arguments.length; _i++) {
             args[_i] = arguments[_i];
         }
-        if (Array.isArray(this.target)) {
+        if (index_1.default.isArray(this.target)) {
             this.target = (_a = this.target).splice.apply(_a, args);
             return this;
         }
@@ -58,7 +57,7 @@ var arrayCategory = {
         }
     },
     groupBy: function (callback, cat) {
-        if (Array.isArray(this.target)) {
+        if (index_1.default.isArray(this.target)) {
             if (index_1.default.isFunction(callback)) {
                 var groups = this.target.reduce(function (acc, item, index, array) {
                     var res = callback(item, index, array);
@@ -73,7 +72,7 @@ var arrayCategory = {
                     }
                     else {
                         if (cat) {
-                            if (typeof cat === "string" && cat.length) {
+                            if (index_1.default.isString(cat) && cat.length) {
                                 acc[cat] = [];
                                 acc[cat].push(item);
                             }
@@ -96,8 +95,8 @@ var arrayCategory = {
         }
     },
     removeItem: function (num, val) {
-        if (Array.isArray(this.target)) {
-            val || typeof val === "number" && val >= 0 ? this.target.splice(num, 1, val) : this.target.splice(num, 1);
+        if (index_1.default.isArray(this.target)) {
+            index_1.default.isNumber(val) && val >= 0 ? this.target.splice(num, 1, val) : this.target.splice(num, 1);
             return this.target;
         }
         else {
@@ -117,10 +116,10 @@ var arrayCategory = {
     },
     unfold: function () {
         var res = [];
-        if (Array.isArray(this.target) && this.target.length) {
+        if (index_1.default.isArray(this.target) && this.target.length) {
             var unfoldArray_1 = function (array) {
                 array.map(function (item) {
-                    if (Array.isArray(item)) {
+                    if (index_1.default.isArray(item)) {
                         return unfoldArray_1(item);
                     }
                     else {
@@ -142,7 +141,7 @@ var arrayCategory = {
         }
     },
     hasItem: function (item) {
-        if (Array.isArray(this.target)) {
+        if (index_1.default.isArray(this.target)) {
             return Boolean(this.target.find(function (el) { return index_1.default.compare(el, item); }));
         }
         else {
@@ -150,18 +149,22 @@ var arrayCategory = {
         }
     },
     index: function (num) {
-        !num && typeof num !== "number" && index_1.default.setError("Invalid value num: \"".concat(num, "\""));
-        if (index_1.default.checkList(this.target) || typeof this.target == "string") {
+        if (!index_1.default.isNumber(num)) {
+            index_1.default.setError("Invalid value num: \"".concat(num, "\""));
+        }
+        if (index_1.default.checkList(this.target) || index_1.default.isString(this.target)) {
             var el = this.target[num];
             if (num < 0)
                 el = this.target[(this.target.length - 1) + num];
             this.target = el;
             return this;
         }
-        index_1.default.setError("\"".concat(this.target, "\" must be a array, string, HTMLCollection or NodeList"));
+        else {
+            index_1.default.setError("\"".concat(this.target, "\" must be a array, string, HTMLCollection or NodeList"));
+        }
     },
     filter: function (callback, thisArg) {
-        if (Array.isArray(this.target)) {
+        if (index_1.default.isArray(this.target)) {
             if (index_1.default.isFunction(callback)) {
                 this.target = thisArg ? this.target.filter(callback, thisArg) : this.target.filter(callback);
                 return this;
@@ -174,9 +177,8 @@ var arrayCategory = {
             index_1.default.setError("\"".concat(this.target, "\" must be a array"));
         }
     },
-    indexOf: index_1.default.indexOf,
     addItem: function (item, position) {
-        if (Array.isArray(this.target)) {
+        if (index_1.default.isArray(this.target)) {
             this.target[!position ? "push" : "unshift"](item);
             return this;
         }
@@ -185,8 +187,8 @@ var arrayCategory = {
         }
     },
     sort: function (fromMore) {
-        if (Array.isArray(this.target)) {
-            if (this.target.every(function (num) { return typeof num === "number"; })) {
+        if (index_1.default.isArray(this.target)) {
+            if (this.target.every(function (item) { return index_1.default.isNumber(item); })) {
                 var quickSort_1 = function (arr) {
                     if (arr.length < 2) {
                         return arr;
@@ -211,10 +213,10 @@ var arrayCategory = {
         }
     },
     uniques: function () {
-        if (Array.isArray(this.target)) {
+        if (index_1.default.isArray(this.target)) {
             var res = Array.from(new Set(this.target));
-            res = this.target.map(function (item) { return index_1.default.isObject(item) ? JSON.stringify(item) : Array.isArray(item) ? JSON.stringify(item.sort()) : item; });
-            res = Array.from(new Set(res)).map(function (item) { return (typeof item === "string" && (index_1.default.isObject(JSON.parse(item)) || Array.isArray(JSON.parse(item)))) ? JSON.parse(item) : item; });
+            res = this.target.map(function (item) { return index_1.default.isObject(item) ? JSON.stringify(item) : index_1.default.isArray(item) ? JSON.stringify(item.sort()) : item; });
+            res = Array.from(new Set(res)).map(function (item) { return (index_1.default.isString(item) && (index_1.default.isObject(JSON.parse(item)) || index_1.default.isArray(JSON.parse(item)))) ? JSON.parse(item) : item; });
             this.target = res;
             return this;
         }
@@ -223,7 +225,7 @@ var arrayCategory = {
         }
     },
     findByIndexAndUpdate: function (index, updates) {
-        if (Array.isArray(this.target)) {
+        if (index_1.default.isArray(this.target)) {
             if (index <= this.target.length - 1 && index >= 0) {
                 this.target[index] = updates;
             }
@@ -234,8 +236,8 @@ var arrayCategory = {
         }
     },
     fillFull: function (item, amount) {
-        if (Array.isArray(this.target)) {
-            if (typeof amount === "number" && amount) {
+        if (index_1.default.isArray(this.target)) {
+            if (index_1.default.isNumber(amount)) {
                 var res = [];
                 for (var i = 0; i < amount; i++) {
                     res.push(item);
@@ -252,8 +254,8 @@ var arrayCategory = {
         }
     },
     findByIndexAndRemove: function (index) {
-        if (Array.isArray(this.target)) {
-            if (typeof index === "number" && index >= 0 && index <= this.target.length - 1) {
+        if (index_1.default.isArray(this.target)) {
+            if (index_1.default.isNumber(index) && index >= 0 && index <= this.target.length - 1) {
                 this.target = this.target.filter(function (item, idx) { return idx !== index; });
             }
             return this;
@@ -263,19 +265,19 @@ var arrayCategory = {
         }
     },
     findByIndexAndUpdateProperty: function (index, prop, val) {
-        if (Array.isArray(this.target)) {
-            if (typeof index === "number" && (typeof prop === "string" || Array.isArray(prop))) {
-                if (typeof prop === "string") {
-                    this.target[index][prop] = val;
+        if (index_1.default.isArray(this.target)) {
+            if (index_1.default.isNumber(index) && (index_1.default.isString(prop) || index_1.default.isArray(prop))) {
+                if (index_1.default.isString(prop)) {
+                    this.target[index][prop.toString()] = val;
                 }
-                if (Array.isArray(prop)) {
+                if (index_1.default.isArray(prop)) {
                     var setValToProp_1 = function (res, endPoint, keys, value) {
                         if (keys[0] !== endPoint) {
                             return setValToProp_1(res[keys[0]], endPoint, keys.filter(function (key, idx) { return idx !== 0; }), value);
                         }
                         res[keys[0]] = val;
                     };
-                    setValToProp_1(this.target[index], prop[prop.length - 1], prop, val);
+                    setValToProp_1(this.target[index], prop[prop.length - 1], Array.from(prop), val);
                 }
                 return this;
             }
@@ -288,7 +290,7 @@ var arrayCategory = {
         }
     },
     randomItem: function () {
-        if (Array.isArray(this.target)) {
+        if (index_1.default.isArray(this.target)) {
             this.target = this.target[Math.floor(index_1.default.getRandom(0, this.target.length - 1))];
             return this;
         }
@@ -299,7 +301,9 @@ var arrayCategory = {
     onlyTruthy: index_1.default.onlyTruthy,
     onlyFalsy: index_1.default.onlyFalsy,
     reverse: index_1.default.reverse,
-    merge: index_1.default.merge
+    merge: index_1.default.merge,
+    isEmpty: index_1.default.isEmpty,
+    indexOf: index_1.default.indexOf,
 };
 for (var i in arrayCategory) {
     // Exports every separately method

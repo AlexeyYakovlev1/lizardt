@@ -13,12 +13,12 @@ export interface IT extends IDomCategory, IArrayCategory, IObjectCategory, IStri
 export interface IGlobal {
   checkList(target: any): Boolean;
   createElement(options: IElement): HTMLElement;
-  addElementOnPos(parent: HTMLElement, element: HTMLElement | IElement, pos: InsertPosition): void;
+  addElementOnPos(parent: HTMLElement, element: HTMLElement | Element | IElement, pos: InsertPosition): void;
   setStyles(el: HTMLElement, obj: object): HTMLElement;
   definesType(name: string): ITypeOfSelector;
   setAttributes(el: HTMLElement, obj: object): HTMLElement;
   setError(message: string): never;
-  removeChild(parent: any, element: string | Element, position?: string): void;
+  removeChild(parent: any, element: string | HTMLElement | Array<string | HTMLElement>, position?: string): void;
   compare(item1: any, item2: any): boolean;
   getAllParents(num?: number): IT;
   indexOf(findItem: any): number;
@@ -30,6 +30,18 @@ export interface IGlobal {
   onlyTruthy(): IT;
   onlyFalsy(): IT;
   getRandom(min: number, max: number): number;
+  isObject(item, callback?: () => any): any;
+  isArray(item: any, callback?: () => any): any;
+  isFunction(item: any, callback?: () => any): any;
+  isNumber(item: any, callback?: () => any): any;
+  isString(item: any, callback?: () => any): any;
+  isSymbol(item: any, callback?: () => any): any;
+  isBigInt(item: any, callback?: () => any): any;
+  isBoolean(item: any, callback?: () => any): any;
+  isUndefined(item: any, callback?: () => any): any;
+  isNull(item: any, callback?: () => any): any;
+  isElement(item: any, callback?: () => any): any;
+  isPromise(item: any, callback?: () => any): any;
 }
 
 export interface ILizardt extends IGeneralCategory, INumberCategory {

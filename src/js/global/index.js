@@ -22,13 +22,13 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var global = {
     checkList: function (target) {
-        return Array.isArray(target) || target instanceof NodeList || target instanceof HTMLCollection;
+        return global.isArray(target) || target instanceof NodeList || target instanceof HTMLCollection;
     },
     createElement: function (_a) {
         var tag = _a.tag, text = _a.text, styles = _a.styles, attributes = _a.attributes;
         var res = document.createElement(tag);
-        if (res instanceof Element) {
-            if (typeof text === "string") {
+        if (global.isElement(res)) {
+            if (global.isString(text)) {
                 res.textContent = text;
             }
             if (styles && Object.keys(styles).length) {
@@ -41,13 +41,13 @@ var global = {
         return res;
     },
     addElementOnPos: function (parent, element, pos) {
-        if (parent instanceof Element) {
+        if (global.isElement(parent)) {
             // Html element
-            if (element instanceof Element) {
-                parent.insertAdjacentElement(pos, element);
+            if (global.isElement(element)) {
+                parent.insertAdjacentElement.bind(parent, pos, element);
             }
             // Object
-            if (element && typeof element === "object" && !Array.isArray(element) && !(element instanceof Element || element instanceof HTMLElement)) {
+            if (global.isObject(element)) {
                 var el = global.createElement(element);
                 parent.insertAdjacentElement(pos, el);
             }
@@ -68,7 +68,7 @@ var global = {
     },
     setAttributes: function (el, obj) {
         for (var attr in obj) {
-            el.setAttribute(attr, Array.isArray(obj[attr]) ? obj[attr].join(" ") : obj[attr]);
+            el.setAttribute(attr, global.isArray(obj[attr]) ? obj[attr].join(" ") : obj[attr]);
         }
         return el;
     },
@@ -76,7 +76,7 @@ var global = {
         throw new Error(message);
     },
     removeChild: function (parent, element, position) {
-        if (parent instanceof Element) {
+        if (global.isElement(parent)) {
             if (position) {
                 switch (position) {
                     case "first":
@@ -87,11 +87,11 @@ var global = {
                         break;
                 }
             }
-            if (typeof element === "string" && element.length) {
+            if (global.isString(element) && element["length"]) {
                 var findChild = parent.querySelector(element);
                 findChild && parent.removeChild(findChild);
             }
-            if (element instanceof Element) {
+            if (global.isElement(element)) {
                 parent.removeChild(element);
             }
         }
@@ -101,13 +101,13 @@ var global = {
     },
     compare: function (item1, item2) {
         var items = [item1, item2];
-        if (items.every(function (item) { return item instanceof Element; })) {
+        if (items.every(function (item) { return global.isElement(item); })) {
             return item1.isEqualNode(item2);
         }
         else if (items.every(function (item) { return ["bigint", "symbol"].includes(typeof item) || isNaN(item); })) {
             return item1.toString() === item2.toString();
         }
-        else if (items.some(function (item) { return item instanceof Element; }) || items.some(function (item) { return ["bigint", "symbol"].includes(typeof item) || isNaN(item); })) {
+        else if (items.some(function (item) { return global.isElement(item); }) || items.some(function (item) { return ["bigint", "symbol"].includes(typeof item) || isNaN(item); })) {
             return false;
         }
         else {
@@ -115,7 +115,7 @@ var global = {
         }
     },
     getAllParents: function (num) {
-        if (this.target instanceof Element) {
+        if (global.isElement(this.target)) {
             var getParent_1 = function (parent, array) {
                 var parents = array;
                 if (parent) {
@@ -125,7 +125,7 @@ var global = {
                 return parents;
             };
             var res = getParent_1(this.target, []);
-            this.target = (typeof num === "number" && num >= 0) ? res[num] : res;
+            this.target = (global.isNumber(num) && num >= 0) ? res[num] : res;
             return this;
         }
         else {
@@ -133,8 +133,8 @@ var global = {
         }
     },
     indexOf: function (findItem) {
-        if (typeof this.target === "string") {
-            if (typeof findItem === "string") {
+        if (global.isString(this.target)) {
+            if (global.isString(findItem)) {
                 var regexp = new RegExp(findItem);
                 var res = this.target.match(regexp);
                 return res ? res.index : -1;
@@ -143,7 +143,7 @@ var global = {
                 global.setError("\"".concat(findItem, "\" not a string"));
             }
         }
-        if (Array.isArray(this.target)) {
+        if (global.isArray(this.target)) {
             var res_1 = this.target.indexOf(findItem);
             if (res_1 === -1) {
                 this.target.map(function (item, index) {
@@ -168,7 +168,7 @@ var global = {
         return res;
     },
     isObject: function (item, callback) {
-        var res = item && typeof item === "object" && !Array.isArray(item)
+        var res = item && typeof item === "object" && !global.isArray(item)
             && !(item instanceof Element || item instanceof HTMLElement);
         if (callback) {
             if (global.isFunction(callback)) {
@@ -185,9 +185,9 @@ var global = {
         for (var _i = 0; _i < arguments.length; _i++) {
             args[_i] = arguments[_i];
         }
-        if (global.isObject(this.target) || Array.isArray(this.target)) {
-            if (args.every(function (item) { return global.isObject(item); }) || args.every(function (item) { return Array.isArray(item); })) {
-                if (Array.isArray(this.target) && args.every(function (item) { return Array.isArray(item); })) {
+        if (global.isObject(this.target) || global.isArray(this.target)) {
+            if (args.every(function (item) { return global.isObject(item); }) || args.every(function (item) { return global.isArray(item); })) {
+                if (global.isArray(this.target) && args.every(function (item) { return global.isArray(item); })) {
                     this.target = __spreadArray([], this.target, true).concat(args.reduce(function (acc, item) {
                         acc = __spreadArray([], acc, true).concat(item);
                         return acc;
@@ -210,11 +210,11 @@ var global = {
         }
     },
     isEmpty: function () {
-        if (typeof this.target === "string" || Array.isArray(this.target) || global.isObject(this.target) || this.target instanceof HTMLElement) {
-            if (typeof this.target === "string") {
+        if (global.isString(this.target) || global.isArray(this.target) || global.isObject(this.target) || global.isElement(this.target)) {
+            if (global.isString(this.target)) {
                 return !Boolean(this.target);
             }
-            else if (Array.isArray(this.target)) {
+            else if (global.isArray(this.target)) {
                 return !Boolean(this.target.length);
             }
             else if (global.isObject(this.target)) {
@@ -229,7 +229,7 @@ var global = {
         }
     },
     reverse: function () {
-        if ((["string", "number"].includes(typeof this.target) || Array.isArray(this.target)) && this.target) {
+        if ((["string", "number"].includes(typeof this.target) || global.isArray(this.target)) && this.target) {
             switch (typeof this.target) {
                 case "string":
                     this.target = this.target.split("").reverse().join("");
@@ -247,7 +247,7 @@ var global = {
         }
     },
     onlyTruthy: function () {
-        if (global.isObject(this.target) || Array.isArray(this.target)) {
+        if (global.isObject(this.target) || global.isArray(this.target)) {
             if (global.isObject(this.target)) {
                 for (var key in this.target) {
                     if (!this.target[key]) {
@@ -255,7 +255,7 @@ var global = {
                     }
                 }
             }
-            if (Array.isArray(this.target)) {
+            if (global.isArray(this.target)) {
                 this.target = this.target.filter(Boolean);
             }
             return this;
@@ -265,7 +265,7 @@ var global = {
         }
     },
     onlyFalsy: function () {
-        if (global.isObject(this.target) || Array.isArray(this.target)) {
+        if (global.isObject(this.target) || global.isArray(this.target)) {
             if (global.isObject(this.target)) {
                 for (var key in this.target) {
                     if (this.target[key]) {
@@ -273,7 +273,7 @@ var global = {
                     }
                 }
             }
-            if (Array.isArray(this.target)) {
+            if (global.isArray(this.target)) {
                 this.target = this.target.filter(function (item) { return !Boolean(item); });
             }
             return this;
@@ -283,12 +283,132 @@ var global = {
         }
     },
     getRandom: function (min, max) {
-        if ([min, max].every(function (num) { return typeof num === "number"; })) {
+        if ([min, max].every(function (num) { return global.isNumber(num); })) {
             return Math.random() * (max - min) + min;
         }
         else {
             global.setError("Not all elements in the given array are of type number");
         }
     },
+    isArray: function (item, callback) {
+        var res = Array.isArray(item);
+        if (callback) {
+            if (global.isFunction(callback)) {
+                return res && callback();
+            }
+            else {
+                global.setError("\"".concat(callback, "\" must be a function"));
+            }
+        }
+        return res;
+    },
+    isNumber: function (item, callback) {
+        var res = typeof item === "number" && !isNaN(item);
+        if (callback) {
+            if (global.isFunction(callback)) {
+                return res && callback();
+            }
+            else {
+                global.setError("\"".concat(callback, "\" must be a function"));
+            }
+        }
+        return res;
+    },
+    isString: function (item, callback) {
+        var res = typeof item === "string";
+        if (callback) {
+            if (global.isFunction(callback)) {
+                return res && callback();
+            }
+            else {
+                global.setError("\"".concat(callback, "\" must be a function"));
+            }
+        }
+        return res;
+    },
+    isSymbol: function (item, callback) {
+        var res = typeof item === "symbol";
+        if (callback) {
+            if (global.isFunction(callback)) {
+                return res && callback();
+            }
+            else {
+                global.setError("\"".concat(callback, "\" must be a function"));
+            }
+        }
+        return res;
+    },
+    isBigInt: function (item, callback) {
+        var res = typeof item === "bigint";
+        if (callback) {
+            if (global.isFunction(callback)) {
+                return res && callback();
+            }
+            else {
+                global.setError("\"".concat(callback, "\" must be a function"));
+            }
+        }
+        return res;
+    },
+    isBoolean: function (item, callback) {
+        var res = typeof item === "boolean";
+        if (callback) {
+            if (global.isFunction(callback)) {
+                return res && callback();
+            }
+            else {
+                global.setError("\"".concat(callback, "\" must be a function"));
+            }
+        }
+        return res;
+    },
+    isUndefined: function (item, callback) {
+        var res = typeof item === "undefined";
+        if (callback) {
+            if (global.isFunction(callback)) {
+                return res && callback();
+            }
+            else {
+                global.setError("\"".concat(callback, "\" must be a function"));
+            }
+        }
+        return res;
+    },
+    isNull: function (item, callback) {
+        var res = item === null;
+        if (callback) {
+            if (global.isFunction(callback)) {
+                return res && callback();
+            }
+            else {
+                global.setError("\"".concat(callback, "\" must be a function"));
+            }
+        }
+        return res;
+    },
+    isElement: function (item, callback) {
+        var res = item instanceof Element || item instanceof HTMLElement;
+        if (callback) {
+            if (global.isFunction(callback)) {
+                return res && callback();
+            }
+            else {
+                global.setError("\"".concat(callback, "\" must be a function"));
+            }
+        }
+        return res;
+    },
+    isPromise: function (item, callback) {
+        var res = item instanceof Promise;
+        if (callback) {
+            if (global.isFunction(callback)) {
+                return res && callback();
+            }
+            else {
+                global.setError("\"".concat(callback, "\" must be a function"));
+            }
+        }
+        return res;
+    }
 };
 exports.default = global;

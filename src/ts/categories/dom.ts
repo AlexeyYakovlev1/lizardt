@@ -16,11 +16,9 @@ import {
 import global from "../global/index";
 
 const domCategory: IDomCategory = {
-  isEmpty: global.isEmpty,
-
   getParent(selector?: string): IT {
-    if (this.target instanceof Element) {
-      this.target = (typeof selector === "string" && selector.length) ? this.target.closest(selector) : this.target.parentElement;
+    if (global.isElement(this.target)) {
+      this.target = (global.isString(selector) && selector.length) ? this.target.closest(selector) : this.target.parentElement;
 
       return this;
     } else {
@@ -29,16 +27,21 @@ const domCategory: IDomCategory = {
   },
 
   styles(stylesObj: object) {
-    if (this.target instanceof Element) {
-      global.setStyles(this.target, stylesObj);
-      return this;
+    if (global.isElement(this.target)) {
+      if (global.isObject(stylesObj)) {
+        global.setStyles(this.target, stylesObj);
+
+        return this;
+      } else {
+        global.setError(`"${stylesObj}" is not an object`);
+      }
     } else {
       global.setError(`"${this.target}" is not a HTML element`);
     }
   },
 
   on(event: string, callback: () => void, options?: object): void {
-    if (callback instanceof Function) {
+    if (global.isFunction(callback)) {
       if (global.isObject(options)) {
         return this.target.addEventListener(event, callback, options);
       }
@@ -50,7 +53,7 @@ const domCategory: IDomCategory = {
   },
 
   onRemove(event: string, callback: () => void, options?: object, useCapture?: boolean): void {
-    if (callback instanceof Function) {
+    if (global.isFunction(callback)) {
       if (global.isObject(options)) {
         return this.target.removeEventListener(event, callback, options, useCapture);
       }
@@ -62,7 +65,7 @@ const domCategory: IDomCategory = {
   },
 
   getAttributes(attribute?: string): IT {
-    if (this.target instanceof Element) {
+    if (global.isElement(this.target)) {
       const attrs: object = { ...this.target.attributes };
       const attributes: Array<IAttribute> = [];
 
@@ -75,7 +78,7 @@ const domCategory: IDomCategory = {
 
       const findAttr: IAttribute = attributes.find(({ name }) => name === attribute);
 
-      this.target = attribute ? findAttr : attributes;
+      this.target = (attribute && global.isString(attribute)) ? findAttr : attributes;
 
       return this;
     } else {
@@ -84,17 +87,17 @@ const domCategory: IDomCategory = {
   },
 
   getChildren(selector?: string): IT {
-    if (this.target instanceof Element) {
+    if (global.isElement(this.target)) {
       const chldr: Array<HTMLElement> = Array.from(this.target.children);
       const children: Array<IChild> = [];
       const findChild: HTMLElement = selector ? this.target.querySelector(selector) : null;
 
       chldr.forEach(child => {
         children.push({
-          $nextEl: child.nextElementSibling,
+          nextEl: child.nextElementSibling,
           name: child.localName,
           text: child.innerText || child.textContent,
-          $el: child,
+          el: child,
         });
       });
 
@@ -107,7 +110,7 @@ const domCategory: IDomCategory = {
   },
 
   getCoordinates(): IT {
-    if (this.target instanceof Element) {
+    if (global.isElement(this.target)) {
       const dataCoordinatesOfEl: IBoundingRect = this.target.getBoundingClientRect();
       const coordinates: ICoordinates = {};
 
@@ -126,7 +129,7 @@ const domCategory: IDomCategory = {
   },
 
   add(...args): IT {
-    if (this.target instanceof Element && args.length) {
+    if (global.isElement(this.target) && args.length) {
       args.forEach(className => {
         const { attribute, name }: ITypeOfSelector = global.definesType(className);
 
@@ -143,7 +146,7 @@ const domCategory: IDomCategory = {
   },
 
   remove(...args): IT {
-    if (this.target instanceof Element && args.length) {
+    if (global.isElement(this.target) && args.length) {
       args.forEach(className => {
         const { attribute, name }: ITypeOfSelector = global.definesType(className);
 
@@ -160,7 +163,7 @@ const domCategory: IDomCategory = {
   },
 
   clearStyles(): IT {
-    if (this.target instanceof Element) {
+    if (global.isElement(this.target)) {
       this.target["style"] = null;
       return this;
     } else {
@@ -169,7 +172,7 @@ const domCategory: IDomCategory = {
   },
 
   txt(value?: string | number): IT {
-    if (this.target instanceof Element) {
+    if (global.isElement(this.target)) {
       if (["string", "number"].includes(typeof value)) {
         this.target.textContent = value;
       }
@@ -181,7 +184,7 @@ const domCategory: IDomCategory = {
   },
 
   size(): IT {
-    if (this.target instanceof Element) {
+    if (global.isElement(this.target)) {
       const { width, height }: ISize = this.target.getBoundingClientRect();
 
       this.target = { width, height };
@@ -193,20 +196,16 @@ const domCategory: IDomCategory = {
   },
 
   addChild(child: HTMLElement | IElement | Array<any>): IT {
-    if (this.target instanceof Element) {
+    if (global.isElement(this.target)) {
       // Object
-      if (child && typeof child === "object" && !Array.isArray(child)
-        && !(child instanceof Element || child instanceof HTMLElement)
-      ) {
-        this.target.appendChild(global.createElement(child));
+      if (global.isObject(child) && !global.isArray(child) && !global.isElement(child)) {
+        this.target.appendChild(this.target, child);
       }
 
       // Array of objects and html elements
-      if (Array.isArray(child) && child.length
-        && child.every(obj => typeof obj === "object" || obj instanceof Element || obj instanceof HTMLElement)
-      ) {
-        child.map(element => {
-          if (!(element instanceof Element || element instanceof HTMLElement)) {
+      if (global.isArray(child) && child["length"] && child["every"](obj => global.isObject(obj) || global.isElement(obj))) {
+        child["map"](element => {
+          if (!global.isElement(element)) {
             this.target.appendChild(global.createElement(element));
           } else {
             this.target.appendChild(element);
@@ -215,7 +214,7 @@ const domCategory: IDomCategory = {
       }
 
       // Html element
-      if (child instanceof Element) {
+      if (global.isElement(child)) {
         this.target.appendChild(child);
       }
 
@@ -226,23 +225,21 @@ const domCategory: IDomCategory = {
   },
 
   removeChild(child: HTMLElement | string | Array<HTMLElement | string>): IT {
-    if (this.target instanceof Element) {
+    if (global.isElement(this.target)) {
       // Selector
-      if (typeof child === "string" && child.length) {
+      if (global.isString(child) && child["length"]) {
         global.removeChild(this.target, child);
       }
 
       // Html element
-      if (child instanceof Element) {
+      if (global.isElement(child)) {
         this.target.removeChild(child);
       }
 
       // Array of html elements and selectors
-      if (Array.isArray(child) && child.length && child.every(element => element instanceof Element
-        || (typeof element === "string" && element.length))
-      ) {
-        child.map(element => {
-          if (element instanceof Element) {
+      if (global.isArray(child) && child["length"] && child["every"](element => global.isElement(element) || (global.isString(element) && element["length"]))) {
+        child["map"](element => {
+          if (global.isElement(element)) {
             this.target.removeChild(element)
           } else {
             global.removeChild(this.target, element);
@@ -267,8 +264,8 @@ const domCategory: IDomCategory = {
   },
 
   setAttribute(attributes: IAttribute): IT {
-    if (this.target instanceof Element) {
-      if (attributes && typeof attributes === "object" && !Array.isArray(attributes) && !(attributes instanceof Element || attributes instanceof HTMLElement)) {
+    if (global.isElement(this.target)) {
+      if (global.isObject(attributes)) {
         global.setAttributes(this.target, attributes);
         return this;
       } else {
@@ -280,13 +277,13 @@ const domCategory: IDomCategory = {
   },
 
   removeAttribute(attribute: string | Array<string>): IT {
-    if (this.target instanceof Element) {
-      if (typeof attribute === "string") {
+    if (global.isElement(this.target)) {
+      if (global.isString(attribute)) {
         this.target.removeAttribute(attribute);
       }
 
-      if (Array.isArray(attribute) && attribute.length && attribute.every(attr => typeof attr === "string")) {
-        attribute.map(attr => this.target.removeAttribute(attr));
+      if (global.isArray(attribute) && attribute.length && attribute["every"](attr => global.isString(attr))) {
+        attribute["map"](attr => this.target.removeAttribute(attr));
       }
       return this;
     } else {
@@ -297,7 +294,7 @@ const domCategory: IDomCategory = {
   data(isArray = false): IT {
     const el: any = this.target;
 
-    if (el instanceof HTMLFormElement) {
+    if (global.isElement(el)) {
       if (el.nodeName === "FORM") {
         const fd: FormData = new FormData(el);
         const resObj: object = {};
@@ -306,8 +303,8 @@ const domCategory: IDomCategory = {
         // Set checkboxes
         checkboxes.forEach(checkbox => fd.append(checkbox["name"], checkbox["checked"]));
         Array.from(fd.entries()).map(arr => {
-          if (typeof arr[1] === "string" && ["false", "true"].includes(arr[1])) {
-            resObj[arr[0]] = JSON.parse(arr[1]);
+          if (["false", "true"].includes(JSON.stringify(arr[1]))) {
+            resObj[arr[0]] = JSON.parse(JSON.stringify(arr[1]));
           } else {
             resObj[arr[0]] = arr[1];
           }
@@ -335,24 +332,24 @@ const domCategory: IDomCategory = {
   },
 
   hasElement(element: Element | Array<Element | string> | string): boolean {
-    if (this.target instanceof Element) {
+    if (global.isElement(this.target)) {
       const children = [...this.target.children];
 
-      if (element instanceof Element) {
+      if (global.isElement(element)) {
         return children.indexOf(element) !== -1;
       }
 
-      if (typeof element === "string") {
+      if (global.isString(element)) {
         return Boolean(this.target.querySelector(element));
       }
 
-      if (Array.isArray(element)) {
-        return element.every(el => {
-          if (el instanceof Element) {
+      if (global.isArray(element)) {
+        return element["every"](el => {
+          if (global.isElement(el)) {
             return children.indexOf(el) !== -1;
           }
 
-          if (typeof el === "string") {
+          if (global.isString(el)) {
             return Boolean(this.target.querySelector(el));
           }
         });
@@ -373,7 +370,7 @@ const domCategory: IDomCategory = {
   },
 
   contains(...args): boolean {
-    if (this.target instanceof Element) {
+    if (global.isElement(this.target)) {
       const $el = this.target;
       const names: Array<boolean> = [];
 
@@ -382,13 +379,16 @@ const domCategory: IDomCategory = {
       }
 
       args.forEach(selector => {
-        if (typeof selector === "string") {
+        if (global.isString(selector)) {
           const infEl = global.definesType(selector);
 
-          if (infEl.attribute === "class") {
-            names.push($el.classList.contains(infEl.name));
-          } else if (infEl.attribute === "id") {
-            names.push($el.getAttribute(infEl.attribute) === infEl.name);
+          switch (infEl.attribute) {
+            case "class":
+              names.push($el.classList.contains(infEl.name));
+              break;
+            case "id":
+              names.push($el.getAttribute(infEl.attribute) === infEl.name);
+              break;
           }
         } else {
           global.setError(`type "${selector}" is not a string`);
@@ -402,14 +402,14 @@ const domCategory: IDomCategory = {
   },
 
   hasParent(selector: string | Element): boolean {
-    if (this.target instanceof Element) {
-      if (typeof selector === "string") {
-        const parent = document.querySelector(selector);
+    if (global.isElement(this.target)) {
+      if (global.isString(selector)) {
+        const parent = document.querySelector(selector.toString());
 
         return Boolean(global.getAllParents.call(this).target.find(element => global.compare(parent, element)));
       }
 
-      if (selector instanceof Element) {
+      if (global.isElement(selector)) {
         return Boolean(global.getAllParents.call(this).target.find(element => global.compare(selector, element)))
       }
     } else {
@@ -418,21 +418,21 @@ const domCategory: IDomCategory = {
   },
 
   addHTML(html: string): IT {
-    if (this.target instanceof Element) {
-      if (typeof html === "string") {
+    if (global.isElement(this.target)) {
+      if (global.isString(html)) {
         this.target.innerHTML = html;
+
+        return this;
       } else {
         global.setError(`"${html}" must be a string`);
       }
-
-      return this;
     } else {
       global.setError(`"${this.target}" is not a HTML element`);
     }
   },
 
   isChecked(): boolean {
-    if (this.target instanceof HTMLElement && "type" in this.target && ["checkbox", "radio"].includes(this.target.type)) {
+    if (global.isElement(this.target) && "type" in this.target && ["checkbox", "radio"].includes(this.target.type)) {
       return this.target.checked;
     } else {
       global.setError(`"${this.target}" must be a checkbox or radio element`);
@@ -440,10 +440,8 @@ const domCategory: IDomCategory = {
   },
 
   toggle(...args): IT {
-    if (this.target instanceof Element && args.length) {
-      args.forEach(className => {
-        this.target.classList.toggle(className);
-      });
+    if (global.isElement(this.target) && args.length) {
+      args.forEach(className => this.target.classList.toggle(className));
       return this;
     } else {
       global.setError(`"${this.target}" is not a HTML element or arguments must be passed`);
@@ -451,7 +449,7 @@ const domCategory: IDomCategory = {
   },
 
   show(): IT {
-    if (this.target instanceof HTMLElement) {
+    if (global.isElement(this.target)) {
       this.target.style.display = "";
 
       const display: string | undefined = getComputedStyle(this.target).display;
@@ -465,7 +463,7 @@ const domCategory: IDomCategory = {
   },
 
   hide(): IT {
-    if (this.target instanceof HTMLElement) {
+    if (global.isElement(this.target)) {
       this.target.style.display = "none";
 
       return this;
@@ -474,11 +472,8 @@ const domCategory: IDomCategory = {
     }
   },
 
-  createElement: global.createElement,
-  getAllParents: global.getAllParents,
-
   clearOfChilds(): IT {
-    if (this.target instanceof Element) {
+    if (global.isElement(this.target)) {
       this.target.innerHTML = "";
       return this;
     } else {
@@ -487,7 +482,7 @@ const domCategory: IDomCategory = {
   },
 
   clearSelectors(): IT {
-    if (this.target instanceof Element) {
+    if (global.isElement(this.target)) {
       this.target.removeAttribute("class");
       this.target.removeAttribute("id");
       return this;
@@ -497,14 +492,14 @@ const domCategory: IDomCategory = {
   },
 
   observer(callbackWhenShow?: (target: any, data: any) => any, callbackWhenHide?: (target: any, data: any) => any, options?: object): void {
-    if (this.target instanceof Element) {
+    if (global.isElement(this.target)) {
       new IntersectionObserver((entries): void => {
         entries.forEach(item => {
-          if (callbackWhenShow && callbackWhenShow instanceof Function) {
+          if (global.isFunction(callbackWhenShow)) {
             item.isIntersecting && callbackWhenShow(item.target, item);
           }
 
-          if (callbackWhenHide && callbackWhenHide instanceof Function) {
+          if (global.isFunction(callbackWhenHide)) {
             !item.isIntersecting && callbackWhenHide(item.target, item);
           }
         });
@@ -514,9 +509,9 @@ const domCategory: IDomCategory = {
     }
   },
 
-  scrollToElement(element: Element | HTMLElement, options?: IScrollOptions): void {
-    if (element instanceof HTMLElement) {
-      const { behavior = "auto", verticalAlignment = "start", horizontalAlignment = "nearest" } = options;
+  scrollToElement(element: Element | HTMLElement, options: IScrollOptions): void {
+    if (global.isElement(element)) {
+      const { behavior = "auto", verticalAlignment = "start", horizontalAlignment = "nearest" } = global.isObject(options) ? options : {};
 
       element.scrollIntoView({
         behavior,
@@ -529,7 +524,7 @@ const domCategory: IDomCategory = {
   },
 
   value(val?: string | number): string {
-    if (this.target instanceof HTMLElement) {
+    if (global.isElement(this.target)) {
       if (["string", "number"].includes(typeof val)) {
         this.target.value = val;
       }
@@ -538,7 +533,11 @@ const domCategory: IDomCategory = {
     } else {
       global.setError(`"${this.target}" is not a HTML element`);
     }
-  }
+  },
+
+  isEmpty: global.isEmpty,
+  createElement: global.createElement,
+  getAllParents: global.getAllParents,
 }
 
 for (let i in domCategory) {

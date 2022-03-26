@@ -182,10 +182,10 @@ lizardt object
 ```Javascript
 /*
 [{
-  $nextEl: null,
+  nextEl: null,
   name: "h1",
   text: undefined,
-  $el: html element
+  el: html element
 }]
 */
 t("[.wrapper]").getChildren().target;

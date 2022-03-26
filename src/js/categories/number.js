@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // Global methods
 var index_1 = require("../global/index");
 var numberCategory = {
-    getRandom: index_1.default.getRandom,
     getPercent: function (current, endNum, round) {
         if ([typeof current, typeof endNum].every(function (num) { return num === "number"; })) {
             var percent = (current / endNum) * 100;
@@ -27,7 +26,7 @@ var numberCategory = {
         for (var _i = 0; _i < arguments.length; _i++) {
             args[_i] = arguments[_i];
         }
-        if (args.every(function (item) { return typeof item === "number"; })) {
+        if (args.every(function (item) { return index_1.default.isNumber(item); })) {
             return Math.min.apply(Math, args);
         }
         else {
@@ -39,7 +38,7 @@ var numberCategory = {
         for (var _i = 0; _i < arguments.length; _i++) {
             args[_i] = arguments[_i];
         }
-        if (args.every(function (item) { return typeof item === "number"; })) {
+        if (args.every(function (item) { return index_1.default.isNumber(item); })) {
             return Math.max.apply(Math, args);
         }
         else {
@@ -47,6 +46,7 @@ var numberCategory = {
         }
     },
     reverse: index_1.default.reverse,
+    getRandom: index_1.default.getRandom,
 };
 for (var i in numberCategory) {
     // Exports every separately method

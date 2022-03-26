@@ -9,14 +9,14 @@ import {
 
 const global: IGlobal = {
   checkList(target: any): Boolean {
-    return Array.isArray(target) || target instanceof NodeList || target instanceof HTMLCollection;
+    return global.isArray(target) || target instanceof NodeList || target instanceof HTMLCollection;
   },
 
   createElement({ tag, text, styles, attributes }: IElement): HTMLElement {
     const res: HTMLElement = document.createElement(tag);
 
-    if (res instanceof Element) {
-      if (typeof text === "string") {
+    if (global.isElement(res)) {
+      if (global.isString(text)) {
         res.textContent = text;
       }
 
@@ -32,15 +32,15 @@ const global: IGlobal = {
     return res;
   },
 
-  addElementOnPos(parent: HTMLElement, element: HTMLElement | IElement, pos: InsertPosition): void {
-    if (parent instanceof Element) {
+  addElementOnPos(parent: HTMLElement, element: HTMLElement | Element | IElement, pos: InsertPosition): void {
+    if (global.isElement(parent)) {
       // Html element
-      if (element instanceof Element) {
-        parent.insertAdjacentElement(pos, element);
+      if (global.isElement(element)) {
+        parent.insertAdjacentElement.bind(parent, pos, element);
       }
 
       // Object
-      if (element && typeof element === "object" && !Array.isArray(element) && !(element instanceof Element || element instanceof HTMLElement)) {
+      if (global.isObject(element)) {
         const el: HTMLElement = global.createElement(element);
 
         parent.insertAdjacentElement(pos, el);
@@ -68,7 +68,7 @@ const global: IGlobal = {
 
   setAttributes(el: HTMLElement, obj: object): HTMLElement {
     for (let attr in obj) {
-      el.setAttribute(attr, Array.isArray(obj[attr]) ? obj[attr].join(" ") : obj[attr]);
+      el.setAttribute(attr, global.isArray(obj[attr]) ? obj[attr].join(" ") : obj[attr]);
     }
 
     return el;
@@ -78,8 +78,8 @@ const global: IGlobal = {
     throw new Error(message);
   },
 
-  removeChild(parent: any, element: string | Element, position?: string): void {
-    if (parent instanceof Element) {
+  removeChild(parent: any, element: string | HTMLElement | Array<string | HTMLElement>, position?: string): void {
+    if (global.isElement(parent)) {
       if (position) {
         switch (position) {
           case "first":
@@ -91,13 +91,13 @@ const global: IGlobal = {
         }
       }
 
-      if (typeof element === "string" && element.length) {
+      if (global.isString(element) && element["length"]) {
         const findChild: HTMLElement | null = parent.querySelector(element);
 
         findChild && parent.removeChild(findChild);
       }
 
-      if (element instanceof Element) {
+      if (global.isElement(element)) {
         parent.removeChild(element);
       }
     } else {
@@ -108,11 +108,11 @@ const global: IGlobal = {
   compare(item1: any, item2: any): boolean {
     const items: Array<any> = [item1, item2];
 
-    if (items.every(item => item instanceof Element)) {
+    if (items.every(item => global.isElement(item))) {
       return item1.isEqualNode(item2);
     } else if (items.every(item => ["bigint", "symbol"].includes(typeof item) || isNaN(item))) {
       return item1.toString() === item2.toString();
-    } else if (items.some(item => item instanceof Element) || items.some(item => ["bigint", "symbol"].includes(typeof item) || isNaN(item))) {
+    } else if (items.some(item => global.isElement(item)) || items.some(item => ["bigint", "symbol"].includes(typeof item) || isNaN(item))) {
       return false;
     } else {
       return JSON.stringify(item1) === JSON.stringify(item2);
@@ -120,7 +120,7 @@ const global: IGlobal = {
   },
 
   getAllParents(num?: number): IT {
-    if (this.target instanceof Element) {
+    if (global.isElement(this.target)) {
       const getParent = (parent: HTMLElement | null, array: Array<HTMLElement>): Array<HTMLElement> => {
         const parents: Array<HTMLElement> = array;
 
@@ -135,7 +135,7 @@ const global: IGlobal = {
 
       const res: Array<HTMLElement> = getParent(this.target, []);
 
-      this.target = (typeof num === "number" && num >= 0) ? res[num] : res;
+      this.target = (global.isNumber(num) && num >= 0) ? res[num] : res;
 
       return this;
     } else {
@@ -144,8 +144,8 @@ const global: IGlobal = {
   },
 
   indexOf(findItem: any): number {
-    if (typeof this.target === "string") {
-      if (typeof findItem === "string") {
+    if (global.isString(this.target)) {
+      if (global.isString(findItem)) {
         const regexp = new RegExp(findItem);
         const res = this.target.match(regexp);
 
@@ -155,7 +155,7 @@ const global: IGlobal = {
       }
     }
 
-    if (Array.isArray(this.target)) {
+    if (global.isArray(this.target)) {
       let res = this.target.indexOf(findItem);
 
       if (res === -1) {
@@ -185,7 +185,7 @@ const global: IGlobal = {
   },
 
   isObject(item, callback?): boolean {
-    const res: boolean = item && typeof item === "object" && !Array.isArray(item)
+    const res: boolean = item && typeof item === "object" && !global.isArray(item)
       && !(item instanceof Element || item instanceof HTMLElement);
 
     if (callback) {
@@ -200,9 +200,9 @@ const global: IGlobal = {
   },
 
   merge(...args): IT {
-    if (global.isObject(this.target) || Array.isArray(this.target)) {
-      if (args.every(item => global.isObject(item)) || args.every(item => Array.isArray(item))) {
-        if (Array.isArray(this.target) && args.every(item => Array.isArray(item))) {
+    if (global.isObject(this.target) || global.isArray(this.target)) {
+      if (args.every(item => global.isObject(item)) || args.every(item => global.isArray(item))) {
+        if (global.isArray(this.target) && args.every(item => global.isArray(item))) {
           this.target = [...this.target].concat(args.reduce((acc, item) => {
             acc = [...acc].concat(item);
 
@@ -231,10 +231,10 @@ const global: IGlobal = {
   },
 
   isEmpty(): boolean {
-    if (typeof this.target === "string" || Array.isArray(this.target) || global.isObject(this.target) || this.target instanceof HTMLElement) {
-      if (typeof this.target === "string") {
+    if (global.isString(this.target) || global.isArray(this.target) || global.isObject(this.target) || global.isElement(this.target)) {
+      if (global.isString(this.target)) {
         return !Boolean(this.target);
-      } else if (Array.isArray(this.target)) {
+      } else if (global.isArray(this.target)) {
         return !Boolean(this.target.length);
       } else if (global.isObject(this.target)) {
         return !Boolean(Object.keys(this.target).length);
@@ -247,7 +247,7 @@ const global: IGlobal = {
   },
 
   reverse(): IT {
-    if ((["string", "number"].includes(typeof this.target) || Array.isArray(this.target)) && this.target) {
+    if ((["string", "number"].includes(typeof this.target) || global.isArray(this.target)) && this.target) {
       switch (typeof this.target) {
         case "string":
           this.target = this.target.split("").reverse().join("");
@@ -266,7 +266,7 @@ const global: IGlobal = {
   },
 
   onlyTruthy(): IT {
-    if (global.isObject(this.target) || Array.isArray(this.target)) {
+    if (global.isObject(this.target) || global.isArray(this.target)) {
       if (global.isObject(this.target)) {
         for (let key in this.target) {
           if (!this.target[key]) {
@@ -275,7 +275,7 @@ const global: IGlobal = {
         }
       }
 
-      if (Array.isArray(this.target)) {
+      if (global.isArray(this.target)) {
         this.target = this.target.filter(Boolean);
       }
 
@@ -284,8 +284,9 @@ const global: IGlobal = {
       global.setError(`"${this.target}" must be either an array or an object`);
     }
   },
+
   onlyFalsy(): IT {
-    if (global.isObject(this.target) || Array.isArray(this.target)) {
+    if (global.isObject(this.target) || global.isArray(this.target)) {
       if (global.isObject(this.target)) {
         for (let key in this.target) {
           if (this.target[key]) {
@@ -294,7 +295,7 @@ const global: IGlobal = {
         }
       }
 
-      if (Array.isArray(this.target)) {
+      if (global.isArray(this.target)) {
         this.target = this.target.filter(item => !Boolean(item));
       }
 
@@ -303,13 +304,154 @@ const global: IGlobal = {
       global.setError(`"${this.target}" must be either an array or an object`);
     }
   },
+
   getRandom(min: number, max: number): number {
-    if ([min, max].every(num => typeof num === "number")) {
+    if ([min, max].every(num => global.isNumber(num))) {
       return Math.random() * (max - min) + min;
     } else {
       global.setError("Not all elements in the given array are of type number");
     }
   },
+
+  isArray(item: any, callback?): boolean {
+    const res: boolean = Array.isArray(item);
+
+    if (callback) {
+      if (global.isFunction(callback)) {
+        return res && callback();
+      } else {
+        global.setError(`"${callback}" must be a function`);
+      }
+    }
+
+    return res;
+  },
+
+  isNumber(item: any, callback?: () => any): any {
+    const res: boolean = typeof item === "number" && !isNaN(item);
+
+    if (callback) {
+      if (global.isFunction(callback)) {
+        return res && callback();
+      } else {
+        global.setError(`"${callback}" must be a function`);
+      }
+    }
+
+    return res;
+  },
+
+  isString(item: any, callback?: () => any): any {
+    const res: boolean = typeof item === "string";
+
+    if (callback) {
+      if (global.isFunction(callback)) {
+        return res && callback();
+      } else {
+        global.setError(`"${callback}" must be a function`);
+      }
+    }
+
+    return res;
+  },
+
+  isSymbol(item: any, callback?: () => any): any {
+    const res: boolean = typeof item === "symbol";
+
+    if (callback) {
+      if (global.isFunction(callback)) {
+        return res && callback();
+      } else {
+        global.setError(`"${callback}" must be a function`);
+      }
+    }
+
+    return res;
+  },
+
+  isBigInt(item: any, callback?: () => any): any {
+    const res: boolean = typeof item === "bigint";
+
+    if (callback) {
+      if (global.isFunction(callback)) {
+        return res && callback();
+      } else {
+        global.setError(`"${callback}" must be a function`);
+      }
+    }
+
+    return res;
+  },
+
+  isBoolean(item: any, callback?: () => any): any {
+    const res: boolean = typeof item === "boolean";
+
+    if (callback) {
+      if (global.isFunction(callback)) {
+        return res && callback();
+      } else {
+        global.setError(`"${callback}" must be a function`);
+      }
+    }
+
+    return res;
+  },
+
+  isUndefined(item: any, callback?: () => any): any {
+    const res: boolean = typeof item === "undefined";
+
+    if (callback) {
+      if (global.isFunction(callback)) {
+        return res && callback();
+      } else {
+        global.setError(`"${callback}" must be a function`);
+      }
+    }
+
+    return res;
+  },
+
+  isNull(item: any, callback?: () => any): any {
+    const res: boolean = item === null;
+
+    if (callback) {
+      if (global.isFunction(callback)) {
+        return res && callback();
+      } else {
+        global.setError(`"${callback}" must be a function`);
+      }
+    }
+
+    return res;
+  },
+
+  isElement(item: any, callback?: () => any): any {
+    const res: boolean = item instanceof Element || item instanceof HTMLElement;
+
+    if (callback) {
+      if (global.isFunction(callback)) {
+        return res && callback();
+      } else {
+        global.setError(`"${callback}" must be a function`);
+      }
+    }
+
+    return res;
+  },
+
+  isPromise(item: any, callback?: () => any): any {
+    const res: boolean = item instanceof Promise;
+
+    if (callback) {
+      if (global.isFunction(callback)) {
+        return res && callback();
+      } else {
+        global.setError(`"${callback}" must be a function`);
+      }
+    }
+
+    return res;
+  }
 };
 
 export default global;

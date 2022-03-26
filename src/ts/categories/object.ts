@@ -6,17 +6,14 @@ import { IT } from "../interfaces/index";
 import global from "../global/index";
 
 const objectCategory: IObjectCategory = {
-  merge: global.merge,
-  isEmpty: global.isEmpty,
-
   hasProperty(property: string | Array<string>): boolean {
     if (global.isObject(this.target)) {
-      if (typeof property === "string") {
-        return property in this.target;
+      if (global.isString(property)) {
+        return property.toString() in this.target;
       }
 
-      if (Array.isArray(property)) {
-        return property.every(prop => prop in this.target);
+      if (global.isArray(property)) {
+        return property["every"](prop => prop in this.target);
       }
     } else {
       global.setError(`"${this.target}" is not an object`);
@@ -47,19 +44,17 @@ const objectCategory: IObjectCategory = {
     }
   },
 
-  addProperty(item: object): IT {
+  addProperty(item: object | Array<any>): IT {
     if (global.isObject(this.target)) {
-      if (global.isObject(item) || Array.isArray(item)) {
-        if (Array.isArray(item)) {
-          const done = item.every(el => global.isObject(el));
+      if (global.isObject(item) || global.isArray(item)) {
+        if (global.isArray(item)) {
+          const done = item["every"](el => global.isObject(el));
 
           if (!done) {
             global.setError(`In array: ${item} all elements must be object`);
           }
 
-          item.forEach(obj => {
-            Object.keys(obj).forEach(key => this.target[key] = obj[key]);
-          })
+          item["forEach"](obj => Object.keys(obj).forEach(key => this.target[key] = obj[key]));
         } else {
           Object.keys(item).forEach(key => this.target[key] = item[key]);
         }
@@ -75,7 +70,7 @@ const objectCategory: IObjectCategory = {
 
   removeProperty(...args): IT {
     if (global.isObject(this.target)) {
-      if (args.every(item => typeof item === "string")) {
+      if (args.every(item => global.isString(item))) {
         args.map(key => key in this.target && delete this.target[key]);
       } else {
         global.setError("Parameters must be of type string");
@@ -89,6 +84,8 @@ const objectCategory: IObjectCategory = {
 
   onlyTruthy: global.onlyTruthy,
   onlyFalsy: global.onlyFalsy,
+  merge: global.merge,
+  isEmpty: global.isEmpty,
 }
 
 for (let i in objectCategory) {

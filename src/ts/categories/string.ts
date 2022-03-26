@@ -7,13 +7,13 @@ import { IT } from "../interfaces/index";
 
 const stringCategory: IStringCategory = {
   hasString(str: string | Array<string>): boolean {
-    if (typeof this.target === "string") {
-      if (typeof str === "string") {
+    if (global.isString(this.target)) {
+      if (global.isString(str)) {
         return this.target.includes(str);
       }
 
-      if (Array.isArray(str) && str.every(item => typeof item === "string")) {
-        return str.every(string => this.target.includes(string));
+      if (global.isArray(str) && str["every"](item => global.isString(item))) {
+        return str["every"](string => this.target.includes(string));
       }
 
       global.setError(`"${str}" not a string or an array`);
@@ -23,8 +23,8 @@ const stringCategory: IStringCategory = {
   },
 
   beginWith(str: string, ignoreRegister?: boolean): boolean {
-    if (typeof this.target === "string") {
-      if (typeof str === "string") {
+    if (global.isString(this.target)) {
+      if (global.isString(str)) {
         const regexp = new RegExp(`^${str}`, ignoreRegister ? "i" : undefined);
 
         return regexp.test(this.target);
@@ -37,8 +37,8 @@ const stringCategory: IStringCategory = {
   },
 
   endWith(str: string, ignoreRegister?: boolean): boolean {
-    if (typeof this.target === "string") {
-      if (typeof str === "string") {
+    if (global.isString(this.target)) {
+      if (global.isString(str)) {
         const regexp = new RegExp(`${str}$`, ignoreRegister ? "i" : undefined);
 
         return regexp.test(this.target);
@@ -51,7 +51,7 @@ const stringCategory: IStringCategory = {
   },
 
   isEmail(): boolean {
-    if (typeof this.target === "string") {
+    if (global.isString(this.target)) {
       return /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/.test(this.target);
     } else {
       global.setError(`"${this.target}" not a string`);
@@ -59,7 +59,7 @@ const stringCategory: IStringCategory = {
   },
 
   hasNumbers(): boolean {
-    if (typeof this.target === "string") {
+    if (global.isString(this.target)) {
       return /\d+/.test(this.target);
     } else {
       global.setError(`"${this.target}" not a string`);
@@ -67,8 +67,8 @@ const stringCategory: IStringCategory = {
   },
 
   isDate(symbol: string): boolean {
-    if (typeof this.target === "string") {
-      if (typeof symbol === "string" && symbol.length) {
+    if (global.isString(this.target)) {
+      if (global.isString(symbol) && symbol.length) {
         const regexp = new RegExp(`(\\d{2}\\${symbol}){2}\\d{4}`);
         return regexp.test(this.target);
       } else {
@@ -80,10 +80,10 @@ const stringCategory: IStringCategory = {
   },
 
   replaceFound(findItems: Array<string>, replaceValues: Array<string>): IT {
-    if (typeof this.target === "string") {
-      if (([findItems, replaceValues].every(items => Array.isArray(items)))) {
+    if (global.isString(this.target)) {
+      if (([findItems, replaceValues].every(items => global.isArray(items)))) {
         if (findItems.length === replaceValues.length) {
-          if ([...findItems, ...replaceValues].every(item => typeof item === "string")) {
+          if ([...findItems, ...replaceValues].every(item => global.isString(item))) {
             this.target = this.target.split("").map(letter => {
               findItems.map((findLetter, index) => {
                 letter = findLetter === letter ? replaceValues[index] : letter;

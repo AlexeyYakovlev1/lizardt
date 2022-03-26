@@ -227,7 +227,23 @@ test("Добавляет предыдущий элемент", () => {
 })
 
 // removeChild
-test("Удаляет html ребенка из блок", () => {
+test("Удаляет html ребенка из блока", () => {
+  document.body.innerHTML = `
+    <div class="myWrapper">
+      <h1>Hello</h1>
+    </div>
+  `;
+
+  const block = document.querySelector(".myWrapper");
+  const child = block.querySelector("h1");
+
+  removeChild.call({ target: block }, child);
+
+  expect(Boolean(block.querySelector("h1"))).toStrictEqual(false);
+})
+
+// addChild
+test("Добавляет html ребенка в блок", () => {
   document.body.innerHTML = `<div class="wrapper">
     <h1 title="Main title">Hello, Lizard!</h1>
   </div>`;
@@ -238,23 +254,7 @@ test("Удаляет html ребенка из блок", () => {
   const child = Boolean(block.querySelector("[title='Main title']"));
 
   expect(child).toStrictEqual(false);
-})
-
-// addChild
-test("Добавляет html ребенка в блок", () => {
-  document.body.innerHTML = `<div class="wrapper"></div>`;
-  const block = document.querySelector(".wrapper");
-  addChild.call({ target: block }, {
-    tag: "h1",
-    text: "Hello, Lizard!",
-    styles: { color: "blue" },
-    attributes: { title: "Main title" }
-  });
-
-  const findChildren = Boolean(block.querySelector("[title='Main title']"));
-
-  expect(findChildren).toStrictEqual(true);
-})
+});
 
 // size
 test("Получение размеров элемента", () => {
@@ -263,7 +263,7 @@ test("Получение размеров элемента", () => {
   const item = size.call({ target: block }).target;
 
   expect(item).toStrictEqual({ height: 0, width: 0 });
-})
+});
 
 // styles
 test("Установка стилей", () => {
@@ -327,7 +327,7 @@ test("Добавление класса/идентификатора", () => {
 
     return expect(block.classList.contains(...args.map(className => className.replace(/^\./, ""))))[toBe]();
   })
-})
+});
 
 // remove
 test("Удаление класса/идентификатора", () => {
@@ -482,10 +482,10 @@ test("Получение дочерних элементов", () => {
       `,
       element: ".wrapper",
       toBe: [{
-        $nextEl: null,
+        nextEl: null,
         name: "h1",
         text: "",
-        $el: document.createElement("h1"),
+        el: document.createElement("h1"),
       }],
     },
     {
@@ -498,16 +498,16 @@ test("Получение дочерних элементов", () => {
       element: ".wrapper",
       toBe: [
         {
-          $nextEl: document.createElement("h2"),
+          nextEl: document.createElement("h2"),
           name: "h1",
           text: "",
-          $el: document.createElement("h1"),
+          el: document.createElement("h1"),
         },
         {
-          $nextEl: null,
+          nextEl: null,
           name: "h2",
           text: "",
-          $el: document.createElement("h2"),
+          el: document.createElement("h2"),
         }
       ],
     },

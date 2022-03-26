@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var index_1 = require("../global/index");
 var ajaxCategory = {
     success: function (callback) {
-        if (this instanceof Promise) {
+        if (index_1.default.isPromise(this)) {
             return this.then(callback);
         }
         else {
@@ -12,7 +12,7 @@ var ajaxCategory = {
         }
     },
     failure: function (callback) {
-        if (this instanceof Promise) {
+        if (index_1.default.isPromise(this)) {
             return this.catch(callback);
         }
         else {
@@ -20,7 +20,7 @@ var ajaxCategory = {
         }
     },
     ajax: function (url, options) {
-        if (typeof url === "string") {
+        if (index_1.default.isString(url)) {
             var data = (options && Object.keys(options).length) ? options : { method: "GET" };
             "beforeSend" in data && data.beforeSend();
             return fetch(url, data);
@@ -34,7 +34,7 @@ var ajaxCategory = {
         for (var _i = 0; _i < arguments.length; _i++) {
             args[_i] = arguments[_i];
         }
-        if (args.length && args.every(function (item) { return item instanceof Promise; })) {
+        if (args.length && args.every(function (item) { return index_1.default.isPromise(item); })) {
             return Promise.all(args);
         }
         else {

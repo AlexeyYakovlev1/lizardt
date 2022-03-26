@@ -5,8 +5,6 @@ import { INumberCategory } from "../interfaces/categories";
 import global from "../global/index";
 
 const numberCategory: INumberCategory = {
-  getRandom: global.getRandom,
-
   getPercent(current: number, endNum: number, round?: boolean): number {
     if ([typeof current, typeof endNum].every(num => num === "number")) {
       const percent: number = (current / endNum) * 100;
@@ -28,7 +26,7 @@ const numberCategory: INumberCategory = {
   },
 
   min(...args): number {
-    if (args.every(item => typeof item === "number")) {
+    if (args.every(item => global.isNumber(item))) {
       return Math.min(...args);
     } else {
       global.setError("All arguments must be of type number");
@@ -36,7 +34,7 @@ const numberCategory: INumberCategory = {
   },
 
   max(...args): number {
-    if (args.every(item => typeof item === "number")) {
+    if (args.every(item => global.isNumber(item))) {
       return Math.max(...args);
     } else {
       global.setError("All arguments must be of type number");
@@ -44,6 +42,7 @@ const numberCategory: INumberCategory = {
   },
 
   reverse: global.reverse,
+  getRandom: global.getRandom,
 }
 
 for (let i in numberCategory) {
