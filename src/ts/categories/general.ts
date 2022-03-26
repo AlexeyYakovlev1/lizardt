@@ -1,7 +1,6 @@
 // Interfaces
 import { IGeneralCategory } from "../interfaces/categories";
 import { IT } from "../interfaces/index";
-import { IPageData } from "../interfaces/options";
 
 // Categories
 import arrayCategory from "../categories/array";
@@ -93,14 +92,20 @@ const generalCategory: IGeneralCategory = {
     }
   },
 
-  getPageInfo(): IPageData {
-    const res: IPageData = {};
+  getPageInfo(): object {
+    const options: object = { ...window, ...window.location, ...window.clientInformation };
+    const needOptions: Array<string> = [
+      "language", "languages", "innerHeight", "innerWidth", "screen",
+      "host", "origin", "pathname", "port", "protocol"
+    ];
 
-    Object.keys(window.location).filter(key => !global.isFunction(window.location[key])).map(key => {
-      res[key] = window.location[key];
-    });
+    return Object.keys(options)
+      .filter(key => needOptions.includes(key))
+      .reduce((res, key) => {
+        res[key] = options[key];
 
-    return res;
+        return res;
+      }, {});
   },
 
   repeat(num: number, callback: (iteration: number) => void): void {

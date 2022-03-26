@@ -91,11 +91,17 @@ var generalCategory = {
         return __assign(__assign({ target: trt ? trt : target }, (0, index_1.default)(__assign(__assign(__assign(__assign({}, dom_1.default), array_1.default), object_1.default), string_1.default), ["createElement", "isArray", "isFunction", "isObject"])), index_2.default.getAdditions);
     },
     getPageInfo: function () {
-        var res = {};
-        Object.keys(window.location).filter(function (key) { return !index_3.default.isFunction(window.location[key]); }).map(function (key) {
-            res[key] = window.location[key];
-        });
-        return res;
+        var options = __assign(__assign(__assign({}, window), window.location), window.clientInformation);
+        var needOptions = [
+            "language", "languages", "innerHeight", "innerWidth", "screen",
+            "host", "origin", "pathname", "port", "protocol"
+        ];
+        return Object.keys(options)
+            .filter(function (key) { return needOptions.includes(key); })
+            .reduce(function (res, key) {
+            res[key] = options[key];
+            return res;
+        }, {});
     },
     repeat: function (num, callback) {
         if (typeof num === "number" && num > 0) {

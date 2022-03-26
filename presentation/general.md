@@ -182,7 +182,7 @@ Gets page data
 Page data
 - **Example**
 ```Javascript
-// { href: 'http://127.0.0.1:5500/index.html', origin: 'http://127.0.0.1:5500', protocol: 'http:', host: '127.0.0.1:5500', … }
+// { origin: 'http://127.0.0.1:5500', screen: Screen, innerWidth: 1496, innerHeight: 298, protocol: 'http:', … }
 console.log(getPageInfo());
 ```
 

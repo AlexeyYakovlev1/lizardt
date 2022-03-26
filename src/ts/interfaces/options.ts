@@ -55,17 +55,4 @@ export interface IAttribute {
   val: any
 }
 
-export interface IPageData {
-  ancestorOrigins?: DOMStringList,
-  hash?: string,
-  host?: string,
-  hostname?: string,
-  href?: string,
-  origin?: string,
-  pathname?: string,
-  port?: string,
-  protocol?: string,
-  search?: string,
-}
-
 export interface IBoundingRect extends ISize, ICoordinates { };
