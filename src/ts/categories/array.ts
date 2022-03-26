@@ -307,6 +307,16 @@ const arrayCategory: IArrayCategory = {
     }
   },
 
+  randomItem(): IT {
+    if (Array.isArray(this.target)) {
+      this.target = this.target[Math.floor(global.getRandom(0, this.target.length - 1))];
+
+      return this;
+    } else {
+      global.setError(`"${this.target}" must be array`);
+    }
+  },
+
   onlyTruthy: global.onlyTruthy,
   onlyFalsy: global.onlyFalsy,
   reverse: global.reverse,

@@ -29,6 +29,7 @@ export interface IGlobal {
   reverse(): IT;
   onlyTruthy(): IT;
   onlyFalsy(): IT;
+  getRandom(min: number, max: number): number;
 }
 
 export interface ILizardt extends IGeneralCategory, INumberCategory {

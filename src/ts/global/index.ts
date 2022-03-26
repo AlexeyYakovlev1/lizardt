@@ -6,7 +6,6 @@ import {
   IGlobal,
   IT
 } from "../interfaces/index";
-import generalCategory from "../categories/general";
 
 const global: IGlobal = {
   checkList(target: any): Boolean {
@@ -303,7 +302,14 @@ const global: IGlobal = {
     } else {
       global.setError(`"${this.target}" must be either an array or an object`);
     }
-  }
+  },
+  getRandom(min: number, max: number): number {
+    if ([min, max].every(num => typeof num === "number")) {
+      return Math.random() * (max - min) + min;
+    } else {
+      global.setError("Not all elements in the given array are of type number");
+    }
+  },
 };
 
 export default global;

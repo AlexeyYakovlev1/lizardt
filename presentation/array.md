@@ -393,3 +393,14 @@ lizardt object
 // [321]
 console.log(t([null, undefined, 0, 321, "", false, NaN]).onlyTruthy().target);
 ```
+
+### ```randomItem()```:
+- **Description**
+Takes any element in an array
+- **Return**
+lizardt object
+- **Example**
+```Javascript
+// 1 or 2 or 3
+console.log(t([1,2,3]).randomItem().target);
+```

@@ -5,13 +5,7 @@ import { INumberCategory } from "../interfaces/categories";
 import global from "../global/index";
 
 const numberCategory: INumberCategory = {
-  getRandom(min: number, max: number): number {
-    if ([min, max].every(num => typeof num === "number")) {
-      return Math.random() * (max - min) + min;
-    } else {
-      global.setError("Not all elements in the given array are of type number");
-    }
-  },
+  getRandom: global.getRandom,
 
   getPercent(current: number, endNum: number, round?: boolean): number {
     if ([typeof current, typeof endNum].every(num => num === "number")) {

@@ -42,6 +42,7 @@ export interface IArrayCategory {
   reverse(): IT;
   onlyTruthy(): IT;
   onlyFalsy(): IT;
+  randomItem(): IT;
 }
 
 // Ajax

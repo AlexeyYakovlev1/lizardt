@@ -287,6 +287,15 @@ var arrayCategory = {
             index_1.default.setError("\"".concat(this.target, "\" must be array"));
         }
     },
+    randomItem: function () {
+        if (Array.isArray(this.target)) {
+            this.target = this.target[Math.floor(index_1.default.getRandom(0, this.target.length - 1))];
+            return this;
+        }
+        else {
+            index_1.default.setError("\"".concat(this.target, "\" must be array"));
+        }
+    },
     onlyTruthy: index_1.default.onlyTruthy,
     onlyFalsy: index_1.default.onlyFalsy,
     reverse: index_1.default.reverse,

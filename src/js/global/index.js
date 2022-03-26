@@ -281,6 +281,14 @@ var global = {
         else {
             global.setError("\"".concat(this.target, "\" must be either an array or an object"));
         }
-    }
+    },
+    getRandom: function (min, max) {
+        if ([min, max].every(function (num) { return typeof num === "number"; })) {
+            return Math.random() * (max - min) + min;
+        }
+        else {
+            global.setError("Not all elements in the given array are of type number");
+        }
+    },
 };
 exports.default = global;
