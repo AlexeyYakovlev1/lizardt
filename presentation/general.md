@@ -480,15 +480,21 @@ len(3); // 1
 Interacts with data stored in the global store object.
 - **Arguments**
   - Action **(required)**
-  - Name **(required)**
+  - Name **(optional)**
   - Data **(optional)**
 - **Return**
-Data or nothing
+Data/undefined/clear object
 - **Example**
 ```Javascript
 storage("set", "user", { name: "Petr", age: 28 });
 storage("get", "user"); // { name: "Petr", age: 28 };
-
+```
+```Javascript
 storage("delete", "user");
 storage("get", "user"); // undefined
 ```
+```Javascript
+// clears the entire object
+storage("clear"); // {}
+```
+

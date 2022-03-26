@@ -1,4 +1,4 @@
-import { IAjaxOptions, IAttribute, IElement, IScrollOptions, IPageData } from "./options";
+import { IAjaxOptions, IAttribute, IElement, IScrollOptions } from "./options";
 import { IT } from "./index";
 
 // String
@@ -103,7 +103,7 @@ export interface IGeneralCategory {
   typeOf(item: any): string;
   extend(options: object): object;
   array(item: any, symb?: string): Array<any>;
-  getPageInfo(): IPageData;
+  getPageInfo(): object;
   repeat(num: number, callback: (iteration: number) => void): void;
   toString(item: any): string;
   toNumber(item: any): number;
@@ -119,7 +119,7 @@ export interface IGeneralCategory {
   isNull(item: any, callback?: () => any): any;
   isElement(item: any, callback?: () => any): any;
   len(item: Array<any> | Object | string | HTMLCollection | Element | number): number;
-  storage(action: "set" | "get" | "delete", name: string, data?: any): any;
+  storage(action: "set" | "get" | "delete" | "clear" | "freeze", name?: string, data?: any): any;
 }
 
 // Number

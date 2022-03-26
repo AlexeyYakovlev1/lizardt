@@ -419,4 +419,6 @@ test("Хранение/получение данных", () => {
     storage("delete", name);
     expect(storage("get", name)).toStrictEqual(undefined);
   })
+
+  expect(storage("clear")).toStrictEqual({});
 });

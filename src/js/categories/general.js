@@ -247,7 +247,7 @@ var generalCategory = {
         if (!index_3.default.checkList(item) && typeof item !== "string" &&
             !index_3.default.isObject(item) && !generalCategory.isElement(item) &&
             !generalCategory.isNumber(item))
-            return index_3.default.setError("\n\t\t\t\tSupported only: Array, String, NodeList, Object, html element, number, but not \"".concat(typeof item, "\"\n\t\t\t"));
+            index_3.default.setError("\n\t\t\t\tSupported only: Array, String, NodeList, Object, html element, number, but not \"".concat(typeof item, "\"\n\t\t\t"));
         // Проверка на массив
         if (Array.isArray(item))
             return item.length;
@@ -267,9 +267,6 @@ var generalCategory = {
         }
     },
     storage: function (action, name, data) {
-        var commands = ["set", "get", "delete"];
-        if (!commands.includes(action) || !name)
-            return index_3.default.setError("The action can only be \"set\" or \"get\", or the name is not defined");
         switch (action) {
             case "set":
                 lizardt_1.default.store[name] = data;
@@ -279,8 +276,10 @@ var generalCategory = {
             case "delete":
                 delete lizardt_1.default.store[name];
                 break;
+            case "clear":
+                return lizardt_1.default.store = {};
             default:
-                return lizardt_1.default.store;
+                index_3.default.setError("The action can only be \"set\", \"get\", \"delete\", \"clear\", or the name is not defined");
         }
     },
     isFunction: index_3.default.isFunction,
