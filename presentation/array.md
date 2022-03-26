@@ -334,7 +334,7 @@ const obj = t([
 
 obj.findByIndexAndUpdateProperty(0, ["house1", "floor1", "floor2", "window"], true);
 
-// // house1 -> floor1 -> floor2 -> window = true
+// house1 -> floor1 -> floor2 -> window = true
 console.log(obj.target);
 
 // [{ key: 10 }, { key: 2 }]
