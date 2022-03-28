@@ -106,11 +106,15 @@ const generalCategory: IGeneralCategory = {
       }, {});
   },
 
-  repeat(num: number, callback: (iteration: number) => void): void {
+  repeat(num: number, condition: (iteration: number) => boolean | null, callback: (iteration: number) => void): void {
     if (global.isNumber(num) && num > 0) {
       if (global.isFunction(callback)) {
         for (let i = 0; i < num; i++) {
-          callback(i);
+          if (global.isFunction(condition)) {
+            condition(i) && callback(i);
+          } else {
+            callback(i);
+          }
         }
       } else {
         global.setError(`"${callback}" must be a function`);

@@ -105,7 +105,7 @@ export interface IGeneralCategory {
   extend(options: object): object;
   array(item: any, symb?: string): Array<any>;
   getPageInfo(): object;
-  repeat(num: number, callback: (iteration: number) => void): void;
+  repeat(num: number, condition: (iteration: number) => boolean | null, callback: (iteration: number) => void): void;
   toString(item: any): string;
   toNumber(item: any): number;
   isObject(item, callback?: () => any): any;

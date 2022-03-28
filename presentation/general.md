@@ -191,6 +191,7 @@ console.log(getPageInfo());
 Repeats a function a specified number of times. The **Iterations** parameter must be greater than 0
 - **Arguments**
   - Iterations **(required)**
+  - Condition **(optional)**
   - Callback **(required)**
 - **Return**
 undefined
@@ -199,10 +200,19 @@ undefined
 let a = 0;
 
 // i - active iteration
-repeat(3, i => a += i);
+repeat(3, null, i => a += i);
 
 // 3
 console.log(a);
+
+// Or
+let b = 0;
+
+// With condition: only even
+repeat(5, i => i % 2 === 0, i => b += i);
+
+// 6
+console.log(b);
 ```
 
 ### ```toString()```:

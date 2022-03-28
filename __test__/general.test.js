@@ -160,14 +160,17 @@ test("Повтор функции", () => {
   let target = 1;
 
   const tests = [
-    { args: [2, i => (target += i)], toBe: 2 },
-    { args: [10, i => (target *= i)], toBe: 0 },
-    { args: [10, i => (target += i + 1)], toBe: 55 },
+    { args: [2, null, i => (target += i)], toBe: 2 },
+    { args: [10, null, i => (target *= i)], toBe: 0 },
+    { args: [10, null, i => (target += i + 1)], toBe: 56 },
+    { args: [5, i => i % 2 === 0, i => (target += i)], toBe: 7 },
   ];
 
   tests.map(({ args, toBe }) => {
     repeat(...args);
     expect(target).toStrictEqual(toBe);
+
+    target = 1;
   });
 });
 

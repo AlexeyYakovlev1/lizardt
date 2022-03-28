@@ -102,11 +102,16 @@ var generalCategory = {
             return res;
         }, {});
     },
-    repeat: function (num, callback) {
+    repeat: function (num, condition, callback) {
         if (index_3.default.isNumber(num) && num > 0) {
             if (index_3.default.isFunction(callback)) {
                 for (var i = 0; i < num; i++) {
-                    callback(i);
+                    if (index_3.default.isFunction(condition)) {
+                        condition(i) && callback(i);
+                    }
+                    else {
+                        callback(i);
+                    }
                 }
             }
             else {
