@@ -204,8 +204,11 @@ repeat(3, null, i => a += i);
 
 // 3
 console.log(a);
+```
 
-// Or
+or
+
+```Javascript
 let b = 0;
 
 // With condition: only even
