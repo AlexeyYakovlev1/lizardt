@@ -45,6 +45,7 @@ export interface IArrayCategory {
   onlyTruthy(): IT;
   onlyFalsy(): IT;
   randomItem(): IT;
+  wrapInAnArray(number:number): any[];
 }
 
 // Ajax

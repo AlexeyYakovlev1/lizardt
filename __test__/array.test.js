@@ -7,7 +7,8 @@ import {
   find, slice, splice,
   findByIndexAndUpdate,
   fillFull, reverse, findByIndexAndRemove,
-  onlyFalsy, onlyTruthy, findByIndexAndUpdateProperty
+  onlyFalsy, onlyTruthy, findByIndexAndUpdateProperty,
+  wrapInAnArray
 } from "../src/js/categories/array";
 
 // find
@@ -362,4 +363,20 @@ test("Найти по индексу и обновить свойство", () =
   ];
 
   tests.map(({ target, args, toBe }) => expect(findByIndexAndUpdateProperty.call({ target }, ...args)).toStrictEqual({ target: toBe }));
+});
+
+// wrapInAnArray
+test("Оборачивает элементы в массив", () => {
+  const tests = [
+    { target: [1,2,3,4], num: 3, toBe: [ [ 1 ], [ 2 ], [ 3 ], 4 ] },
+    { target: [1,2,3,4], num: 2, toBe: [ [ 1, 2 ], [ 3, 4 ] ] },
+    { target: [1,2,3,4], num: 1, toBe: [ [ 1, 2, 3, 4 ] ] },
+    { target: [1,2,3,4,5,6], num: 3, toBe: [ [ 1, 2 ], [ 3, 4 ], [ 5, 6 ] ] },
+    { target: [1,2,3,4,5,6], num: 2, toBe: [ [ 1, 2, 3 ], [ 4, 5, 6 ] ] },
+    { target: [1,2,3,4,5,6], num: 4, toBe: [ [ 1 ], [ 2 ], [ 3 ], [ 4 ], 5, 6 ] },
+    { target: [1,2,3,4,5,6,7,8], num: 4, toBe: [ [ 1, 2 ], [ 3, 4 ], [ 5, 6 ], [ 7, 8 ] ] },
+    { target: [1,2,3,4,5,6,7,8], toBe: [ [ 1,2,3,4,5,6,7,8 ] ] }
+  ];
+
+  tests.map(({ target, num, toBe }) => expect(wrapInAnArray.call({ target }, num || undefined)).toStrictEqual(toBe));
 });

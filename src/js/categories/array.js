@@ -298,6 +298,40 @@ var arrayCategory = {
             index_1.default.setError("\"".concat(this.target, "\" must be array"));
         }
     },
+    wrapInAnArray: function (number) {
+        if (!Array.isArray(this.target))
+            index_1.default.setError("Array must be array");
+        if (!this.target.length)
+            index_1.default.setError("Array length must be greater than 0");
+        if (number === undefined)
+            return [this.target];
+        if (!index_1.default.isNumber(number))
+            index_1.default.setError("Typeof number must be number");
+        // проверка на сравнение числа и длины массива
+        if (number > this.target.length) {
+            index_1.default.setError("The number of arrays in which the elements of the array\n\t\t\t\tare wrapped must not be greater than the length of the array itself.\n\t\t\t\tArgument number: \"".concat(number, "\" > length argument array: \"").concat(this.target.length, "\""));
+        }
+        var res = []; // результирующий массив 
+        var numElms = Math.floor(this.target.length / number); // количество элементов в каждом массиве
+        // создание массивов
+        for (var j = 0; j < number; ++j) {
+            var arr = [];
+            // проход по массиву
+            for (var h = 0; h < this.target.length; ++h)
+                // сколько элементов должно быть в одном массиве
+                for (var i = 0; i < numElms; ++i)
+                    if (arr.length < numElms) {
+                        arr.push(this.target[h]);
+                        this.target.splice(h, 1);
+                    }
+            res.push(arr);
+        }
+        /* если длина массива не кратна числу массивов, которые оборачивают элементы аргумента массива,
+        то оставшиеся элементы аргумента массива дополнять к уже построенному */
+        if (this.target.length % number !== 0)
+            return res.concat(this.target);
+        return res;
+    },
     onlyTruthy: index_1.default.onlyTruthy,
     onlyFalsy: index_1.default.onlyFalsy,
     reverse: index_1.default.reverse,

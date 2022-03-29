@@ -405,3 +405,22 @@ lizardt object
 // 1 or 2 or 3
 console.log(t([1,2,3]).randomItem().target);
 ```
+
+### ```wrapInAnArray()```:
+- **Description**
+Creates a certain number of arrays to which a certain number of elements are automatically added
+- **Arguments**
+  - Number **(optional)**
+- **Return**
+Array
+- **Example**
+```Javascript
+t([1,2,3,4]).wrapInAnArray(3); // [ [ 1 ], [ 2 ], [ 3 ], 4 ]
+t([1,2,3,4]).wrapInAnArray(2); // [ [ 1, 2 ], [ 3, 4 ] ]
+t([1,2,3,4]).wrapInAnArray(1); // [ [ 1, 2, 3, 4 ] ]
+t([1,2,3,4,5,6]).wrapInAnArray(3); // [ [ 1, 2 ], [ 3, 4 ], [ 5, 6 ] ]
+t([1,2,3,4,5,6]).wrapInAnArray(2); // [ [ 1, 2, 3 ], [ 4, 5, 6 ] ]
+t([1,2,3,4,5,6]).wrapInAnArray(4); // [ [ 1 ], [ 2 ], [ 3 ], [ 4 ], 5, 6 ]
+t([1,2,3,4,5,6,7,8]).wrapInAnArray(4); // [ [ 1, 2 ], [ 3, 4 ], [ 5, 6 ], [ 7, 8 ] ]
+t([1,2,3,4]).wrapInAnArray(); // [ [ 1, 2, 3, 4 ] ]
+```
