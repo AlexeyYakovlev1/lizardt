@@ -9,6 +9,8 @@ export interface IStringCategory {
   endWith(str: string, ignoreRegister?: boolean): boolean;
   isEmail(): boolean;
   isDate(symbol: string): boolean;
+  onlyNumbers(): boolean;
+  onlyLetters(): boolean;
   hasNumbers(): boolean;
   replaceFound(findItems: Array<string>, replaceValues: Array<string>): IT;
   isEmpty(): boolean;
@@ -24,7 +26,7 @@ export interface IArrayCategory {
   removeItem(index: number, val?: any): Array<any>;
   hasItem(item: any): boolean;
   index(num: number): IT;
-  filter(callback: () => any, thisArg?: any): any;
+  filter(): any;
   indexOf(findItem: any): number;
   groupBy(callback: (el?, index?, array?) => any, cat?: string): IT;
   addItem(item: any, position?: boolean): IT;

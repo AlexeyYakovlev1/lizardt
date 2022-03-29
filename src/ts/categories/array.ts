@@ -25,7 +25,7 @@ const arrayCategory: IArrayCategory = {
 
       return this;
     } else {
-      global.setError(`"${this.target}" is not a array`);
+      global.setError(`"${this.target}" is not a array`);;
     }
   },
 
@@ -35,7 +35,7 @@ const arrayCategory: IArrayCategory = {
 
       return this;
     } else {
-      global.setError(`"${this.target}" is not a array`);
+      global.setError(`"${this.target}" is not a array`);;
     }
   },
 
@@ -45,7 +45,7 @@ const arrayCategory: IArrayCategory = {
 
       return this;
     } else {
-      global.setError(`"${this.target}" is not a array`);
+      global.setError(`"${this.target}" is not a array`);;
     }
   },
 
@@ -83,7 +83,7 @@ const arrayCategory: IArrayCategory = {
         global.setError(`"${callback}" is not a function`);
       }
     } else {
-      global.setError(`"${this.target}" is not a array`);
+      global.setError(`"${this.target}" is not a array`);;
     }
   },
 
@@ -93,7 +93,7 @@ const arrayCategory: IArrayCategory = {
 
       return this.target;
     } else {
-      global.setError(`"${this.target}" is not a array`);
+      global.setError(`"${this.target}" is not a array`);;
     }
   },
 
@@ -150,7 +150,7 @@ const arrayCategory: IArrayCategory = {
 
   index(num: number): any {
     if (!global.isNumber(num)) {
-      global.setError(`Invalid value num: "${num}"`);
+      global.setError(`Invalid value num: ${num}`);
     }
 
     if (global.checkList(this.target) || global.isString(this.target)) {
@@ -165,18 +165,10 @@ const arrayCategory: IArrayCategory = {
     }
   },
 
-  filter(callback: () => any, thisArg?: any): any {
-    if (global.isArray(this.target)) {
-      if (global.isFunction(callback)) {
-        this.target = thisArg ? this.target.filter(callback, thisArg) : this.target.filter(callback);
+  filter(...args): any {
+    this.target = this.target.filter(...args);
 
-        return this;
-      } else {
-        global.setError(`"${callback}" must be a function`);
-      }
-    } else {
-      global.setError(`"${this.target}" must be a array`);
-    }
+    return this;
   },
 
   addItem(item: any, position?: boolean): IT {

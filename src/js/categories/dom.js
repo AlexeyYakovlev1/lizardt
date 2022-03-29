@@ -321,11 +321,11 @@ var domCategory = {
                 return this;
             }
             else {
-                index_1.default.setError("The element \"".concat(el, "\" must have a \"FORM\" nodeName"));
+                index_1.default.setError("\"".concat(el, "\" not form"));
             }
         }
         else {
-            index_1.default.setError("Item \"".concat(el, "\" must be HTMLFormElement"));
+            index_1.default.setError("\"".concat(el, "\" must be an element"));
         }
     },
     hasElement: function (element) {
@@ -385,7 +385,7 @@ var domCategory = {
                     }
                 }
                 else {
-                    index_1.default.setError("type \"".concat(selector, "\" is not a string"));
+                    index_1.default.setError("\"".concat(selector, "\" is not a string"));
                 }
             });
             return names_1.every(function (name) { return name; });

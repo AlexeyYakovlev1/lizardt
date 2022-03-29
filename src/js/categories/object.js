@@ -44,7 +44,7 @@ var objectCategory = {
                 if (index_1.default.isArray(item)) {
                     var done = item["every"](function (el) { return index_1.default.isObject(el); });
                     if (!done) {
-                        index_1.default.setError("In array: ".concat(item, " all elements must be object"));
+                        index_1.default.setError("In array: \"".concat(item, "\" all elements must be object"));
                     }
                     item["forEach"](function (obj) { return Object.keys(obj).forEach(function (key) { return _this.target[key] = obj[key]; }); });
                 }

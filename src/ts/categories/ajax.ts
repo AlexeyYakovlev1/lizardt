@@ -10,7 +10,7 @@ const ajaxCategory: IAjaxCategory = {
     if (global.isPromise(this)) {
       return this.then(callback);
     } else {
-      global.setError(`"${this}" should be a promise`);
+      global.setError(`"${this}"should be a promise`);
     }
   },
 
@@ -18,7 +18,7 @@ const ajaxCategory: IAjaxCategory = {
     if (global.isPromise(this)) {
       return this.catch(callback);
     } else {
-      global.setError(`"${this}" should be a promise`);
+      global.setError(`"${this}"should be a promise`);
     }
   },
 
@@ -30,7 +30,7 @@ const ajaxCategory: IAjaxCategory = {
 
       return fetch(url, data);
     } else {
-      global.setError(`"${url}" is not a string`);
+      global.setError(`"${url}"is not a string`);
     }
   },
 

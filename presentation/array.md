@@ -99,9 +99,10 @@ lizardt object
 t([1,2,3,4,5]).filter(num => num % 2 === 0).target;
 
 // [{ name: "A3", age: 18 }]
-t([{ name: "A1", age: 15 }, { name: "A2", age: 12 }, { name: "A3", age: 18 }]).filter(({ age }) => {
-  return age >= 18;
-}).target;
+t([{ name: "A1", age: 15 }, { name: "A2", age: 12 }, { name: "A3", age: 18 }])
+  .filter(({ age }) => {
+    return age >= 18;
+  }).target;
 ```
 
 ### ```groupBy()```:

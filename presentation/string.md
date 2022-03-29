@@ -135,3 +135,37 @@ lizardt object
 // "!dlrow ,olleH"
 console.log(t("Hello, world!").reverse().target);
 ```
+
+### ```onlyNumbers()```:
+- **Description**
+Checks if a string contains only numbers
+- **Return**
+Boolean
+- **Example**
+```Javascript
+// true
+console.log(t("412 332").onlyNumbers());
+// true
+console.log(t("412").onlyNumbers());
+// false
+console.log(t("41s2").onlyNumbers());
+// false
+console.log(t("2dD412").onlyNumbers());
+```
+
+### ```onlyLetters()```:
+- **Description**
+Checks if a string contains only letters
+- **Return**
+Boolean
+- **Example**
+```Javascript
+// true
+console.log(t("Hello").onlyLetters());
+// false
+console.log(t("Hello.").onlyLetters());
+// true
+console.log(t("Lizard t").onlyLetters());
+// false
+console.log(t("32322").onlyLetters());
+```

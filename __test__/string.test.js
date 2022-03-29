@@ -8,7 +8,9 @@ import {
   isDate,
   replaceFound,
   isEmpty,
-  reverse
+  reverse,
+  onlyNumbers,
+  onlyLetters
 } from "../src/js/categories/string";
 
 // isEmpty
@@ -185,4 +187,27 @@ test("Перевернуть строку", () => {
   ];
 
   tests.map(({ target, toBe }) => expect(reverse.call({ target })).toStrictEqual({ target: toBe }));
+});
+
+// onlyNumbers
+test("Только цифры", () => {
+  const tests = [
+    { target: "wwww2", toBe: "toBeFalsy" },
+    { target: "321", toBe: "toBeTruthy" },
+    { target: "32d1", toBe: "toBeFalsy" },
+  ];
+
+  tests.map(({ target, toBe }) => expect(onlyNumbers.call({ target })[toBe]));
+});
+
+// onlyLetters
+test("Только буквы", () => {
+  const tests = [
+    { target: "dddwa3", toBe: "toBeFalsy" },
+    { target: "Hello", toBe: "toBeTruthy" },
+    { target: "32d1", toBe: "toBeFalsy" },
+    { target: "Hello, wa", toBe: "toBeFalsy" },
+  ];
+
+  tests.map(({ target, toBe }) => expect(onlyLetters.call({ target })[toBe]));
 });

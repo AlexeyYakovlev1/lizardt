@@ -26,6 +26,7 @@ var arrayCategory = {
         }
         else {
             index_1.default.setError("\"".concat(this.target, "\" is not a array"));
+            ;
         }
     },
     slice: function () {
@@ -40,6 +41,7 @@ var arrayCategory = {
         }
         else {
             index_1.default.setError("\"".concat(this.target, "\" is not a array"));
+            ;
         }
     },
     splice: function () {
@@ -54,6 +56,7 @@ var arrayCategory = {
         }
         else {
             index_1.default.setError("\"".concat(this.target, "\" is not a array"));
+            ;
         }
     },
     groupBy: function (callback, cat) {
@@ -92,6 +95,7 @@ var arrayCategory = {
         }
         else {
             index_1.default.setError("\"".concat(this.target, "\" is not a array"));
+            ;
         }
     },
     removeItem: function (num, val) {
@@ -101,6 +105,7 @@ var arrayCategory = {
         }
         else {
             index_1.default.setError("\"".concat(this.target, "\" is not a array"));
+            ;
         }
     },
     center: function () {
@@ -150,7 +155,7 @@ var arrayCategory = {
     },
     index: function (num) {
         if (!index_1.default.isNumber(num)) {
-            index_1.default.setError("Invalid value num: \"".concat(num, "\""));
+            index_1.default.setError("Invalid value num: ".concat(num));
         }
         if (index_1.default.checkList(this.target) || index_1.default.isString(this.target)) {
             var el = this.target[num];
@@ -163,19 +168,14 @@ var arrayCategory = {
             index_1.default.setError("\"".concat(this.target, "\" must be a array, string, HTMLCollection or NodeList"));
         }
     },
-    filter: function (callback, thisArg) {
-        if (index_1.default.isArray(this.target)) {
-            if (index_1.default.isFunction(callback)) {
-                this.target = thisArg ? this.target.filter(callback, thisArg) : this.target.filter(callback);
-                return this;
-            }
-            else {
-                index_1.default.setError("\"".concat(callback, "\" must be a function"));
-            }
+    filter: function () {
+        var _a;
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
         }
-        else {
-            index_1.default.setError("\"".concat(this.target, "\" must be a array"));
-        }
+        this.target = (_a = this.target).filter.apply(_a, args);
+        return this;
     },
     addItem: function (item, position) {
         if (index_1.default.isArray(this.target)) {

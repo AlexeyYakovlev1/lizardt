@@ -324,10 +324,10 @@ const domCategory: IDomCategory = {
 
         return this;
       } else {
-        global.setError(`The element "${el}" must have a "FORM" nodeName`);
+        global.setError(`"${el}" not form`);
       }
     } else {
-      global.setError(`Item "${el}" must be HTMLFormElement`);
+      global.setError(`"${el}" must be an element`);
     }
   },
 
@@ -375,7 +375,7 @@ const domCategory: IDomCategory = {
       const names: Array<boolean> = [];
 
       if (!args.length) {
-        global.setError(`Selectors array must be filled`);
+        global.setError("Selectors array must be filled");
       }
 
       args.forEach(selector => {
@@ -391,7 +391,7 @@ const domCategory: IDomCategory = {
               break;
           }
         } else {
-          global.setError(`type "${selector}" is not a string`);
+          global.setError(`"${selector}" is not a string`);
         }
       })
 

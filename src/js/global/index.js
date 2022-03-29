@@ -140,7 +140,7 @@ var global = {
                 return res ? res.index : -1;
             }
             else {
-                global.setError("\"".concat(findItem, "\" not a string"));
+                global.setError("\"".concat(findItem, "\" is not a string"));
             }
         }
         if (global.isArray(this.target)) {

@@ -143,7 +143,7 @@ var generalCategory = {
         if (!index_3.default.checkList(item) && !index_3.default.isString(item) &&
             !index_3.default.isObject(item) && !index_3.default.isElement(item) &&
             !index_3.default.isNumber(item))
-            index_3.default.setError("\n\t\t\t\tSupported only: Array, String, NodeList, Object, html element, number, but not \"".concat(typeof item, "\"\n\t\t\t"));
+            index_3.default.setError("The element type must be one of the following: array, string, nodeList, object, HTML element or number, but resulting type: \"".concat(typeof item, "\""));
         // Проверка на массив
         if (index_3.default.isArray(item))
             return item["length"];

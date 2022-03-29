@@ -8,7 +8,7 @@ var ajaxCategory = {
             return this.then(callback);
         }
         else {
-            index_1.default.setError("\"".concat(this, "\" should be a promise"));
+            index_1.default.setError("\"".concat(this, "\"should be a promise"));
         }
     },
     failure: function (callback) {
@@ -16,7 +16,7 @@ var ajaxCategory = {
             return this.catch(callback);
         }
         else {
-            index_1.default.setError("\"".concat(this, "\" should be a promise"));
+            index_1.default.setError("\"".concat(this, "\"should be a promise"));
         }
     },
     ajax: function (url, options) {
@@ -26,7 +26,7 @@ var ajaxCategory = {
             return fetch(url, data);
         }
         else {
-            index_1.default.setError("\"".concat(url, "\" is not a string"));
+            index_1.default.setError("\"".concat(url, "\"is not a string"));
         }
     },
     allComplete: function () {

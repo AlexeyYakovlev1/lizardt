@@ -151,7 +151,7 @@ const global: IGlobal = {
 
         return res ? res.index : -1;
       } else {
-        global.setError(`"${findItem}" not a string`);
+        global.setError(`"${findItem}" is not a string`);
       }
     }
 

@@ -16,9 +16,9 @@ const stringCategory: IStringCategory = {
         return str["every"](string => this.target.includes(string));
       }
 
-      global.setError(`"${str}" not a string or an array`);
+      global.setError(`"${str}" is not a string or an array`);
     } else {
-      global.setError(`"${this.target}" not a string`);
+      global.setError(`"${this.target}" is not a string`);
     }
   },
 
@@ -29,10 +29,10 @@ const stringCategory: IStringCategory = {
 
         return regexp.test(this.target);
       } else {
-        global.setError(`"${str}" not a string`);
+        global.setError(`"${str}" is not a string`);
       }
     } else {
-      global.setError(`"${this.target}" not a string`);
+      global.setError(`"${this.target}" is not a string`);
     }
   },
 
@@ -43,10 +43,10 @@ const stringCategory: IStringCategory = {
 
         return regexp.test(this.target);
       } else {
-        global.setError(`"${str}" not a string`);
+        global.setError(`"${str}" is not a string`);
       }
     } else {
-      global.setError(`"${this.target}" not a string`);
+      global.setError(`"${this.target}" is not a string`);
     }
   },
 
@@ -54,7 +54,7 @@ const stringCategory: IStringCategory = {
     if (global.isString(this.target)) {
       return /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/.test(this.target);
     } else {
-      global.setError(`"${this.target}" not a string`);
+      global.setError(`"${this.target}" is not a string`);
     }
   },
 
@@ -62,7 +62,7 @@ const stringCategory: IStringCategory = {
     if (global.isString(this.target)) {
       return /\d+/.test(this.target);
     } else {
-      global.setError(`"${this.target}" not a string`);
+      global.setError(`"${this.target}" is not a string`);
     }
   },
 
@@ -72,10 +72,10 @@ const stringCategory: IStringCategory = {
         const regexp = new RegExp(`(\\d{2}\\${symbol}){2}\\d{4}`);
         return regexp.test(this.target);
       } else {
-        global.setError(`"${symbol}" not a string`);
+        global.setError(`"${symbol}" is not a string`);
       }
     } else {
-      global.setError(`"${this.target}" not a string`);
+      global.setError(`"${this.target}" is not a string`);
     }
   },
 
@@ -100,10 +100,26 @@ const stringCategory: IStringCategory = {
           global.setError("The number of search elements does not match with those to be replaced");
         }
       } else {
-        global.setError(`"${findItems}" and "${replaceValues}" must be a array`);
+        global.setError("All arguments must be an array");
       }
     } else {
-      global.setError(`"${this.target}" not a string`);
+      global.setError(`"${this.target}" is not a string`);
+    }
+  },
+
+  onlyNumbers(): boolean {
+    if (global.isString(this.target)) {
+      return /^[\d|\s]+$/i.test(this.target);
+    } else {
+      global.setError(`"${this.target}" is not a string`);
+    }
+  },
+
+  onlyLetters(): boolean {
+    if (global.isString(this.target)) {
+      return /^[a-z|а-я|\s]+$/i.test(this.target);
+    } else {
+      global.setError(`"${this.target}" is not a string`);
     }
   },
 

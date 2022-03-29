@@ -21,10 +21,10 @@ var stringCategory = {
             if (index_1.default.isArray(str) && str["every"](function (item) { return index_1.default.isString(item); })) {
                 return str["every"](function (string) { return _this.target.includes(string); });
             }
-            index_1.default.setError("\"".concat(str, "\" not a string or an array"));
+            index_1.default.setError("\"".concat(str, "\" is not a string or an array"));
         }
         else {
-            index_1.default.setError("\"".concat(this.target, "\" not a string"));
+            index_1.default.setError("\"".concat(this.target, "\" is not a string"));
         }
     },
     beginWith: function (str, ignoreRegister) {
@@ -34,11 +34,11 @@ var stringCategory = {
                 return regexp.test(this.target);
             }
             else {
-                index_1.default.setError("\"".concat(str, "\" not a string"));
+                index_1.default.setError("\"".concat(str, "\" is not a string"));
             }
         }
         else {
-            index_1.default.setError("\"".concat(this.target, "\" not a string"));
+            index_1.default.setError("\"".concat(this.target, "\" is not a string"));
         }
     },
     endWith: function (str, ignoreRegister) {
@@ -48,11 +48,11 @@ var stringCategory = {
                 return regexp.test(this.target);
             }
             else {
-                index_1.default.setError("\"".concat(str, "\" not a string"));
+                index_1.default.setError("\"".concat(str, "\" is not a string"));
             }
         }
         else {
-            index_1.default.setError("\"".concat(this.target, "\" not a string"));
+            index_1.default.setError("\"".concat(this.target, "\" is not a string"));
         }
     },
     isEmail: function () {
@@ -60,7 +60,7 @@ var stringCategory = {
             return /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/.test(this.target);
         }
         else {
-            index_1.default.setError("\"".concat(this.target, "\" not a string"));
+            index_1.default.setError("\"".concat(this.target, "\" is not a string"));
         }
     },
     hasNumbers: function () {
@@ -68,7 +68,7 @@ var stringCategory = {
             return /\d+/.test(this.target);
         }
         else {
-            index_1.default.setError("\"".concat(this.target, "\" not a string"));
+            index_1.default.setError("\"".concat(this.target, "\" is not a string"));
         }
     },
     isDate: function (symbol) {
@@ -78,11 +78,11 @@ var stringCategory = {
                 return regexp.test(this.target);
             }
             else {
-                index_1.default.setError("\"".concat(symbol, "\" not a string"));
+                index_1.default.setError("\"".concat(symbol, "\" is not a string"));
             }
         }
         else {
-            index_1.default.setError("\"".concat(this.target, "\" not a string"));
+            index_1.default.setError("\"".concat(this.target, "\" is not a string"));
         }
     },
     replaceFound: function (findItems, replaceValues) {
@@ -107,11 +107,27 @@ var stringCategory = {
                 }
             }
             else {
-                index_1.default.setError("\"".concat(findItems, "\" and \"").concat(replaceValues, "\" must be a array"));
+                index_1.default.setError("All arguments must be an array");
             }
         }
         else {
-            index_1.default.setError("\"".concat(this.target, "\" not a string"));
+            index_1.default.setError("\"".concat(this.target, "\" is not a string"));
+        }
+    },
+    onlyNumbers: function () {
+        if (index_1.default.isString(this.target)) {
+            return /^[\d|\s]+$/i.test(this.target);
+        }
+        else {
+            index_1.default.setError("\"".concat(this.target, "\" is not a string"));
+        }
+    },
+    onlyLetters: function () {
+        if (index_1.default.isString(this.target)) {
+            return /^[a-z|а-я|\s]+$/i.test(this.target);
+        }
+        else {
+            index_1.default.setError("\"".concat(this.target, "\" is not a string"));
         }
     },
     indexOf: index_1.default.indexOf,

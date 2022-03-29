@@ -51,7 +51,7 @@ const objectCategory: IObjectCategory = {
           const done = item["every"](el => global.isObject(el));
 
           if (!done) {
-            global.setError(`In array: ${item} all elements must be object`);
+            global.setError(`In array: "${item}" all elements must be object`);
           }
 
           item["forEach"](obj => Object.keys(obj).forEach(key => this.target[key] = obj[key]));

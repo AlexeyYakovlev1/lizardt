@@ -147,9 +147,7 @@ const generalCategory: IGeneralCategory = {
       !global.isObject(item) && !global.isElement(item) &&
       !global.isNumber(item)
     )
-      global.setError(`
-				Supported only: Array, String, NodeList, Object, html element, number, but not "${typeof item}"
-			`);
+      global.setError(`The element type must be one of the following: array, string, nodeList, object, HTML element or number, but resulting type: "${typeof item}"`);
 
     // Проверка на массив
     if (global.isArray(item)) return item["length"];
