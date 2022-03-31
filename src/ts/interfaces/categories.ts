@@ -45,7 +45,7 @@ export interface IArrayCategory {
   onlyTruthy(): IT;
   onlyFalsy(): IT;
   randomItem(): IT;
-  wrapInAnArray(number:number): any[];
+  wrapInAnArray(number: number): any[];
 }
 
 // Ajax
@@ -59,7 +59,7 @@ export interface IAjaxCategory {
 // DOM
 export interface IDomCategory {
   clearSelectors(): IT;
-  clearOfChilds(): IT;
+  clearOfChildren(): IT;
   styles(stylesObj: object): IT;
   on(event: string, callback: () => any, options?: object): void;
   getAttributes(attribute?: string): IT;
@@ -88,6 +88,7 @@ export interface IDomCategory {
   hasParent(selector: string | Element): boolean;
   onRemove(event: string, callback: () => any, options?: object, useCapture?: boolean): void;
   addHTML(html: string): IT;
+  setHTML(html: string): IT;
   isChecked(): boolean;
   show(): IT;
   hide(): IT;

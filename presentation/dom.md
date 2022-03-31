@@ -48,7 +48,7 @@ undefined
 - **Example**
 ```Javascript
 t("[button]").on("click", () =>  {
-	console.log("Hello");
+  console.log("Hello");
 });
 ```
 
@@ -214,7 +214,7 @@ Gets all the parents of an element, including itself. When we use **num** the pa
 - **Arguments**
   - Num **(optional)**
 - **Return**
-List of parents
+List of parents or html element
 - **Example**
 ```Javascript
 t("[.wrapper]").getAllParents(); // [HtmlElement, ...]
@@ -511,7 +511,7 @@ t("[.title]").getParent("document").target;
 
 ### ```addHTML()```:
 - **Description**
-Sets html markup
+Adds html markup to an element
 - **Arguments**
   - Html string **(required)**
 - **Return**
@@ -521,9 +521,29 @@ lizardt object
 /*
   <body>
     <div>Hello, lizard!</div>
+    <h1 class="title">Hello, lizard!</h1>
   </body>
 */
-t("[body]").addHTML("<div>Hello, lizard!</div>"); // Now body has a .wrapper block
+t("[body]").addHTML("<div>Hello, lizard!</div>");
+t("[body]").addHTML("<h1 class='title'>Hello, lizard!</h1>");
+```
+
+### ```setHTML()```:
+- **Description**
+Sets new html markup to an element
+- **Arguments**
+  - Html string **(required)**
+- **Return**
+lizardt object
+- **Example**
+```Javascript
+/*
+  <body>
+    <h1 class="title">Hello, lizard!</h1>
+  </body>
+*/
+t("[body]").addHTML("<div>Hello, lizard!</div>");
+t("[body]").addHTML("<h1 class='title'>Hello, lizard!</h1>");
 ```
 
 ### ```isChecked()```:
@@ -564,14 +584,14 @@ const target = t("[.target]").target;
 t(btn).on("click", () => t(target).hide());
 ```
 
-### ```clearOfChilds()```:
+### ```clearOfChildren()```:
 - **Description**
-Removes child elements
+Removes children from an element
 - **Return**
 lizardt object
 - **Example**
 ```Javascript
-t("[.list]").clearOfChilds();
+t("[.list]").clearOfChildren();
 ```
 
 ### ```clearSelectors()```:

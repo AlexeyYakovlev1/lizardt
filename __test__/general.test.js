@@ -27,6 +27,11 @@ test("Сравнение двух элементов", () => {
     { args: [null, null], toBe: "toBeTruthy" },
     { args: [NaN, null], toBe: "toBeFalsy" },
     { args: [NaN, Symbol(13)], toBe: "toBeFalsy" },
+    { args: [undefined, "undefined"], toBe: "toBeFalsy" },
+    { args: [undefined, undefined], toBe: "toBeTruthy" },
+    { args: [undefined, NaN], toBe: "toBeFalsy" },
+    { args: [undefined, 2], toBe: "toBeFalsy" },
+    { args: [undefined, BigInt(231)], toBe: "toBeFalsy" },
   ];
 
   tests.map(({ args, toBe }) => expect(compare(...args))[toBe]());

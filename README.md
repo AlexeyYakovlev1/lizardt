@@ -5,8 +5,6 @@ This library is designed to work quickly and easily with DOM and JavaScript in j
 Requires [Node.js](https://nodejs.org/) to run.
 
 ```sh
-cd ./project
-
 npm install lizardt --save-dev
 ```
 

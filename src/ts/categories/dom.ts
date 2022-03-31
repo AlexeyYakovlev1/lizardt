@@ -420,6 +420,20 @@ const domCategory: IDomCategory = {
   addHTML(html: string): IT {
     if (global.isElement(this.target)) {
       if (global.isString(html)) {
+        this.target.innerHTML += html;
+
+        return this;
+      } else {
+        global.setError(`"${html}" must be a string`);
+      }
+    } else {
+      global.setError(`"${this.target}" is not a HTML element`);
+    }
+  },
+
+  setHTML(html: string): IT {
+    if (global.isElement(this.target)) {
+      if (global.isString(html)) {
         this.target.innerHTML = html;
 
         return this;
@@ -472,7 +486,7 @@ const domCategory: IDomCategory = {
     }
   },
 
-  clearOfChilds(): IT {
+  clearOfChildren(): IT {
     if (global.isElement(this.target)) {
       this.target.innerHTML = "";
       return this;

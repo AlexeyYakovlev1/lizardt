@@ -13,8 +13,8 @@ import {
   contains, hasParent, getAllParents,
   createElement, getParent,
   addHTML, isChecked, toggle, show,
-  hide, clearOfChilds, clearSelectors,
-  value, isEmpty
+  hide, clearOfChildren, clearSelectors,
+  value, isEmpty, setHTML
 } from "../src/js/categories/dom";
 
 // isEmpty
@@ -653,32 +653,23 @@ test("Получает родителя элемента", () => {
 });
 
 // addHTML
-test("Установка HTML разметки в тег", () => {
+test("Добавление HTML разметки в тег", () => {
   const block = createElement({ tag: "div" });
-  const tests = [
-    {
-      target: block,
-      args: ["<div class='wrapper'>Hello, all!</div>"],
-      toBe: "<div class=\"wrapper\">Hello, all!</div>",
-      getInnerHTML() {
-        return block.innerHTML;
-      }
-    },
-    {
-      target: block,
-      args: [`<div class='wrapper'><h1 class='title'>Title</h1></div>`],
-      toBe: `<div class=\"wrapper\"><h1 class=\"title\">Title</h1></div>`,
-      getInnerHTML() {
-        return block.innerHTML;
-      }
-    },
-  ];
 
-  tests.map(({ toBe, target, args, getInnerHTML }) => {
-    addHTML.call({ target }, ...args);
+  addHTML.call({ target: block }, "<h1>Hello</h1>");
+  addHTML.call({ target: block }, "<h1>Hello</h1>");
 
-    expect(getInnerHTML()).toStrictEqual(toBe);
-  });
+  expect(block.innerHTML).toStrictEqual(`<h1>Hello</h1><h1>Hello</h1>`);
+});
+
+// setHTML
+test("Установка новой HTML разметки в тег", () => {
+  const block = createElement({ tag: "div" });
+
+  block.innerHTML = "<h1>Hello!</h1>";
+  setHTML.call({ target: block }, "");
+
+  expect(block.innerHTML).toStrictEqual("");
 });
 
 // isCheked
@@ -768,14 +759,14 @@ test("Скрытие элемента на странице", () => {
   });
 });
 
-// clearOfChilds
+// clearOfChildren
 test("Удаляет все дочерние элементы из родительского", () => {
   document.body.innerHTML = `<ul class="list">
     <li></li>
     <li></li>
   </ul>`;
   const list = document.querySelector(".list");
-  expect(clearOfChilds.call({ target: list }).target.children.length).toStrictEqual(0);
+  expect(clearOfChildren.call({ target: list }).target.children.length).toStrictEqual(0);
 })
 
 // clearSelectors
