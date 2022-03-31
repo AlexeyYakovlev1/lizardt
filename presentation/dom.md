@@ -542,8 +542,8 @@ lizardt object
     <h1 class="title">Hello, lizard!</h1>
   </body>
 */
-t("[body]").addHTML("<div>Hello, lizard!</div>");
-t("[body]").addHTML("<h1 class='title'>Hello, lizard!</h1>");
+t("[body]").setHTML("<div>Hello, lizard!</div>");
+t("[body]").setHTML("<h1 class='title'>Hello, lizard!</h1>");
 ```
 
 ### ```isChecked()```:
