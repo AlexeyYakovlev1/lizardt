@@ -2,7 +2,7 @@ const { src, dest, parallel, watch } = require("gulp");
 const ts = require("gulp-typescript");
 const webpack = require("webpack-stream");
 const plumber = require("gulp-plumber");
-const uglify = require("gulp-uglify");
+const uglify = require("gulp-uglify-es").default;
 
 const tsProject = ts.createProject("./tsconfig.json");
 const paths = {
@@ -55,9 +55,7 @@ const typescript = () => {
 const js = () => {
   return src(paths.js.from)
     .pipe(plumber())
-    .pipe(webpack({
-      mode: "development",
-    }))
+    .pipe(webpack({ mode: "development" }))
     .pipe(uglify())
     .pipe(dest(paths.js.to));
 }
@@ -69,7 +67,8 @@ const watching = () => {
 
 const buildFunc = () => parallel(typescript, js);
 const defaultFunc = () => parallel(buildFunc(), watching);
+const funcBuildLibrary = () => parallel(buildLibrary, readme);
 
 exports.build = buildFunc();
 exports.default = defaultFunc();
-exports.buildLibrary = parallel(buildLibrary, readme);
+exports.buildLibrary = funcBuildLibrary();

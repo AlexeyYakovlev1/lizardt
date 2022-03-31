@@ -299,7 +299,7 @@ var arrayCategory = {
         }
     },
     wrapInAnArray: function (number) {
-        if (!Array.isArray(this.target))
+        if (!index_1.default.isArray(this.target))
             index_1.default.setError("Array must be array");
         if (!this.target.length)
             index_1.default.setError("Array length must be greater than 0");
