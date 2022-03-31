@@ -1,4 +1,4 @@
-#  About
+##  About
 This library is designed to work quickly and easily with DOM and JavaScript in js file.
 
 ##  Installation
