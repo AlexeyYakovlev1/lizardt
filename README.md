@@ -3,6 +3,11 @@
 </p>
 <h1 align="center">Lizardt JS library Documentation</h1>
 <h3 align="center">This library is designed to work quickly and easily with the DOM and JavaScript in a js file</h3>
+<p align="center">
+  <img alt="NPM" src="https://img.shields.io/npm/l/lizardt?color=green">
+  <img alt="NPM" src="https://packagephobia.com/badge?p=lizardt">
+  <img alt="npm" src="https://img.shields.io/npm/v/lizardt?color=green">
+</p>
 <br/>
 <br/>
 <br/>
@@ -22,6 +27,17 @@ import "lizardt";
 // window.t, window.createElement, ...
 console.log(t("231"));
 console.log(createElement({...}));
+```
+
+or
+
+```HTML
+<body>
+    <script src="./node_modules/lizardt/js/lizardt.js"></script>
+    <script>
+        console.log(t("hello, world").onlyLetters()); // false
+    </script>
+</body>
 ```
 
 ##  Methods
