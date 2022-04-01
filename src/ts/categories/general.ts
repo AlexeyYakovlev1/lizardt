@@ -7,6 +7,7 @@ import arrayCategory from "../categories/array";
 import domCategory from "../categories/dom";
 import objectCategory from "./object";
 import stringCategory from "./string";
+import functionCategory from "../categories/function";
 
 // Additional methods
 import filterMethods from "../filterMethods/index";
@@ -85,7 +86,7 @@ const generalCategory: IGeneralCategory = {
 
     return {
       target: trt ? trt : target,
-      ...filterMethods({ ...domCategory, ...arrayCategory, ...objectCategory, ...stringCategory }, ["createElement", "isArray", "isFunction", "isObject"]),
+      ...filterMethods({ ...domCategory, ...arrayCategory, ...objectCategory, ...stringCategory, ...functionCategory }, ["createElement", "scrollToElement"]),
       ...additions.getAdditions,
     }
   },

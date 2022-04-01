@@ -20,7 +20,7 @@ const lizardt: ILizardt = {
   ...filterMethods(
     { ...domCategory, ...arrayCategory, ...objectCategory, ...ajaxCategory },
     [],
-    ["createElement", "index", "scrollToElement", "allComplete", "ajax"]
+    ["createElement", "scrollToElement", "allComplete", "ajax"]
   ),
 };
 const ajaxMethods: Omit<IAjaxCategory, "ajax" | "allComplete"> = filterMethods(ajaxCategory, ["ajax"]);

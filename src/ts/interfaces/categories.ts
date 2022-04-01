@@ -150,3 +150,8 @@ export interface IObjectCategory {
   onlyTruthy(): IT;
   onlyFalsy(): IT;
 }
+
+// Function
+export interface IFunctionCategory {
+  context(ctx: any, call: boolean): () => any;
+}
