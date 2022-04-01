@@ -307,7 +307,7 @@ const arrayCategory: IArrayCategory = {
     }
   },
 
-  wrapInAnArray(number): any[] {
+  wrapInAnArray(number: number): Array<any> {
     if (!global.isArray(this.target))
       global.setError(`Array must be array`);
 

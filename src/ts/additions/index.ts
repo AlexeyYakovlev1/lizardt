@@ -5,6 +5,7 @@ import stringCategory from "../categories/string";
 import objectCategory from "../categories/object";
 import domCategory from "../categories/dom";
 import generalCategory from "../categories/general";
+import functionCategory from "../categories/function";
 
 // Global methods
 import global from "../global/index";
@@ -16,7 +17,10 @@ const allMethods: object = {
   ...objectCategory,
   ...numberCategory,
   ...stringCategory,
+  ...functionCategory
 }
+
+console.log(Object.keys(allMethods).length);
 
 export default {
   additions: {},

@@ -169,7 +169,7 @@ const generalCategory: IGeneralCategory = {
     }
   },
 
-  storage(action, name, data) {
+  storage(action: string, name?: string, data?: any): any {
     switch (action) {
       case "set":
         lizardt.store[name] = data;
