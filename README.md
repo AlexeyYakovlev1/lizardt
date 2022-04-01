@@ -1,5 +1,8 @@
-##  About
-This library is designed to work quickly and easily with DOM and JavaScript in js file.
+<p align="center">
+<img src="./icons/logo.svg" />
+</p>
+<h1 align="center">Lizardt JS library</h1>
+<h3 align="center">This library is designed to work quickly and easily with DOM and JavaScript in js file</h3>
 
 ##  Installation
 Requires [Node.js](https://nodejs.org/) to run.

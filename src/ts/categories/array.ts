@@ -236,7 +236,7 @@ const arrayCategory: IArrayCategory = {
       global.setError(`"${this.target}" must be array`);
     }
   },
-
+  // ┬┴┬┴┤( ͡° ͜ʖ├┬┴┬┴
   fillFull(item: any, amount: number): IT {
     if (global.isArray(this.target)) {
       if (global.isNumber(amount)) {
