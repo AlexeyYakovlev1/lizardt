@@ -176,7 +176,6 @@ console.log(t("2dD412").onlyNumbers());
 ```
 
 ### `onlyLetters()`:
-
 -   **Description**
     Checks if a string contains only letters
 -   **Return**
@@ -267,4 +266,34 @@ t("Hello'World").camelCase("'"); // helloWorld
 t("hello world").PascalCase(); // HelloWorld
 t("hello-World").PascalCase("-"); // HelloWorld
 t("Hello=World").PascalCase("="); // HelloWorld
+```
+
+### `lower()`:
+
+-   **Description**
+    Converts a string to lowercase
+-   **Return**
+    lizardt object
+-   **Example**
+
+```Javascript
+// lizard
+console.log(t("lizard").lower().target);
+// lizard
+console.log(t("LIZARd").lower().target);
+```
+
+### `upper()`:
+
+-   **Description**
+    Converts a string to uppercase    
+-   **Return**
+    lizardt object
+-   **Example**
+
+```Javascript
+// LIZARD
+console.log(t("LIZARD").upper().target);
+// LIZARD
+console.log(t("lizarD").upper().target);
 ```

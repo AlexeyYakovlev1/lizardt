@@ -20,8 +20,6 @@ const allMethods: object = {
   ...functionCategory
 }
 
-console.log(Object.keys(allMethods).length);
-
 export default {
   additions: {},
   set setAddition(options) {

@@ -3,7 +3,8 @@ import stringCategory, {
   endWith, isEmail, hasNumbers,
   isDate, replaceFound, isEmpty,
   reverse, onlyNumbers, onlyLetters,
-  snake_case, camelCase, PascalCase
+  snake_case, camelCase, PascalCase,
+  lower, upper
 } from "../src/js/categories/string";
 
 // isEmpty
@@ -249,4 +250,26 @@ test("Превращает строку pascal регистр", () => {
   ];
 
   tests.map(({ target, symbol, toBe }) => expect(PascalCase.call({ target }, symbol)).toStrictEqual(toBe));
+});
+
+// lower
+test("Привести к нижнему регистру", () => {
+  const tests = [
+    { target: "hello", toBe: "hello" },
+    { target: "helLO", toBe: "hello" },
+    { target: "hello, WoRlDD", toBe: "hello, worldd" },
+  ];
+
+  tests.map(({ target, toBe }) => expect(lower.call({ target })).toStrictEqual({ target: toBe }));
+});
+
+// upper
+test("Привести к верхнему регистру", () => {
+  const tests = [
+    { target: "hello", toBe: "HELLO" },
+    { target: "helLO", toBe: "HELLO" },
+    { target: "hello, WoRlDD", toBe: "HELLO, WORLDD" },
+  ];
+
+  tests.map(({ target, toBe }) => expect(upper.call({ target })).toStrictEqual({ target: toBe }));
 });

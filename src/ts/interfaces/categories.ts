@@ -19,6 +19,8 @@ export interface IStringCategory {
   "kebab-case"(symbol: string): string;
   camelCase(symbol?: string): string;
   PascalCase(symbol: string): string;
+  lower(): IT;
+  upper(): IT;
 }
 
 // Array
