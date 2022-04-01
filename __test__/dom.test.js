@@ -250,10 +250,10 @@ test("Добавляет html ребенка в блок", () => {
 
   const block = document.querySelector(".wrapper");
 
-  removeChild.call({ target: block }, block.querySelector("[title='Main title']"));
+  addChild.call({ target: block }, block.querySelector("[title='Main title']"));
   const child = Boolean(block.querySelector("[title='Main title']"));
 
-  expect(child).toStrictEqual(false);
+  expect(child).toStrictEqual(true);
 });
 
 // size

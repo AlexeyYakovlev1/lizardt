@@ -166,9 +166,13 @@ const arrayCategory: IArrayCategory = {
   },
 
   filter(...args): any {
-    this.target = this.target.filter(...args);
+    if (global.isArray(this.target)) {
+      this.target = this.target.filter(...args);
 
-    return this;
+      return this;
+    } else {
+      global.setError(`"${this.target}" must be array`);
+    }
   },
 
   addItem(item: any, position?: boolean): IT {

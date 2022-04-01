@@ -82,25 +82,15 @@ const stringCategory: IStringCategory = {
   replaceFound(findItems: Array<string>, replaceValues: Array<string>): IT {
     if (global.isString(this.target)) {
       if (([findItems, replaceValues].every(items => global.isArray(items)))) {
-        if (findItems.length === replaceValues.length) {
-          if ([...findItems, ...replaceValues].every(item => global.isString(item))) {
-            this.target = this.target.split("").map(letter => {
-              findItems.map((findLetter, index) => {
-                letter = findLetter === letter ? replaceValues[index] : letter;
-              });
+        this.target = this.target.split("").map(letter => {
+          findItems.map((findLetter, index) => letter = findLetter === letter ? replaceValues[index] : letter);
 
-              return letter;
-            }).join("");
+          return letter;
+        }).join("");
 
-            return this;
-          } else {
-            global.setError("The contents of arrays must be of type string");
-          }
-        } else {
-          global.setError("The number of search elements does not match with those to be replaced");
-        }
+        return this;
       } else {
-        global.setError("All arguments must be an array");
+        global.setError("All arguments must be an array and their lengths must match, also their elements must be a string");
       }
     } else {
       global.setError(`"${this.target}" is not a string`);
@@ -153,7 +143,6 @@ const stringCategory: IStringCategory = {
   upper(): IT {
     if (global.isString(this.target)) {
       this.target = this.target.toUpperCase();
-
       return this;
     } else {
       global.setError(`"${this.target}" must be a string`);

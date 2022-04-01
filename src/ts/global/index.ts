@@ -518,7 +518,7 @@ const global: IGlobal = {
       }
 
       return res;
-    } else global.setError(`Target must be a string`);
+    } else global.setError(`"${target}" must be a string`);
   }
 };
 

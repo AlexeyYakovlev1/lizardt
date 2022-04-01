@@ -198,19 +198,13 @@ const domCategory: IDomCategory = {
   addChild(child: HTMLElement | IElement | Array<any>): IT {
     if (global.isElement(this.target)) {
       // Object
-      if (global.isObject(child) && !global.isArray(child) && !global.isElement(child)) {
-        this.target.appendChild(this.target, child);
+      if (global.isObject(child)) {
+        this.target.appendChild(global.createElement.call(this, child));
       }
 
       // Array of objects and html elements
       if (global.isArray(child) && child["length"] && child["every"](obj => global.isObject(obj) || global.isElement(obj))) {
-        child["map"](element => {
-          if (!global.isElement(element)) {
-            this.target.appendChild(global.createElement(element));
-          } else {
-            this.target.appendChild(element);
-          }
-        });
+        child["map"](element => this.target.appendChild(!global.isElement(element) ? global.createElement(element) : element));
       }
 
       // Html element
@@ -239,11 +233,7 @@ const domCategory: IDomCategory = {
       // Array of html elements and selectors
       if (global.isArray(child) && child["length"] && child["every"](element => global.isElement(element) || (global.isString(element) && element["length"]))) {
         child["map"](element => {
-          if (global.isElement(element)) {
-            this.target.removeChild(element)
-          } else {
-            global.removeChild(this.target, element);
-          }
+          global.isElement(element) ? this.target.removeChild(element) : global.removeChild(this.target, element);
         });
       }
 
@@ -254,13 +244,21 @@ const domCategory: IDomCategory = {
   },
 
   addPrevElement(element: HTMLElement | IElement): IT {
-    global.addElementOnPos(this.target, element, "beforebegin");
-    return this;
+    if (global.isElement(this.target)) {
+      global.addElementOnPos(this.target, element, "beforebegin");
+      return this;
+    } else {
+      global.setError(`"${this.target}" is not a HTML element`);
+    }
   },
 
   addNextElement(element: HTMLElement | IElement): IT {
-    global.addElementOnPos(this.target, element, "afterend");
-    return this;
+    if (global.isElement(this.target)) {
+      global.addElementOnPos(this.target, element, "afterend");
+      return this;
+    } else {
+      global.setError(`"${this.target}" is not a HTML element`);
+    }
   },
 
   setAttribute(attributes: IAttribute): IT {
