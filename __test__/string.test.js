@@ -1,16 +1,9 @@
-import {
-  hasString,
-  indexOf,
-  beginWith,
-  endWith,
-  isEmail,
-  hasNumbers,
-  isDate,
-  replaceFound,
-  isEmpty,
-  reverse,
-  onlyNumbers,
-  onlyLetters
+import stringCategory, {
+  hasString, indexOf, beginWith,
+  endWith, isEmail, hasNumbers,
+  isDate, replaceFound, isEmpty,
+  reverse, onlyNumbers, onlyLetters,
+  snake_case, camelCase, PascalCase
 } from "../src/js/categories/string";
 
 // isEmpty
@@ -210,4 +203,50 @@ test("Только буквы", () => {
   ];
 
   tests.map(({ target, toBe }) => expect(onlyLetters.call({ target })[toBe]));
+});
+
+// snake_case
+test("Превращает строку в snake регистр", () => {
+  const tests = [
+    { target: "fooBar", symbol: "upper", toBe: "foo_bar" },
+    { target: "FOObAR", symbol: "lower", toBe: "foo_bar" },
+    { target: "qwer ty", symbol: "space", toBe: "qwer_ty" },
+    { target: "qwer-ty", symbol: "-", toBe: "qwer_ty" }
+  ];
+
+  tests.map(({ target, symbol, toBe }) => expect(snake_case.call({ target }, symbol)).toStrictEqual(toBe));
+});
+
+// kebab-case
+test("Превращает строку в kebab регистр", () => {
+  const tests = [
+    { target: "fooBar", symbol: "upper", toBe: "foo-bar" },
+    { target: "FOObAR", symbol: "lower", toBe: "foo-bar" },
+    { target: "qwer ty", symbol: "space", toBe: "qwer-ty" },
+    { target: "qwer-ty", symbol: "-", toBe: "qwer-ty" }
+  ];
+
+  tests.map(({ target, symbol, toBe }) => expect(stringCategory["kebab-case"].call({ target }, symbol)).toStrictEqual(toBe));
+});
+
+// camelCase
+test("Превращает строку camel регистр", () => {
+  const tests = [
+    { target: "hello`case", symbol: "`", toBe: "helloCase" },
+    { target: "hello~case", symbol: "~", toBe: "helloCase" },
+    { target: "hello case", toBe: "helloCase" }
+  ];
+
+  tests.map(({ target, symbol, toBe }) => expect(camelCase.call({ target }, symbol)).toStrictEqual(toBe));
+});
+
+// PascalCase
+test("Превращает строку pascal регистр", () => {
+  const tests = [
+    { target: "hello`case", symbol: "`", toBe: "HelloCase" },
+    { target: "hello~case", symbol: "~", toBe: "HelloCase" },
+    { target: "hello case", toBe: "HelloCase" }
+  ];
+
+  tests.map(({ target, symbol, toBe }) => expect(PascalCase.call({ target }, symbol)).toStrictEqual(toBe));
 });
