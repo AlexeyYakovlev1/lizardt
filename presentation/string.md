@@ -254,7 +254,7 @@ t("Hello'World").camelCase("'"); // helloWorld
 ### `PascalCase()`:
 
 -   **Description**
-    Converts a string to camelCase
+    Converts a string to PascalCase
 -   **Return**
     string
 -   **Arguments**
