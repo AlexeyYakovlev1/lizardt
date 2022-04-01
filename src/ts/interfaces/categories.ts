@@ -144,6 +144,7 @@ export interface INumberCategory {
 
 // Object
 export interface IObjectCategory {
+<<<<<<< HEAD
     hasProperty(property: string | Array<string>): boolean;
     keys(): IT;
     values(): IT;
@@ -153,4 +154,20 @@ export interface IObjectCategory {
     isEmpty(): boolean;
     onlyTruthy(): IT;
     onlyFalsy(): IT;
+=======
+  hasProperty(property: string | Array<string>): boolean;
+  keys(): IT;
+  values(): IT;
+  addProperty(item: object | Array<any>): IT;
+  removeProperty(key: string): IT;
+  merge(item: Array<any> | object): IT;
+  isEmpty(): boolean;
+  onlyTruthy(): IT;
+  onlyFalsy(): IT;
+}
+
+// Function
+export interface IFunctionCategory {
+  context(ctx: any, call: boolean): () => any;
+>>>>>>> ef73e9835c9e4714e5270f639004dd23ec15d8af
 }
