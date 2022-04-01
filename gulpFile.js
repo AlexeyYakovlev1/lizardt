@@ -18,10 +18,6 @@ const paths = {
     from: "./src/js/lizardt.js",
     to: "../build/js/"
   },
-  readme: {
-    from: "./README.md",
-    to: "../build/"
-  }
 }
 
 const buildLibrary = () => {
@@ -36,11 +32,6 @@ const buildLibrary = () => {
     }))
     .pipe(uglify())
     .pipe(dest(paths.build.to));
-}
-
-const readme = () => {
-  return src(paths.readme.from)
-    .pipe(dest(paths.readme.to));
 }
 
 const typescript = () => {
@@ -67,7 +58,7 @@ const watching = () => {
 
 const buildFunc = () => parallel(typescript, js);
 const defaultFunc = () => parallel(buildFunc(), watching);
-const funcBuildLibrary = () => parallel(buildLibrary, readme);
+const funcBuildLibrary = () => parallel(buildLibrary);
 
 exports.build = buildFunc();
 exports.default = defaultFunc();
