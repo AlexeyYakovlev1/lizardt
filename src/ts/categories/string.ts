@@ -81,7 +81,9 @@ const stringCategory: IStringCategory = {
 
   replaceFound(findItems: Array<string>, replaceValues: Array<string>): IT {
     if (global.isString(this.target)) {
-      if (([findItems, replaceValues].every(items => global.isArray(items)))) {
+      if (([findItems, replaceValues].every(items => global.isArray(items)))
+        && findItems.length === replaceValues.length
+        && [...findItems, ...replaceValues].every(item => global.isString(item))) {
         this.target = this.target.split("").map(letter => {
           findItems.map((findLetter, index) => letter = findLetter === letter ? replaceValues[index] : letter);
 

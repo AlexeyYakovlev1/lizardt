@@ -114,9 +114,11 @@ const global: IGlobal = {
       return true;
     } else if (items.some(item => item === undefined)) {
       return false;
-    } else if (items.every(item => ["bigint", "symbol"].includes(typeof item) || isNaN(item))) {
+    } else if (items.every(item => !global.isArray(item) && (["bigint", "symbol"].includes(typeof item) || isNaN(item)))) {
       return item1.toString() === item2.toString();
-    } else if (items.some(item => global.isElement(item)) || items.some(item => ["bigint", "symbol"].includes(typeof item) || isNaN(item))) {
+    } else if (items.every(item => global.isArray(item))) {
+      return JSON.stringify(item1.sort()) === JSON.stringify(item2.sort());
+    } else if (items.some(item => global.isElement(item)) || items.some(item => ["bigint", "symbol"].includes(typeof item) || isNaN(item)) || items.some(item => global.isArray(item))) {
       return false;
     } else {
       return JSON.stringify(item1) === JSON.stringify(item2);
