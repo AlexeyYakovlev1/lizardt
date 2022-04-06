@@ -37,7 +37,7 @@ export interface IArrayCategory {
   groupBy(callback: (el?, index?, array?) => any, cat?: string): IT;
   addItem(item: any, position?: boolean): IT;
   merge(item: Array<any> | object): IT;
-  sort(fromMore: boolean): IT;
+  sort(fromMore?: boolean): IT;
   uniques(): IT;
   slice(): IT;
   splice(): IT;
@@ -86,7 +86,7 @@ export interface IDomCategory {
   setAttribute(attributes: IAttribute): IT;
   removeAttribute(attribute: string | Array<string>): IT;
   createElement(options: IElement): HTMLElement;
-  data(isArray: boolean): IT;
+  data(isArray?: boolean): IT;
   hasElement(element: Element | Array<Element | string> | string): boolean;
   removeLastChild(): IT;
   removeFirstChild(): IT;
@@ -117,7 +117,7 @@ export interface IGeneralCategory {
   getPageInfo(): object;
   repeat(num: number, condition: (iteration: number) => boolean | null, callback: (iteration: number) => void): void;
   toString(item: any): string;
-  toNumber(item: any): number;
+  toNumber(item: string): number;
   isObject(item, callback?: () => any): any;
   isArray(item: any, callback?: () => any): any;
   isFunction(item: any, callback?: () => any): any;

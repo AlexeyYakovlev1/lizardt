@@ -8,6 +8,16 @@ test("Проверка на пустоту", () => {
   ];
 
   tests.map(({ target, toBe }) => expect(isEmpty.call({ target }))[toBe]());
+
+  // Error
+  const falsyTests = [
+    { target: undefined },
+    { target: NaN },
+    { target: null },
+    { target: 10 },
+  ];
+
+  falsyTests.map(({ target }) => expect(() => isEmpty.call({ target })).toThrowError());
 });
 
 // hasProperty
@@ -36,6 +46,16 @@ test("Проверка на наличие свойства", () => {
   ];
 
   tests.map(({ target, toBe, args }) => expect(hasProperty.call({ target }, ...args))[toBe]());
+
+  // Error
+  const falsyTests = [
+    { target: undefined },
+    { target: NaN },
+    { target: null },
+    { target: 10 },
+  ];
+
+  falsyTests.map(({ target }) => expect(() => hasProperty.call({ target })).toThrowError());
 });
 
 // keys
@@ -47,6 +67,16 @@ test("Вывод ключей в массиве", () => {
   ];
 
   tests.map(({ target, toBe }) => expect(keys.call({ target })).toStrictEqual({ target: toBe }));
+
+  // Error
+  const falsyTests = [
+    { target: undefined },
+    { target: NaN },
+    { target: null },
+    { target: 10 },
+  ];
+
+  falsyTests.map(({ target }) => expect(() => keys.call({ target })).toThrowError());
 });
 
 // values
@@ -58,14 +88,39 @@ test("Вывод значений в массиве", () => {
   ];
 
   tests.map(({ target, toBe }) => expect(values.call({ target })).toStrictEqual({ target: toBe }));
+
+  // Error
+  const falsyTests = [
+    { target: undefined },
+    { target: NaN },
+    { target: null },
+    { target: 10 },
+  ];
+
+  falsyTests.map(({ target }) => expect(() => values.call({ target })).toThrowError());
 });
 
 // addPropery
 test("Добавление свойства в объект", () => {
-  expect(addProperty.call({ target: {} }, { name: "Alexey", age: 17 }).target).toStrictEqual({ name: "Alexey", age: 17 });
-  expect(addProperty.call({ target: { name: "Alexey" } }, { age: 17 }).target).toStrictEqual({ name: 'Alexey', age: 17 });
-  expect(addProperty.call({ target: {} }, [{ name: "Alexey" }, { age: 17 }]).target).toStrictEqual({ name: 'Alexey', age: 17 });
-})
+  const tests = [
+    { target: {}, args: [{ name: "Alex" }], toBe: { name: "Alex" } },
+    { target: { age: 16 }, args: [{}], toBe: { age: 16 } },
+    { target: { age: 16, name: "Alex" }, args: [{ status: "Junior" }], toBe: { status: "Junior", age: 16, name: "Alex" } },
+  ];
+
+  tests.map(({ target, args, toBe }) => expect(addProperty.call({ target }, ...args)).toStrictEqual({ target: toBe }));
+
+  // Error
+  const falsyTests = [
+    { target: undefined, args: [] },
+    { target: NaN, args: [] },
+    { target: null, args: [] },
+    { target: 10, args: [] },
+    { target: {}, args: [null] },
+  ];
+
+  falsyTests.map(({ target, args }) => expect(() => addProperty.call({ target }, ...args)).toThrowError());
+});
 
 // merge
 test("Объединение объектов", () => {
@@ -83,6 +138,17 @@ test("Объединение объектов", () => {
   ];
 
   tests.map(({ target, args, toBe }) => expect(merge.call({ target }, ...args)).toStrictEqual({ target: toBe }));
+
+  // Error
+  const falsyTests = [
+    { target: undefined, args: [] },
+    { target: NaN, args: [] },
+    { target: null, args: [] },
+    { target: 10, args: [] },
+    { target: {}, args: [null] },
+  ];
+
+  falsyTests.map(({ target, args }) => expect(() => merge.call({ target }, ...args)).toThrowError());
 });
 
 // removeProperty
@@ -94,6 +160,17 @@ test("Удаление свойства", () => {
   ];
 
   tests.map(({ target, toBe, args }) => expect(removeProperty.call({ target }, ...args)).toStrictEqual({ target: toBe }));
+
+  // Error
+  const falsyTests = [
+    { target: undefined, args: [] },
+    { target: NaN, args: [] },
+    { target: null, args: [] },
+    { target: 10, args: [] },
+    { target: {}, args: [null] },
+  ];
+
+  falsyTests.map(({ target, args }) => expect(() => removeProperty.call({ target }, ...args)).toThrowError());
 });
 
 // onlyFalsy
@@ -104,6 +181,16 @@ test("Только ложные значения", () => {
   ];
 
   tests.map(({ target, toBe }) => expect(onlyFalsy.call({ target })).toStrictEqual({ target: toBe }));
+
+  // Error
+  const falsyTests = [
+    { target: undefined },
+    { target: NaN },
+    { target: null },
+    { target: 10 },
+  ];
+
+  falsyTests.map(({ target }) => expect(() => onlyFalsy.call({ target })).toThrowError());
 });
 
 // onlyTruthy
@@ -114,4 +201,14 @@ test("Только правдивые значения", () => {
   ];
 
   tests.map(({ target, toBe }) => expect(onlyTruthy.call({ target })).toStrictEqual({ target: toBe }));
+
+  // Error
+  const falsyTests = [
+    { target: undefined },
+    { target: NaN },
+    { target: null },
+    { target: 10 },
+  ];
+
+  falsyTests.map(({ target }) => expect(() => onlyTruthy.call({ target })).toThrowError());
 });

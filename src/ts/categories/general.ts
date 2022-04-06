@@ -50,7 +50,7 @@ const generalCategory: IGeneralCategory = {
 
       return options;
     } else {
-      global.setError(`"${options}" is not a object`);
+      global.setError(`"${options}" must be an object`);
     }
   },
 
@@ -133,7 +133,7 @@ const generalCategory: IGeneralCategory = {
     }
   },
 
-  toNumber(item: any): number {
+  toNumber(item: string): number {
     if (global.isString(item)) {
       return +item;
     } else {

@@ -1,11 +1,10 @@
 import {
   last, removeItem, center,
-  unfold, each,
-  hasItem, index, indexOf,
-  filter, groupBy, addItem,
-  merge, sort, uniques,
-  find, slice, splice,
-  findByIndexAndUpdate,
+  unfold, each, hasItem,
+  index, indexOf, filter,
+  groupBy, addItem, merge,
+  sort, uniques, find,
+  slice, splice, findByIndexAndUpdate,
   fillFull, reverse, findByIndexAndRemove,
   onlyFalsy, onlyTruthy, findByIndexAndUpdateProperty,
   wrapInAnArray
@@ -20,6 +19,15 @@ test("Поиск подходящего элемента", () => {
   ];
 
   tests.map(({ target, args, toBe }) => expect(find.call({ target }, ...args)).toStrictEqual({ target: toBe }));
+
+  // Error
+  const falsyTests = [
+    { target: [1, 2, 3, 4], args: ["string"] },
+    { target: {}, args: [] },
+    { target: 231, args: [] },
+  ];
+
+  falsyTests.map(({ target, args }) => expect(() => find.call({ target }, ...args)).toThrowError());
 });
 
 // slice
@@ -66,6 +74,15 @@ test("Вывод последнего элемента из массива", () 
   ];
 
   tests.map(({ target, toBe }) => expect(last.call({ target })).toStrictEqual({ target: toBe }));
+
+  // Error
+  const falsyTests = [
+    { target: {} },
+    { target: "{}" },
+    { target: 10 },
+  ];
+
+  falsyTests.map(({ target }) => expect(() => last.call({ target })).toThrowError());
 });
 
 // removeItem
@@ -80,6 +97,17 @@ test("Удаление элемента из массива", () => {
   tests.map(({ target, args, toBe }) => {
     expect(removeItem.call({ target }, ...args)).toStrictEqual(toBe);
   });
+
+  // Error
+  const falsyTests = [
+    { target: {}, args: [] },
+    { target: "{}", args: [] },
+    { target: 10, args: [] },
+    { target: [1, 2, 3], args: ["name"] },
+    { target: [332, 22], args: [() => { }] },
+  ];
+
+  falsyTests.map(({ target, args }) => expect(() => removeItem.call({ target }, ...args)).toThrowError());
 });
 
 // center
@@ -92,6 +120,15 @@ test("Вывод центрального элемента из массива",
   ];
 
   tests.map(({ target, toBe }) => expect(center.call({ target })).toStrictEqual({ target: toBe }));
+
+  // Error
+  const falsyTests = [
+    { target: {} },
+    { target: "{}" },
+    { target: 10 }
+  ];
+
+  falsyTests.map(({ target }) => expect(() => removeItem.call({ target })).toThrowError());
 });
 
 // unfold
@@ -100,6 +137,8 @@ test("Распаковка вложенного массива", () => {
     { target: [[1, 2, [3, 4, [5, 6, [7, 8]]]]], toBe: [1, 2, 3, 4, 5, 6, 7, 8] },
     { target: [[{ name: "Alex" }]], toBe: [{ name: "Alex" }] },
     { target: "", toBe: [] },
+    { target: null, toBe: [] },
+    { target: [document.body, [1, 2, document.body, [document.body]]], toBe: [document.body, 1, 2, document.body, document.body] },
   ];
 
   tests.map(({ target, toBe }) => expect(unfold.call({ target })).toStrictEqual({ target: toBe }));
@@ -127,6 +166,16 @@ test("Перебор массива", () => {
   ];
 
   tests.map(({ target, args, toBe }) => expect(each.call({ target }, ...args)).toStrictEqual(toBe));
+
+  // Error
+  const falsyTests = [
+    { target: {}, args: ["string"] },
+    { target: "{}", args: ["string"] },
+    { target: 10, args: ["string"] },
+    { target: [], args: [null] }
+  ];
+
+  falsyTests.map(({ target, args }) => expect(() => each.call({ target }, ...args)).toThrowError());
 });
 
 // hasItem
@@ -135,9 +184,22 @@ test("Проверка наличия элемента в массиве", () =>
     { target: [1, 2, 3, 4], toBe: "toBeTruthy", args: [2] },
     { target: [1, 2, 3, "Hello"], toBe: "toBeTruthy", args: ["Hello"] },
     { target: [1, 2, 3, 4], toBe: "toBeFalsy", args: [5] },
+    { target: [undefined, 2, 4, 1], toBe: "toBeTruthy", args: [undefined] },
+    { target: [undefined, 2, 4, 1, null], toBe: "toBeTruthy", args: [null] },
+    { target: [undefined, 2, 4, 1, NaN, null], toBe: "toBeTruthy", args: [NaN] },
+    { target: [undefined, 2, 4, 1, NaN, null], toBe: "toBeFalsy", args: [false] },
   ];
 
   tests.map(({ target, args, toBe }) => expect(hasItem.call({ target }, ...args))[toBe]());
+
+  // Error
+  const falsyTests = [
+    { target: {}, args: ["string"] },
+    { target: "{}", args: ["string"] },
+    { target: 10, args: ["string"] },
+  ];
+
+  falsyTests.map(({ target, args }) => expect(() => hasItem.call({ target }, ...args)).toThrowError());
 });
 
 // index
@@ -149,6 +211,18 @@ test("Проверка на вывод элемента по индексу", ()
   ];
 
   tests.map(({ target, toBe, args }) => expect(index.call({ target }, ...args)).toStrictEqual(toBe));
+
+  // Error
+  const falsyTests = [
+    { target: {}, args: ["string"] },
+    { target: "{}", args: ["string"] },
+    { target: 10, args: ["string"] },
+    { target: [10, 2, 4, 1], args: ["string"] },
+    { target: [10, 2, 4, 1], args: [null] },
+    { target: [10, 2, 4, 1], args: [undefined] },
+  ];
+
+  falsyTests.map(({ target, args }) => expect(() => index.call({ target }, ...args)).toThrowError());
 });
 
 // indexOf
@@ -179,9 +253,23 @@ test("Проверка на вывод индекса, если элемент �
       args: [{ name: "Alexandr", age: 18 }],
       toBe: 1
     },
+    {
+      target: ["Hello", { name: "Alexandr", age: 18 }, undefined],
+      args: [undefined],
+      toBe: 2
+    },
   ];
 
   tests.map(({ target, args, toBe }) => expect(indexOf.call({ target }, ...args)).toStrictEqual(toBe));
+
+  // Error
+  const falsyTests = [
+    { target: {}, args: ["string"] },
+    { target: document.body, args: ["string"] },
+    { target: 10, args: ["string"] },
+  ];
+
+  falsyTests.map(({ target, args }) => expect(() => indexOf.call({ target }, ...args)).toThrowError());
 });
 
 // filter
@@ -211,6 +299,17 @@ test("Проверка на фильтрацию массива", () => {
   ];
 
   tests.map(({ target, args, toBe }) => expect(filter.call({ target }, ...args)).toStrictEqual({ target: toBe }));
+
+  // Error
+  const falsyTests = [
+    { target: {}, args: ["string"] },
+    { target: document.body, args: ["string"] },
+    { target: 10, args: ["string"] },
+    { target: [10], args: [null] },
+    { target: [10], args: [undefined] },
+  ];
+
+  falsyTests.map(({ target, args }) => expect(() => filter.call({ target }, ...args)).toThrowError());
 });
 
 // groupBy
@@ -239,13 +338,38 @@ test("Сортирует массив по группам", () => {
   ];
 
   tests.map(({ target, args, toBe }) => expect(groupBy.call({ target }, ...args)).toStrictEqual({ target: toBe }));
+
+  // Error
+  const falsyTests = [
+    { target: {}, args: ["string"] },
+    { target: document.body, args: ["string"] },
+    { target: 10, args: ["string"] },
+    { target: [10], args: [null] },
+    { target: [10], args: [undefined] },
+  ];
+
+  falsyTests.map(({ target, args }) => expect(() => groupBy.call({ target }, ...args)).toThrowError());
 });
 
 // addItem
 test("Добавление элемента в массив", () => {
-  expect(addItem.call({ target: [1, 2, 3] }, "4").target[3]).toStrictEqual("4");
-  expect(addItem.call({ target: [1, 2, 3] }, "4", true).target[3]).toStrictEqual(3);
-})
+  const tests = [
+    { target: [1, 2, 3], args: ["4"], toBe: [1, 2, 3, "4"] },
+    { target: [1], args: ["4", true], toBe: ["4", 1] },
+    { target: [null, undefined, NaN], args: [false], toBe: [null, undefined, NaN, false] },
+  ];
+
+  tests.map(({ target, args, toBe }) => expect(addItem.call({ target }, ...args)).toStrictEqual({ target: toBe }));
+
+  // Error
+  const falsyTests = [
+    { target: {}, args: ["string"] },
+    { target: document.body, args: ["string"] },
+    { target: 10, args: ["string"] },
+  ];
+
+  falsyTests.map(({ target, args }) => expect(() => addItem.call({ target }, ...args)).toThrowError());
+});
 
 // merge
 test("Объединение массивов", () => {
@@ -263,6 +387,17 @@ test("Объединение массивов", () => {
   ];
 
   tests.map(({ target, args, toBe }) => expect(merge.call({ target }, ...args)).toStrictEqual({ target: toBe }));
+
+  // Error
+  const falsyTests = [
+    { target: "", args: [] },
+    { target: document.body, args: [] },
+    { target: 10, args: [] },
+    { target: [], args: [false, {}] },
+    { target: [], args: [[], false] },
+  ];
+
+  falsyTests.map(({ target, args }) => expect(() => merge.call({ target }, ...args)).toThrowError());
 });
 
 // sort
@@ -271,9 +406,19 @@ test("Сортировка массива", () => {
     { target: [3, 2, 1], args: [true], toBe: [3, 2, 1] },
     { target: [3, 2, 2, 4], args: [], toBe: [2, 2, 3, 4] },
     { target: [3], args: [true], toBe: [3] },
+    { target: [3, 2, 51, 2], args: ["string"], toBe: [2, 2, 3, 51] },
   ];
 
   tests.map(({ target, args, toBe }) => expect(sort.call({ target }, ...args)).toStrictEqual({ target: toBe }));
+
+  // Error
+  const falsyTests = [
+    { target: "", args: [] },
+    { target: document.body, args: [] },
+    { target: 10, args: [] },
+  ];
+
+  falsyTests.map(({ target, args }) => expect(() => sort.call({ target }, ...args)).toThrowError());
 });
 
 // uniques
@@ -290,6 +435,16 @@ test("Вывод уникальных элементов", () => {
   ];
 
   tests.map(({ target, toBe }) => expect(uniques.call({ target })).toStrictEqual({ target: toBe }));
+
+  // Error
+  const falsyTests = [
+    { target: "" },
+    { target: document.body },
+    { target: 10 },
+    { target: undefined }
+  ];
+
+  falsyTests.map(({ target }) => expect(() => uniques.call({ target })).toThrowError());
 });
 
 // findByIndexAndUpdate
@@ -301,6 +456,15 @@ test("Найти элемент по индексу и удалить", () => {
   ];
 
   tests.map(({ target, toBe, args }) => expect(findByIndexAndUpdate.call({ target }, ...args)).toStrictEqual({ target: toBe }));
+
+  // Error
+  const falsyTests = [
+    { target: "", args: [] },
+    { target: document.body, args: [] },
+    { target: 10, args: [] },
+  ];
+
+  falsyTests.map(({ target, args }) => expect(() => findByIndexAndUpdate.call({ target }, ...args)).toThrowError());
 });
 
 // fillFull
@@ -312,6 +476,15 @@ test("Заполнить весь массив полностью", () => {
   ];
 
   tests.map(({ target, toBe, args }) => expect(fillFull.call({ target }, ...args)).toStrictEqual({ target: toBe }));
+
+  // Error
+  const falsyTests = [
+    { target: "", args: [] },
+    { target: document.body, args: [] },
+    { target: 10, args: [] },
+  ];
+
+  falsyTests.map(({ target, args }) => expect(() => fillFull.call({ target }, ...args)).toThrowError());
 });
 
 // reverse
@@ -319,9 +492,19 @@ test("Перевернуть массив", () => {
   const tests = [
     { target: [1, 2, 3], toBe: [3, 2, 1] },
     { target: ["H", "e", "l", "l", "o"], toBe: ["o", "l", "l", "e", "H"] },
+    { target: 100, toBe: 1 }
   ];
 
   tests.map(({ target, toBe }) => expect(reverse.call({ target })).toStrictEqual({ target: toBe }));
+
+  // Error
+  const falsyTests = [
+    { target: null },
+    { target: document.body },
+    { target: undefined },
+  ];
+
+  falsyTests.map(({ target }) => expect(() => reverse.call({ target })).toThrowError());
 });
 
 // findByIndexAndRemove
@@ -332,6 +515,16 @@ test("Удалить элемент по индексу", () => {
   ];
 
   tests.map(({ target, toBe, args }) => expect(findByIndexAndRemove.call({ target }, ...args)).toStrictEqual({ target: toBe }));
+
+  // Error
+  const falsyTests = [
+    { target: "", args: [] },
+    { target: document.body, args: [] },
+    { target: 10, args: [] },
+    { target: [10], args: ["string", 24] }
+  ];
+
+  falsyTests.map(({ target, args }) => expect(() => findByIndexAndRemove.call({ target }, ...args)).toThrowError());
 });
 
 // onlyFalsy
@@ -342,6 +535,16 @@ test("Только ложные элементы", () => {
   ];
 
   tests.map(({ target, toBe }) => expect(onlyFalsy.call({ target })).toStrictEqual({ target: toBe }));
+
+  // Error
+  const falsyTests = [
+    { target: "" },
+    { target: document.body },
+    { target: 10 },
+    { target: null }
+  ];
+
+  falsyTests.map(({ target }) => expect(() => onlyFalsy.call({ target })).toThrowError());
 });
 
 // onlyTruthy
@@ -352,6 +555,16 @@ test("Только правдивые элементы", () => {
   ];
 
   tests.map(({ target, toBe }) => expect(onlyTruthy.call({ target })).toStrictEqual({ target: toBe }));
+
+  // Error
+  const falsyTests = [
+    { target: "" },
+    { target: document.body },
+    { target: 10 },
+    { target: null }
+  ];
+
+  falsyTests.map(({ target }) => expect(() => onlyTruthy.call({ target })).toThrowError());
 });
 
 // findByIndexAndUpdateProperty
@@ -363,20 +576,44 @@ test("Найти по индексу и обновить свойство", () =
   ];
 
   tests.map(({ target, args, toBe }) => expect(findByIndexAndUpdateProperty.call({ target }, ...args)).toStrictEqual({ target: toBe }));
+
+  // Error
+  const falsyTests = [
+    { target: "", args: [] },
+    { target: document.body, args: [] },
+    { target: 10, args: [] },
+    { target: [10], args: ["string", 24] },
+    { target: [10], args: [0, ["keu2", null]] },
+    { target: [10], args: [0, [null]] },
+  ];
+
+  falsyTests.map(({ target, args }) => expect(() => findByIndexAndUpdateProperty.call({ target }, ...args)).toThrowError());
 });
 
 // wrapInAnArray
 test("Оборачивает элементы в массив", () => {
   const tests = [
-    { target: [1,2,3,4], num: 3, toBe: [ [ 1 ], [ 2 ], [ 3 ], 4 ] },
-    { target: [1,2,3,4], num: 2, toBe: [ [ 1, 2 ], [ 3, 4 ] ] },
-    { target: [1,2,3,4], num: 1, toBe: [ [ 1, 2, 3, 4 ] ] },
-    { target: [1,2,3,4,5,6], num: 3, toBe: [ [ 1, 2 ], [ 3, 4 ], [ 5, 6 ] ] },
-    { target: [1,2,3,4,5,6], num: 2, toBe: [ [ 1, 2, 3 ], [ 4, 5, 6 ] ] },
-    { target: [1,2,3,4,5,6], num: 4, toBe: [ [ 1 ], [ 2 ], [ 3 ], [ 4 ], 5, 6 ] },
-    { target: [1,2,3,4,5,6,7,8], num: 4, toBe: [ [ 1, 2 ], [ 3, 4 ], [ 5, 6 ], [ 7, 8 ] ] },
-    { target: [1,2,3,4,5,6,7,8], toBe: [ [ 1,2,3,4,5,6,7,8 ] ] }
+    { target: [1, 2, 3, 4], num: 3, toBe: [[1], [2], [3], 4] },
+    { target: [1, 2, 3, 4], num: 2, toBe: [[1, 2], [3, 4]] },
+    { target: [1, 2, 3, 4], num: 1, toBe: [[1, 2, 3, 4]] },
+    { target: [1, 2, 3, 4, 5, 6], num: 3, toBe: [[1, 2], [3, 4], [5, 6]] },
+    { target: [1, 2, 3, 4, 5, 6], num: 2, toBe: [[1, 2, 3], [4, 5, 6]] },
+    { target: [1, 2, 3, 4, 5, 6], num: 4, toBe: [[1], [2], [3], [4], 5, 6] },
+    { target: [1, 2, 3, 4, 5, 6, 7, 8], num: 4, toBe: [[1, 2], [3, 4], [5, 6], [7, 8]] },
+    { target: [1, 2, 3, 4, 5, 6, 7, 8], toBe: [[1, 2, 3, 4, 5, 6, 7, 8]] }
   ];
 
-  tests.map(({ target, num, toBe }) => expect(wrapInAnArray.call({ target }, num || undefined)).toStrictEqual(toBe));
+  tests.map(({ target, num, toBe }) => expect(wrapInAnArray.call({ target }, num)).toStrictEqual(toBe));
+
+  // Error
+  const falsyTests = [
+    { target: null, args: [] },
+    { target: {}, args: [] },
+    { target: "", args: [] },
+    { target: undefined, args: [] },
+    { target: [], args: ["false"] },
+    { target: [], args: [NaN] },
+  ];
+
+  falsyTests.map(({ target, args }) => expect(() => wrapInAnArray.call({ target }, ...args)).toThrowError());
 });

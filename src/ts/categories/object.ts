@@ -16,7 +16,7 @@ const objectCategory: IObjectCategory = {
         return property["every"](prop => prop in this.target);
       }
     } else {
-      global.setError(`"${this.target}" is not an object`);
+      global.setError(`"${this.target}" must be an object`);
     }
   },
 
@@ -28,7 +28,7 @@ const objectCategory: IObjectCategory = {
 
       return this;
     } else {
-      global.setError(`"${this.target}" is not an object`);
+      global.setError(`"${this.target}" must be an object`);
     }
   },
 
@@ -40,7 +40,7 @@ const objectCategory: IObjectCategory = {
 
       return this;
     } else {
-      global.setError(`"${this.target}" is not an object`);
+      global.setError(`"${this.target}" must be an object`);
     }
   },
 
@@ -64,7 +64,7 @@ const objectCategory: IObjectCategory = {
         global.setError(`"${item}" must be object or array of object`);
       }
     } else {
-      global.setError(`"${this.target}" is not an object`);
+      global.setError(`"${this.target}" must be an object`);
     }
   },
 
@@ -78,7 +78,7 @@ const objectCategory: IObjectCategory = {
 
       return this;
     } else {
-      global.setError(`"${this.target}" is not an object`);
+      global.setError(`"${this.target}" must be an object`);
     }
   },
 

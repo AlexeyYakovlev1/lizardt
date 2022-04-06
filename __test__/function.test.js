@@ -8,4 +8,13 @@ test("Замена существующего контекста у функци
   ];
 
   tests.map(({ target, args, toBe }) => expect(context.call({ target }, ...args)).toStrictEqual(toBe));
+
+  // Error
+  const falsyTests = [
+    { target: {}, args: [] },
+    { target: "{}", args: [] },
+    { target: 0, args: [] },
+  ];
+
+  falsyTests.map(({ target, args }) => expect(() => context.call({ target }, ...args)).toThrowError());
 });

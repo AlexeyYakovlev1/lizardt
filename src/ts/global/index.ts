@@ -12,24 +12,29 @@ const global: IGlobal = {
     return global.isArray(target) || target instanceof NodeList || target instanceof HTMLCollection;
   },
 
-  createElement({ tag, text, styles, attributes }: IElement): HTMLElement {
-    const res: HTMLElement = document.createElement(tag);
+  createElement(options: IElement): HTMLElement {
+    if (global.isObject(options)) {
+      const { tag, text, styles, attributes }: IElement = options;
+      const res: HTMLElement = document.createElement(tag);
 
-    if (global.isElement(res)) {
-      if (global.isString(text)) {
-        res.textContent = text;
+      if (global.isElement(res)) {
+        if (global.isString(text)) {
+          res.textContent = text;
+        }
+
+        if (styles && Object.keys(styles).length) {
+          global.setStyles(res, styles);
+        }
+
+        if (attributes && Object.keys(attributes).length) {
+          global.setAttributes(res, attributes);
+        }
       }
 
-      if (styles && Object.keys(styles).length) {
-        global.setStyles(res, styles);
-      }
-
-      if (attributes && Object.keys(attributes).length) {
-        global.setAttributes(res, attributes);
-      }
+      return res;
+    } else {
+      global.setError(`"${options}" must be an object`);
     }
-
-    return res;
   },
 
   addElementOnPos(parent: HTMLElement, element: HTMLElement | Element | IElement, pos: InsertPosition): void {
@@ -80,15 +85,13 @@ const global: IGlobal = {
 
   removeChild(parent: any, element: string | HTMLElement | Array<string | HTMLElement>, position?: string): void {
     if (global.isElement(parent)) {
-      if (position) {
-        switch (position) {
-          case "first":
-            parent.removeChild(parent.firstElementChild);
-            break;
-          case "last":
-            parent.removeChild(parent.lastElementChild);
-            break;
-        }
+      switch (position) {
+        case "first":
+          parent.removeChild(parent.firstElementChild);
+          break;
+        case "last":
+          parent.removeChild(parent.lastElementChild);
+          break;
       }
 
       if (global.isString(element) && element["length"]) {
@@ -145,34 +148,38 @@ const global: IGlobal = {
 
       return this;
     } else {
-      global.setError(`"${this.target}" is not a HTML element`);
+      global.setError(`"${this.target}" must be a HTML element`);
     }
   },
 
   indexOf(findItem: any): number {
-    if (global.isString(this.target)) {
-      if (global.isString(findItem)) {
-        const regexp = new RegExp(findItem);
-        const res = this.target.match(regexp);
+    if (global.isArray(this.target) || global.isString(this.target)) {
+      if (global.isString(this.target)) {
+        if (global.isString(findItem)) {
+          const regexp = new RegExp(findItem);
+          const res = this.target.match(regexp);
 
-        return res ? res.index : -1;
-      } else {
-        global.setError(`"${findItem}" is not a string`);
-      }
-    }
-
-    if (global.isArray(this.target)) {
-      let res = this.target.indexOf(findItem);
-
-      if (res === -1) {
-        this.target.map((item, index) => {
-          if (global.compare(item, findItem)) {
-            res = index;
-          }
-        });
+          return res ? res.index : -1;
+        } else {
+          global.setError(`"${findItem}" must be a string`);
+        }
       }
 
-      return res;
+      if (global.isArray(this.target)) {
+        let res = this.target.indexOf(findItem);
+
+        if (res === -1) {
+          this.target.map((item, index) => {
+            if (global.compare(item, findItem)) {
+              res = index;
+            }
+          });
+        }
+
+        return res;
+      }
+    } else {
+      global.setError(`"${this.target}" must be a either a string or an array`);
     }
   },
 
@@ -207,7 +214,7 @@ const global: IGlobal = {
 
   merge(...args): IT {
     if (global.isObject(this.target) || global.isArray(this.target)) {
-      if (args.every(item => global.isObject(item)) || args.every(item => global.isArray(item))) {
+      if (args.every(item => global.isObject(item) || global.isArray(item))) {
         if (global.isArray(this.target) && args.every(item => global.isArray(item))) {
           this.target = [...this.target].concat(args.reduce((acc, item) => {
             acc = [...acc].concat(item);
@@ -229,7 +236,7 @@ const global: IGlobal = {
 
         return this;
       } else {
-        global.setError("All content must be either an array or an object");
+        global.setError("All arguments must be either an array or an object");
       }
     } else {
       global.setError(`"${this.target}" must be an array or an object`);
@@ -468,7 +475,7 @@ const global: IGlobal = {
         if (!symbol) {
           target.split(" ").map(item => {
             item[0] ? str += `${item[0].toUpperCase()}${item}`.replace(item[0], "") : false;
-          })
+          });
         } else {
           if (!target.split("").includes(symbol))
             global.setError(`

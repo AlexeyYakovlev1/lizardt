@@ -9,6 +9,16 @@ test("Вывод процента", () => {
   ];
 
   tests.map(({ args, toBe }) => expect(getPercent(...args)).toStrictEqual(toBe));
+
+  // Error
+  const falsyTests = [
+    { args: ["dwa"] },
+    { args: [null] },
+    { args: [NaN] },
+    { args: [() => { }] },
+  ];
+
+  falsyTests.map(({ args }) => expect(() => getPercent(...args)).toThrowError());
 });
 
 // getNumFromPercent
@@ -20,6 +30,16 @@ test("Вывод числа от процента", () => {
   ];
 
   tests.map(({ args, toBe }) => expect(getNumFromPercent(...args)).toStrictEqual(toBe));
+
+  // Error
+  const falsyTests = [
+    { args: ["dwa"] },
+    { args: [null, 2] },
+    { args: [NaN] },
+    { args: [() => { }] },
+  ];
+
+  falsyTests.map(({ args }) => expect(() => getNumFromPercent(...args)).toThrowError());
 });
 
 // reverse
@@ -30,6 +50,16 @@ test("Перевернуть число", () => {
   ];
 
   tests.map(({ target, toBe }) => expect(reverse.call({ target })).toStrictEqual({ target: toBe }));
+
+  // Error
+  const falsyTests = [
+    { target: [undefined] },
+    { target: [null, 2] },
+    { target: [NaN] },
+    { target: [() => { }] },
+  ];
+
+  falsyTests.map(({ target }) => expect(() => getNumFromPercent.call({ target })).toThrowError());
 });
 
 // min
@@ -40,6 +70,16 @@ test("Вывод наименьшего числа", () => {
   ];
 
   tests.map(({ target, toBe }) => expect(min(...target)).toStrictEqual(toBe));
+
+  // Error
+  const falsyTests = [
+    { args: ["dwa"] },
+    { args: [null, 2] },
+    { args: [NaN] },
+    { args: [() => { }] },
+  ];
+
+  falsyTests.map(({ args }) => expect(() => min(...args)).toThrowError());
 });
 
 // max
@@ -50,4 +90,14 @@ test("Вывод наибольшего числа", () => {
   ];
 
   tests.map(({ target, toBe }) => expect(max(...target)).toStrictEqual(toBe));
+
+  // Error
+  const falsyTests = [
+    { args: ["dwa"] },
+    { args: [null, 2] },
+    { args: [NaN] },
+    { args: [() => { }] },
+  ];
+
+  falsyTests.map(({ args }) => expect(() => max(...args)).toThrowError());
 });

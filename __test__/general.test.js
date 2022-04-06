@@ -51,6 +51,10 @@ test("Копирование элемента", () => {
       target: "123",
       toBe: "123"
     },
+    {
+      target: {},
+      toBe: {}
+    }
   ];
 
   tests.map(({ target, toBe }) => expect(copy(target)).toStrictEqual(toBe));
@@ -143,6 +147,15 @@ test("Добавление новых опций", () => {
 
   expect(item).toStrictEqual("Hello, Alexey");
   expect(item2).toStrictEqual(false);
+
+  // Error
+  const falsyTests = [
+    { args: [[]] },
+    { args: [""] },
+    { args: [null] },
+  ];
+
+  falsyTests.map(({ args }) => expect(() => extend(...args)).toThrowError());
 });
 
 // array
@@ -180,6 +193,18 @@ test("Повтор функции", () => {
 
     target = 1;
   });
+
+  // Error
+  const falsyTests = [
+    { args: [[]] },
+    { args: [""] },
+    { args: [null] },
+    { args: [4, null, null] },
+    { args: [4, null, undefined] },
+    { args: [4, null, "undefined"] },
+  ];
+
+  falsyTests.map(({ args }) => expect(() => repeat(...args)).toThrowError());
 });
 
 // toString
@@ -193,7 +218,7 @@ test("Превращение в строку", () => {
   tests.map(({ args, toBe }) => expect(toString(...args)).toStrictEqual(toBe));
 });
 
-// toString
+// toNumber
 test("Превращение в цифру", () => {
   const tests = [
     { args: ["31"], toBe: 31 },
@@ -201,6 +226,18 @@ test("Превращение в цифру", () => {
   ];
 
   tests.map(({ args, toBe }) => expect(toNumber(...args)).toStrictEqual(toBe));
+
+  // Error
+  const falsyTests = [
+    { args: [[]] },
+    { args: [undefined] },
+    { args: [null] },
+    { args: [4, null, null] },
+    { args: [4, null, undefined] },
+    { args: [4, null, "undefined"] },
+  ];
+
+  falsyTests.map(({ args }) => expect(() => toNumber(...args)).toThrowError());
 });
 
 // isArray
@@ -388,6 +425,17 @@ test("Проверка на DOM элемент", () => {
   tests.map(({ target, toBe }) => expect(isElement(target))[toBe]());
 });
 
+// isPromise
+test("Проверка на Promise", () => {
+  const tests = [
+    { args: [new Promise((res, rej) => setTimeout(() => res(31), 0))], toBe: "toBeTruthy" },
+    { args: [9], toBe: "toBeFalsy" },
+    { args: [false], toBe: "toBeFalsy" },
+  ];
+
+  tests.map(({ args, toBe }) => expect(isPromise(...args))[toBe]());
+});
+
 // len
 test("Длина элемента", () => {
   document.body.innerHTML = `<div class="wrapper">
@@ -400,7 +448,6 @@ test("Длина элемента", () => {
 	</div>`;
 
   const nodeList = document.querySelector(".wrapper");
-
   const tests = [
     { target: [1, 2, 3, 4], res: 4 },
     { target: "hello", res: 5 },
@@ -411,6 +458,15 @@ test("Длина элемента", () => {
   ];
 
   tests.map(({ target, res }) => expect(len(target)).toStrictEqual(res));
+
+  // Error
+  const falsyTests = [
+    { args: [null] },
+    { args: [undefined] },
+    { args: [BigInt(231)] },
+  ];
+
+  falsyTests.map(({ args }) => expect(() => len(...args)).toThrowError());
 });
 
 // storage
@@ -432,15 +488,14 @@ test("Хранение/получение данных", () => {
   })
 
   expect(storage("clear")).toStrictEqual({});
-});
 
-// isPromise
-test("Проверка на Promise", () => {
-  const tests = [
-    { args: [new Promise((res, rej) => setTimeout(() => res(31), 0))], toBe: "toBeTruthy" },
-    { args: [9], toBe: "toBeFalsy" },
-    { args: [false], toBe: "toBeFalsy" },
+  // Error
+  const falsyTests = [
+    { args: [null] },
+    { args: [undefined] },
+    { args: [BigInt(231)] },
+    { args: ["string"] },
   ];
 
-  tests.map(({ args, toBe }) => expect(isPromise(...args))[toBe]());
+  falsyTests.map(({ args }) => expect(() => storage(...args)).toThrowError());
 });

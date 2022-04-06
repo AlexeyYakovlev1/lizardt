@@ -22,7 +22,7 @@ const domCategory: IDomCategory = {
 
       return this;
     } else {
-      global.setError(`"${this.target}" is not a HTML element`);
+      global.setError(`"${this.target}" must be an HTML element`);
     }
   },
 
@@ -33,10 +33,10 @@ const domCategory: IDomCategory = {
 
         return this;
       } else {
-        global.setError(`"${stylesObj}" is not an object`);
+        global.setError(`"${stylesObj}" is must be an HTML element an object`);
       }
     } else {
-      global.setError(`"${this.target}" is not a HTML element`);
+      global.setError(`"${this.target}" must be an HTML element`);
     }
   },
 
@@ -48,7 +48,7 @@ const domCategory: IDomCategory = {
 
       return this.target.addEventListener(event, callback);
     } else {
-      global.setError(`"${callback}" is not a function`);
+      global.setError(`"${callback}" must be a function`);
     }
   },
 
@@ -60,7 +60,7 @@ const domCategory: IDomCategory = {
 
       return this.target.removeEventListener(event, callback, null, useCapture);
     } else {
-      global.setError(`"${callback}" is not a function`);
+      global.setError(`"${callback}" must be a function`);
     }
   },
 
@@ -82,7 +82,7 @@ const domCategory: IDomCategory = {
 
       return this;
     } else {
-      global.setError(`"${this.target}" is not a HTML element`);
+      global.setError(`"${this.target}" must be an HTML element`);
     }
   },
 
@@ -105,7 +105,7 @@ const domCategory: IDomCategory = {
 
       return this;
     } else {
-      global.setError(`"${this.target}" is not a HTML element`);
+      global.setError(`"${this.target}" must be an HTML element`);
     }
   },
 
@@ -124,24 +124,28 @@ const domCategory: IDomCategory = {
 
       return this;
     } else {
-      global.setError(`"${this.target}" is not a HTML element`);
+      global.setError(`"${this.target}" must be an HTML element`);
     }
   },
 
   add(...args): IT {
     if (global.isElement(this.target) && args.length) {
-      args.forEach(className => {
-        const { attribute, name }: ITypeOfSelector = global.definesType(className);
+      if (args.every(item => global.isString(item))) {
+        args.forEach(className => {
+          const { attribute, name }: ITypeOfSelector = global.definesType(className);
 
-        if (attribute === "class") {
-          this.target.classList.add(name);
-        } else {
-          this.target.setAttribute(attribute, name);
-        }
-      });
-      return this;
+          if (attribute === "class") {
+            this.target.classList.add(name);
+          } else {
+            this.target.setAttribute(attribute, name);
+          }
+        });
+        return this;
+      } else {
+        global.setError("All arguments must be of type string");
+      }
     } else {
-      global.setError(`"${this.target}" is not a HTML element or the argument list is empty`);
+      global.setError(`"${this.target}" must be an HTML element or the argument list is empty`);
     }
   },
 
@@ -158,7 +162,7 @@ const domCategory: IDomCategory = {
       });
       return this;
     } else {
-      global.setError(`"${this.target}" is not a HTML element or the argument list is empty`);
+      global.setError(`"${this.target}" must be an HTML element or the argument list is empty`);
     }
   },
 
@@ -167,7 +171,7 @@ const domCategory: IDomCategory = {
       this.target["style"] = null;
       return this;
     } else {
-      global.setError(`"${this.target}" is not a HTML element`);
+      global.setError(`"${this.target}" must be an HTML element`);
     }
   },
 
@@ -179,7 +183,7 @@ const domCategory: IDomCategory = {
 
       return this.target.textContent;
     } else {
-      global.setError(`"${this.target}" is not a HTML element`);
+      global.setError(`"${this.target}" must be an HTML element`);
     }
   },
 
@@ -191,73 +195,89 @@ const domCategory: IDomCategory = {
 
       return this;
     } else {
-      global.setError(`"${this.target}" is not a HTML element`);
+      global.setError(`"${this.target}" must be an HTML element`);
     }
   },
 
   addChild(child: HTMLElement | IElement | Array<any>): IT {
     if (global.isElement(this.target)) {
-      // Object
-      if (global.isObject(child)) {
-        this.target.appendChild(global.createElement.call(this, child));
-      }
+      if (global.isElement(child) || global.isObject(child) || global.isArray(child)) {
+        // Object
+        if (global.isObject(child)) {
+          this.target.appendChild(global.createElement.call(this, child));
+        }
 
-      // Array of objects and html elements
-      if (global.isArray(child) && child["length"] && child["every"](obj => global.isObject(obj) || global.isElement(obj))) {
-        child["map"](element => this.target.appendChild(!global.isElement(element) ? global.createElement(element) : element));
-      }
+        // Array of objects and html elements
+        if (global.isArray(child) && child["length"] && child["every"](obj => global.isObject(obj) || global.isElement(obj))) {
+          child["map"](element => this.target.appendChild(!global.isElement(element) ? global.createElement(element) : element));
+        }
 
-      // Html element
-      if (global.isElement(child)) {
-        this.target.appendChild(child);
-      }
+        // Html element
+        if (global.isElement(child)) {
+          this.target.appendChild(child);
+        }
 
-      return this;
+        return this;
+      } else {
+        global.setError(`"${child}" can be an array, object or html element`);
+      }
     } else {
-      global.setError(`"${this.target}" is not a HTML element`);
+      global.setError(`"${this.target}" must be an HTML element`);
     }
   },
 
   removeChild(child: HTMLElement | string | Array<HTMLElement | string>): IT {
     if (global.isElement(this.target)) {
-      // Selector
-      if (global.isString(child) && child["length"]) {
-        global.removeChild(this.target, child);
-      }
+      if (global.isElement(child) || global.isString(child) || global.isArray(child)) {
+        // Selector
+        if (global.isString(child) && child["length"]) {
+          global.removeChild(this.target, child);
+        }
 
-      // Html element
-      if (global.isElement(child)) {
-        this.target.removeChild(child);
-      }
+        // Html element
+        if (global.isElement(child)) {
+          this.target.removeChild(child);
+        }
 
-      // Array of html elements and selectors
-      if (global.isArray(child) && child["length"] && child["every"](element => global.isElement(element) || (global.isString(element) && element["length"]))) {
-        child["map"](element => {
-          global.isElement(element) ? this.target.removeChild(element) : global.removeChild(this.target, element);
-        });
-      }
+        // Array of html elements and selectors
+        if (global.isArray(child) && child["length"] && child["every"](element => global.isElement(element) || (global.isString(element) && element["length"]))) {
+          child["map"](element => {
+            global.isElement(element) ? this.target.removeChild(element) : global.removeChild(this.target, element);
+          });
+        }
 
-      return this;
+        return this;
+      } else {
+        global.setError(`"${child}" can be html element, array or string`);
+      }
     } else {
-      global.setError(`"${this.target}" is not a HTML element`);
+      global.setError(`"${this.target}" must be an HTML element`);
     }
   },
 
   addPrevElement(element: HTMLElement | IElement): IT {
     if (global.isElement(this.target)) {
-      global.addElementOnPos(this.target, element, "beforebegin");
-      return this;
+      if (global.isElement(element) || global.isObject(element)) {
+        global.addElementOnPos(this.target, element, "beforebegin");
+        return this;
+      } else {
+        global.setError(`"${element}" can be an object or an html element`);
+      }
     } else {
-      global.setError(`"${this.target}" is not a HTML element`);
+      global.setError(`"${this.target}" must be an HTML element`);
     }
   },
 
   addNextElement(element: HTMLElement | IElement): IT {
     if (global.isElement(this.target)) {
-      global.addElementOnPos(this.target, element, "afterend");
-      return this;
+      if (global.isElement(element) || global.isObject(element)) {
+        global.addElementOnPos(this.target, element, "afterend");
+        return this;
+      } else {
+        global.setError(`"${element}" can be an object or an html element`);
+      }
     } else {
-      global.setError(`"${this.target}" is not a HTML element`);
+      global.setError(`"${this.target}" must be an HTML element`);
     }
   },
 
@@ -267,29 +287,34 @@ const domCategory: IDomCategory = {
         global.setAttributes(this.target, attributes);
         return this;
       } else {
-        global.setError(`"${attributes}" is not a object`);
+        global.setError(`"${attributes}" must be a object`);
       }
     } else {
-      global.setError(`"${this.target}" is not a HTML element`);
+      global.setError(`"${this.target}" must be an HTML element`);
     }
   },
 
   removeAttribute(attribute: string | Array<string>): IT {
     if (global.isElement(this.target)) {
-      if (global.isString(attribute)) {
-        this.target.removeAttribute(attribute);
-      }
+      if (global.isArray(attribute) || global.isString(attribute)) {
+        if (global.isString(attribute)) {
+          this.target.removeAttribute(attribute);
+        }
 
-      if (global.isArray(attribute) && attribute.length && attribute["every"](attr => global.isString(attr))) {
-        attribute["map"](attr => this.target.removeAttribute(attr));
+        if (global.isArray(attribute) && attribute.length && attribute["every"](attr => global.isString(attr))) {
+          attribute["map"](attr => this.target.removeAttribute(attr));
+        }
+
+        return this;
+      } else {
+        global.setError(`"${attribute}" can be a string or an array of strings`);
       }
-      return this;
     } else {
-      global.setError(`"${this.target}" is not a HTML element`);
+      global.setError(`"${this.target}" must be an HTML element`);
     }
   },
 
-  data(isArray = false): IT {
+  data(isArray?: boolean): IT {
     const el: any = this.target;
 
     if (global.isElement(el)) {
@@ -308,7 +333,7 @@ const domCategory: IDomCategory = {
           }
         });
 
-        if (isArray) {
+        if (global.isBoolean(isArray) && isArray) {
           const resArray: Array<string> = [];
 
           for (let key in resObj) {
@@ -322,38 +347,42 @@ const domCategory: IDomCategory = {
 
         return this;
       } else {
-        global.setError(`"${el}" not form`);
+        global.setError(`"${el}" must be the form`);
       }
     } else {
-      global.setError(`"${el}" must be an element`);
+      global.setError(`"${el}" must be an HTML element`);
     }
   },
 
   hasElement(element: Element | Array<Element | string> | string): boolean {
     if (global.isElement(this.target)) {
-      const children = [...this.target.children];
+      if (global.isElement(element) || global.isString(element) || global.isArray(element)) {
+        const children = [...this.target.children];
 
-      if (global.isElement(element)) {
-        return children.indexOf(element) !== -1;
-      }
+        if (global.isElement(element)) {
+          return children.indexOf(element) !== -1;
+        }
 
-      if (global.isString(element)) {
-        return Boolean(this.target.querySelector(element));
-      }
+        if (global.isString(element)) {
+          return Boolean(this.target.querySelector(element));
+        }
 
-      if (global.isArray(element)) {
-        return element["every"](el => {
-          if (global.isElement(el)) {
-            return children.indexOf(el) !== -1;
-          }
+        if (global.isArray(element)) {
+          return element["every"](el => {
+            if (global.isElement(el)) {
+              return children.indexOf(el) !== -1;
+            }
 
-          if (global.isString(el)) {
-            return Boolean(this.target.querySelector(el));
-          }
-        });
+            if (global.isString(el)) {
+              return Boolean(this.target.querySelector(el));
+            }
+          });
+        }
+      } else {
+        global.setError(`"${this.target}" can be an array, element or string`);
       }
     } else {
-      global.setError(`"${this.target}" is not a HTML element`);
+      global.setError(`"${this.target}" must be an HTML element`);
     }
   },
 
@@ -389,29 +418,33 @@ const domCategory: IDomCategory = {
               break;
           }
         } else {
-          global.setError(`"${selector}" is not a string`);
+          global.setError(`"${selector}" must be a string`);
         }
       })
 
       return names.every(name => name);
     } else {
-      global.setError(`"${this.target}" is not a HTML element`);
+      global.setError(`"${this.target}" must be an HTML element`);
     }
   },
 
   hasParent(selector: string | Element): boolean {
     if (global.isElement(this.target)) {
-      if (global.isString(selector)) {
-        const parent = document.querySelector(selector.toString());
+      if (global.isString(selector) || global.isElement(selector)) {
+        if (global.isString(selector)) {
+          const parent = document.querySelector(selector.toString());
 
-        return Boolean(global.getAllParents.call(this).target.find(element => global.compare(parent, element)));
-      }
+          return Boolean(global.getAllParents.call(this).target.find(element => global.compare(parent, element)));
+        }
 
-      if (global.isElement(selector)) {
-        return Boolean(global.getAllParents.call(this).target.find(element => global.compare(selector, element)))
+        if (global.isElement(selector)) {
+          return Boolean(global.getAllParents.call(this).target.find(element => global.compare(selector, element)))
+        }
+      } else {
+        global.setError(`"${this.target}" must be an HTML element or a string`);
       }
     } else {
-      global.setError(`"${this.target}" is not a HTML element`);
+      global.setError(`"${this.target}" must be an HTML element`);
     }
   },
 
@@ -425,7 +458,7 @@ const domCategory: IDomCategory = {
         global.setError(`"${html}" must be a string`);
       }
     } else {
-      global.setError(`"${this.target}" is not a HTML element`);
+      global.setError(`"${this.target}" must be an HTML element`);
     }
   },
 
@@ -439,7 +472,7 @@ const domCategory: IDomCategory = {
         global.setError(`"${html}" must be a string`);
       }
     } else {
-      global.setError(`"${this.target}" is not a HTML element`);
+      global.setError(`"${this.target}" must be an HTML element`);
     }
   },
 
@@ -453,10 +486,14 @@ const domCategory: IDomCategory = {
 
   toggle(...args): IT {
     if (global.isElement(this.target) && args.length) {
-      args.forEach(className => this.target.classList.toggle(className));
-      return this;
+      if (args.every(item => global.isString(item))) {
+        args.forEach(className => this.target.classList.toggle(className));
+        return this;
+      } else {
+        global.setError("All arguments must be of type string");
+      }
     } else {
-      global.setError(`"${this.target}" is not a HTML element or arguments must be passed`);
+      global.setError(`"${this.target}" must be an HTML element or arguments must be passed`);
     }
   },
 
@@ -470,7 +507,7 @@ const domCategory: IDomCategory = {
 
       return this;
     } else {
-      global.setError(`"${this.target}" is not a HTML element`);
+      global.setError(`"${this.target}" must be an HTML element`);
     }
   },
 
@@ -480,7 +517,7 @@ const domCategory: IDomCategory = {
 
       return this;
     } else {
-      global.setError(`"${this.target}" is not a HTML element`);
+      global.setError(`"${this.target}" must be an HTML element`);
     }
   },
 
@@ -489,7 +526,7 @@ const domCategory: IDomCategory = {
       this.target.innerHTML = "";
       return this;
     } else {
-      global.setError(`"${this.target}" is not a HTML element`);
+      global.setError(`"${this.target}" must be an HTML element`);
     }
   },
 
@@ -499,7 +536,7 @@ const domCategory: IDomCategory = {
       this.target.removeAttribute("id");
       return this;
     } else {
-      global.setError(`"${this.target}" is not a HTML element`);
+      global.setError(`"${this.target}" must be an HTML element`);
     }
   },
 
@@ -517,7 +554,7 @@ const domCategory: IDomCategory = {
         });
       }, options).observe(this.target);
     } else {
-      global.setError(`"${this.target}" is not a HTML element`);
+      global.setError(`"${this.target}" must be an HTML element`);
     }
   },
 
@@ -531,7 +568,7 @@ const domCategory: IDomCategory = {
         inline: horizontalAlignment
       });
     } else {
-      global.setError(`"${element}" is not a HTML element`);
+      global.setError(`"${element}" must be an HTML element`);
     }
   },
 
@@ -543,7 +580,7 @@ const domCategory: IDomCategory = {
 
       return this.target.value;
     } else {
-      global.setError(`"${this.target}" is not a HTML element`);
+      global.setError(`"${this.target}" must be an HTML element`);
     }
   },
 

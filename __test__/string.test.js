@@ -15,6 +15,15 @@ test("Проверка на пустоту", () => {
   ];
 
   tests.map(({ target, toBe }) => expect(isEmpty.call({ target }))[toBe]());
+
+  // Error
+  const falsyTests = [
+    { target: 10 },
+    { target: null },
+    { target: undefined },
+  ];
+
+  falsyTests.map(({ target }) => expect(() => isEmpty.call({ target })).toThrowError());
 });
 
 // hasString
@@ -43,6 +52,16 @@ test("Проверяет наличие значения в строке", () =>
   ];
 
   tests.map(({ target, args, toBe }) => expect(hasString.call({ target }, ...args))[toBe]());
+
+  // Error
+  const falsyTests = [
+    { target: 10, args: [] },
+    { target: null, args: [] },
+    { target: undefined, args: [] },
+    { target: "undefined", args: [null] },
+  ];
+
+  falsyTests.map(({ target, args }) => expect(() => hasString.call({ target }, ...args)).toThrowError());
 });
 
 // indexOf
@@ -61,6 +80,16 @@ test("Возвращает индекс начала строки, котора�
   ];
 
   tests.map(({ target, args, toBe }) => expect(indexOf.call({ target }, ...args)).toStrictEqual(toBe));
+
+  // Error
+  const falsyTests = [
+    { target: 10, args: [] },
+    { target: null, args: [] },
+    { target: undefined, args: [] },
+    { target: "undefined", args: [null] },
+  ];
+
+  falsyTests.map(({ target, args }) => expect(() => indexOf.call({ target }, ...args)).toThrowError());
 });
 
 // beginWith
@@ -84,6 +113,16 @@ test("Проверяет начало строки", () => {
   ];
 
   tests.map(({ target, args, toBe }) => expect(beginWith.call({ target }, ...args))[toBe]());
+
+  // Error
+  const falsyTests = [
+    { target: 10, args: [] },
+    { target: null, args: [] },
+    { target: undefined, args: [] },
+    { target: "undefined", args: [null] },
+  ];
+
+  falsyTests.map(({ target, args }) => expect(() => beginWith.call({ target }, ...args)).toThrowError());
 });
 
 // endWith
@@ -107,6 +146,16 @@ test("Проверяет конец строки", () => {
   ];
 
   tests.map(({ target, args, toBe }) => expect(endWith.call({ target }, ...args))[toBe]());
+
+  // Error
+  const falsyTests = [
+    { target: 10, args: [] },
+    { target: null, args: [] },
+    { target: undefined, args: [] },
+    { target: "undefined", args: [null] },
+  ];
+
+  falsyTests.map(({ target, args }) => expect(() => endWith.call({ target }, ...args)).toThrowError());
 });
 
 // isEmail
@@ -119,6 +168,15 @@ test("Проверка электронной почты", () => {
   ];
 
   tests.map(({ target, toBe }) => expect(isEmail.call({ target }))[toBe]());
+
+  // Error
+  const falsyTests = [
+    { target: 10 },
+    { target: null },
+    { target: undefined },
+  ];
+
+  falsyTests.map(({ target }) => expect(() => isEmail.call({ target })).toThrowError());
 });
 
 // hasNumbers
@@ -131,6 +189,15 @@ test("Проверка наличия цифр", () => {
   ];
 
   tests.map(({ target, toBe }) => expect(hasNumbers.call({ target }))[toBe]());
+
+  // Error
+  const falsyTests = [
+    { target: 10 },
+    { target: null },
+    { target: undefined },
+  ];
+
+  falsyTests.map(({ target }) => expect(() => hasNumbers.call({ target })).toThrowError());
 });
 
 // isDate
@@ -159,6 +226,16 @@ test("Проверка на дату", () => {
   ];
 
   tests.map(({ target, args, toBe }) => expect(isDate.call({ target }, ...args))[toBe]());
+
+  // Error
+  const falsyTests = [
+    { target: 10, args: [] },
+    { target: null, args: [] },
+    { target: undefined, args: [] },
+    { target: "undefined", args: [null] },
+  ];
+
+  falsyTests.map(({ target, args }) => expect(() => isDate.call({ target }, ...args)).toThrowError());
 });
 
 // replaceFound
@@ -171,6 +248,18 @@ test("Находит символы глобально по всей строк�
   ];
 
   tests.map(({ target, args, toBe }) => expect(replaceFound.call({ target }, ...args)).toStrictEqual({ target: toBe }));
+
+  // Error
+  const falsyTests = [
+    { target: 10, args: [] },
+    { target: null, args: [] },
+    { target: undefined, args: [] },
+    { target: "undefined", args: [null] },
+    { target: "undefined", args: [[], undefined] },
+    { target: "undefined", args: [[], [1]] },
+  ];
+
+  falsyTests.map(({ target, args }) => expect(() => replaceFound.call({ target }, ...args)).toThrowError());
 });
 
 // reverse
@@ -181,6 +270,15 @@ test("Перевернуть строку", () => {
   ];
 
   tests.map(({ target, toBe }) => expect(reverse.call({ target })).toStrictEqual({ target: toBe }));
+
+  // Error
+  const falsyTests = [
+    { target: NaN, },
+    { target: null },
+    { target: undefined },
+  ];
+
+  falsyTests.map(({ target }) => expect(() => reverse.call({ target })).toThrowError());
 });
 
 // onlyNumbers
@@ -192,6 +290,15 @@ test("Только цифры", () => {
   ];
 
   tests.map(({ target, toBe }) => expect(onlyNumbers.call({ target })[toBe]));
+
+  // Error
+  const falsyTests = [
+    { target: 10, },
+    { target: null },
+    { target: undefined },
+  ];
+
+  falsyTests.map(({ target }) => expect(() => onlyNumbers.call({ target })).toThrowError());
 });
 
 // onlyLetters
@@ -204,6 +311,15 @@ test("Только буквы", () => {
   ];
 
   tests.map(({ target, toBe }) => expect(onlyLetters.call({ target })[toBe]));
+
+  // Error
+  const falsyTests = [
+    { target: 10, },
+    { target: null },
+    { target: undefined },
+  ];
+
+  falsyTests.map(({ target }) => expect(() => onlyLetters.call({ target })).toThrowError());
 });
 
 // snake_case
@@ -216,6 +332,16 @@ test("Превращает строку в snake регистр", () => {
   ];
 
   tests.map(({ target, symbol, toBe }) => expect(snake_case.call({ target }, symbol)).toStrictEqual(toBe));
+
+  // Error
+  const falsyTests = [
+    { target: 10, args: [] },
+    { target: null, args: [] },
+    { target: undefined, args: [] },
+    { target: "undefined", args: [null] },
+  ];
+
+  falsyTests.map(({ target, args }) => expect(() => snake_case.call({ target }, ...args)).toThrowError());
 });
 
 // kebab-case
@@ -228,6 +354,16 @@ test("Превращает строку в kebab регистр", () => {
   ];
 
   tests.map(({ target, symbol, toBe }) => expect(stringCategory["kebab-case"].call({ target }, symbol)).toStrictEqual(toBe));
+
+  // Error
+  const falsyTests = [
+    { target: 10, args: [] },
+    { target: null, args: [] },
+    { target: undefined, args: [] },
+    { target: "undefined", args: [null] },
+  ];
+
+  falsyTests.map(({ target, args }) => expect(() => ["kebab-case"].call({ target }, ...args)).toThrowError());
 });
 
 // camelCase
@@ -239,6 +375,15 @@ test("Превращает строку camel регистр", () => {
   ];
 
   tests.map(({ target, symbol, toBe }) => expect(camelCase.call({ target }, symbol)).toStrictEqual(toBe));
+
+  // Error
+  const falsyTests = [
+    { target: 10 },
+    { target: null },
+    { target: undefined },
+  ];
+
+  falsyTests.map(({ target }) => expect(() => camelCase.call({ target })).toThrowError());
 });
 
 // PascalCase
@@ -250,6 +395,15 @@ test("Превращает строку pascal регистр", () => {
   ];
 
   tests.map(({ target, symbol, toBe }) => expect(PascalCase.call({ target }, symbol)).toStrictEqual(toBe));
+
+  // Error
+  const falsyTests = [
+    { target: 10 },
+    { target: null },
+    { target: undefined },
+  ];
+
+  falsyTests.map(({ target }) => expect(() => PascalCase.call({ target })).toThrowError());
 });
 
 // lower
@@ -261,6 +415,15 @@ test("Привести к нижнему регистру", () => {
   ];
 
   tests.map(({ target, toBe }) => expect(lower.call({ target })).toStrictEqual({ target: toBe }));
+
+  // Error
+  const falsyTests = [
+    { target: 10 },
+    { target: null },
+    { target: undefined },
+  ];
+
+  falsyTests.map(({ target }) => expect(() => lower.call({ target })).toThrowError());
 });
 
 // upper
@@ -272,4 +435,13 @@ test("Привести к верхнему регистру", () => {
   ];
 
   tests.map(({ target, toBe }) => expect(upper.call({ target })).toStrictEqual({ target: toBe }));
+
+  // Error
+  const falsyTests = [
+    { target: 10 },
+    { target: null },
+    { target: undefined },
+  ];
+
+  falsyTests.map(({ target }) => expect(() => upper.call({ target })).toThrowError());
 });

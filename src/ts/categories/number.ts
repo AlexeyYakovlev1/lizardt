@@ -11,7 +11,7 @@ const numberCategory: INumberCategory = {
 
       return round ? Math.round(percent) : percent;
     } else {
-      global.setError(`"${current}" or "${endNum}" not a number`);
+      global.setError(`"${current}" or "${endNum}" must be a number`);
     }
   },
 
@@ -21,7 +21,7 @@ const numberCategory: INumberCategory = {
 
       return round ? Math.round(number) : number;
     } else {
-      global.setError(`"${percent}" or "${num}" not a number`);
+      global.setError(`"${percent}" or "${num}" must be a number`);
     }
   },
 

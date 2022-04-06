@@ -38,7 +38,7 @@ const ajaxCategory: IAjaxCategory = {
 
       return fetch(url, data);
     } else {
-      global.setError(`"${url}" is not a string`);
+      global.setError(`"${url}" must be a string`);
     }
   },
 

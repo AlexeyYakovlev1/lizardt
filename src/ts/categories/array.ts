@@ -15,7 +15,7 @@ const arrayCategory: IArrayCategory = {
 
       return this;
     } else {
-      global.setError(`"${this.target}" is not a array`);
+      global.setError(`"${this.target}" must be an array`);
     }
   },
 
@@ -25,7 +25,7 @@ const arrayCategory: IArrayCategory = {
 
       return this;
     } else {
-      global.setError(`"${this.target}" is not a array`);;
+      global.setError(`"${this.target}" must be an array`);;
     }
   },
 
@@ -35,7 +35,7 @@ const arrayCategory: IArrayCategory = {
 
       return this;
     } else {
-      global.setError(`"${this.target}" is not a array`);;
+      global.setError(`"${this.target}" must be an array`);;
     }
   },
 
@@ -45,7 +45,7 @@ const arrayCategory: IArrayCategory = {
 
       return this;
     } else {
-      global.setError(`"${this.target}" is not a array`);;
+      global.setError(`"${this.target}" must be an array`);;
     }
   },
 
@@ -80,20 +80,24 @@ const arrayCategory: IArrayCategory = {
 
         return this;
       } else {
-        global.setError(`"${callback}" is not a function`);
+        global.setError(`"${callback}" must be a function`);
       }
     } else {
-      global.setError(`"${this.target}" is not a array`);;
+      global.setError(`"${this.target}" must be an array`);;
     }
   },
 
   removeItem(num: number, val?: any): Array<any> {
     if (global.isArray(this.target)) {
-      global.isNumber(val) && val >= 0 ? this.target.splice(num, 1, val) : this.target.splice(num, 1);
+      if (global.isNumber(num)) {
+        global.isNumber(val) && val >= 0 ? this.target.splice(num, 1, val) : this.target.splice(num, 1);
 
-      return this.target;
+        return this.target;
+      } else {
+        global.setError(`"${num}" must be a number`);
+      }
     } else {
-      global.setError(`"${this.target}" is not a array`);;
+      global.setError(`"${this.target}" must be an array`);;
     }
   },
 
@@ -106,7 +110,7 @@ const arrayCategory: IArrayCategory = {
 
       return this;
     } else {
-      global.setError(`"${this.target}" is not a list`);
+      global.setError(`"${this.target}" should be a list`);
     }
   },
 
@@ -136,15 +140,15 @@ const arrayCategory: IArrayCategory = {
     if (global.checkList(this.target) && global.isFunction(callback)) {
       return Array.from(this.target).map(callback);
     } else {
-      global.setError(`"${this.target}" is not a list or your callback is not a function`);
+      global.setError(`"${this.target}" is not a list or the callback is not a function`);
     }
   },
 
   hasItem(item: any): boolean {
     if (global.isArray(this.target)) {
-      return Boolean(this.target.find(el => global.compare(el, item)));
+      return this.target.some(el => global.compare(el, item));
     } else {
-      global.setError(`"${this.target}" is not an array`);
+      global.setError(`"${this.target}" must be a array`);
     }
   },
 
@@ -184,7 +188,7 @@ const arrayCategory: IArrayCategory = {
     }
   },
 
-  sort(fromMore: boolean): IT {
+  sort(fromMore?: boolean): IT {
     if (global.isArray(this.target)) {
       if (this.target.every(item => global.isNumber(item))) {
         const quickSort = (arr: Array<any>): Array<any> => {
@@ -200,7 +204,7 @@ const arrayCategory: IArrayCategory = {
             arr[i] > lastNum ? more.push(arr[i]) : less.push(arr[i]);
           }
 
-          return quickSort(fromMore ? more : less).concat(lastNum, quickSort(fromMore ? less : more));
+          return quickSort((global.isBoolean(fromMore) && fromMore) ? more : less).concat(lastNum, quickSort((global.isBoolean(fromMore) && fromMore) ? less : more));
         }
 
         this.target = quickSort(this.target);
@@ -265,9 +269,11 @@ const arrayCategory: IArrayCategory = {
     if (global.isArray(this.target)) {
       if (global.isNumber(index) && index >= 0 && index <= this.target.length - 1) {
         this.target = this.target.filter((item, idx) => idx !== index);
-      }
 
-      return this;
+        return this;
+      } else {
+        global.setError(`"${this.target}" muste be a number`);
+      }
     } else {
       global.setError(`"${this.target}" must be array`);
     }
